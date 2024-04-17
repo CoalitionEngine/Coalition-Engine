@@ -1,7 +1,6 @@
 /// @description Initialization
 
 Initialize();
-//LoadFonts();
 
 window_set_caption("Coalition Engine");
 window_set_caption("Undertale");

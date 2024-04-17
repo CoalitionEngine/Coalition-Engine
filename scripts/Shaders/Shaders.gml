@@ -9,6 +9,7 @@ room_instance_add(room_first, 0, 0, oShaderController);
 */
 function AddShaderEffect(shader, surf = false)
 {
+	gml_pragma("forceinline");
 	return oShaderController.Main.Add(shader, surf);
 }
 /**
@@ -19,6 +20,7 @@ function AddShaderEffect(shader, surf = false)
 */
 function ShaderSetUniform(ID, name, value)
 {
+	gml_pragma("forceinline");
 	oShaderController.Main.SetUniform(ID, name, value);
 }
 /**
@@ -27,6 +29,7 @@ function ShaderSetUniform(ID, name, value)
 */
 function RemoveShaderEffect(ID)
 {
+	gml_pragma("forceinline");
 	oShaderController.Main.Remove(ID);
 }
 function __Shader() constructor
@@ -101,12 +104,13 @@ function __Shader() constructor
 ///@param {real} amount		The amount to blur 
 function Blur_Screen(duration, amount)
 {
+	gml_pragma("forceinline");
 	var shader_blur = instance_create_depth(0, 0, -1000, blur_shader);
 	with shader_blur
 	{
-		id.duration = duration;		//sets duration
+		self.duration = duration;	//sets duration
 		var_blur_amount = amount;	//sets blur amount
-		TweenFire(id, "o", 0, false, 0, duration, "var_blur_amount>", 0);
+		TweenFire(self, "o", 0, false, 0, duration, "var_blur_amount>", 0);
 	}
 	return shader_blur;
 }

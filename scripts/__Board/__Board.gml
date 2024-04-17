@@ -135,4 +135,16 @@ function __Board() constructor {
 		var i = 0, n = array_length(BattleBoardList);
 		repeat n if BattleBoardList[i] != board.id i++; else return i;
 	}
+	///Automatically masks the board with the default background color
+	static Mask = function(obj = oEnemyParent)
+	{
+		with obj
+		{
+			Battle_Masking_Start();
+			draw_set_color(oBoard.bg_color);
+			draw_rectangle(0, 0, 640, 480, false);
+			draw_set_color(c_white);
+			Battle_Masking_End();
+		}
+	}
 }

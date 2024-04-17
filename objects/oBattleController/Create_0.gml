@@ -1,6 +1,7 @@
 //Loads texture group
 texturegroup_load("texbattle");
 Fader_Fade(1, 0, 20);
+draw_set_align(fa_left, fa_top);
 menu_state = 0;
 battle_state = 0;
 battle_turn = 0;
@@ -32,6 +33,7 @@ with Target
 	buffer			= 0;
 	retract_method	= choose(0, 1);
 	WaitTime		= -1;
+	Sprite			= sprTargetBG;
 }
 Aim = {};
 with Aim
@@ -61,15 +63,16 @@ function ResetFightAim()
 		alpha = 1;
 		retract_method = choose(0, 1);
 	}
+	var TargetCount = Target.Count;
 	with Aim
 	{
-		scale = array_create(other.Target.Count, 1);
+		scale = array_create(TargetCount, 1);
 		angle = 0;
-		color = array_create(other.Target.Count, c_white);
+		color = array_create(TargetCount, c_white);
 		retract = choose(-1, 1);
 	}
 	var interval = irandom_range(60, 120), hspd = 4 + random(3);
-	for (var i = 0; i < Target.Count; ++i) {
+	for (var i = 0; i < TargetCount; ++i) {
 		Target.time[i] = 0;
 		with Aim
 		{
@@ -121,7 +124,6 @@ menu_text_typist = scribble_typist()
 	.sound_per_char(snd_txtTyper, 1, 1, " ^!.?,:/\\|*")
 
 BattleData.SetMenuDialog(menu_text);
-
 #endregion
 #region KR Functions
 kr_timer = 0;
@@ -153,27 +155,43 @@ with Button
 Button.Update = function(duration = global.battle_lerp_speed == 1 ? 1 : 30) {
 	static UpdateData = function(i, duration)
 	{
+		if Item_Count() == 0 Button.ColorTarget[2] = [c_ltgray, c_ltgray];
 		Button.ColorLerpScale[i] = EaseOutQuad(Button.ColorLerpTimer[i], 0, 1, duration);
 		Button.Color[i] = merge_color(Button.ColorTarget[i][0], Button.ColorTarget[i][menu_state >= 0], Button.ColorLerpScale[i]);
+		Button.Color[i] = merge_color(c_black, Button.Color[i], Button.Alpha[i]);
 	}
 	var i = 0;
 	repeat 4
 	{
-		if i == menu_button_choice
+		if battle_state != BATTLE_STATE.MENU
 		{
-			if Button.ColorLerpTimer[i] < duration Button.ColorLerpTimer[i]++;
+			if Button.ColorLerpTimer[i] > 0 Button.ColorLerpTimer[i]--;
+			Button.Scale[i] += (Button.ScaleTarget[0] - Button.Scale[i]) / 6;
+			Button.Alpha[i] += (Button.AlphaTarget[0] - Button.Alpha[i]) / 6;
 		}
 		else
 		{
-			if Button.ColorLerpTimer[i] > 0 Button.ColorLerpTimer[i]--;
+			if i == menu_button_choice
+			{
+				if Button.ColorLerpTimer[i] < duration Button.ColorLerpTimer[i]++;
+				Button.Scale[i] += (Button.ScaleTarget[1] - Button.Scale[i]) / 6;
+				Button.Alpha[i] += (Button.AlphaTarget[1] - Button.Alpha[i]) / 6;
+			}
+			else
+			{
+				if Button.ColorLerpTimer[i] > 0 Button.ColorLerpTimer[i]--;
+				Button.Scale[i] += (Button.ScaleTarget[0] - Button.Scale[i]) / 6;
+				Button.Alpha[i] += (Button.AlphaTarget[0] - Button.Alpha[i]) / 6;
+			}
 		}
+		if Button.OverrideAlpha[i] != 1 Button.Alpha[i] = Button.OverrideAlpha[i];
 		UpdateData(i, duration);
 		++i;
 	}
 }
 #endregion
 #region UI Functions
-if DEBUG
+if ALLOW_DEBUG
 {
 	debug = false;
 	debug_alpha = 0;
@@ -189,6 +207,7 @@ hp_max = global.hp_max;
 kr = global.kr;
 refill_speed = 0.2;
 hp_predict = 0;
+show_predict_hp = true;
 board_cover_hp_bar = false;
 board_cover_button = false;
 board_full_cover = false;
@@ -199,13 +218,10 @@ item_lerp_y = array_create(8, 0);
 item_space = Item_Space();
 
 for (var i = 0; i < 8; ++i)
-{
 	item_lerp_color[i] = c_dkgray; 
-}
 
 item_lerp_x_target = 0;
 item_lerp_y_target = 0;
-item_lerp_color_target_values =  [ [16,16,16] , [128,128,128] , [255,255,255] ]; // c_gray - c_white
 item_lerp_color_amount = array_create(8, 16 / 255);
 item_lerp_color_amount_target = array_create(8, 16 / 255);
 item_desc_x = 360;
@@ -312,8 +328,6 @@ function begin_turn() {
 		menu_text_typist.reset();
 		battle_state = 0;
 		menu_state = 0;
-		var end_turn_text = battle_turn - 1;
-		end_turn_text = min(0, battle_turn);
 		last_choice = 0;
 	}
 }
@@ -335,8 +349,8 @@ function begin_spare(activate_the_turn) {
 	oEnemyParent.is_being_spared = true;
 	oEnemyParent.spare_end_begin_turn = activate_the_turn;
 	if !activate_the_turn {
-		menu_state = -1;
-		battle_state = -1;
+		menu_state = MENU_STATE.BUTTON_SELECTION;
+		battle_state = BATTLE_STATE.MENU;
 	}
 }
 
@@ -344,20 +358,18 @@ function begin_spare(activate_the_turn) {
 	(Internal) Ends the battle
 */
 function end_battle() {
-	battle_state = 3;
+	battle_state = BATTLE_STATE.RESULT;
 	if !global.BossFight {
 		battle_end_text = lexicon_text("Battle.Win", string(Result.Exp), string(Result.Gold));
-		if global.data.lv < 20 and global.data.Exp + Result.Exp >= Player.GetExpNext() {
+		if Player.LV() < 20 and global.data.Exp + Result.Exp >= Player.GetExpNext() {
 			global.data.lv++;
-			var is_maxhp = (global.hp == global.hp_max);
-			global.hp_max = (global.data.lv = 20 ? 99 : global.data.lv * 4 + 16);
-			if is_maxhp global.hp = global.hp_max;
+			if Player.HP() == Player.HPMax()
+				Player.HPMax(Player.LV() == 20 ? 99 : Player.LV() * 4 + 16);
 			battle_end_text += lexicon_text("Battle.LoveInc");
 			audio_play(snd_level_up);
 		}
 		battle_end_text_writer = scribble("* " + battle_end_text);
-		if battle_end_text_writer.get_page() != 0
-			battle_end_text_writer.page(0);
+		if battle_end_text_writer.get_page() != 0 battle_end_text_writer.page(0);
 		battle_end_text_typist = scribble_typist()
 			.in(0.5, 0)
 			.sound_per_char(snd_txtTyper, 1, 1, " ^!.?,:/\\|*")
@@ -375,19 +387,7 @@ function dialog_start() {
 			PreAttackFunctions[max(0, DetermineTurn())]();
 		state = 1;
 	}
-	battle_state = 1;
+	battle_state = BATTLE_STATE.DIALOG;
 	SetSoulPos(320, 320, 0);
-}
-no_enemy_pos = [];
-ncontains_enemy = 0;
-function check_contain_enemy() {
-	ncontains_enemy = 0;
-	for (var i = 0; i < 2; i++) {
-		if !instance_exists(enemy[i]) {
-			ncontains_enemy++;
-			array_push(no_enemy_pos, i);
-		}
-		else continue;
-	}
 }
 #endregion

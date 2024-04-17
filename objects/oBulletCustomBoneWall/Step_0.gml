@@ -10,7 +10,34 @@ if warn_color_swap
 	}
 }
 
-if time_warn == 0 and state == 1
+if time_warn
+{
+	time_warn--;
+	width = point_distance(Board.GetLeftPos(), Board.GetUpPos(), Board.GetRightPos(), Board.GetDownPos());
+	
+	//Since the centre position of the warning box is the x/y position, calculate the corner
+	//positions of the warning box
+	var TargetX = x, TargetY = y;
+	//Apply first displacement
+	TargetX -= lengthdir_x(width / 2 + 1, image_angle + 90);
+	TargetY -= lengthdir_y(width / 2 + 1, image_angle + 90);
+	//Top left corner (With respect to image_angle = 0)
+	WarningBoxPos[# 0, 0] = TargetX + lengthdir_x(distance[1] - distance[0] - height / 2, image_angle);
+	WarningBoxPos[# 0, 1] = TargetY + lengthdir_y(distance[1] - distance[0] - height / 2, image_angle);
+	//Top Right corner
+	WarningBoxPos[# 1, 0] = TargetX;
+	WarningBoxPos[# 1, 1] = TargetY;
+	//Apply second displacement
+	TargetX += lengthdir_x(width + 1, image_angle + 90);
+	TargetY += lengthdir_y(width + 1, image_angle + 90);
+	//Bottom left corner (With respect to image_angle = 0)
+	WarningBoxPos[# 3, 0] = TargetX + lengthdir_x(distance[1] - distance[0] - height / 2, image_angle);
+	WarningBoxPos[# 3, 1] = TargetY + lengthdir_y(distance[1] - distance[0] - height / 2, image_angle);
+	//Bottom Right corner
+	WarningBoxPos[# 2, 0] = TargetX;
+	WarningBoxPos[# 2, 1] = TargetY;
+}
+else if state == 1
 {
 	//Play sound
 	if sound_create audio_play(snd_bonewall);
@@ -20,15 +47,17 @@ if time_warn == 0 and state == 1
 			spacing = sprite_get_height(sprite); i < width / 2; i += spacing) {
 		var X = x + lengthdir_x(i, image_angle + 90),
 			Y = y + lengthdir_y(i, image_angle + 90),
-			bone = Bullet_Bone(X, Y, height * sqrt(2), 0, 0, type,,, image_angle,, false, time_stay + time_move * 2 + time_warn);
+			MoveTime = time_move, StayTime = time_stay,
+			bone = Bullet_Bone(X, Y, height, 0, 0, type,,, image_angle,, false, StayTime + MoveTime * 2 + time_warn),
+			EaseIn = ease[0], EaseOut = ease[1], InitDistance = distance[0], Displace = distace[1];
 		with bone
 		{
-			TweenFire(self, other.ease[0], 0, 0, 0, other.time_move,
-			"x>", x - lengthdir_x(other.distance[1] * sqrt(2) - 20, image_angle),
-			"y>", y - lengthdir_y(other.distance[1] * sqrt(2) - 20, image_angle));
-			TweenFire(self, other.ease[1], 0, 0, other.time_move + other.time_stay, other.time_move,
-			"x>", x + lengthdir_x(other.distance[0], image_angle),
-			"y>", y + lengthdir_y(other.distance[0], image_angle));
+			TweenFire(self, EaseIn, 0, 0, 0, MoveTime,
+			"x>", x - lengthdir_x(InitDistance - Displace, image_angle),
+			"y>", y - lengthdir_y(InitDistance - Displace, image_angle));
+			TweenFire(self, EaseOut, 0, 0, MoveTime + StayTime, MoveTime,
+			"x>", x + lengthdir_x(InitDistance, image_angle),
+			"y>", y + lengthdir_y(InitDistance, image_angle));
 		}
 	}
 }

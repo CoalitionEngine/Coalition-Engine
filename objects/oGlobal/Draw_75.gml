@@ -1,12 +1,11 @@
 #region Fading methods
-var i = 0, n = array_length(Fade.Activate);
-repeat n
+var i = 0;
+repeat array_length(Fade.Activate)
 {
 	if Fade.Activate[i][0]
 	{
 		Fade.Timer++;
-		var duration = Fade.Activate[i][1],
-			delay = Fade.Activate[i][2];
+		var duration = Fade.Activate[i][1], delay = Fade.Activate[i][2];
 		switch i
 		{
 			case FADE.CIRCLE:

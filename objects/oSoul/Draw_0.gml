@@ -2,17 +2,9 @@ live;
 var STATE = oBattleController.battle_state,
 	MENU = oBattleController.menu_state;
 image_angle += draw_angle;
-if (STATE = 0 or STATE = 2) and (MENU != 5) and !IsGrazer
+if (STATE = 0 or STATE = 2) and (MENU != 5)
 	draw_self();
-//Grazing (Unused, unless a better method is found)
-//if GrazeTimer GrazeTimer--;
-//if IsGrazer
-//{
-//	draw_sprite_ext(sprSoulGraze, 0, x, y, 2, 2, image_angle, c_white, GrazeAlpha);
-//	GrazeAlpha -= 1/40;
-//}
 image_angle -= draw_angle;
-
 
 //Green soul shield drawing
 if mode = SOUL_MODE.GREEN
@@ -63,7 +55,6 @@ if mode == SOUL_MODE.PURPLE and STATE == 2
 	draw_set_color(c_white);
 	draw_set_alpha(1);
 }
-
 
 
 show_hitbox();

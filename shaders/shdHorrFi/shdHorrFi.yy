@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shdHorrFi",
   "parent": {
-    "name": "Engine Essential",
-    "path": "folders/Coalition Engine/Shaders/Engine Essential.yy",
+    "name": "Extra Effects",
+    "path": "folders/Coalition Engine/Shaders/Extra Effects.yy",
   },
   "type": 1,
 }

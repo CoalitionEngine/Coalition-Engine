@@ -7,17 +7,14 @@ __CoalitionEngineError(!is_struct(menu_text_typist), "'menu_text_typist' is not 
 if !audio_group_is_loaded(audgrpbattle) audio_group_load(audgrpbattle);
 Button.Update();
 var DefaultFontNB = lexicon_text("Font"),
-	DefaultFont = "[" + DefaultFontNB + "]",
+	DefaultFont = $"[{DefaultFontNB}]",
 	input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
 	input_confirm = PRESS_CONFIRM,
 	input_cancel = PRESS_CANCEL;
 
 //Check for empty slots of enemy
-check_contain_enemy();
-var target_option = menu_choice[0];
-if menu_choice[0] >= no_enemy_pos[0] target_option += ncontains_enemy;
-
+var target_option = enemy_instance[menu_choice[0]].__enemy_slot;
 switch battle_state {
 	case BATTLE_STATE.MENU:
 		switch menu_state {
@@ -35,7 +32,7 @@ switch battle_state {
 				with oSoul
 				{
 					visible = true;
-					x = lerp(x, _button_pos[_button_slot * 2] - sprite_get_width(other.Button.Sprites[_button_slot]) * other.Button.Scale[_button_slot] / 2 + 20, other.lerp_speed);
+					x = lerp(x, _button_pos[_button_slot * 2] - 38 * other.Button.Scale[_button_slot], other.lerp_speed);
 					y = lerp(y, _button_pos[_button_slot * 2 + 1] + 1, other.lerp_speed);
 				}
 				//If input is detected, change state to button state
@@ -150,15 +147,6 @@ switch battle_state {
 								item_desc_alpha = 0;
 							}
 						break
-
-						case ITEM_SCROLL.CIRCLE:
-							if input_horizontal != 0 {
-								choice = posmod(choice + input_horizontal, len + 3);
-								menu_choice[2] = choice;
-								audio_play(snd_menu_switch);
-						}
-						break
-
 					}
 				}
 				//Soul lerping
@@ -185,12 +173,6 @@ switch battle_state {
 								else item_lerp_color_amount_target[i] = 16 / 255;
 								item_lerp_color_amount[i] = lerp(item_lerp_color_amount[i], item_lerp_color_amount_target[i], global.lerp_speed);
 							}
-							
-						break
-
-						case ITEM_SCROLL.CIRCLE:
-							oSoul.x += (190 + (130 * (choice % 3)) - oSoul.x) / 3;
-							oSoul.y += (310 - (40 * (abs((choice % 3) - 1))) - oSoul.y) / 3;
 						break
 
 					}
@@ -206,8 +188,6 @@ switch battle_state {
 					if menu_state == MENU_STATE.ITEM // Item-consuming code
 					{
 						var ItemID = choice;
-						if item_scroll_type == ITEM_SCROLL.CIRCLE
-							ItemID *= 8/12
 						Item_Use(global.item[ceil(ItemID)]);
 						last_choice = 2;
 						item_space = Item_Space();
@@ -217,7 +197,9 @@ switch battle_state {
 					else // Action-executing code
 					{
 						menu_text_typist.reset();
-						__text_writer = scribble("* " + enemy_act_text[target_option, choice]);
+						var tex = enemy_act_text[target_option, choice];
+						tex = is_method(tex) ? tex() : tex;
+						__text_writer = scribble("* " + tex);
 						if __text_writer.get_page() != 0 __text_writer.page(0);
 						menu_state = -1;
 						if enemy_act_function[target_option, choice] != -1
@@ -259,9 +241,8 @@ switch battle_state {
 		//Soul angle lerping
 		var target_soul_angle = 0;
 		if (menu_state == MENU_STATE.FIGHT or menu_state == MENU_STATE.ACT or
-			(menu_state == MENU_STATE.ITEM and item_scroll_type != ITEM_SCROLL.CIRCLE
-								and item_scroll_type != ITEM_SCROLL.HORIZONTAL) or
-			menu_state == MENU_STATE.MERCY or menu_state == MENU_STATE.ACT_SELECT)
+			menu_state == MENU_STATE.ITEM or menu_state == MENU_STATE.MERCY or
+			menu_state == MENU_STATE.ACT_SELECT)
 			target_soul_angle = 90;
 		oSoul.image_angle = lerp(oSoul.image_angle, target_soul_angle, lerp_speed == 1 ? 1 : lerp_speed / 3);
 	break
@@ -288,11 +269,10 @@ with Target
 if global.debug {
 	var game_speed = game_get_speed(gamespeed_fps);
 	if keyboard_check(vk_rshift) {
-		if game_speed > 5 {
+		if game_speed > 5
 			game_set_speed(game_speed + 5 * input_horizontal, gamespeed_fps);
-		}
-	if keyboard_check(ord("R")) game_set_speed(60, gamespeed_fps);
-	if keyboard_check(ord("F")) game_set_speed(600, gamespeed_fps);
+		if keyboard_check(ord("R")) game_set_speed(60, gamespeed_fps);
+		if keyboard_check(ord("F")) game_set_speed(600, gamespeed_fps);
 	}
 	if battle_state == 0 and keyboard_check(vk_control)
 		battle_turn = max(0, battle_turn + input_horizontal);

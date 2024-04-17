@@ -106,10 +106,7 @@ function draw_cube_width(_draw_x, _draw_y, _size, _point_h, _point_v, _colour, _
 		i = 0;
 	repeat 8
 	{
-		var node = nodes[i],
-			_x = node[0],
-			_y = node[1],
-			_z = node[2];
+		var node = nodes[i], _x = node[0], _y = node[1], _z = node[2];
  
 	    node[0] = _x * cosX - _z * sinX;
 	    node[2] = _z * cosX + _x * sinX;
@@ -130,12 +127,9 @@ function draw_cube_width(_draw_x, _draw_y, _size, _point_h, _point_v, _colour, _
 	repeat 12
 	{
 		var edge = edges[i],
-			p1 = nodes[edge[0]],
-			p2 = nodes[edge[1]],
-			x_start = _draw_x + p1[0] * _size,
-			y_start = _draw_y + p1[1] * _size,
-			x_end = _draw_x + p2[0] * _size,
-			y_end = _draw_y + p2[1] * _size;
+			p1 = nodes[edge[0]], p2 = nodes[edge[1]],
+			x_start = _draw_x + p1[0] * _size, y_start = _draw_y + p1[1] * _size,
+			x_end = _draw_x + p2[0] * _size, y_end = _draw_y + p2[1] * _size;
 		draw_line_width(x_start, y_start, x_end, y_end, _width);
 		
 		if _edge_circ draw_circle(x_start, y_start, _width / 2, false);

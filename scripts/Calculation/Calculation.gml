@@ -1,19 +1,20 @@
 /**
-	Returns a Positive Quotient of the 2 values
+	Returns a Positive Quotient of the 2 values, do not confuse this with a % b
 	@param {real} a The number to be divided
 	@param {real} b The number to divide
 */
 function posmod(a, b)
 {
+	gml_pragma("forceinline");
 	var value = a % b;
-	while (value < 0 and b > 0) or (value > 0 and b < 0) 
-		value += b;
+	while (value < 0 and b > 0) or (value > 0 and b < 0) value += b;
 	return value;
 }
 
 ///Calculating the legnthdir_xy position of the points
 function point_xy(p_x, p_y)
 {
+	gml_pragma("forceinline");
 	var angle = image_angle;
 	
 	point_x = lengthdir_x(p_x - x, angle) + lengthdir_y(p_y - y, -angle) + x;
@@ -23,6 +24,7 @@ function point_xy(p_x, p_y)
 ///Calculating the legnthdir_xy position of the points
 function point_xy_array(p_x, p_y)
 {
+	gml_pragma("forceinline");
 	var angle = image_angle;
 	
 	return [lengthdir_x(p_x - x, angle) + lengthdir_y(p_y - y, -angle) + x,
@@ -32,6 +34,7 @@ function point_xy_array(p_x, p_y)
 ///Returns the lengthdir_x/y values in a Vector2 (stupidly useless)
 function lengthdir_xy(length, dir) constructor
 {
+	gml_pragma("forceinline");
 	return new Vector2(lengthdir_x(length, dir), lengthdir_y(length, dir));
 }
 
@@ -43,14 +46,20 @@ function lengthdir_xy(length, dir) constructor
 */
 function Sigma(arr, n, k)
 {
+	gml_pragma("forceinline");
 	for(var i = n, value = 0; i <= k; ++i)
 		value += arr[i];
 	return value;
 }
 
-///Checks if the value is equal to the other given values
+/**
+	Checks if the value is equal to the other given values
+	@param {Any} var	The variable to checl
+	@param {Any} val	The values to check for
+*/
 function is_val()
 {
+	gml_pragma("forceinline");
 	//for (var i = 1; i < argument_count; ++i)
 	//{
 	//	if argument[0] == argument[i]
@@ -73,6 +82,7 @@ function is_val()
 */
 function array_multiply(arr, num)
 {
+	gml_pragma("forceinline");
 	var i = 0, n = array_length(arr);
 	repeat n
 		arr[i++] *= num;
@@ -86,5 +96,24 @@ function array_multiply(arr, num)
 */
 function is_bit(val, bit)
 {
+	gml_pragma("forceinline");
 	return (val & bit) != 0;
+}
+
+/*
+	This is faster than the game maker built-in power()
+	@param {real} x		The number to change
+	@param {real} n		How many times to multiply x by itself
+*/
+function quick_pow(x, n)
+{
+	gml_pragma("forceinline");
+	var ret = 1, pow = x;
+	while n
+	{
+		if (n & 1) ret *= pow;
+		pow *= pow;
+		n = n >> 1;
+	}
+	return ret;
 }

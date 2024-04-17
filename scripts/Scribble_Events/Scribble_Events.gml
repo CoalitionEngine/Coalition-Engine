@@ -22,7 +22,22 @@ function flash(_element, _parameter_array, _character_index)
 	if _parameter_array[0] audio_play(snd_noise);
 }
 ///A demostration on beginning an encounter in dialog
-function sansfightstart(_element, _parameter_array, _character_index)
+function sansfightstart()
 {
 	oOWPlayer.Encounter_Begin();
+}
+
+function ToSaveState()
+{
+	with oOWController
+	{
+		save_state = SAVE_STATE.CHOOSING;
+		dialog_exists = false;
+		dialog_typist.reset();
+	}
+}
+///Ends the current dialog
+function enddialog(_element, _parameter_array, _character_index)
+{
+	oOWController.dialog_exists = false;
 }

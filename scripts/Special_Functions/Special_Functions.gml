@@ -1,10 +1,9 @@
 ///Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
 function check_outside(){
-	var cam = view_camera[0],
-		view_x = camera_get_view_x(cam),
-		view_y = camera_get_view_y(cam),
-		view_w = camera_get_view_width(cam),
-		view_h = camera_get_view_height(cam);
+	gml_pragma("forceinline");
+	var cam = oGlobal.MainCamera,
+		view_x = cam.x, view_y = cam.y,
+		view_w = cam.view_width, view_h = cam.view_height;
 	
 	return !rectangle_in_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom,
 									view_x, view_y, view_x + view_w, view_y + view_h) 
@@ -14,9 +13,9 @@ function check_outside(){
 
 ///Takes a screenshot and saves it with given filename + current time
 function Screenshot(filename = "") {
-	var date = string("{0}y-{1}m-{2}d_{3}h_{4}m_{5}s", current_year, current_month, current_day,
-						current_hour, current_minute, current_second);
-	screen_save(string("Screenshots/{0}{1}.png", filename, date));
+	gml_pragma("forceinline");
+	var date = $"{current_year}y-{current_month}m-{current_day}d_{current_hour}h_{current_minute}m_{current_second}s";
+	screen_save($"Screenshots/{filename}{date}.png");
 }
 
 /**
@@ -187,7 +186,7 @@ function ConvertRealToKey(val)
 function tips()
 {
 	//funny texts
-	var tips = [
+	static tips = [
 					"Reasons for engine: There are none",
 					"O-oooooooooo AAAAE-A-A-I-A-U-",
 					"Never gonna-",
@@ -217,10 +216,28 @@ function tips()
 	@param {real} y1	The y coordinate of the top left coordinate of the rectangle
 	@param {real} x2	The x coordinate of the bottom right coordinate of the rectangle
 	@param {real} y2	The y coordinate of the bottom right coordinate of the rectangle
-	
 */
 function mouse_in_rectangle(x1, y1, x2, y2) {
+	gml_pragma("forceinline");
 	return point_in_rectangle(mouse_x, mouse_y, x1, y1, x2, y2);
+}
+
+function mouse_in_circle(x, y, rad) {
+	gml_pragma("forceinline");
+	return point_in_circle(mouse_x, mouse_y, x, y, rad);
+}
+
+function mouse_in_triangle(x1, y1, x2, y2, x3, y3) {
+	gml_pragma("forceinline");
+	return point_in_triangle(mouse_x, mouse_y, x1, y1, x2, y2, x3, y3);
+}
+
+///Checks whether an instance exists, if not, create at (0, 0)
+///@param {ID.Instance,Asset.GMObject} Instance	The instance to check
+function instance_check_create(inst)
+{
+	gml_pragma("forceinline");
+	if !instance_exists(inst) instance_create_depth(0, 0, 0, inst);
 }
 
 #region Point Lists

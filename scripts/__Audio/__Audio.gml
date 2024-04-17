@@ -10,6 +10,7 @@
 */
 function audio_play(soundid, single = false, loops = false, volume = 1, pitch = 1, time = 0, position = 0)
 {
+	gml_pragma("forceinline");
 	if single audio_stop_sound(soundid);
 	var audio = audio_play_sound(soundid, 1, loops, volume, 0, pitch);
 	audio_sound_gain(audio, volume, time);
@@ -25,6 +26,7 @@ function audio_play(soundid, single = false, loops = false, volume = 1, pitch = 
 */
 function AudioStickToTime(aud, time, margin = 3/60)
 {
+	gml_pragma("forceinline");
 	if abs(audio_sound_get_track_position(aud) - time) >= margin
 		audio_sound_set_track_position(aud, time);
 }
@@ -34,10 +36,11 @@ function AudioStickToTime(aud, time, margin = 3/60)
 ///@return {Array<Asset.GMSound>}
 function audio_create_stream_array()
 {
+	gml_pragma("forceinline");
 	for(var i = 0, arr = []; i < argument_count; ++i)
 	{
 		//Only pushes the array if file exists
-		var text = "Music/" + string(argument[i]) + ".ogg";
+		var text = $"Music/{argument[i]}.ogg";
 		array_push(arr, audio_create_stream(text));
 	}
 	return arr;
@@ -46,11 +49,9 @@ function audio_create_stream_array()
 ///@param {Array<Asset.GMSound>} array	The array of streamed audio to destroy
 function audio_destroy_stream_array(arr)
 {
-	var i = 0, n = array_length(arr);
-	repeat n
-	{
-		audio_stream_destroy(arr[i++]);
-	}
+	gml_pragma("forceinline");
+	var i = 0;
+	repeat array_length(arr) audio_stream_destroy(arr[i++]);
 	arr = -1;
 }
 
@@ -67,13 +68,8 @@ function audio_destroy_stream_array(arr)
 */
 function audio_transition(init_aud, target_aud, time, single = false, loop = false, volume = 1, pitch = 1, position = 0)
 {
-	if !audio_is_playing(init_aud)
-	{
-		show_debug_message("The audio is not playing");
-	}
-	else
-	{
-		audio_sound_gain(init_aud, 0, time);
-	}
+	gml_pragma("forceinline");
+	if !audio_is_playing(init_aud) show_debug_message("The audio is not playing");
+	else audio_sound_gain(init_aud, 0, time);
 	return audio_play(target_aud, single, loop, volume, pitch, time, position);
 }

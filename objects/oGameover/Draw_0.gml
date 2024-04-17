@@ -1,7 +1,4 @@
 //draw_sprite_ext(sprGameOver,0,320,124,1,1,0,c_white,alpha);
-draw_set_font(fnt_8bitwonder);
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
 draw_text_transformed_color(320, 124, "GAME\nOVER", 2, 2, 0, c_white, c_white, c_white, c_white, alpha);
 if state == 0
 	draw_self();

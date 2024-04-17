@@ -65,7 +65,7 @@ if state == 2 and !__died and enemy_in_battle {
 	//Timer
 	if start time++;
 	if array_length(AttackFunctions) > BattleData.Turn()
-		AttackFunctions[DetermineTurn()]();
+		AttackFunctions[BattleData.Turn()]();
 	else
 	{
 		oBattleController.battle_turn--;

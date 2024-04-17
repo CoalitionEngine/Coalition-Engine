@@ -3,40 +3,29 @@ var ItemCount = Item_Count(),
 	input_horizontal = PRESS_HORIZONTAL,
 	input_cancel = PRESS_CANCEL,
 	input_confirm = PRESS_CONFIRM;
-
 // Save UI
-if is_saving
+if save_state >= SAVE_STATE.CHOOSING
 {
 	WaitTime++;
 	oOWPlayer.moveable = false;
-	var dialog_box_x = 108,
-		dialog_box_y = 118,
-		dialog_width = 424,
-		dialog_height = 174,
-		dialog_box_frame = 5;
-	//Box UI drawing
+	//Box UI drawing, using int over vars are better
 	draw_set_color(c_white);
-	draw_rectangle(dialog_box_x, dialog_box_y, dialog_box_x + dialog_width,
-					dialog_box_y + dialog_height, false);
+	draw_rectangle(108, 118, 108 + 424, 118 + 174, false);
 	draw_set_color(c_black);
-	draw_rectangle(dialog_box_x + dialog_box_frame, dialog_box_y + dialog_box_frame,
-					dialog_box_x + dialog_width - dialog_box_frame,
-					dialog_box_y + dialog_height - dialog_box_frame, false);
+	draw_rectangle(108 + 5, 118 + 5, 108 + 424 - 5, 118 + 174 - 5, false);
 	
-	draw_set_color(Saved ? c_yellow : c_white);
+	draw_set_color(save_state == SAVE_STATE.FINISHED ? c_yellow : c_white);
 	draw_set_font(fnt_dt_sans);
 	draw_set_halign(fa_left);
-	draw_text(140, 140, global.data.name);
-	draw_text(295, 140, "LV " + string(global.data.lv));
+	draw_text(140, 140, Player.Name());
+	draw_text(295, 140, "LV " + string(Player.LV()));
 	var time = global.timer,
 		second = time div 60,
 		minute = string(second div 60);
-	second %= 60;
-	second = string(second);
+	second = string(second % 60);
 	draw_text(423, 140, minute + ":" + (real(second) < 10 ? "0" : "") + second);
-	//Placeholer room name getter
-	draw_text(140, 180, RoomNames[OverworldSubRoom]);
-	if !Saved
+	draw_text(140, 180, RoomNames[| OverworldSubRoom]);
+	if save_state == SAVE_STATE.CHOOSING
 	{
 		if input_horizontal != 0
 		{
@@ -52,14 +41,13 @@ if is_saving
 			WaitTime = 0;
 			if !Choice
 			{
-				Saved = 1;
+				//You can insert your save functions here
+				save_state = SAVE_STATE.FINISHED;
 				audio_play(snd_save);
 			}
 			else
 			{
-				Saved = 0;
-				is_saving = false;
-				Saving = false;
+				save_state = SAVE_STATE.NOT_SAVING
 				Choice = 0;
 				oOWPlayer.moveable = true;
 				oOWController.menu_disable = false;
@@ -67,180 +55,151 @@ if is_saving
 			}
 		}
 	}
-	if Saved == 1
+	elif save_state == SAVE_STATE.FINISHED
 	{
+		draw_set_halign(fa_center);
+		draw_text(240, 240, "File Saved.");
 		if input_confirm and WaitTime
 		{
 			Choice = 0;
-			is_saving = false;
-			Saving = false;
+			save_state = SAVE_STATE.NOT_SAVING;
+			menu_disable = false;
 			oOWPlayer.moveable = true;
-			oOWController.menu_disable = false;
 			oOWCollision.Collided = false;
 		}
 	}
 }
 
-	#region // Menu Overworld
-	// Check if the menu should display more on top or more on bottom, depending on player's position
-	var menu_at_top = oOWPlayer.y < camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) / 2 + 10;
+#region // Menu Overworld
+// Check if the menu should display more on top or more on bottom, depending on player's position
+var menu_at_top = oOWPlayer.y < camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) / 2 + 10;
 	
-	#region // The "Name - LV - HP - G" box
-
+#region // The "Name - LV - HP - G" box
+//Don't draw if the box is out of bound
+if menu_ui_x > -140
+{
 	// Position and side elements
 	var ui_box_x = menu_ui_x + 6,
-		ui_box_y = menu_at_top ? 45 : 328,
-		ui_width = 130,
-		ui_height = 98,
-		ui_box_frame = 5;
-
+		ui_box_y = menu_at_top ? 45 : 328;
 	// Box Drawing
-	draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + ui_width - 1, ui_box_y + ui_height - 1, ui_box_frame,,,,, true);
-
+	draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + 130 - 1, ui_box_y + 98 - 1, 5,,,,, true);
+	
 	// String var declaration
-	var name =			string(global.data.name),
-		lv =			string(global.data.lv),
-		hp =			string(global.hp),
-		max_hp =		string(global.hp_max),
-		gold =			string(global.data.Gold);
+	var name =		string(Player.Name()),
+		lv =		string(Player.LV()),
+		hp =		string(Player.HP()),
+		max_hp =	string(Player.HPMax()),
+		gold =		string(Player.Gold());
 
 	// String drawing
 	draw_set_color(c_white);
-
-	draw_text_scribble(ui_box_x + 12, ui_box_y + 3, "[fnt_dt_sans]" + name);
+	ui_box_x += 12;
+	draw_text_scribble(ui_box_x, ui_box_y + 3, "[fnt_dt_sans]" + name);
 
 
 	draw_set_font(fnt_cot);
-	draw_text(ui_box_x + 12, ui_box_y + 36, "LV  " + lv);
-	draw_text(ui_box_x + 12, ui_box_y + 54, "HP  " + hp + "/" + max_hp);
+	draw_text(ui_box_x, ui_box_y + 36, "LV  " + lv);
+	draw_text(ui_box_x, ui_box_y + 54, "HP  " + hp + "/" + max_hp);
 
 	// Toby Fox method because the number in Gold is not aligned correctly with spaces
-	var ui_num_x = ui_box_x + 12 + string_width("LV  ");
-	draw_text(ui_box_x + 12, ui_box_y + 72, "G");
+	var ui_num_x = ui_box_x + string_width("LV  ");
+	draw_text(ui_box_x, ui_box_y + 72, "G");
 	draw_text(ui_num_x, ui_box_y + 72, gold);
-
 	#endregion
 
 	#region // The "ITEM - STAT - CELL" box with their respective elements
 
 	// Position and side elements for the box
 	ui_box_x = menu_ui_x + 6;
-	ui_box_y = 174;
-	ui_width = 130;
-	ui_height = 136;
-	ui_box_frame = 6;
 	
 	// Box Drawing
-	draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + ui_width - 1, ui_box_y + ui_height - 1, ui_box_frame,,,,, true);
+	draw_rectangle_width_background(ui_box_x, 174, ui_box_x + 130 - 1, 174 + 136 - 1, 6,,,,, true);
 
 	// Menu Label
 	var exist_check = [ItemCount, 1, CellCount];
 	draw_set_font(fnt_dt_sans);
 	for(var i = 0; i < 3; ++i)
 	{
-		draw_set_color(menu_color[i, bool(exist_check[i])]); // Check if the menu exists or not to proceed color
-		draw_text(ui_box_x + 46, ui_box_y + 15 + i * 36, menu_label[i]);
+		// Check if the menu exists or not to proceed color
+		draw_set_color(menu_color[i, bool(exist_check[i])]);
+		draw_text(ui_box_x + 46, 174 + 15 + i * 36, menu_label[i]);
 	}
 
-
 	#region // Drawing the box for each state
-
-		// Var declaration
-		var ui_box_x = 194,
-			ui_width = 334,
-			ui_box_frame = 6;
-
 		#region // ITEM state
-			if menu_ui_y[MENU_MODE.ITEM] > -500
+		if menu_ui_y[MENU_MODE.ITEM] > -500
+		{
+			var ui_box_y = menu_ui_y[MENU_MODE.ITEM] + 6;
+			// Box Drawing
+			draw_rectangle_width_background(194, ui_box_y, 194 + 334 - 1, ui_box_y + 350 - 1, 6,,,, 0.4, true);
+	
+			// Item text drawing
+			draw_set_font(fnt_dt_sans);
+			draw_set_color(c_white);
+			var i = 0, n = ItemCount;
+			repeat n
 			{
-				var ui_height = 350,
-					ui_box_y = menu_ui_y[MENU_MODE.ITEM] + 6;
-	
-				// Box Drawing
-				draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + ui_width - 1, ui_box_y + ui_height - 1, ui_box_frame,,,, 0.4, true);
-	
-				// Item text drawing
-				draw_set_font(fnt_dt_sans);
-				draw_set_color(c_white);
-				var i = 0, n = ItemCount;
-				repeat n
-				{
-					draw_text(232, ui_box_y + 23 + i * 32, item_name[i]);
-					++i;
-				}
-
-				// Item function
-				var gap = [0, 96, 114],
-					menu_text = ["USE", "INFO", "DROP"];
-				draw_set_font(fnt_dt_sans);
-				draw_set_color(c_white);
-
-				for(var i = 0; i < 3; i++)
-					draw_text(234 + Sigma(gap, 0, i), ui_box_y + 303, menu_text[i]);
+				draw_text(232, ui_box_y + 23 + i * 32, item_name[i]);
+				++i;
 			}
-		#endregion
 
+			// Item function
+			var gap = [0, 96, 114];
+			draw_set_font(fnt_dt_sans);
+			draw_set_color(c_white);
+
+			for(var i = 0; i < 3; i++)
+				draw_text(234 + Sigma(gap, 0, i), ui_box_y + 303, menu_item_text[i]);
+		}
+		#endregion
 		#region // STAT state
-			if menu_ui_y[MENU_MODE.STAT] > -480
-			{
-				var ui_height = 406,
-					ui_box_y = menu_ui_y[MENU_MODE.STAT] + 6;
+		if menu_ui_y[MENU_MODE.STAT] > -480
+		{
+			var ui_box_y = menu_ui_y[MENU_MODE.STAT] + 6;
 				
-				// Box Drawing
-				draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + ui_width - 1, ui_box_y + ui_height - 1, ui_box_frame,,,, 0.4, true);
+			// Box Drawing
+			draw_rectangle_width_background(194, ui_box_y, 194 + 334 - 1, ui_box_y + 406 - 1, 6,,,, 0.4, true);
 	
-				// Stat text drawing
-				draw_set_font(fnt_dt_sans);
-				draw_set_color(c_white);
-				draw_text(216, ui_box_y + 27,"''" + global.data.name + "''");
-				draw_text(216, ui_box_y + 87, "LV " + lv);
-				draw_text(216, ui_box_y + 119, "HP " + hp + " / "+ max_hp);
-				draw_text(216, ui_box_y + 183, "AT " + string(global.player_base_atk) + " (" + string(global.player_attack) + ")");
-				draw_text(216, ui_box_y + 215, "DF " + string(global.player_base_def) + " (" + string(global.player_def) + ")");
-				draw_text(384, ui_box_y + 183, "EXP: " + string(global.data.Exp));
-				draw_text(384, ui_box_y + 215, "NEXT: " + string(Player.GetExpNext()));
-				draw_text(216, ui_box_y + 273, "WEAPON: " + string(global.data.AttackItem));
-				draw_text(216, ui_box_y + 305, "ARMOR: " + string(global.data.DefenseItem));
-				draw_text(216, ui_box_y + 347, "GOLD: " + gold);
-			}
+			// Stat text drawing
+			draw_set_font(fnt_dt_sans);
+			draw_set_color(c_white);
+			draw_text(216, ui_box_y + 27, $"\"{Player.Name()}\"");
+			draw_text(216, ui_box_y + 87, $"LV {lv}");
+			draw_text(216, ui_box_y + 119, $"HP {hp} / {max_hp}");
+			draw_text(216, ui_box_y + 183, $"AT {global.player_base_atk} ({global.player_attack})");
+			draw_text(216, ui_box_y + 215, $"DF {global.player_base_def} ({global.player_def})");
+			draw_text(384, ui_box_y + 183, $"EXP: {Player.Exp()}");
+			draw_text(384, ui_box_y + 215, $"NEXT: {Player.GetExpNext()}");
+			draw_text(216, ui_box_y + 273, $"WEAPON: {global.data.AttackItem}");
+			draw_text(216, ui_box_y + 305, $"ARMOR: {global.data.DefenseItem}");
+			draw_text(216, ui_box_y + 347, $"GOLD: {gold}");
+		}
 		#endregion
-
 		#region // CELL state
-			if menu_ui_y[MENU_MODE.CELL] > -500
-			{
-				var ui_height = 258,
-					ui_box_y = menu_ui_y[MENU_MODE.CELL] + 6;
+		if menu_ui_y[MENU_MODE.CELL] > -500
+		{
+			var ui_box_y = menu_ui_y[MENU_MODE.CELL] + 6;
 	
-				// Box Drawing
-				draw_rectangle_width_background(ui_box_x, ui_box_y, ui_box_x + ui_width - 1, ui_box_y + ui_height - 1, ui_box_frame,,,, 0.4, true);
+			// Box Drawing
+			draw_rectangle_width_background(194, ui_box_y, 194 + 334 - 1, ui_box_y + 258 - 1, 6,,,, 0.4, true);
 		
-				// Cell text drawing
-				draw_set_font(fnt_dt_sans);
-				draw_set_color(c_white);
-				for (var i = 1, n = CellCount; i <= n; ++i)
-					draw_text(232, ui_box_y - 9 + i * 32, CellData.GetName(i));
-			}
+			// Cell text drawing
+			draw_set_font(fnt_dt_sans);
+			draw_set_color(c_white);
+			for (var i = 1, n = CellCount; i <= n; ++i)
+				draw_text(232, ui_box_y - 9 + i * 32, CellData.GetName(i));
+		}
 		#endregion
-
 	#endregion
-
 	// Check if player has opened a Box
 	if box_mode
 	{
 		oOWPlayer.moveable = false;
-		var dialog_box_x = 20,
-			dialog_box_y = 20,
-			dialog_width = 600,
-			dialog_height = 440,
-			dialog_box_frame = 5;
 		//Box UI drawing
 		draw_set_color(c_white);
-		draw_rectangle(dialog_box_x, dialog_box_y, dialog_box_x + dialog_width,
-						dialog_box_y + dialog_height, false);
+		draw_rectangle(20, 20, 20 + 600, 20 + 440, false);
 		draw_set_color(c_black);
-		draw_rectangle(dialog_box_x + dialog_box_frame, dialog_box_y + dialog_box_frame,
-						dialog_box_x + dialog_width - dialog_box_frame,
-						dialog_box_y + dialog_height - dialog_box_frame, false);
+		draw_rectangle(20 + 5, 20 + 5, 20 + 600 - 5, 20 + 440 - 5, false);
 		draw_set_color(c_white);
 		draw_line_width(320, 90, 320, 390, 5);
 		draw_set_font(fnt_dt_sans);
@@ -267,7 +226,7 @@ if is_saving
 			{
 				if global.Box[Box_ID, i]
 				{
-					BoxData.InfoLoad();
+					BoxData.InfoLoad(Box_ID);
 					draw_set_color(c_white);
 					draw_text(380, 70 + i * 35, box_name[i]);
 				}
@@ -286,8 +245,8 @@ if is_saving
 	}
 	// Drawing the soul over everything
 	draw_sprite_ext(sprSoulMenu, 0, menu_soul_pos[0], menu_soul_pos[1], 1, 1, 0, c_red, menu_soul_alpha);
-
 	#endregion
+}
 #endregion
 
 // Check if a Overworld Dialog is occuring
@@ -295,21 +254,14 @@ if dialog_exists
 {
 	//Dialog Box drawing
 	oOWPlayer.moveable = false;
-	var dialog_box_x = 30,
-		dialog_box_y = (dialog_is_down ? 320 : 10),
-		dialog_width = 580,
-		dialog_height = 150,
-		dialog_box_frame = 5;
+	var dialog_box_y = (dialog_is_down ? 320 : 10);
 	draw_set_color(c_white);
-	draw_rectangle(dialog_box_x, dialog_box_y, dialog_box_x + dialog_width,
-					dialog_box_y + dialog_height, false);
+	draw_rectangle(30, dialog_box_y, 30 + 580, dialog_box_y + 150, false);
 	draw_set_color(c_black);
-	draw_rectangle(dialog_box_x + dialog_box_frame, dialog_box_y + dialog_box_frame,
-					dialog_box_x + dialog_width - dialog_box_frame,
-					dialog_box_y + dialog_height - dialog_box_frame, false);
+	draw_rectangle(30 + 5, dialog_box_y + 5, 30 + 580 - 5, dialog_box_y + 150 - 5, false);
 	
 	//Dialog Text drawing
-	var dis = 0;
+	var dis = 0, _writer = __text_writer, _typist = dialog_typist;
 	if dialog_sprite != -1
 	{
 		dis = 95;
@@ -317,45 +269,45 @@ if dialog_exists
 			spr_h = sprite_get_height(dialog_sprite),
 			sprite_dis_x = sprite_get_xoffset(dialog_sprite) - spr_w / 2,
 			sprite_dis_y = sprite_get_yoffset(dialog_sprite) - spr_h / 2;
-		draw_sprite_ext(dialog_sprite, dialog_sprite_index, dialog_box_x + 60 + sprite_dis_x, dialog_box_y + 80 + sprite_dis_y, 80 /spr_w, 80 / spr_h, 0, c_white, 1);
+		draw_sprite_ext(dialog_sprite, dialog_sprite_index, 30 + 60 + sprite_dis_x, dialog_box_y + 80 + sprite_dis_y, 80 /spr_w, 80 / spr_h, 0, c_white, 1);
 	}
-	__text_writer.starting_format(dialog_font, c_white)
-	__text_writer.draw(dialog_box_x + 25 + dis, dialog_box_y + 20, dialog_typist)
+	_writer.starting_format(dialog_font, c_white)
+	_writer.draw(30 + 25 + dis, dialog_box_y + 20, _typist)
 	
 	//Check if the dialog is currently an option and draw if question is asked and buffer time has expired
-	if dialog_option and dialog_typist.get_state() == 1
+	if dialog_option and _typist.get_state() == 1
 	{
 		if option_buffer > 0 option_buffer--;
 		if !option_buffer
 		{
-			option_text.draw(dialog_box_x + 45, dialog_box_y + 110, option_typist)
+			option_text.draw(30 + 45, dialog_box_y + 110, option_typist)
 			if input_horizontal != 0
+			{
+				audio_play(snd_menu_switch);
 				option = posmod(option + input_horizontal, option_amount);
-			draw_sprite_ext(sprSoul, 0, dialog_box_x + option_length[option], dialog_box_y + 110, 1, 1, 90, c_red, 1);
+			}
+			draw_sprite_ext(sprSoul, 0, 30 + option_length[option], dialog_box_y + 110, 1, 1, 90, c_red, 1);
 		}
 	}
 		
 	//Dialog skipping
 	if input_cancel and global.TextSkipEnabled
 	{
-		__text_writer.page(__text_writer.get_page_count() - 1);
-		dialog_typist.skip_to_pause();
+		_writer.page(_writer.get_page_count() - 1);
+		_typist.skip_to_pause();
 	}
-	if dialog_typist.get_state() == 1 and __text_writer.get_page() < (__text_writer.get_page_count() - 1)
-		__text_writer.page(__text_writer.get_page() + 1)
-	if dialog_typist.get_state() == 1
+	if _typist.get_paused() and PRESS_CONFIRM _typist.unpause();
+	if _typist.get_state() == 1 and _writer.get_page() < (_writer.get_page_count() - 1)
+		_writer.page(_writer.get_page() + 1)
+	if _typist.get_state() == 1
 	{
 		if input_confirm
 		{
 			dialog_exists = false;
-			is_saving = Saving;
 			Choice = 0;
 			oOWPlayer.moveable = true;
-			if dialog_option
-			{
-				//Executes the event of the option
-				option_event[option]();
-			}
+			//Executes the event of the option
+			if dialog_option option_event[option]();
 		}
 	}
 }

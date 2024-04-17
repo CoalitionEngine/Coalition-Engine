@@ -12,6 +12,8 @@ function RemoveEnemy()
 			enemy_draw_hp_bar[enemy_slot] = 0;
 			array_delete(enemy_instance, menu_choice[0], 1);
 		}
+		with oEnemyParent
+			if __enemy_slot > other.__enemy_slot __enemy_slot--;
 }
 #endregion
 // Check if other enemies are dying
@@ -186,9 +188,8 @@ if !__died and !is_spared
 						damage_color = c_red;
 					}
 					draw_damage = true;
-					TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 0, 40, "_enemy_hp", _enemy_hp, enemy_hp);
-					TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 0, 20, "damage_y>", damage_y - 30);
-					TweenFire(id, EaseInQuad, TWEEN_MODE_ONCE, false, 20, 20, "damage_y", damage_y - 30, damage_y);
+					TweenFire("~oQuad", "$40", "_enemy_hp>", enemy_hp);
+					TweenFire("~", ["oQuad", "iQuad"], "#p", ">1", "$20", "damage_y>", "@-30");
 				}
 				attack_time++;
 				if is_real(damage)
@@ -198,24 +199,16 @@ if !__died and !is_spared
 		}
 
 		if draw_damage {
-			draw_set_halign(fa_center);
-			draw_set_valign(fa_middle);
-			draw_set_font(fnt_dmg);
-			draw_set_color(damage_color);
-			outline_draw_text(xstart, damage_y, string(damage), damage_color, 1, 1, 0, 3, c_black);
+			scribble("[fnt_dmg_outlined][fa_center][fa_middle]" + string(damage)).blend(damage_color, 1).draw(xstart, damage_y);
 			// Bar retract speed thing idk
-			if is_string(damage) == false {
+			if !is_string(damage) {
 				draw_set_color(c_dkgray);
 				var TLX = xstart - bar_width / 2,
 					TLY = y - enemy_total_height / 2 - 40,
 					BRY = TLY + 20;
-				draw_rectangle(TLX, TLY, xstart + bar_width / 2, BRY, 0);
-				draw_set_color(c_lime);
-				draw_rectangle(TLX, TLY, max(xstart - bar_width / 2 + (_enemy_hp / enemy_hp_max) * bar_width, xstart - bar_width / 2 - 1), BRY, 0);
+				draw_sprite_ext(sprPixel, 0, TLX, TLY, bar_width, 20, 0, c_dkgray, 1);
+				draw_sprite_ext(sprPixel, 0, TLX, TLY, max(_enemy_hp / enemy_hp_max * bar_width, -1), 20, 0, c_lime, 1);
 			}
-			draw_set_halign(fa_left);
-			draw_set_valign(fa_top);
-			draw_set_color(c_white);
 		}
 
 		if enemy_hp > 0 // Check if the enemy is going to die
@@ -261,7 +254,7 @@ if is_being_spared {
 				oBattleController.Result.Exp += Exp_Give;
 				is_spared = true;
 				audio_play(snd_vaporize);
-				TweenFire(id, EaseLinear, TWEEN_MODE_ONCE, false, 0, 30, "image_alpha", image_alpha, 0.5);
+				TweenFire(id, "", 0, false, 0, 30, "image_alpha>", 0.5);
 			}
 			else spare_function();
 		}
@@ -297,3 +290,6 @@ if state == 2 {
 		draw_text(640, 10, "Time: " + string(time));
 	draw_set_halign(fa_left);
 }
+
+//Remove if uneeded
+Board.Mask();

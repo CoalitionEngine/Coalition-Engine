@@ -1,4 +1,3 @@
-live;
 if HittingArrow
 {
 	if HitTimer > 0

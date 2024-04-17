@@ -1,11 +1,12 @@
 /**
 	Toggles border on and off, you can choose to have a smooth window size transition
-	@param {bool} enable	Whether the border is enabled or not
-	@param {function} Easing	The easing of the window size change (TweenGMX)
-	@param {real} duration	The duration of the easing
+	@param {bool} enable			Whether the border is enabled or not
+	@param {function,string} Easing	The easing of the window size change (TweenGMX)
+	@param {real} duration			The duration of the easing
 */
-function BorderSetEnable(enable, func = EaseLinear, dur = 0)
+function BorderSetEnable(enable, func = "", dur = 0)
 {
+	gml_pragma("forceinline");
 	oGlobal.Border.Enabled = enable;
 	for (var i = 0,  w = enable ? 960 : 640, h = enable ? 540 : 480,
 		iw = window_get_width(), ih = window_get_height(); i < dur; ++i) {
@@ -25,6 +26,7 @@ function BorderSetEnable(enable, func = EaseLinear, dur = 0)
 */
 function BorderSetSprite(spr, trans_time = 0)
 {
+	gml_pragma("forceinline");
 	with oGlobal.Border
 	{
 		if Sprite != -1 SpritePrevious = Sprite;

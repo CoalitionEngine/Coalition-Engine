@@ -6,8 +6,9 @@ with Border
 		WindowWidth = window_get_width(),
 		WindowHeight = window_get_height(),
 		WindowRatio = min(WindowWidth / WindowTargetWidth, WindowHeight / WindowTargetHeight);
-	if Enabled {
-		application_surface_draw_enable(false);
+	application_surface_draw_enable(!Enabled);
+	if Enabled
+	{
 		var BorderX = (WindowWidth - 960 * WindowRatio) / 2,
 			BorderY = (WindowHeight - 540 * WindowRatio) / 2;
 		display_set_gui_maximize(WindowRatio, WindowRatio, BorderX + 160 * WindowRatio, BorderY + 30 * WindowRatio);
@@ -32,9 +33,6 @@ with Border
 		gpu_set_blendenable(true);
 	}
 	else
-	{
-		application_surface_draw_enable(true);
 		display_set_gui_maximize(WindowRatio, WindowRatio, (WindowWidth - 640 * WindowRatio) / 2, (WindowHeight - 480 * WindowRatio) / 2);
-	}
 }
 #endregion

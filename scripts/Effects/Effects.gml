@@ -8,6 +8,7 @@
 */
 function Fader_Fade(start = oGlobal.fader_alpha, target, duration, delay = 0, color = oGlobal.fader_color)
 {
+	gml_pragma("forceinline");
 	oGlobal.fader_color = color;
 	TweenFire(oGlobal, "", 0, false, delay, duration, "fader_alpha", start, target);
 }
@@ -24,6 +25,7 @@ function Fader_Fade(start = oGlobal.fader_alpha, target, duration, delay = 0, co
 */
 function Fader_Fade_InOut(start = oGlobal.fader_alpha, target, final, in_dur, duration, out_dur, delay = 0, color = oGlobal.fader_color)
 {
+	gml_pragma("forceinline");
 	with oGlobal
 	{
 		fader_color = color;
@@ -35,6 +37,7 @@ function Fader_Fade_InOut(start = oGlobal.fader_alpha, target, final, in_dur, du
 //Fades the screen using custom methods (probably for cutscenes in the overworld)
 function Fade_Out(mode = FADE.CIRCLE, duration = 30, delay = 60)
 {
+	gml_pragma("forceinline");
 	with oGlobal.Fade
 	{
 		Activate[mode][0] = true;
@@ -43,80 +46,10 @@ function Fade_Out(mode = FADE.CIRCLE, duration = 30, delay = 60)
 	}
 }
 
-///Creates a motion blur of a sprite
-///@param {real} length	The length of the blur
-///@param {real} direction	The direction of the blur
-function motion_blur(length, direction){
-    if (length > 0) {
-		var step = 3, dir, px = dcos(direction), py = -dsin(direction), a;
- 
-        a = image_alpha / (length / step);
-        if (a >= 1) {
-            draw_sprite_ext(sprite_index, image_index, x, y, image_xscale,
-                image_yscale, image_angle, image_blend, image_alpha);
-            a /= 2;
-        }
- 
-        for(var i = length; i >= 0; i -= step) {
-            draw_sprite_ext(sprite_index, image_index, x + (px * i), y + (py * i),
-                image_xscale, image_yscale, image_angle, image_blend, a);
-        }
-    } else {
-        draw_sprite_ext(sprite_index, image_index, x, y, image_xscale,
-                image_yscale, image_angle, image_blend, image_alpha);
-    }
-}
-
-/**
-	Creates a motion blur of a sprite
-	@param {real} sprite	The sprite to blur
-	@param {real} subimg	The image index of the sprite
-	@param {real} x			The x position
-	@param {real} y			The y position
-	@param {real} xscale	The xscale of the sprite
-	@param {real} yscale	The yscale of the sprite
-	@param {real} angle		The angle fo the sprite
-	@param {color} blend	The image blend of the sprite
-	@param {real} alpha		The alpha of the sprite
-	@param {real} length	The	length of the blur
-	@param {real} direction	The direction of the blur
-*/
-function motion_blur_ext(sprite, subimg, xx, yy, xscale, yscale, angle, blend, alpha, length, direction) {
-    if (length > 0) {
-		var step = 3, dir, px = dcos(direction), py = -dsin(direction), a;
- 
-        a = image_alpha / (length / step);
-        if (a >= 1) {
-            draw_sprite_ext(sprite, subimg, xx, yy, xscale, yscale, angle, blend, alpha);
-            a /= 2;
-        }
- 
-        for(var i = length; i >= 0; i -= step) {
-            draw_sprite_ext(sprite, subimg, xx + (px * i), yy + (py * i), xscale, yscale, angle, blend, a);
-        }
-    } else {
-        draw_sprite_ext(sprite, subimg, xx, yy, xscale, yscale, angle, blend, alpha);
-    }
-}
-
-//function draw_circle_width(x, y, radius = 100, thickness = 4, segments = 20, color = c_white)
-//{
-//	var jadd = 360/segments;
-//	draw_set_color(color);
-//	draw_primitive_begin(pr_trianglestrip);
-//	for (var j = 0; j <= 360; j+=jadd)
-//	{
-//	    draw_vertex(x + lengthdir_x(radius, j), y + lengthdir_y(radius, j));
-//		radius += thickness;
-//	    draw_vertex(x + lengthdir_x(radius, j), y + lengthdir_y(radius, j));
-//		radius -= thickness;
-//	}
-//	draw_primitive_end();
-//}
-
 ///Creates a trail of the object using particles (Best not to use)
 ///@param {real} duration		The duration of the effect
 function TrailStep(duration = 30) {
+	gml_pragma("forceinline");
 	part_system_depth(global.TrailS, depth + 1);
 	part_type_sprite(global.TrailP, sprite_index, 0, 0, 0);
 	part_type_life(global.TrailP, duration, duration);
@@ -130,6 +63,7 @@ function TrailStep(duration = 30) {
 function TrailEffect(Duration, Sprite = sprite_index, Subimg = image_index, X = x, Y = y, Xscale = image_xscale,
 					Yscale = image_yscale, Rot = image_angle, Col = image_blend, Alpha = image_alpha)
 {
+	gml_pragma("forceinline");
 	with instance_create_depth(X, Y, depth + 1, oEffect)
 	{
 		sprite = Sprite;
@@ -145,14 +79,14 @@ function TrailEffect(Duration, Sprite = sprite_index, Subimg = image_index, X = 
 
 /**
 	Splices the screen, similar to Edgetale run 3 final attack
-	@param {real} x				The x position of the center of the split
-	@param {real} y				The y position of the center of the split
-	@param {real} direction		The direction of the split
-	@param {real} in_duration	The duration of the split animation from 0 to full
-	@param {real} duration		The delay before animating it back to 0
-	@param {real} end_duration	The duration of the split animation from full to 0
-	@param {real} distance		The distance of the split
-	@param Easing			The easing method of the splice (TweenGMX Format)
+	@param {real} x					The x position of the center of the split
+	@param {real} y					The y position of the center of the split
+	@param {real} direction			The direction of the split
+	@param {real} in_duration		The duration of the split animation from 0 to full
+	@param {real} duration			The delay before animating it back to 0
+	@param {real} end_duration		The duration of the split animation from full to 0
+	@param {real} distance			The distance of the split
+	@param {function,string}Easing	The easing method of the splice (TweenGMX Format)
 */
 function SpliceScreen(x, y, dir, idur, dur, edur, dis, ease = "oQuad") {
 	var _xs = x + lengthdir_x(1000, dir),

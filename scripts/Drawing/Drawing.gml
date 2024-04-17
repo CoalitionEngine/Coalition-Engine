@@ -9,6 +9,7 @@
 	@param {bool} full		Whether the rectangle is a semi-round angled rectangle or a full right-angled rectangle (Default former)
 */
 function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, full = false) {
+	gml_pragma("forceinline");
 	var dis = real(full) * width / 2, prev_col = draw_get_color();
 	draw_set_color(color);
 	draw_line_width(x1 - dis, y1, x2 + dis, y1, width);
@@ -32,6 +33,7 @@ function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, full =
 												or a full right-angled rectangle (Default former)
 */
 function draw_rectangle_width_background(x1, y1, x2, y2, width = 1, ocolor = c_white, oalpha = 1, bcolor = c_black, balpha = 1, full = false) {
+	gml_pragma("forceinline");
 	if !full && oalpha != 1 && balpha != 1 {
 		var al = draw_get_alpha(), col = draw_get_color();
 		draw_set_alpha(balpha);
@@ -102,6 +104,7 @@ function draw_circular_bar(x, y, value, max, colour, radius, transparency, width
 	@param {real} rate		The rate of the movement (Multiplies to the function declared in 'move')
 */
 function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, color = c_white, move = dsin, intensity = 20, rate = 1) {
+	gml_pragma("forceinline");
 	static displace = 0;
 	static time = 0;
 	time++;
@@ -191,6 +194,7 @@ function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, c
 	@param {real} y2	The bottom right y position of the rectangle
 */
 function draw_invert_rect(x1, y1, x2, y2) {
+	gml_pragma("forceinline");
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_rectangle(x1, y1, x2, y2, false);
 	gpu_set_blendmode(bm_normal);
@@ -205,6 +209,7 @@ function draw_invert_rect(x1, y1, x2, y2) {
 	@param {real} y3	The y coordinate of the triangle's third corner
 */
 function draw_invert_triangle(x1, y1, x2, y2, x3, y3) {
+	gml_pragma("forceinline");
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_triangle(x1, y1, x2, y2, x3, y3, false);
 	gpu_set_blendmode(bm_normal);
@@ -216,6 +221,7 @@ function draw_invert_triangle(x1, y1, x2, y2, x3, y3) {
 	@param {real} radius The radius of the circle
 */
 function draw_invert_cricle(x, y, radius) {
+	gml_pragma("forceinline");
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_circle(x, y, radius, false);
 	gpu_set_blendmode(bm_normal);
@@ -250,7 +256,7 @@ function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset
 		dir = point_direction(line_start_x, line_start_y, line_end_x, line_end_y);
 	//Add to list twice for the 2 halves of the splice
 	repeat 2
-		ds_list_add(global.sur_list, [new Canvas(640, 480), offset, dir, true_line_start, true_line_end]);
+		ds_list_add(global.sur_list, [surface_create(640, 480), offset, dir, true_line_start, true_line_end]);
 	return ds_list_size(global.sur_list) - 2;
 }
 
@@ -324,5 +330,18 @@ function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xsca
 
 ///Resets the GPU state to default
 function reset_gpu_state() {
+	gml_pragma("forceinline");
 	gpu_set_state(global.DefaultGPUState);
+}
+
+/*
+	Sets the drawing alignment (Combination of drawset_h/valign)
+	@param {Constant.Halign} HAlign	The horizontal alignment
+	@param {Constant.Valign} VAlign	The vertical alignment
+*/
+function draw_set_align(halign = fa_left, valign = fa_top)
+{
+	gml_pragma("forceinline");
+	draw_set_halign(halign);
+	draw_set_valign(valign);
 }

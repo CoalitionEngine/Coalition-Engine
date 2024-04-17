@@ -1,5 +1,6 @@
 function len_load()
 {
+	gml_pragma("forceinline");
 	Len = {};
 	with Len
 	{
@@ -20,6 +21,7 @@ function len_load()
 
 function len_step()
 {
+	gml_pragma("forceinline");
 	with Len
 	{
 		if activate
@@ -45,6 +47,7 @@ function len_step()
 
 function axis_load()
 {
+	gml_pragma("forceinline");
 	Axis = {};
 	with Axis
 	{
@@ -60,14 +63,15 @@ function axis_load()
 
 function axis_step()
 {
+	gml_pragma("forceinline");
 	with Axis
 	{
 		if activate
 		{
 			var board = target_board,
 				_ang = override ? override_angle : board.image_angle;
-			X += hspeed;
-			Y += vspeed;
+			X += other.hspeed;
+			Y += other.vspeed;
 			var dis = point_distance(board.x, board.y, X, Y),
 				dir = point_direction(board.x, board.y, X, Y);
 			other.x = lengthdir_x(dis, dir + _ang) + board.x;

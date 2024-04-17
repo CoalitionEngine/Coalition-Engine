@@ -1,10 +1,12 @@
 #region Engine
-//Here are the macros for the en2ine
-#macro ENGINE_VERSION "Beta v5.2.3"
+//Here are the macros for the engine
+#macro __COALITION_ENGINE_VERSION "v6.0.0 Beta 1"
 #macro ALLOW_DEBUG  true
-#macro DEBUG (game_is_standalone() ? false : true)
+//This automatically set DEBUG into false when you build the game
+#macro DEBUG !game_is_standalone()
 #macro RELEASE !DEBUG
-#macro ERROR_LOG true
+#macro __COALITION_ENGINE_ERROR_LOG true || DEBUG
+#macro __COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR true
 #endregion
 #region Input
 //Here are the macros for handy input code
@@ -29,12 +31,11 @@
 #macro this self
 #macro is ==
 //Handy GMLive macro for users who have GMlive
-#macro COALITION_ENABLE_GMLIVE false
-#macro live if COALITION_ENABLE_GMLIVE && asset_get_index("obj_gmlive") != -1\
-			{\
-				if !instance_exists(obj_gmlive) instance_create_depth(0, 0, 0, obj_gmlive);\
-				if live_call() return live_result\
-			}
+#macro COALITION_ENABLE_GMLIVE DEBUG
+#macro live if COALITION_ENABLE_GMLIVE && asset_get_index("obj_gmlive") != -1 {\
+	instance_check_create(obj_gmlive);\
+	if live_call() return live_result\
+}
 #endregion
 
 enum FONTS {
@@ -50,52 +51,6 @@ enum FONTS {
 	CHINESE,
 }
 
-function LoadFonts() {
-	global.__CoalitionFonts = [
-		font_add("Fonts/8-BIT WONDER.TTF", 36, false, false, 32, 128),
-		font_add("Fonts/Hachicro.ttf", 30, false, false, 32, 128),
-		font_add("Fonts/crypt of tomorrow.ttf", 9, false, false, 32, 128),
-		font_add("Fonts/Determination Mono.otf", 20, false, false, 32, 128),
-		font_add("Fonts/Determination Sans.otf", 20, false, false, 32, 128),
-		font_add("Fonts/Monster Friend Fore.otf", 36, false, false, 32, 128),
-		font_add("Fonts/Mars Needs Cunnilingus.ttf", 18, false, false, 32, 128),
-		font_add("Fonts/Comic Sans UT.ttf", 12, false, false, 32, 128),
-		font_add("Fonts/UT Hp Font.ttf", 7.5, false, false, 32, 128),
-		font_add("Fonts/fzxs12.ttf", 18, false, false, 32, 128),
-	];
-	//waiting for scribble to be updated to 9.0 so sdf from font_add are supported for scribble
-	//#macro fnt_8bitwonder global.__CoalitionFonts[0]
-	//font_enable_sdf(fnt_8bitwonder, true);
-	//#macro fnt_dmg global.__CoalitionFonts[1]
-	//font_enable_sdf(fnt_dmg, true);
-	//#macro fnt_cot global.__CoalitionFonts[2]
-	//font_enable_sdf(fnt_cot, true);
-	//#macro fnt_dt_mono global.__CoalitionFonts[3]
-	//font_enable_sdf(fnt_dt_mono, true);
-	//#macro fnt_dt_sans global.__CoalitionFonts[4]
-	//font_enable_sdf(fnt_dt_sans, true);
-	//#macro fnt_logo global.__CoalitionFonts[5]
-	//font_enable_sdf(fnt_logo, true);
-	//#macro fnt_mnc global.__CoalitionFonts[6]
-	//font_enable_sdf(fnt_mnc, true);
-	//#macro fnt_sans global.__CoalitionFonts[7]
-	//font_enable_sdf(fnt_sans, true);
-	//#macro fnt_uicon global.__CoalitionFonts[8]
-	//font_enable_sdf(fnt_uicon, true);
-	//#macro fnt_menu_chin global.__CoalitionFonts[9]
-	//font_enable_sdf(fnt_menu_chin, true);
-}
-
-function UnloadFonts() {
-	var i = 0, n = array_length(global.__CoalitionFonts);
-	repeat n
-	{
-		if font_exists(global.__CoalitionFonts[i])
-			font_delete(global.__CoalitionFonts[i]);
-		++i;
-	}
-}
-
 //Soul
 enum SOUL_MODE
 {
@@ -109,7 +64,7 @@ enum SOUL_MODE
 	FREEBLUE = 8,
 }
 
-//Direction
+//Direction for the ones who can't memorize directions
 enum DIR
 {
 	UP = 90,
@@ -123,28 +78,25 @@ enum DIR
 enum ITEM
 {
 	PIE = 1,
-	INOODLES = 2,
-	STEAK = 3,
-	SNOWP = 4,
-	LHERO = 5,
-	SEATEA = 6,
+	INOODLES,
+	STEAK,
+	SNOWP,
+	LHERO,
+	SEATEA,
 }
-//Change this value when more items are added
-#macro ITEM_COUNT 6
 //Item Scroll types
 enum ITEM_SCROLL
 {
 	DEFAULT = 0,
 	VERTICAL = 1,
-	CIRCLE = 2,
 	HORIZONTAL = 3,
 }
 //Overworld Room ID
 enum OVERWORLD
 {
 	CORRIDOR = 0,
-	RUINS_ROOM_1 = 1,
-	RUINS_ROOM_2 = 2,
+	RUINS_ROOM_1 = 0,
+	RUINS_ROOM_2 = 1,
 }
 
 // Batle or Menu States
@@ -166,6 +118,13 @@ enum MENU_STATE
 	ACT_SELECT = 6,
 	MERCY_END = 7,
 	FLEE = 8
+}
+enum SAVE_STATE
+{
+	NOT_SAVING = 0,
+	DISPLAY_DIALOG = 1,
+	CHOOSING = 2,
+	FINISHED = 3
 }
 
 enum FADE

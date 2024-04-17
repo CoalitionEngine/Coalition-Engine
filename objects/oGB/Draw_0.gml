@@ -1,108 +1,12 @@
-var color, _type = type;
-switch _type
+Battle_Masking_Start(true);
+var color = image_blend;
+switch type
 {
-	case 0: color = image_blend;	break;
 	case 1: color = c_aqua;			break;
 	case 2: color = c_orange;		break;
 	case 3: color = c_red;			break;
 }
-Battle_Masking_Start(true);
-
-if state = 4
-{
-	var _x = x,
-		_y = y,
-		
-		_angle = image_angle,
-		_alpha = beam_alpha,
-		
-		_xscale = image_xscale,
-		_yscale = image_yscale,
-		_end_point = e;
-	
-	var _blast_timer = timer_blast,
-		_exit_timer = timer_exit,
-		_size = beam_scale;
-	//Sine the beam
-	var beam_siner = sin(_blast_timer / pi) * _size / 4;
-	
-	var rx = 0,
-		ry = 0
-	
-	draw_set_alpha(_alpha);
-	var pre_col = color,
-		cosx = dcos(image_angle),
-		sinx = -dsin(image_angle);
-	draw_set_color(color);
-	//Thickest line (Further)
-	var xs = lengthdir_x(35 * _xscale, image_angle),
-		ys = lengthdir_y(35 * _xscale, image_angle),
-		xe = lengthdir_x(1200 + _end_point, image_angle),
-		ye = lengthdir_y(1200 + _end_point, image_angle);
-	
-	draw_line_width(x + xs + rx, y + ys + ry, x + xe + rx, y + ye + ry, _size + beam_siner);
-	//Thinner lines (Closer)
-	var xa = lengthdir_x(25 * _xscale, image_angle),
-		ya = lengthdir_y(25 * _xscale, image_angle),
-		xb = lengthdir_x(30 * _xscale, image_angle),
-		yb = lengthdir_y(30 * _xscale, image_angle);
-	
-	draw_line_width(x + xs + rx, y + ys + ry, x + xa + rx, y + ya + ry, (_size / 2) + beam_siner);
-	draw_line_width(x + xs + rx, y + ys + ry, x + xb + rx, y + yb + ry, (_size / 1.25) + beam_siner);
-	
-	color = pre_col;
-	var collisiondir_x = dcos(image_angle - 90),
-		collisiondir_y = -dsin(image_angle - 90);
-	if global.inv <= 0
-	{
-		for (var c = 0; c < _size / 2.25; c++)
-		{
-			var x_f = ((collisiondir_x * (_yscale + beam_siner)) / 2) * (c / 8),
-				y_f = ((collisiondir_y * (_yscale + beam_siner)) / 2) * (c / 8);
-
-			if beam_alpha >= 0.8
-			{
-				if collision_line((x + xs + rx) - x_f, (y + ys + ry) - y_f, (x + xe + rx) - x_f, (y + ye + ry) - y_f, oSoul, false, true)
-				or collision_line((x + xs + rx) + x_f, (y + ys + ry) + y_f, (x + xe + rx) + x_f, (y + ye + ry) + y_f, oSoul, false, true)
-				{
-					var collision = true;
-					if _type != 0 and _type != 3
-					{
-						collision = IsSoulMoving();
-						collision = (_type == 1 ? collision : !collision);
-					}
-					if collision Soul_Hurt();
-				
-				}
-				if global.show_hitbox
-				{
-					draw_set_color(c_red);
-					draw_line_width((x + xs + rx) - x_f, (y + ys + ry) - y_f, (x + xe + rx) - x_f, (y + ye + ry) - y_f, 3);
-					draw_line_width((x + xs + rx) + x_f, (y + ys + ry) + y_f, (x + xe + rx) + x_f, (y + ye + ry) + y_f, 3);
-				}
-			}
-		}
-	}
-	
-	auto_destroy();
-	
-	x = _x;
-	y = _y;
-	image_angle = _angle;
-	beam_alpha = _alpha;
-	
-	image_xscale = _xscale;
-	image_yscale = _yscale;
-	image_blend = color;
-	
-	timer_blast = _blast_timer;
-	timer_exit = _exit_timer;
-	beam_scale = _size;
-	e = _end_point;
-}
-
-draw_set_alpha(1);
-draw_self()
-draw_set_color(c_white);
+if state == 4
+	draw_sprite_ext(beam_sprite, 0, x, y, image_xscale, beam_scale, image_angle, color, beam_alpha);
+draw_sprite_ext(gb_sprite, gb_index, gbx, gby, gb_xscale, gb_yscale, image_angle, color, gb_alpha);
 Battle_Masking_End();
-

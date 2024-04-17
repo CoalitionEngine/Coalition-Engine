@@ -14,7 +14,10 @@
     "name": "Overworld",
     "path": "folders/Coalition Engine/Objects/Overworld.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "oOWChars",
+    "path": "objects/oOWChars/oOWChars.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,

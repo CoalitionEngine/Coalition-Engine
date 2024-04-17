@@ -1,4 +1,3 @@
-live;
 event_inherited();
 
 var soul = oSoul,
@@ -15,7 +14,7 @@ if mode == 1 or mode == 3
 		case "": case EaseLinear:
 			//Sets the arrow to only rotate if it is 81 pixels away from the soul
 			var CalDist = clamp(0, len - 80, 81) / 81;
-			dir = target_dir + power(CalDist, 1.5) * 180 * RotateDirection;
+			dir = target_dir + quick_pow(CalDist, 1.5) * 180 * RotateDirection;
 			break;
 		//im thinking shut up
 	}

@@ -4,7 +4,7 @@ if global.inv > 0 {
 	global.inv--;
 	if !global.kr_activation {
 		if image_speed == 0 {
-			image_speed = 1 / 2;
+			image_speed = 0.5;
 			image_index = 1;
 		}
 	}
@@ -31,7 +31,7 @@ if STATE == 2 {
 		check_board = instance_exists(oBoard);
 	if check_board // When the board is real XD
 	{
-		var board = BattleBoardList[min(SoulListID, array_length(BattleBoardList) - 1)],
+		var board			= BattleBoardList[min(SoulListID, array_length(BattleBoardList) - 1)],
 			board_x			= board.x,
 			board_y			= board.y,
 			board_angle		= posmod(board.image_angle, 360),
@@ -47,7 +47,10 @@ if STATE == 2 {
 		x += board_x - oBoard.xprevious;
 		y += board_y - oBoard.yprevious;
 	}
-
+	//Disable green shields
+	if mode != SOUL_MODE.GREEN || BattleData.State() != BATTLE_STATE.IN_TURN instance_deactivate_object(oGreenShield);
+	else instance_activate_object(oGreenShield);
+	
 	switch mode
 	{
 		case SOUL_MODE.RED: {
@@ -301,7 +304,8 @@ if STATE == 2 {
 		
 	}
 	
-	if !IsGrazer
+	var CheckMode = 0;
+	if CheckMode == 0
 	{
 		//Collision check of the Main Board
 		if check_board && !board.VertexMode {
@@ -323,14 +327,63 @@ if STATE == 2 {
 		{
 			
 		}
-	
-		//Check if the soul is allowed to go outside the screen
-		if !allow_outside {
-			x = clamp(x, oGlobal.MainCamera.x + x_offset, oGlobal.MainCamera.x + 640 - x_offset);
-			y = clamp(y, oGlobal.MainCamera.y + y_offset, oGlobal.MainCamera.y + 480 - y_offset);
+	}
+	else if CheckMode == 1
+	{
+		//Creates an array to check whether the 4 bounds of the soul is inside the board
+		var check_arr = array_create(4, false);
+		//Include the thickness of the board for the bound width for for accurate calculation
+		if board.VertexMode
+		{
+			x_offset += board.thickness_frame / 2;
+			y_offset += board.thickness_frame / 2;
+		}
+		var i = 0, check_list =
+		[
+			[x - x_offset, y],
+			[x + x_offset, y],
+			[x, y - y_offset],
+			[x, y + y_offset],
+		];
+		repeat 4
+		{
+			check_arr[i] = board.contains(check_list[i][0], check_list[i][1]);
+			++i;
+		}
+		i = 0;
+		repeat 4
+		{
+			if !check_arr[i]
+			{
+				var TarPos, TarDist = -1,
+					arr = board.limit(check_list[i][0], check_list[i][1]),
+					dist = point_distance(check_list[i][0], check_list[i][1], arr[0], arr[1]);
+				if dist < TarDist || TarDist == -1
+				{
+					TarPos = arr;
+					TarDist = dist;
+				}
+				x = arr[0] + x - check_list[i][0];
+				y = arr[1] + y - check_list[i][1];
+			}
+			++i;
+		}
+		if board.VertexMode
+		{
+			x_offset -=  board.thickness_frame / 2;
+			y_offset -=  board.thickness_frame / 2;
 		}
 	}
+	else if CheckMode == 2
+	{
+			
+	}
 	
+	//Check if the soul is allowed to go outside the screen
+	if !allow_outside {
+		x = clamp(x, oGlobal.MainCamera.x + x_offset, oGlobal.MainCamera.x + 640 - x_offset);
+		y = clamp(y, oGlobal.MainCamera.y + y_offset, oGlobal.MainCamera.y + 480 - y_offset);
+	}
 }
 
 if global.EnableGrazing
@@ -340,30 +393,3 @@ if global.EnableGrazing
 	oGrazer.x = x;
 	oGrazer.y = y;
 }
-
-//Grazing (Unused, unless a better method is found)
-//if global.EnableGrazing
-//{
-//	if !IsGrazer
-//	{
-//		if Grazer == -1
-//		{
-//			GrazeObj = instance_create_depth(x, y, depth, oSoul)
-//			Grazer = 1;
-//		}
-//		with GrazeObj
-//		{
-//			IsGrazer = true;
-//			x = x;
-//			y = y;
-//			image_xscale = 4;
-//			image_yscale = 4;
-//			image_alpha = 0;
-//		}
-//		if Grazer
-//		{
-//			GrazeObj.x = x;
-//			GrazeObj.y = y;
-//		}
-//	}
-//}

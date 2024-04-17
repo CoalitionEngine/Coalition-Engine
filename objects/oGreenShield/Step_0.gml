@@ -1,4 +1,3 @@
-live;
 with oGreenArr
 {
 	//Only check collision if they are the same type

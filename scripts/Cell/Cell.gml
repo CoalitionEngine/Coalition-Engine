@@ -12,7 +12,7 @@ function Cell() constructor {
 		@param {real} slot The slot to get the name of
 	*/
 	static GetName = function(slot) {
-		var name = ["", "Phone", "Dimensional Box A"];
+		static name = ["", "Phone", "Dimensional Box A"];
 		return name[global.cell[slot - 1]];
 	}
 	/**
@@ -20,7 +20,7 @@ function Cell() constructor {
 		@param {real} slot The slot to get the dialog of
 	*/
 	static GetText = function(slot) {
-		var text = ["", "Test Phone text 1", ""];
+		static text = ["", "Test Phone text 1", ""];
 		return text[global.cell[slot]];
 	}
 	/**
@@ -28,7 +28,7 @@ function Cell() constructor {
 		@param {real} slot The slot to get the data of
 	*/
 	static IsBox = function(slot) {
-		var is_box = [0, 0, 1];
+		static is_box = [0, 0, 1];
 		return is_box[global.cell[slot]];
 	}
 	/**
@@ -36,9 +36,9 @@ function Cell() constructor {
 		@param {real} slot The slot to get the data of
 	*/
 	static GetBoxID = function(slot) {
-		var NameToID = ["Dimensional Box A"],
-			ID = [1, 2],
-			i = 0, Name = GetText(slot), target = 0;
+		static NameToID = ["Dimensional Box A"],
+			ID = [1, 2];
+		var i = 0, Name = CellData.GetText(slot), target = 0;
 		repeat(array_length(NameToID))
 		{
 			if Name == NameToID[i] {
@@ -47,6 +47,6 @@ function Cell() constructor {
 			}
 			i++;
 		}
-		return (IsBox(slot) ? ID[target] : 0);
+		return (CellData.IsBox(slot) ? ID[target] : 0);
 	}
 }

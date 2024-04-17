@@ -1,5 +1,7 @@
 Camera.Scale(1, 1);
 audio_stop_all();
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 enum DEBUG_STATE
 {
 	MAIN = 0,

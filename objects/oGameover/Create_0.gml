@@ -15,9 +15,9 @@ image_blend = c_red;
 instance_destroy(oBulletParents);
 instance_destroy(oPlatform);
 Fader_Fade(,0, 0);
-//Stop recording (If any)
-if (global.ReplayMode == "Record")
-	instance_destroy(oReplayer);
+draw_set_font(fnt_8bitwonder);
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
 
 window_set_caption("Game Over");
 

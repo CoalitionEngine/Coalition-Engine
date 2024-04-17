@@ -1,5 +1,5 @@
-if !instance_exists(oOWController) instance_create_depth(0, 0, 0, oOWController);
-//oGlobal.MainCamera.target = id;
+event_inherited();
+instance_check_create(oOWController);
 Camera.Scale(2, 2);
 moveable = true;
 //You only need Up - Down - Left, because the Right is just an invert of Left, unless
@@ -13,9 +13,9 @@ image_speed = 0;
 allow_run = true;
 speed_multiplier = 1;
 
-//Dialog_BeginOption("what you want do", ["restart", "end", "continue"],
-//[function(){game_restart()},  function(){game_end()}, function() {}]);
-//OW_Dialog("Welcome to the\n  Underg- Overworld!");
+//Dialog_BeginOption("what you want do", ["continue", "end"],
+//[function(){},  function(){game_end()}]);
+//OverworldDialog("Welcome to the\n  Underg- Overworld!");
 //var t = CreateTextWriter(20, 20, "[c_white][fnt_dt_sans][scale,1][spr_sans_head,0][scale,1]blabla[snd_item_heal]\nlba");
 //t[0].in(0.5, 0)
 //t[0].sound_per_char(snd_txtTyper, 1, 1, " ^!.?,:/\\|*")

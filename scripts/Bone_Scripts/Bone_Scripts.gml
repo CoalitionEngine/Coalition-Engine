@@ -15,6 +15,7 @@
 	@param {color} Base_Color	The color of the bone
 */
 function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = 0, mode = 0, angle = 90, rotate = 0, destroyable = true, duration = -1, base_col = oEnemyParent.base_bone_col) {
+	gml_pragma("forceinline");
 	var DEPTH = -10;
 	if instance_exists(oBoard)
 	{
@@ -22,11 +23,7 @@ function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = 0, mode = 0, angl
 		if out DEPTH--;
 	}
 	
-	var bone = instance_create_depth(x, y, DEPTH, oBulletBone,
-	{
-		hspeed : hspd,
-		vspeed : vspd,
-	});
+	var bone = instance_create_depth(x, y, DEPTH, oBulletBone, { hspeed : hspd, vspeed : vspd });
 	with bone
 	{
 		target_board = BattleBoardList[TargetBoard];
@@ -37,13 +34,11 @@ function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = 0, mode = 0, angl
 		id.type = type;
 		id.duration = duration;
 		id.mode = mode;
-		
 		id.destroyable = destroyable;
 		base_color = base_col;
 	}
 	return bone;
 }
-
 
 /**
 	Creates a bone at the Top of the board
@@ -56,8 +51,8 @@ function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = 0, mode = 0, angl
 	@param {bool} destroy	Whether the bullets destroys when offscreen (Default True)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneTop(x, length, hspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1)
-{
+function Bullet_BoneTop(x, length, hspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_Bone(x, Board.GetUpPos() + length / 2, length, hspd, 0, type, out,, 90, rotate, destroyable, duration);
 }
 
@@ -73,6 +68,7 @@ function Bullet_BoneTop(x, length, hspd, type = 0, out = 0, rotate = 0, destroya
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
 function Bullet_BoneBottom(x, length, hspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_Bone(x, Board.GetDownPos() - length / 2, length, hspd, 0, type, out,, 90, rotate, destroyable, duration);
 }
 
@@ -87,8 +83,8 @@ function Bullet_BoneBottom(x, length, hspd, type = 0, out = 0, rotate = 0, destr
 	@param {bool} destroy	Whether the bullets destroys when offscreen (Default True)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneLeft(y, length, vspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1)
-{
+function Bullet_BoneLeft(y, length, vspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_Bone(Board.GetLeftPos() + length / 2, y, length, 0, vspd, type, out,, 0, rotate, destroyable, duration);
 }
 
@@ -103,8 +99,8 @@ function Bullet_BoneLeft(y, length, vspd, type = 0, out = 0, rotate = 0, destroy
 	@param {bool} destroy	Whether the bullets destroys when offscreen (Default True)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneRight(y, length, vspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1)
-{
+function Bullet_BoneRight(y, length, vspd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_Bone(Board.GetRightPos() - length / 2, y, length, 0, vspd, type, out,, 0, rotate, destroyable, duration);
 }
 
@@ -118,8 +114,8 @@ function Bullet_BoneRight(y, length, vspd, type = 0, out = 0, rotate = 0, destro
 	@param {bool} destroy	Whether the bullets destroys when offscreen (Default True)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneFullV(x, spd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1)
-{
+function Bullet_BoneFullV(x, spd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_BoneBottom(x, Board.GetHeight(), spd, type, out, rotate, destroyable, duration);
 }
 
@@ -133,8 +129,8 @@ function Bullet_BoneFullV(x, spd, type = 0, out = 0, rotate = 0, destroyable = t
 	@param {bool} destroy	Whether the bullets destroys when offscreen (Default True)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneFullH(y, spd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1)
-{
+function Bullet_BoneFullH(y, spd, type = 0, out = 0, rotate = 0, destroyable = true, duration = -1) {
+	gml_pragma("forceinline");
 	return Bullet_BoneLeft(y, Board.GetWidth(), spd, type, out, rotate, destroyable, duration);
 }
 
@@ -149,8 +145,8 @@ function Bullet_BoneFullH(y, spd, type = 0, out = 0, rotate = 0, destroyable = t
 	@param {real} destroy	Whether the bones destroy themselves when offscreen (Default 0)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneGapH(x, y, vspd, gap, type = 0, out = 0, destroyable = 0, duration = -1)
-{
+function Bullet_BoneGapH(x, y, vspd, gap, type = 0, out = 0, destroyable = 0, duration = -1) {
+	gml_pragma("forceinline");
 	left_bone = Bullet_BoneLeft(y, x - Board.GetLeftPos() - gap / 2, vspd, type, out,, destroyable, duration);
 	right_bone = Bullet_BoneRight(y, Board.GetRightPos()- gap / 2 - x, vspd, type, out,, destroyable, duration);
 }
@@ -166,8 +162,8 @@ function Bullet_BoneGapH(x, y, vspd, gap, type = 0, out = 0, destroyable = 0, du
 	@param {real} destroy	Whether the bones destroy themselves when offscreen (Default 0)
 	@param {real} duration	The amount of time the bone exists before destroying itself (Default -1)
 */
-function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = 0, destroyable = 0, duration = -1)
-{
+function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = 0, destroyable = 0, duration = -1) {
+	gml_pragma("forceinline");
 	up_bone = Bullet_BoneTop(x, y - Board.GetUpPos() - gap / 2, hspd, type, out,, destroyable, duration);
 	down_bone = Bullet_BoneBottom(x, Board.GetDownPos()- gap / 2 - y, hspd, type, out,, destroyable, duration);
 }
@@ -184,6 +180,7 @@ function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = 0, destroyable = 0, du
 	@param {bool} create_sound	Whether the create sound plays (Default True)
 */
 function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true) {
+	gml_pragma("forceinline");
 	var DEPTH = -10;
 	if instance_exists(oBoard)  DEPTH = oBoard.depth + 1;
 	dir %= 360;
@@ -219,6 +216,7 @@ function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_
 	@param {Asset.GMObject} object	The object to use as the wall (Default bones)
 */
 function Bullet_CustomBoneWall(dir, height, distance, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true, ease = ["", ""], width = -1, obj = oBulletBone) {
+	gml_pragma("forceinline");
 	var DEPTH = -10;
 	if instance_exists(oBoard)  DEPTH = oBoard.depth + 1;
 	dir %= 360;
@@ -260,8 +258,8 @@ function Bullet_CustomBoneWall(dir, height, distance, delay, duration, type = 0,
 	@param {bool} out			Whether the bones are outside the board
 	@param {bool} auto_destroy	Whether it auto destroys based on the timer
 */
-function Bullet_BoneWaveH(x, y, amount, func, multiply, xdisplace, spd, ydisplace, gap, col = 0, out = false, auto_dest = false)
-{
+function Bullet_BoneWaveH(x, y, amount, func = sin, multiply, xdisplace, spd, ydisplace, gap, col = 0, out = false, auto_dest = false) {
+	gml_pragma("forceinline");
 	var arr = array_create(amount * 2);
 	for (var i = 0; i < amount; ++i) {
 		Bullet_BoneGapH(x + func(i * multiply) * xdisplace, y + i * ydisplace, spd, gap, col, out, false, auto_dest ? -1 : abs((y + i * ydisplace) / speed));
@@ -286,8 +284,8 @@ function Bullet_BoneWaveH(x, y, amount, func, multiply, xdisplace, spd, ydisplac
 	@param {bool} out			Whether the bones are outside the board
 	@param {bool} auto_destroy	Whether it auto destroys based on the timer
 */
-function Bullet_BoneWaveV(x, y, amount, func, multiply, ydisplace, spd, xdisplace, gap, col = 0, out = false, auto_dest = false)
-{
+function Bullet_BoneWaveV(x, y, amount, func = sin, multiply, ydisplace, spd, xdisplace, gap, col = 0, out = false, auto_dest = false) {
+	gml_pragma("forceinline");
 	var arr = array_create(amount * 2);
 	for (var i = 0; i < amount; ++i) {
 		Bullet_BoneGapV(x + i * xdisplace, y + func(i * multiply) * ydisplace, spd, gap, col, out, false, auto_dest ? -1 : abs((x + i * xdisplace) / speed));
@@ -313,8 +311,8 @@ function Bullet_BoneWaveV(x, y, amount, func, multiply, ydisplace, spd, xdisplac
 	@param {real} Anim_Time			The time of the scaling animation (Default 0 - Instant)
 	@param {function,string} Easing	The easing of the scaling animation (Default EaseLinear)
 */
-function Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rot_x, rot_y, rot_z, scale_x, scale_y, scale_z, anim_time = 0, ease = "")
-{
+function Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rot_x, rot_y, rot_z, scale_x, scale_y, scale_z, anim_time = 0, ease = "") {
+	gml_pragma("forceinline");
 	var inst = instance_create_depth(x, y, -2, o3DBone);
 	with inst
 	{

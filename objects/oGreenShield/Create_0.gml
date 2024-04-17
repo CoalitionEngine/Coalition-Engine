@@ -1,4 +1,3 @@
-live;
 HitColor = c_white;
 ID = 0;
 HittingArrow = false;

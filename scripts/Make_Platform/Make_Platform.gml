@@ -11,6 +11,7 @@
 */
 function Make_Platform(x, y, hspd, vspd, _length, out = 0, angle = 0, _sticky = true)
 {
+	gml_pragma("forceinline");
 	var DEPTH = -600;
 	if instance_exists(oBoard)
 	{

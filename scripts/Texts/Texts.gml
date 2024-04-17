@@ -9,6 +9,7 @@
 */
 function CreateTextWriter(x, y, text, skip_enabled = false, event = [])
 {
+	gml_pragma("forceinline");
 	//Create the controller if it doesn't exist already
 	if !instance_exists(oTextController) instance_create_depth(0, 0, 0, oTextController);
 	var i = 0;

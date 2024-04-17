@@ -41,11 +41,11 @@ It is best to use Game Maker 2.3+ (Non-LTS) builds.
 These are the versions of the external libraries that are packaged with the newest version of the engine.
 
 > [!IMPORTANT]
-> You should not remove these libraries from the engine.
+> You should not remove libraries without '()' from the engine as they are essential for the engine to run.
 
-| Scribble | Input | Clean Shapes| Lexicon | Canvas | TurboGML | TweenGMX |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 8.5.0 | 6.1.5 | 1.1.1 | 3.0.2 | 2.1.0 | 3.0.0 | 1.0.3 |
+| Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX | (Kawase) | DoLater |
+| :---: | :---: | :---: | :---: | :---: | :---: | :--: | :--: |
+| 9.0.0 | 6.1.5 | 1.1.1 | 3.0.2 | 3.0.0 | 1.0.3 | 2.0.1 | 4.0.0 |
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114492-749f7f25-9780-4a28-80b2-1bb4bad86e22.png)
 

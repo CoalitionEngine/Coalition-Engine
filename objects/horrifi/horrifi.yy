@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Effects",
-    "path": "folders/Coalition Engine/Objects/Effects.yy",
+    "name": "Optional",
+    "path": "folders/Coalition Engine/Objects/Effects/Optional.yy",
   },
   "parentObjectId": null,
   "persistent": false,

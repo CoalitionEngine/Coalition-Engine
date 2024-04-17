@@ -34,7 +34,7 @@ if encounter_state
 			encounter_draw[1] = 0;
 			encounter_draw[2] = 1;
 			audio_play(snd_encounter_soul_move);
-			TweenFire(id, EaseLinear, TWEEN_MODE_ONCE, false, 0, 30,
+			TweenFire(id, "", 0, false, 0, 30,
 			"encounter_soul_x", encounter_soul_x, 48,
 			"encounter_soul_y", encounter_soul_y, 454);
 		}
@@ -61,7 +61,7 @@ var input_horizontal = CHECK_HORIZONTAL,
 	//input_confirm =    input_check("confirm"),
 	input_cancel =     HOLD_CANCEL,
 	input_menu =	   PRESS_MENU,
-	spd = (global.spd + input_cancel) * speed_multiplier,
+	spd = (global.spd + (allow_run ? input_cancel : 0)) * speed_multiplier,
 	scale_x = last_dir,
 	assign_sprite = last_sprite;
 
@@ -100,7 +100,7 @@ if moveable and global.interact_state == INTERACT_STATE.IDLE // When the player 
 			scale_x = array_length(dir_sprite) == 3 ? -sign(input_horizontal) : 1;
 			//Check whether the movement is moving into a tile
 			displace = sign(input_horizontal) ? 1 : -1;
-			if !tile_meeting(x + displace, y, "TileCollision")
+			if !CollideWithAnything(x + displace, y)
 				x += displace;
 		}
 		if input_vertical != 0
@@ -110,7 +110,7 @@ if moveable and global.interact_state == INTERACT_STATE.IDLE // When the player 
 			scale_x = 1;
 			//Check whether the movement is moving into a tile
 			displace = sign(input_vertical) ? 1 : -1;
-			if !tile_meeting(x, y + displace, "TileCollision")
+			if !CollideWithAnything(x, y + displace)
 				y += displace;
 		}
 		

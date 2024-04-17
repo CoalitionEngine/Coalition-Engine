@@ -17,7 +17,7 @@ if global.kr_activation
 		{
 			kr_timer = 0;
 			global.kr--;
-			global.hp--
+			global.hp--;
 		}
 		if global.hp <= 0 global.hp = 1;
 	}
@@ -29,7 +29,7 @@ else
 	global.kr = 0;
 }
 
-if global.hp <= 0
+if global.hp <= 0 && global.deadable
 	if !global.debug gameover();
 	else
 	{

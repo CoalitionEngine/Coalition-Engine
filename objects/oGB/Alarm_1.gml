@@ -1,4 +1,4 @@
 ///@desc Auto index during fire
-var num = image_number - 1;
-image_index = (image_index != num ? num : num - 1);
+var num = sprite_get_number(gb_sprite) - 1;
+gb_index = (gb_index != num ? num : num - 1);
 alarm[1] = 2;

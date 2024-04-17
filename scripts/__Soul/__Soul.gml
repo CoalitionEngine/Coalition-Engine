@@ -3,6 +3,7 @@
 ///@param {bool} effect	Whether to create the soul effect or not (Default True)
 function SoulSetMode(soul_mode, effect = true)
 {
+	gml_pragma("forceinline");
 	with BattleSoulList[TargetSoul]
 	{
 		dir = DIR.DOWN;
@@ -38,6 +39,7 @@ function SoulSetMode(soul_mode, effect = true)
 */
 function SetSoulPos(target_x, target_y, duration = 0, Easing = "", delay = 0)
 {
+	gml_pragma("forceinline");
 	with BattleSoulList[TargetSoul]
 		TweenEasyMove(x, y, target_x, target_y, delay, duration, Easing);
 }
@@ -45,9 +47,14 @@ function SetSoulPos(target_x, target_y, duration = 0, Easing = "", delay = 0)
 ///@desc Return whether is soul moving or not
 ///@param {bool} mode	Whether the check is position based or input based
 function IsSoulMoving(input_based = false) {
+	gml_pragma("forceinline");
 	var target_soul = BattleSoulList[TargetSoul];
 	return (input_based ?
 	(CHECK_HORIZONTAL != 0 || CHECK_VERTICAL != 0) :
 	floor(target_soul.x) != floor(target_soul.xprevious) or floor(target_soul.y) != floor(target_soul.yprevious));
 }
 
+function LimitSoulInVertexBoard()
+{
+	
+}

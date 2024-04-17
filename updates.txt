@@ -1,5 +1,42 @@
 Update Logs (This is the beta builds)
 
+v6.0.0 (Eden)
+Removed:
+GMLive functions on green soul
+Some deprecated codes
+Unessacary assets
+
+Fixed:
+Shader controller surface drawing method not applying
+Debug mouse pointer doesn't register save point
+Overworld dialog sprite remains after activating a dialog that has a dialog sprite
+Optimised overworld UI drawing event
+Item button remains in default colors when there are no items
+Sparing softlocks you
+Loading multiple arrays using Load_Data will cause a crash
+Releasing a game build would cause oBattleController to crash
+
+Updated:
+New sine wave shader with 7 modes
+Option for custom sprite for target background in battle
+Changed button updating function
+Custom angled bonewall can now be created (Currently not very user-friendly)
+Option to enable player running in overworld
+New method on room transition in overworld for better optimisation and user-friendlier
+Updated overworld save UI state for better organisation
+Changed some variables in scripts into static variables to boost performance
+Updated addons to newest versions
+Data saving is now avalible
+Changed macro statements for faster compiling
+Set overworld dialog to be skippable or end because I forgot (bruh)
+Added a seperate parent object for every overworld character for better controlling
+Further optimised objects by changing local constant variables into constants
+Optimised blaster drawing
+You can now dynamically add items using ItemLibraryAdd()
+Fixed some fundemental engine logic
+Fixed overworld collision bug
+Bullet collisions are now optimised and is controlled via a script
+
 v5.3.1 (Eden)
 Fixed bugs:
 I untangled the corruption manually so the green soul functions now re-exist
@@ -597,17 +634,4 @@ Added movement for enemy while under attack (the damage and miss)
 v3.5.3 (Panthervention)
 Proper Game Over added, adjusted and fixing KR, adjusting enemy hp bar on menu. (Do not touch KR mechanic!)
 
-v3.5 (Eden)
-Added angled soul in menu, modified item ui, fixed dialog bug, fixed kr, fixed blaster (basically brute force the bugs, h)
-
-v3.4 (Eden)
-Added dialog system
-(v3.41: fixed Enemey_Function_Load)
-
-v3.3 (Eden)
-Added color/retraction to aiming, fixed item text became menu text, added enemy hp bar drawing on menu (is optional), fixed some enemy data bugs (i++ and ++i, imagine)
-
-v3.2 (Eden)
-Polished Menu Dialog System, Turn System and gameover
-
-v3
+v3.5 

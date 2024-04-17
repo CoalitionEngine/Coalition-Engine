@@ -10,6 +10,7 @@
 	@param {real} alpha			Tje alpha of the surface to draw
 */
 function draw_surface_rotated_ext(_surf, _x, _y, _xscale, _yscale, _rot, _col, _alpha) {
+	gml_pragma("forceinline");
 	var _halfW = surface_get_width(_surf) / 2 * _xscale,
 		_halfH = surface_get_height(_surf) / 2 * _yscale,
 		_rotX = -lengthdir_x(_halfW, _rot) + lengthdir_y(_halfH, _rot),
@@ -30,6 +31,7 @@ function draw_surface_rotated_ext(_surf, _x, _y, _xscale, _yscale, _rot, _col, _
 	@param {real} y2				The y coordinate of the bottom right corner of the rectangle
 */
 function draw_surface_tiled_area(surface, xx, yy, x1, y1, x2, y2) {
+	gml_pragma("forceinline");
 	var left, top, width, height, X, Y,
 		sw = surface_get_width(surface),
 		sh = surface_get_height(surface),

@@ -1,3 +1,4 @@
+live;
 //Load texture
 texturegroup_load("texoverworld");
 Fader_Fade(1, 0, 15);
@@ -50,6 +51,7 @@ menu_ui_y = array_create(4, -480);
 menu_soul_pos = [-606, 211];
 menu_soul_alpha = 1;
 menu_label = ["ITEM","STAT","CELL"];
+menu_item_text = ["USE", "INFO", "DROP"] ;
 menu_color =
 [
 	[c_dkgray, c_white],
@@ -71,14 +73,15 @@ Box_ID = 0;
 #endregion
 
 ForceNotDisplayUI = false;
-Saving = false;
-is_saving = false;
-Saved = 0;
+save_state = 0;
 Choice = 0;
 WaitTime = 0;
 
 #region // Debug properties
-debug = false;
-debug_alpha = 0;
+if ALLOW_DEBUG
+{
+	debug = false;
+	debug_alpha = 0;
+}
 #endregion
-global.lerp_speed = 1;	
+global.lerp_speed = 1;

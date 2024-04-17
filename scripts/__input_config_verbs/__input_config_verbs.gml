@@ -15,25 +15,13 @@ function __input_config_verbs()
     return {
         keyboard_and_mouse:
         {
-	        up:    [input_binding_key(vk_up)],
-	        down:  [input_binding_key(vk_down)],
-	        left:  [input_binding_key(vk_left)],
-	        right: [input_binding_key(vk_right)],
-        
-	        confirm:	[input_binding_key("Z"), input_binding_key(vk_enter)],
-	        cancel:		[input_binding_key("X"), input_binding_key(vk_lshift)],
-	        menu:		[input_binding_key("C")],
-			alt:		[input_binding_key(vk_alt)],
-            
-            //accept:  input_binding_key(vk_space),
-            //cancel:  input_binding_key(vk_backspace),
-            //action:  input_binding_key(vk_enter),
-            //special: input_binding_key(vk_shift),
-            
-            //No aiming verbs since we use the mouse for that (see below for aiming verb examples)
-            //shoot: input_binding_mouse_button(mb_left),
-            
-            pause: input_binding_key(vk_escape),
+            up:    [input_binding_key(vk_up)],
+            down:  [input_binding_key(vk_down)],
+            left:  [input_binding_key(vk_left)],
+            right: [input_binding_key(vk_right)],
+            cancel:  [input_binding_key(vk_shift), input_binding_key(ord("X"))],
+            confirm:  [input_binding_key(vk_enter), input_binding_key(ord("Z"))],
+            menu:  [input_binding_key(ord("C"))]
         },
         
         gamepad:

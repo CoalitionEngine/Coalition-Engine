@@ -11,7 +11,7 @@ fader_alpha = 0;
 
 RGBShake = 0;
 RGBDecrease = 1;
-RGBSurf = new Canvas(640, 480);
+RGBSurf = surface_create(640, 480);
 RGBShakeMethod = 0;
 
 Song =  {};
@@ -64,9 +64,9 @@ with Border
 
 #region Effects
 shader_enable_corner_id(true);
-GradientSurf = new Canvas(640, 480);
+GradientSurf = surface_create(640, 480);
 global.sur_list = ds_list_create();
-CutScreenSurface = undefined;
+CutScreenSurface = surface_create(640, 480);
 CutLineStart = shader_get_uniform(shdCutScreen, "u_lineStart");
 CutLineEnd = shader_get_uniform(shdCutScreen, "u_lineEnd");
 CutSide = shader_get_uniform(shdCutScreen, "u_side");

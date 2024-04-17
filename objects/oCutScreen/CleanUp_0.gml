@@ -1,5 +1,5 @@
-global.sur_list[| TEMPID + 1][0].Free();
+surface_free(global.sur_list[| TEMPID + 1][0]);
 ds_list_delete(global.sur_list, TEMPID + 1);
-global.sur_list[| TEMPID][0].Free();
+surface_free(global.sur_list[| TEMPID][0]);
 ds_list_delete(global.sur_list, TEMPID);
 with oCutScreen TEMPID -= 2;

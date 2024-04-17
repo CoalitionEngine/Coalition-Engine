@@ -10,6 +10,7 @@ enum LANGUAGE
 	@param {real} ID	The id of the language (i.e. LANGUAGE.ENGLISH)
 */
 function SetLanguage(lang_id) {
+	gml_pragma("forceinline");
 	global.Language = lang_id;
 	lexicon_locale_set(lexicon_languages_get_array()[lang_id][1]);
 }

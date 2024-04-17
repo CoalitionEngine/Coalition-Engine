@@ -21,12 +21,17 @@ repeat ShaderAmount
 	{
 		if !surface_exists(SurfaceList[i]) SurfaceList[i] = surface_create(640, 480);
 		surface_set_target(SurfaceList[i]);
+		draw_surface(application_surface, 0, 0);
+		surface_reset_target();
 	}
 	else draw_surface(application_surface, 0, 0);
-	if IsDrawnToSurf surface_reset_target();
 	//Reset the shader
 	shader_reset();
 	
-	if IsDrawnToSurf draw_surface(SurfaceList[i], 0, 0);
+	if IsDrawnToSurf
+	{
+		draw_clear(c_black);
+		draw_surface(SurfaceList[i], 0, 0);
+	}
 	++i;
 }

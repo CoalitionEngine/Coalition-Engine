@@ -1,10 +1,12 @@
 function Initialize()
 {
-	show_debug_message("Coalition Engine: This is version " + ENGINE_VERSION);
+	show_debug_message("Coalition Engine: This is version " + __COALITION_ENGINE_VERSION);
 	__CoalitionCheckCompatibilty();
 	//Set to true when releasing your game
 	gml_release_mode(RELEASE);
 	randomize();
+	//Pre-bake outline font for damage
+	scribble_font_bake_outline_8dir_2px("fnt_dmg", "fnt_dmg_outlined", c_black, true);
 	
 	//Some users may not want a lerp animation to be played, you may set this to 1
 	global.lerp_speed = 0.16;
@@ -25,20 +27,8 @@ function Initialize()
 	//Sets Whether Blasters cause RGB splitting effect
 	global.RGBBlaster = false;
 	
-	//Replaying uses
-	global.ReplaySaveFileName = "";
-	global.ReplayLoadFileName = "";
-	global.ReplayMode = "Record";
-	global.RecordReplay = false;
-	
 	//Sets whether the current text is skippable (Engine usage)
 	global.TextSkipEnabled = true;
-	
-	//Items
-	global.item_heal_override_kr = true; //Does kr reduce when max heal or not
-	global.item_uses_left = array_create(ITEM_COUNT + 1, 1);
-	//Demonstration on how to change item usage count
-	global.item_uses_left[ITEM.PIE] = 2;
 	
 	//Spare
 	global.SpareTextColor = (!irandom(100) ? "[c_fuchsia]" : "[c_yellow]");
@@ -55,7 +45,7 @@ function Initialize()
 	global.SaveFile[? "Wep"] =		"Stick";
 	global.SaveFile[? "Arm"] =		"Bandage";
 	global.SaveFile[? "Kills"] =	0;
-	var Item_Preset = [ITEM.PIE, ITEM.INOODLES, ITEM.STEAK, ITEM.SNOWP, ITEM.SNOWP,
+	static Item_Preset = [ITEM.PIE, ITEM.INOODLES, ITEM.STEAK, ITEM.SNOWP, ITEM.SNOWP,
 						ITEM.LHERO, ITEM.LHERO, ITEM.SEATEA],
 		Cell_Preset = [1, 2, 0, 0, 0, 0, 0, 0],
 		Box_Preset =  //Insert the items manually
@@ -103,6 +93,13 @@ function Initialize()
 		}
 	}
 	
+	//Items
+	ItemLibraryInit();
+	global.item_heal_override_kr = true; //Does kr reduce when max heal or not
+	global.item_uses_left = array_create(ds_list_size(global.ItemLibrary) + 1, 1);
+	//Demonstration on how to change item usage count
+	global.item_uses_left[ITEM.PIE] = 2;
+	
 	//Custom Settings
 	global.Settings = ds_map_create();
 	global.Volume = 100;
@@ -110,9 +107,9 @@ function Initialize()
 	global.ShowFPS = false;
 	//Input keys are defined at __input_config_profiles_and_default_bindings
 	
-	if !file_exists("Settings.ini") Save_Settings(); else Load_Settings();
-	
 	global.TempData = ds_map_create();
+	if file_exists("TempData.dat") LoadData();
+	SaveData();
 	
 	//Battle
 	global.battle_encounter = 0;
@@ -130,7 +127,7 @@ function Initialize()
 	ConvertItemNameToStat();
 	Player.GetBaseStats();
 	//Example on how to set up an ecounter
-	EnemyData.SetEncoutner(,,oEnemySansExample);
+	EnemyData.SetEncoutner(,,oEnemySansExample,);
 	global.kr = 0;
 	global.kr_activation = false;
 	global.damage = 1;
@@ -177,4 +174,7 @@ function Initialize()
 	
 	//BPM of the song (Rhythm usage)
 	global.SongBPM = 0;
+	
+	global.MinFPS = undefined;
+	global.MaxFPS = 60;
 }

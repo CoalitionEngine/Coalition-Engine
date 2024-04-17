@@ -270,7 +270,11 @@ function Vector2(x, y=x) constructor {
 		gml_pragma("forceinline");
 		return min(x, y);
 	};
-	
+	/// Returns the projection of the vector
+	static Project = function(origin, vector2) {
+		gml_pragma("forceinline");
+		return origin.Dot(vector2) / origin.Magnitude();
+	}
 }
 
 

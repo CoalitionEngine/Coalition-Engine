@@ -30,24 +30,28 @@ rotate = 0;
 
 //Board frame color
 image_blend = c_white;
+//Board background color
+bg_color = c_black;
 
 //Polygon board (WIP)
 VertexMode = false;
 Vertex = [];
+VertexList = [];
 
 function ConvertToVertex() {
 	if VertexMode exit;
 	Vertex = [];
+	VertexList = [];
 	var PointList =
 	[
-		[x - left - thickness_frame, y - up - thickness_frame],
-		[x - left - thickness_frame, y + down],
-		[x + right, y + down],
-		[x + right, y - up - thickness_frame]
+		[x + right + 2.5, y - up - 2.5],
+		[x + right + 2.5, y + down + 2.5],
+		[x - left - 2.5, y + down + 2.5],
+		[x - left - 2.5, y - up - 2.5]
 	], displace = thickness_frame * dcos(image_angle) / 2;
 	for (var i = 0; i < 4; ++i) {
 		var arr = point_xy_array(PointList[i][0], PointList[i][1]);
-		array_push(Vertex, arr[0] + displace, arr[1] + displace);
+		array_push(Vertex, arr[0], arr[1]);
 	}
 	VertexMode = true;
 }

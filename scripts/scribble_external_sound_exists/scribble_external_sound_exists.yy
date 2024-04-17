@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Miscellaneous",
-    "path": "folders/Coalition Engine/Addons/Scribble/Miscellaneous.yy",
+    "name": "External Assets",
+    "path": "folders/Coalition Engine/Addons/Scribble/External Assets.yy",
   },
 }

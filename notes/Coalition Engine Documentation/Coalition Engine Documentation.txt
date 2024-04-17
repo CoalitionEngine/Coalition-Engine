@@ -5,9 +5,11 @@ TK, Panthervention, Supereden, RTF, Maxin(Jay)
 
 For coding assistance and problems encountered during game making
 Please file a help post in our Discord server: https://discord.gg/Sxr5JzhhvG
+or
+Post a public issue on Github: https://github.com/RTFTR/Coalition-Engine/issues
 
 For details on how to use this engine, please read this:
-https://docs.google.com/document/d/1PxeJxLadrUCBvG7DbQhDqAS7m8n5o21E8o8JhcnuDWI/edit?usp=sharing
+https://github.com/RTFTR/Coalition-Engine/wiki
 
 Official Github repositories:
 Stable Build: When the feature is completly done and stable, It will be moved to the Stable branch.

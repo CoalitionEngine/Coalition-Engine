@@ -4,7 +4,7 @@
   "name": "shdKawaseDown",
   "parent": {
     "name": "(System)",
-    "path": "folders/Kawase/(System).yy",
+    "path": "folders/Coalition Engine/Addons/Kawase/(System).yy",
   },
   "type": 1,
 }

@@ -9,9 +9,10 @@ repeat n
 	var page = TextWriterList[i].get_page();
 	if TextTypistList[i].get_state() == 1 and page < (TextWriterList[i].get_page_count() - 1)
 			TextWriterList[i].page(page + 1)
-	else if TextTypistList[i].get_state() == 1
+	if TextTypistList[i].get_state() == 1
 	{
 		array_delete(TextTypistList, i, 1);
 		array_delete(TextWriterList, i, 1);
 	}
+	++i;
 }

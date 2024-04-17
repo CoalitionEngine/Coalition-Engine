@@ -1,13 +1,9 @@
 /// @description Global
 if input_check("pause") or input_check_double("pause")
 {
-	quit_timer++;
-	if quit_timer >= 60 game_end();
+	if quit_timer++ >= 60 game_end();
 }
-else
-{
-	quit_timer = quit_timer > 0 ? quit_timer - 2 : 0;
-}
+else quit_timer = quit_timer > 0 ? quit_timer - 2 : 0;
 
 global.timer++;
 
@@ -40,8 +36,5 @@ if room == rRestart
 	if restart_timer++ == restart_ender game_restart();
 }
 
-if RGBShake > 0
-{
-	RGBShake -= RGBDecrease;
-}
-else if !RGBSurf.IsAvailable() RGBSurf = new Canvas(640, 480);
+if RGBShake > 0 RGBShake -= RGBDecrease;
+else if !surface_exists(RGBSurf) RGBSurf = surface_create(640, 480);

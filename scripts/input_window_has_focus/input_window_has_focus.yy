@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "23  Other",
-    "path": "folders/Coalition Engine/Addons/Input/23  Other.yy",
+    "name": "Deprecated",
+    "path": "folders/Coalition Engine/Addons/Input/(System)/Deprecated.yy",
   },
 }

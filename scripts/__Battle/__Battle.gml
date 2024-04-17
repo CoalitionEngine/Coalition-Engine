@@ -1,6 +1,7 @@
 ///Resets the board state to default
 ///@param {bool} angle_div	Whether the angle of the board be fixed between -90 < x < 90 or not
 function ResetBoard(anglediv = true) {
+	gml_pragma("forceinline");
 	Board.SetSize();
 	if anglediv oBoard.image_angle %= 90;
 	Board.SetAngle();
@@ -10,6 +11,7 @@ function ResetBoard(anglediv = true) {
 ///Sets the box angle, size and position to the default settings for green soul
 function Set_GreenBox()
 {
+	gml_pragma("forceinline");
 	Board.SetAngle();
 	Board.SetSize(42, 42, 42, 42, 20);
 	Board.SetPos(320, 240, 20);
@@ -20,6 +22,7 @@ function Set_GreenBox()
 ///@param {real} kr		The Damage to Purple KR (Default 1)
 function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 {
+	gml_pragma("forceinline");
 	if !global.inv and can_hurt
 	{
 		audio_play(snd_hurt);
@@ -39,6 +42,7 @@ function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 */
 function Slam(Direction, move = 20, hurt = false, target_enemy = oEnemyParent)
 {
+	gml_pragma("forceinline");
 	Direction = posmod(Direction, 360);
 	with target_enemy
 	{
@@ -64,6 +68,7 @@ function Slam(Direction, move = 20, hurt = false, target_enemy = oEnemyParent)
 ///@param {bool} sprite					Whether a sprite used for masking
 ///@param {Asset.GMObject,Array} board	Which board to mask in
 function Battle_Masking_Start(spr = false, board = undefined) {
+	gml_pragma("forceinline");
 	board ??= BattleBoardList[TargetBoard];
 	if oGlobal.MainCamera.enable_z exit;
 	if instance_exists(board) and depth >= board.depth
@@ -80,7 +85,8 @@ function Battle_Masking_Start(spr = false, board = undefined) {
 
 ///Ends the masked drawing
 ///@param {Asset.GMObject,Array} board	Which board that was used to mask in
-function Battle_Masking_End(board = undefined){
+function Battle_Masking_End(board = undefined) {
+	gml_pragma("forceinline");
 	board ??= BattleBoardList[TargetBoard];
 	if oGlobal.MainCamera.enable_z exit;
 	if instance_exists(board) shader_reset();

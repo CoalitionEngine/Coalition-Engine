@@ -1,5 +1,4 @@
 var _color = sticky ? c_lime : c_fuchsia,
-	_sprite = sprPlatform,
 	_angle = image_angle,
 	_alpha = image_alpha,
 	_length = length / 4;
@@ -16,8 +15,8 @@ var _x = x,
 //Masking
 Battle_Masking_Start(true);
 //Drawing
-draw_sprite_ext(_sprite, 0, _x, _y, _image_xscale, _image_yscale, _angle, c_white, _alpha);
-draw_sprite_ext(_sprite, 1, _x, _y, _image_xscale, _image_yscale, _angle, _color, _alpha);
+draw_sprite_ext(sprite_index, 0, _x, _y, _image_xscale, _image_yscale, _angle, c_white, _alpha);
+draw_sprite_ext(sprite_index, 1, _x, _y, _image_xscale, _image_yscale, _angle, _color, _alpha);
 Battle_Masking_End();
 
 //Effect drawing (For the one said in Step)
@@ -29,8 +28,8 @@ if effect
 		 _color = image_blend;
 		_x = effect_x;
 		_y = effect_y;
-	draw_sprite_ext(_sprite, 0, _x, _y, _xscale, _yscale, _angle, c_white, _alpha);
-	draw_sprite_ext(_sprite, 1, _x, _y, _xscale, _yscale, _angle, _color, _alpha);
+	draw_sprite_ext(sprite_index, 0, _x, _y, _xscale, _yscale, _angle, c_white, _alpha);
+	draw_sprite_ext(sprite_index, 1, _x, _y, _xscale, _yscale, _angle, _color, _alpha);
 }
 
 show_hitbox(c_lime);

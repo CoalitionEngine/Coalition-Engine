@@ -1,19 +1,18 @@
 //Quit Texts
 if quit_timer
 	draw_sprite_ext(sprQuitMesssge, quit_timer / 14, 4, 4, 2, 2, 0, c_white, quit_timer / 15);
-
 if RGBShake
 {
 	switch RGBShakeMethod
 	{
 		//Extra surface drawing (has shadow)
 		case 0:
-			RGBSurf = CanvasGetAppSurf(true);
+			surface_copy(RGBSurf, 0, 0, application_surface);
 			draw_clear(c_black);
 			gpu_set_blendmode(bm_add);
-			RGBSurf.DrawExt(random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_red, 1);
-			RGBSurf.DrawExt(random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_blue, 1);
-			RGBSurf.DrawExt(random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_dkgreen, 1);
+			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_red, 1);
+			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_blue, 1);
+			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_dkgreen, 1);
 			gpu_set_blendmode(bm_normal);
 		break
 		//Application surface drawing (No shadow, brighter)
@@ -68,11 +67,10 @@ if room == rRestart
 //Gradient, pre-baked (will only run once to store the surface)
 if global.timer == 1
 {
-	GradientSurf.Start();
+	surface_set_target(GradientSurf);
 	shader_set(shdGradient);
 	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_white, 1);
 	shader_reset();
-	GradientSurf.Finish();
+	surface_reset_target();
 	shader_enable_corner_id(false);
 }
-

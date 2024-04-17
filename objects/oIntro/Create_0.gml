@@ -3,15 +3,6 @@ hint = 0;
 TweenFire(self, "", 0, 0, 119, 1, "hint>", 1);
 y = 0;
 
-//instance_create_depth(0,0,1,RainbowFuture);
-//if choose(0,1)
-//	instance_create_depth(0,0,1,Bloomer);
-//var shd = choose(
-////shdSepia,
-//shdNoise
-//)
-//Effect_Shader(shd);
-
 enum INTRO_MENU_STATE
 {
 	LOGO,
@@ -28,9 +19,26 @@ menu_state = INTRO_MENU_STATE.LOGO;
 menu_choice = [0, 0];
 input_buffer = 0;
 
+#region Introduction
+instruction_label = "--- Instruction ---";
+instruction_text =
+@"[Z or ENTER] - Confirm
+[X or SHIFT] - Cancel
+[C or CTRL] - Menu (In-game)
+[F4] - Fullscreen
+[Hold ESC] - Quit
+When HP is 0, you lose.";
+#endregion
+
 #region // Naming function
-var Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-naming_letter = [Letters, string_lower(Letters)];
+var Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", i = 0;
+naming_letter = ds_grid_create(26, 2);
+repeat 26
+{
+	naming_letter[# i, 0] = string_char_at(Letters, i);
+	naming_letter[# i, 1] = string_lower_buffer(string_char_at(Letters, i));
+	++i;
+}
 naming_choice = 1;
 naming_alpha = [1, 0];
 name = "";
@@ -92,7 +100,7 @@ function SettingPush(name, vary, desc)
 	array_push(SettingDesc, desc);
 }
 function CheckName(checkname){
-	switch string_lower(checkname)
+	switch string_lower_buffer(checkname)
 	{
 		default:
 			name_desc="Is this name correct?"
@@ -196,15 +204,6 @@ function CheckName(checkname){
 	}
 }
 
-KeyIsSetting = false;
-KeySelX = 1000;
-KeyTextY = 30;
-KeyTextYTarget = 30;
-KeySet = -1;
-KeySetVerb = "";
-KeyScale = array_create(14, 0.6);
-KeySurface = -1;
-
 ValSetX = 1000;
 CubePos = [320, 100];
 LerpSpeed = 0.12;
@@ -213,10 +212,5 @@ Titlepos = [320, 200];
 DescX = 320;
 LogoText = "Coalition\nEngine";
 LogoText = "UNDERTALE";
-Musics = audio_create_stream_array("MusSans", "MusOST1");
-MusicList = [];
 fading = false;
 #endregion
-
-window_set_cursor(cr_none);
-instance_create_depth(mouse_x, mouse_y, -1, oOrbit);

@@ -1,6 +1,7 @@
 ///Loads the datas of an encounter that you have stored in this script
 ///@param {real} encounter_number Loads the data of the argument
 function Enemy_Function_Load(encounter_number = global.battle_encounter) {
+	gml_pragma("forceinline");
 	enemy = array_create(3, noone);
 	enemy_name = [];
 	enemy_hp = [];
@@ -11,9 +12,9 @@ function Enemy_Function_Load(encounter_number = global.battle_encounter) {
 	var enemy_presets = global.enemy_presets;
 	
 	enemy_instance = [];
-	for (var i = 0, enemies; i < 3; ++i)
+	for (var i = 0, enemies = []; i < 3; ++i)
 	{
-		enemies[i] = enemy_presets[encounter_number, i];
+		enemies[i] = enemy_presets[encounter_number][i];
 		if enemies[i] != noone
 		{
 			array_push(enemy_instance, instance_create_depth(160 * (i + 1), 250, 1, enemies[i]));
@@ -22,6 +23,7 @@ function Enemy_Function_Load(encounter_number = global.battle_encounter) {
 			enemy_hp[i] =			enemies[i].enemy_hp;
 			enemy_hp_max[i] =		enemies[i].enemy_hp_max;
 			enemy_draw_hp_bar[i] =	enemies[i].enemy_draw_hp_bar;
+			array_last(enemy_instance).__enemy_slot = i;
 			var ii = 0;
 			repeat array_length(enemies[i].enemy_act) - 1
 			{
@@ -90,7 +92,7 @@ function Enemy() constructor
 	/**
 		Sets the HP data of the enemy
 		@param {Asset.GMObject} enemy	The enemy to set the HP data to
-		@param {rael} max_hp			The max hp of the enemy
+		@param {real} max_hp			The max hp of the enemy
 		@param {real} current_hp		The current hp of the enemy (Default max)
 		@param {bool} draw_hp_bar		Whether the hp bar will be drawn in the menu
 	*/
