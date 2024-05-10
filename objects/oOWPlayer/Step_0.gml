@@ -2,8 +2,8 @@
 function Encounter_Begin(exclaim = true, move = true)
 {
 	//Gets the relative position of the palyer
-	encounter_soul_x = 	(x - Camera.ViewX()) * Camera.GetScale(0);
-	encounter_soul_y = 	(y - Camera.ViewY() - sprite_height / 2) * Camera.GetScale(1);
+	encounter_soul_x = 	(x - Camera.ViewX()) * Camera.GetScale(1);
+	encounter_soul_y = 	(y - Camera.ViewY() - sprite_height / 2) * Camera.GetScale(2);
 	encounter_state = 3 - move - exclaim;
 	if encounter_state == 1 audio_play(snd_warning);
 }
