@@ -14,6 +14,7 @@ height = 25;
 
 warn_color = c_red;
 warn_alpha_filled = 0.25;
+warn_color_swap = true;
 
 time_warn = 18;
 time_move = 5;

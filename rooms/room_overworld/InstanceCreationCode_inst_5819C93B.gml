@@ -5,6 +5,6 @@ Event = function()
 	with oOWPlayer
 	{
 		scribble_typists_add_event("sansfite", sansfightstart)
-		OW_Dialog("sans fight time[delay,60][sansfite]")
+		OverworldDialog("sans fight time[delay,60][sansfite]",,,,spr_sans_head, 6)
 	}
 }

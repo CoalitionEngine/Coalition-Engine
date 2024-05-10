@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Keyboard (Direct)",
-    "path": "folders/Coalition Engine/Addons/Input/Keyboard (Direct).yy",
+    "name": "26  Keyboard (Direct)",
+    "path": "folders/Coalition Engine/Addons/Input/26  Keyboard (Direct).yy",
   },
 }

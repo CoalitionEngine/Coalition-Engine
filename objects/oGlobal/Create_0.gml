@@ -4,60 +4,74 @@ restart_timer = 0;
 restart_ender = irandom_range(30, 120);
 restart_tip = tips();
 
-camera_scale_x = 1;
-camera_scale_y = 1;
-camera_view_width = 640;
-camera_view_height = 480;
-camera_shake_i = 0;
-
-camera_x = 0;
-camera_y = 0;
-camera_angle = 0;
-camera_target = noone;
-camera_previous_target = noone;
-Main_Camera = view_camera[0];
-
 quit_timer = 0;
 
 fader_color = c_black;
 fader_alpha = 0;
 
-effect_shader =
-[
-	
-];
-effect_surf = [-1];
-effect_param =
-[
-	["", 1],
-];
-
 RGBShake = 0;
+RGBDecrease = 1;
+RGBSurf = surface_create(640, 480);
+RGBShakeMethod = 0;
 
-Song = 
+Song =  {};
+with Song
 {
-	Activate : false,
-	Name : "",
-	Dist : -20,
-	Time : 0,
+	Activate = false;
+	Name = "";
+	Dist = -20;
+	Time = 0;
+	Lerp = 0.21;
 };
 
-Fade =
+Fade = {};
+with Fade
 {
-	Method : FADE.DEFAULT,
-	Activate : [
+	Method = FADE.DEFAULT;
+	Activate =
+	[
 		[false, 0, 0],
 		[false, 0, 0],
 		[false, 0, 0, 32],
-	],
-	Timer : 0
+	];
+	Timer = 0;
 };
 FadeTime = 0;
 
-Naming =
+Naming = {};
+with Naming
 {
-	Enabled : true,
-	Allowed : true,
-	Named : false,
-	State : 1
-};
+	Enabled = true;
+	Allowed = true;
+	Named = false;
+	State = 1
+}
+
+Border = {};
+with Border
+{
+	Enabled = false;
+	Sprite = -1;
+	SpritePrevious = -1;
+	Alpha = 1;
+	AlphaPrevious = 0;
+	//Whether the border is the game itself
+	AutoCapture = true;
+	//Whether the border is blurred, if so how much
+	Blur = 5;
+	__BlurShaderSize = shader_get_uniform(shdGaussianBlur, "size");
+	EaseMethod = "";
+	EaseDuration = 0;
+	EaseTimer = 0;
+	EaseTweens = array_create(2);
+}
+
+#region Effects
+shader_enable_corner_id(true);
+GradientSurf = surface_create(640, 480);
+global.sur_list = ds_list_create();
+CutScreenSurface = surface_create(640, 480);
+CutLineStart = shader_get_uniform(shdCutScreen, "u_lineStart");
+CutLineEnd = shader_get_uniform(shdCutScreen, "u_lineEnd");
+CutSide = shader_get_uniform(shdCutScreen, "u_side");
+#endregion

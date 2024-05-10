@@ -1,17 +1,7 @@
 audio_play(snd_logo);
 hint = 0;
-TweenFire(self, EaseLinear, TWEEN_MODE_ONCE, false, 119, 1, "hint", 0, 1);
+TweenFire(self, "", 0, 0, 119, 1, "hint>", 1);
 y = 0;
-
-//instance_create_depth(0,0,1,RainbowFuture);
-//if choose(0,1)
-//	instance_create_depth(0,0,1,Bloomer);
-//var shd = choose(
-////shdSepia,
-////shdInvert,
-//shdNoise
-//)
-//Effect_Shader(shd);
 
 enum INTRO_MENU_STATE
 {
@@ -29,10 +19,28 @@ menu_state = INTRO_MENU_STATE.LOGO;
 menu_choice = [0, 0];
 input_buffer = 0;
 
+#region Introduction
+instruction_label = "--- Instruction ---";
+instruction_text =
+@"[[Z or ENTER] - Confirm
+[[X or SHIFT] - Cancel
+[[C or CTRL] - Menu (In-game)
+[[F4] - Fullscreen
+[[Hold ESC] - Quit
+When HP is 0, you lose.";
+#endregion
+
 #region // Naming function
-var Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-naming_letter = [Letters, string_lower(Letters)];
-naming_choice = 1;
+Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var i = 0;
+naming_letter = ds_grid_create(27, 2);
+repeat 27
+{
+	naming_letter[# i, 0] = string_char_at(Letters, i + 1);
+	naming_letter[# i, 1] = string_lower_buffer(naming_letter[# i, 0]);
+	++i;
+}
+naming_choice = 0;
 naming_alpha = [1, 0];
 name = "";
 name_desc = "Is this name correct?";
@@ -43,182 +51,127 @@ name_max_length = 6; // In letter ofc
 name_confirm = 0;
 name_usable = true
 name_check = false;
-//naming_check=[frisk","WARNING : This name will\rmake your life hell\ranyways, proceed?"]
 #endregion
 
 #region // Settings
-global.easy = true;
-is_setting = false;
-settings_x = -480;
-Setting = 0;
-SettingY = 85;
-SettingYTarget = 85;
-SettingSoundIsPlayed = false;
-BGShdVal = 0;
-SettingVar =
-[
-	global.Volume,
-	global.CompatibilityMode,
-	global.ShowFPS,
-	global.easy,
-	global.InputKeys,
-	undefined
-];
-SettingVarChange = [5, 0, 0, 0, 0];
-SettingName =
-[
-	"Master Volume",
-	"Show FPS",
-	"Compatibility Mode",
-	"Easy Mode",
-	"Input Keys",
-	"Battle Select",
-];
-MouseInSetting = false;
-SettingDescX = 1000;
-SettingDesc =
-[
-	"Volume of game\n(Left Right to Toggle)\n(Shift for precise)",
-	"Shows FPS on the top\nright corner",
-	"Reduces special effects",
-	"Enables Easy Mode",
-	"Change your inputs",
-	"",
-];
-SettingSurface = -1;
-SelectingKey = false;
-function SettingPush(name, vary, desc)
-{
-	array_push(SettingName, name);
-	array_push(SettingVar, vary);
-	array_push(SettingDesc, desc);
-}
 function CheckName(checkname){
-	switch string_lower(checkname)
+	switch string_lower_buffer(checkname)
 	{
 		default:
-			name_desc="Is this name correct?"
-			name_usable = true
+			name_desc = "Is this name correct?";
+			name_usable = true;
 			break;
 		case "chara":
-			name_desc="The true name."
-			name_usable = true
+			name_desc = "The true name.";
+			name_usable = true;
 			break;
 		case "frisk":
-			name_desc="WARNING : This name will\rmake your life hell\ranyways, proceed?"
-			name_usable = true
+			name_desc = "WARNING : This name will\rmake your life hell\ranyways, proceed?";
+			name_usable = true;
 			break;
 		case "aaaaaa":
-			name_desc="Not very creative...?"
-			name_usable = true
+			name_desc = "Not very creative...?";
+			name_usable = true;
 			break;
 		case "toriel":
-			name_desc="I think you should\rthink of your own\rname, my child."
-			name_usable = false
-			name_confirm=0
+			name_desc = "I think you should\rthink of your own\rname, my child.";
+			name_usable = false;
+			name_confirm = false;
 			break;
 		case "alphy":
-			name_desc="Uh.... Ok?"
+			name_desc = "Uh.... Ok?";
+			name_usable = true;
 			break;
 		case "alphys":
-			name_desc="D-Don't do that."
-			name_usable = false
-			name_confirm=0
+			name_desc = "D-Don't do that.";
+			name_usable = false;
+			name_confirm = false;
 			break;
 		case "asgore":
-			name_desc="You cannot."
-			name_usable = false
-			name_confirm=0
+			name_desc = "You cannot.";
+			name_usable = false;
+			name_confirm = false;
 			break;
 		case "asriel":
-			name_desc="..."
-			name_usable = false
-			name_confirm=0
+			name_desc = "...";
+			name_usable = false;
+			name_confirm = false;
 			break;
 		case "flowey":
-			name_desc="I already CHOSE\rthat name."
-			name_confirm=0
-			name_usable = false
+			name_desc = "I already CHOSE\rthat name.";
+			name_confirm = false;
+			name_usable = false;
 			break;
 		case "sans":
-			name_desc="nope."
-			name_confirm=0
-			name_usable = false
+			name_desc = "nope.";
+			name_confirm = false;
+			name_usable = false;
 			break;
 		case "papyru":
-			name_desc="I'LL ALLOW IT!!!!"
+			name_desc = "I'LL ALLOW IT!!!!";
+			name_usable = true;
 			break;
 		case "undyne":
-			name_desc="Get your OWN name!"
-			name_usable = false
-			name_confirm=0
+			name_desc = "Get your OWN name!";
+			name_usable = false;
+			name_confirm = false;
 			break;
 		case "mtt":
 		case "mettat":
 		case "metta":
-			name_desc="OOOOH!!! ARE YOU\rPROMOTING MY BRAND?"
+			name_desc = "OOOOH!!! ARE YOU\rPROMOTING MY BRAND?";
+			name_usable = true;
 			break;
 		case "temmie":
-			name_desc="hOI!"
+			name_desc = "hOI!";
+			name_usable = true;
 			break;
 		case "murder":
 		case "mercy":
-			name_desc="That's a little on-\rthe-nose, isn't it...?"
+			name_desc = "That's a little on-\rthe-nose, isn't it...?";
+			name_usable = true;
 			break;
 		case "gerson":
-			name_desc="Wah ha ha! Why not?"
+			name_desc = "Wah ha ha! Why not?";
+			name_usable = true;
 			break;
 		case "bratty":
-			name_desc="Like, OK I guess."
+			name_desc = "Like, OK I guess.";
+			name_usable = true;
 			break;
 		case "catty":
-			name_desc="Bratty! Bratty!\rThat's MY name!"
+			name_desc = "Bratty! Bratty!\rThat's MY name!";
+			name_usable = true;
 			break;
 		case "bpants":
-			name_desc="You are really scraping the\rbottom of the barrel."
+			name_desc = "You are really scraping the\rbottom of the barrel.";
+			name_usable = true;
 			break;
 		case "jerry":
-			name_desc="Jerry."
+			name_desc = "Jerry.";
+			name_usable = true;
 			break;
 		case "woshua":
-			name_desc="Clean name."
+			name_desc = "Clean name.";
+			name_usable = true;
 			break;
 		case "blooky":
-			name_desc="..........\r(They're powerless to\rstop you.)"
+			name_desc = "..........\r(They're powerless to\rstop you.)";
+			name_usable = true;
 			break;
 		case "shyren":
-			name_desc="...?"
+			name_desc = "...?";
+			name_usable = true;
 			break;
 		case "aaron":
-			name_desc="Is this name correct? ;)"
+			name_desc = "Is this name correct? ;)";
+			name_usable = true;
 			break;
 		case "gaster":
 			game_restart();
 			break;
 	}
 }
-
-KeyIsSetting = false;
-KeySelX = 1000;
-KeyTextY = 30;
-KeyTextYTarget = 30;
-KeySet = -1;
-KeySetVerb = "";
-KeyScale = array_create(14, 0.6);
-KeySurface = -1;
-
-ValSetX = 1000;
-CubePos = [320, 100];
-LerpSpeed = 0.12;
-TitleScale = 1;
-Titlepos = [320, 200];
-DescX = 320;
-LogoText = "Coalition\nEngine";
 LogoText = "UNDERTALE";
-Musics = audio_create_stream_array("MusSans", "MusOST1");
-MusicList = [];
 fading = false;
 #endregion
-
-window_set_cursor(cr_none);
-instance_create_depth(mouse_x, mouse_y, -1, oOrbit);

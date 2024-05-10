@@ -1,23 +1,62 @@
-#macro ENGINE_VERSION "Beta v4.6.9.5"
-//Input
-enum INPUT
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	CONFIRM,
-	CANCEL,
-	MENU
-};
-enum INPUT_TYPE
-{
-	CHECK,
-	PRESS,
-	RELEASE,
-};
+#region Engine
+//Here are the macros for the engine
+#macro __COALITION_ENGINE_VERSION "v0.6.0"
+#macro ALLOW_DEBUG  true
+//This automatically set DEBUG into false when you build the game
+//#macro DEBUG !game_is_standalone()
+#macro DEBUG true
+#macro RELEASE !DEBUG
+#macro __COALITION_ENGINE_ERROR_LOG true || DEBUG
+#macro __COALITION_VERBOSE true || DEBUG
+#macro __COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR true
+#endregion
+#region Input
+//Here are the macros for handy input code
+#macro CHECK_HORIZONTAL (global.diagonal_speed ? input_check_opposing("left", "right") : input_x("left", "right", "up", "down"))
+#macro CHECK_VERTICAL (global.diagonal_speed ? input_check_opposing("up", "down") : input_y("left", "right", "up", "down"))
+#macro PRESS_HORIZONTAL input_check_opposing_pressed("left", "right")
+#macro PRESS_VERTICAL input_check_opposing_pressed("up", "down")
+#macro CHECK_MOVING input_distance("left", "right", "up", "down") != 0
+#macro PRESS_CONFIRM input_check_pressed("confirm")
+#macro HOLD_CONFIRM input_check("confirm")
+#macro PRESS_CANCEL input_check_pressed("cancel")
+#macro HOLD_CANCEL input_check("cancel")
+#macro PRESS_MENU input_check_pressed("menu")
+#endregion
+#region Handy Macros
+//Here are the macros for simplifing code, for instance the ins_dest can act as a instance_destroy
+//If you type in ins_dest (object)
+#macro ins_dest for(;;{instance_destroy(a); break}) var a =
+#macro elif else if
+#macro defer for (;; {
+#macro after ; break; })
+#macro c_dkgreen make_color_rgb(0, 255, 0)
+#macro this self
+#macro is ==
+//Handy GMLive macro for users who have GMlive
+#macro COALITION_ENABLE_GMLIVE DEBUG
+#macro live if COALITION_ENABLE_GMLIVE \
+	if asset_get_index("obj_gmlive") != -1 {\
+	instance_check_create(obj_gmlive);\
+	if live_call() return live_result\
+}
+#endregion
+
+enum FONTS {
+	GAMEOVER,
+	DAMAGE,
+	COT,
+	DTMONO,
+	DTSANS,
+	LOGO,
+	MNC,
+	SANS,
+	UI,
+	CHINESE,
+}
 
 //Soul
+//guys trust me im working on it
 enum SOUL_MODE
 {
 	RED = 1,
@@ -30,7 +69,7 @@ enum SOUL_MODE
 	FREEBLUE = 8,
 }
 
-//Direction
+//Direction for the ones who can't memorize directions
 enum DIR
 {
 	UP = 90,
@@ -44,26 +83,25 @@ enum DIR
 enum ITEM
 {
 	PIE = 1,
-	INOODLES = 2,
-	STEAK = 3,
-	SNOWP = 4,
-	LHERO = 5,
-	SEATEA = 6,
+	INOODLES,
+	STEAK,
+	SNOWP,
+	LHERO,
+	SEATEA,
 }
-//Change this value when more items are added
-#macro ITEM_COUNT 6
 //Item Scroll types
 enum ITEM_SCROLL
 {
 	DEFAULT = 0,
 	VERTICAL = 1,
-	CIRCLE = 2,
 	HORIZONTAL = 3,
 }
 //Overworld Room ID
 enum OVERWORLD
 {
 	CORRIDOR = 0,
+	RUINS_ROOM_1 = 0,
+	RUINS_ROOM_2 = 1,
 }
 
 // Batle or Menu States
@@ -86,6 +124,13 @@ enum MENU_STATE
 	MERCY_END = 7,
 	FLEE = 8
 }
+enum SAVE_STATE
+{
+	NOT_SAVING = 0,
+	DISPLAY_DIALOG = 1,
+	CHOOSING = 2,
+	FINISHED = 3
+}
 
 enum FADE
 {
@@ -93,3 +138,4 @@ enum FADE
 	CIRCLE = 1,
 	LINES = 2
 }
+

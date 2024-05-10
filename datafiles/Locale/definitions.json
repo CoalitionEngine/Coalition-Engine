@@ -1,0 +1,10 @@
+{
+    "English": {
+        "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
+        "file": "./english.json"
+    },
+    "SimpZH": {
+        "locale": "zh-MO",
+        "file": "./simpzh.json"
+    }
+}

@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shdClipMask",
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Coalition Engine/Shaders.yy",
+    "name": "Engine Essential",
+    "path": "folders/Coalition Engine/Shaders/Engine Essential.yy",
   },
   "type": 1,
 }

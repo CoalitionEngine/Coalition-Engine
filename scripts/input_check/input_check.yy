@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Checkers",
-    "path": "folders/Coalition Engine/Addons/Input/Checkers.yy",
+    "name": "01  Checking Verbs",
+    "path": "folders/Coalition Engine/Addons/Input/01  Checking Verbs.yy",
   },
 }

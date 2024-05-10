@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Extended Verbs",
-    "path": "folders/Coalition Engine/Addons/Input/Extended Verbs.yy",
+    "name": "27  Combos",
+    "path": "folders/Coalition Engine/Addons/Input/27  Combos.yy",
   },
 }

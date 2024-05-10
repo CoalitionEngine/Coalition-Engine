@@ -1,84 +1,65 @@
-///@desc Creates a Blaster
-///@param {array} xy			Initial x and y position of the Blaster
-///@param {array} angles		Initial and Target angles of the Blaster
-///@param {array} scale			The scales of the Blaster
-///@param {array} ideal_xy		Target x and y position of the Blaster
-///@param {array} move_pause_dur The move, pause and duration of the Blaster
-///@param {real} type			The color of the Blaster (Default 0)
-///@param {bool} blur			Whether the screen blurs when the blaster fires (Default Flase)
-///@param {real} c_sound		Whether the creation sound plays when created (Default 1)
-///@param {real} r_sound		Whether the releasing sound plays when firing (Default 1)
-function Bullet_GasterBlaster(XY,ANGLE,SCALE,IDEALXY,MPD,TYPE = 0,BLUR = false,C_SOUND = 1,R_SOUND = 1) 
-{
-	var DEPTH = -1000;
-	
-	var blaster = is_array(XY) ? instance_create_depth(XY[0], XY[1], DEPTH, oGB)
-				: instance_create_depth(XY.x, XY.y, DEPTH, oGB);
-	
+//feather ignore all
+/**
+	@desc Creates a Blaster with given parameters
+	@param {real} x				The x position of the blaster when created
+	@param {real} y				The y position of the blaster when created
+	@param {real} target_x		The target x position of the blaster
+	@param {real} target_y		The target y position of the blaster
+	@param {real} init_angle	The inital angle of the blaster (Default ± 180 of the taget angle)
+	@param {real} target_angle	The target angle of the blaster
+	@param {real} scale_x		The x scale of the blaster
+	@param {real} scale_y		The y scale of the blaster
+	@param {real} move			The move time of the blaster
+	@param {real} pause			The pause time of the blaster before it shoots after it finished moving
+	@param {real} duration		The duration of the blast
+	@param {real} color			The color of the blaster (Default 0)
+	@param {bool} blur			Whether the blaster blurs the screen upon firing (Default false)
+	@param {bool} create_sound	Whether the creation sound plays (Default true)
+	@param {bool} release_sound	Whether the firing sound plays (Default true)
+*/
+function CreateBlaster(x, y, t_x, t_y, i_angle = undefined, t_angle, s_x, s_y, move, pause, dur, col = 0, blur = false, c_sound = true, r_sound = true) {
+	gml_pragma("forceinline");
+	i_angle ??= t_angle + choose(180, -180);
+	var blaster = instance_create_depth(x, y, -10, oGB);
 	with blaster
 	{
-		image_angle = ANGLE[0];
+		gbx = x; gby = y;
+		gb_xscale = s_y; gb_yscale = s_x;
+		image_angle = i_angle;
 		
-		image_yscale = SCALE[0];
-		image_xscale = SCALE[1];
+		target_x = t_x; target_y = t_y;
+		target_angle = t_angle;
 		
-		target_x = IDEALXY[0];
-		target_y = IDEALXY[1];
-		target_angle = ANGLE[1];
-		
-		time_pause = MPD[1];
-		time_blast = MPD[2];
-		time_move = MPD[0];
-		
-		type = TYPE;
-		
-		charge_sound = C_SOUND;
-		release_sound = R_SOUND;
-		blurring = BLUR;
+		time_move = move;
+		time_pause = pause;
+		time_blast = dur;
+		type = col;
+		blurring = blur;
+		charge_sound = c_sound;
+		release_sound = r_sound;
 	}
-
 	return blaster;
 }
 
-///@desc Makes a blaster circle
-///@param {array} Circle_Center		The x and y target of the Circle
-///@param {array} Distances			The initial and target distance between the GB and the Center of the Circle
-///@param {array} Directions		The Init and target direction of the GB in the circle
-///@param {array} Angles			The Initial and target angle of the GB
-///@param {array} Scales			The Scales fo the GB
-///@param {array} Move_Pause_Dur	The Move pause and duration of the GB
-///@param {real} Color				The color of the GB (Default White)
-///@param {bool} blur				Whether the screen blurs when the blaster fires (Default Flase)
-///@param {real} c_sound			Whether the creation sound plays when created (Default 1)
-///@param {real} r_sound			Whether the releasing sound plays when firing (Default 1)
-function Blaster_Circle(aim_xy, len, dir, angle, sc, mpd, col = 0, blur = false, c = 1, r = 1)
-{
-	var pos =
-	[
-		[lengthdir_x(len[0], dir[0]) + aim_xy[0], lengthdir_y(len[0], dir[0]) + aim_xy[1]],
-		[lengthdir_x(len[1], dir[1]) + aim_xy[0], lengthdir_y(len[1], dir[1]) + aim_xy[1]]
-	],
-	gb = Bullet_GasterBlaster(pos[0], angle, sc, pos[1], mpd, col, blur, c, r);
-	return gb;
-}
 
-///@desc Creates a homing blaster
-///@param {real} Init_Angle			The Initial angle of the blaster
-///@param {array} Target_Pos		The Target angle of the blaster
-///@param {array} Scales			The Scales fo the GB
-///@param {array} Move_Pause_Dur	The Move pause and duration of the GB
-///@param {real} Color				The color of the GB (Default White)
-///@param {bool} blur				Whether the screen blurs when the blaster fires (Default Flase)
-///@param {real} c_sound			Whether the creation sound plays when created (Default 1)
-///@param {real} r_sound			Whether the releasing sound plays when firing (Default 1)
-function Blaster_Aim(ian, txy, sc, mpd, col = 0, blur = false, c = 1, r = 1)
-{
-	var dd = random(360),
-		dir = is_array(txy) ? point_direction(txy[0], txy[1], oSoul.x, oSoul.y)
-				: point_direction(txy.x, txy.y, oSoul.x, oSoul.y),
-		fpos = lengthdir_xy(600, dd);
-		fpos.x += oSoul.x;
-		fpos.y += oSoul.y;
-		var gb = Bullet_GasterBlaster(fpos,	[ian, dir], sc, txy, mpd, col, blur, c, r);
-	return gb;
+/**
+	Creates a blaster in a blaster circle
+	@param {real} x				The x position of the center of the circle
+	@param {real} y				The y position of the center of the circle
+	@param {real} len_start		The beginning distance between the blaster to the center
+	@param {real} len_end		The target distance between the blaster and the center
+	@param {real} dir_start		The intial direction of the blaster
+	@param {real} dir			The target direction of the blaster
+	@param {real} scale_x		The x scale of the blaster
+	@param {real} scale_y		The y scale of the blaster
+	@param {real} move			The move time of the blaster
+	@param {real} pause			The pause time of the blaster before it shoots after it finished moving
+	@param {real} duration		The duration of the blast
+*/
+function CreateBlasterCircle(x, y, len_start, len_end, dir_start = undefined, dir, scale_x, scale_y, move, pause, dur) {
+	gml_pragma("forceinline");
+	var xs = x + lengthdir_x(len_start, dir), ys = y + lengthdir_y(len_start, dir),
+		xe = x + lengthdir_x(len_end, dir),   ye = y + lengthdir_y(len_end, dir),
+		ang = point_direction(xe, ye, x, y);
+	CreateBlaster(xs, ys, xe, ye, dir_start, ang, scale_x, scale_y, move, pause, dur);
 }

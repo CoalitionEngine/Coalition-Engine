@@ -1,0 +1,14 @@
+{
+    "language": "English",
+    "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
+    "text": {
+        "Font": "fnt_dt_mono",
+        "Battle": {
+            "ItemPage": "PAGE {0}",
+            "Spare": "* Spare",
+            "Flee": "* Flee",
+            "Win": "You WON![delay,333]\n* You earned {0} XP and {1} gold.",
+            "LoveInc": "\n[delay,333]* Your LOVE increased!"
+        }
+    }
+}

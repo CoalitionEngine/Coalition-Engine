@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Extended Verbs",
-    "path": "folders/Coalition Engine/Addons/Input/Extended Verbs.yy",
+    "name": "04  Further Verb Functions",
+    "path": "folders/Coalition Engine/Addons/Input/04  Further Verb Functions.yy",
   },
 }

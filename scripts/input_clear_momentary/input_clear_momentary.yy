@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Other",
-    "path": "folders/Coalition Engine/Addons/Input/Other.yy",
+    "name": "23  Other",
+    "path": "folders/Coalition Engine/Addons/Input/23  Other.yy",
   },
 }

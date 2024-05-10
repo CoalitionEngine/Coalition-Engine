@@ -13,7 +13,7 @@ var soul = oSoul;
 surface_set_target(surface);
 draw_clear_alpha(c_white, 0);
 draw_clear_alpha(c_black, 0);
-draw_sprite_ext(sprPixel, 0, bg_x - 5 * dcos(image_angle), bg_y - 5 * -dsin(image_angle - 90), bg_w + 10, bg_h + 10, _angle, c_black, _alpha);
+draw_sprite_ext(sprPixel, 0, bg_x - lengthdir_x(5, image_angle), bg_y - lengthdir_y(5, image_angle - 90), bg_w + 10, bg_h + 10, _angle, c_black, _alpha);
 for (var i = 0; i < 4; ++i)
 	draw_sprite_ext(sprPixel, 0, _frame_x[i], _frame_y[i], _frame_w[i], _frame_h[i], _angle, _color, _alpha);
 surface_reset_target();

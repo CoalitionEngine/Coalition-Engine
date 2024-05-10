@@ -1,147 +1,440 @@
+// Feather disable all
 __input_initialize();
-
 function __input_initialize()
 {
-    if (variable_global_exists("__input_initialization_phase")) return false;
-    global.__input_initialization_phase = "Pending";
+    static _initialized = false;
+    if (_initialized) return;
+    _initialized = true;
+    
+    //Don't use static here as this puts the game into a boot loop
+    var _global = __input_global();
     
     //Set up the extended debug functionality
-    global.__input_debug_log = "input___" + string_replace_all(string_replace_all(date_datetime_string(date_current_datetime()), ":", "-"), " ", "___") + ".txt";
-    if (INPUT_EXTERNAL_DEBUG_LOG && __INPUT_DEBUG)
+    _global.__debug_log = "input___" + string_replace_all(string_replace_all(date_datetime_string(date_current_datetime()), ":", "-"), " ", "___") + ".txt";
+    if (__INPUT_EXTERNAL_DEBUG_LOG && __INPUT_DEBUG)
     {
-        show_debug_message("Input: Set external debug log to \"" + string(global.__input_debug_log) + "\"");
+        show_debug_message("Input: Set external debug log to \"" + string(_global.__debug_log) + "\"");
         exception_unhandled_handler(__input_exception_handler);
     }
     
-    __input_trace("Welcome to Input by @jujuadams and @offalynne! This is version ", __INPUT_VERSION, ", ", __INPUT_DATE);
-    
-    //Attempt to set up a time source for slick automatic input handling
-    try
+    __input_trace("Welcome to Input by Juju Adams and Alynne Keith! This is version ", __INPUT_VERSION, ", ", __INPUT_DATE);
+    if (__INPUT_SILENT)
     {
-        //GMS2022.500.58 runtime
-        global.__input_time_source = time_source_create(time_source_game, 1, time_source_units_frames, function()
-        {
-            __input_system_tick();
-        }, [], -1);
-        
-        time_source_start(global.__input_time_source);
+        __input_trace("Warning! Per __INPUT_SILENT mode, most logging is suppressed. This is NOT recommended");
     }
-    catch(_error)
+    
+    
+    
+    #region Feature detection
+    
+    //Detect infinity
+    if (is_undefined(infinity))
+    {
+        __input_error("Error!\nGM constant 'infinity' is undefined. Please file a bug with YoYoGames.\n", "@jujuadams and @offalynne\n", __INPUT_DATE);
+    }
+    
+    //Detect is_instanceof(), which offers some minor performance gains
+    if (INPUT_ON_WEB)
+    {
+        //Buggy as of 2023-07-05
+        _global.__use_is_instanceof = false;
+    }
+    else
     {
         try
         {
-            //Early GMS2022.500.xx runtimes
-            global.__input_time_source = time_source_create(time_source_game, 1, time_source_units_frames, function()
-            {
-                __input_system_tick();
-            }, -1);
-            
-            time_source_start(global.__input_time_source);
+            var _instance_of = is_instanceof(input_binding_empty(), __input_class_binding);
+            _global.__use_is_instanceof = _instance_of;
         }
         catch(_error)
         {
-            //If the above fails then fall back on needing to call input_tick()
-            global.__input_time_source = undefined;
-            __input_trace("Warning! Running on a GM runtime earlier than 2022.5");
+            _global.__use_is_instanceof = false;
         }
     }
     
+    if (not __INPUT_SILENT)
+    {
+        __input_trace(_global.__use_is_instanceof? "Using is_instanceof() for comparisons" : "is_instanceof() unavailable, using legacy comparisons");
+    }
+    
+    //Detect new string functions, which offer a significant performance gain when reading the SDL2 database
+    if (INPUT_ON_WEB)
+    {
+        //Buggy as of 2023-10-08
+        _global.__use_legacy_strings = false;
+    }
+    else 
+    {
+        try
+        {
+            var _split = array_equals(string_split("Juju\nwaz\nere", "\n", true), ["Juju", "waz", "ere"]);
+            var _trim  = (string_trim("         you can't catch me          ") == "you can't catch me");
+            _global.__use_legacy_strings = !(_split && _trim);
+        }
+        catch(_error)
+        {
+            _global.__use_legacy_strings = true;
+        }
+    }
+    
+    if (not __INPUT_SILENT)
+    {
+        __input_trace(_global.__use_is_instanceof? "Using new string functions to parse SDL2 database" : "New string functions unavailable, using legacy SDL2 database parsing");
+    }
+      
+    //Detect new native gamepad constants
+    var _use_gp_extended = false;
+    try
+    {
+        _use_gp_extended = is_numeric(gp_home) && is_numeric(gp_extra1) && is_numeric(gp_paddler) && is_numeric(gp_paddlel) && is_numeric(gp_paddlerb) && is_numeric(gp_paddlelb) && is_numeric(gp_touchpadbutton);
+    }
+    catch(_error)
+    {    
+        _use_gp_extended = false;
+    }
+    
+    if (_use_gp_extended)
+    {
+        _global.__gp_guide    = gp_home;
+        _global.__gp_misc1    = gp_extra1;
+        _global.__gp_touchpad = gp_touchpadbutton;
+        _global.__gp_paddle1  = gp_paddler;
+        _global.__gp_paddle2  = gp_paddlel;
+        _global.__gp_paddle3  = gp_paddlerb;
+        _global.__gp_paddle4  = gp_paddlelb;        
+        
+        if not (__INPUT_SILENT) __input_trace("Using native extended gamepad values");
+    }
+    else
+    {
+        _global.__gp_guide    = 32889;
+        _global.__gp_misc1    = 32890;
+        _global.__gp_touchpad = 32891;
+        _global.__gp_paddle1  = 32892;
+        _global.__gp_paddle2  = 32893;
+        _global.__gp_paddle3  = 32894;
+        _global.__gp_paddle4  = 32895;        
+        
+        if not (__INPUT_SILENT) __input_trace("Native extended gamepad values unavailable");
+    }
+    
+    //Detect is_debug_overlay_open() to block game input to overlay, if supported
+    if (INPUT_ON_WEB || INPUT_ON_CONSOLE)
+    {
+        //Buggy as of 2023-10-08
+        _global.__use_debug_overlay_status = false;
+    }
+    else 
+    {
+        try
+        {
+            var _overlay_open = is_debug_overlay_open();
+            _global.__use_debug_overlay_status = is_bool(_overlay_open);
+        }
+        catch(_error)
+        {
+            _global.__use_debug_overlay_status = false;
+        }
+    }
+    
+    if not (__INPUT_SILENT)
+    {
+        __input_trace(_global.__use_debug_overlay_status? "Using debug overlay status to block input" : "Debug overlay status is unavailable");
+    }
+    
+    if (INPUT_ON_WEB)
+    {
+        //Buggy as of 2023-10-08
+        _global.__allow_gamepad_tester = false;
+    }
+    else 
+    {
+        try
+        {
+            ref_create({x: 32}, "x");
+            _global.__allow_gamepad_tester = true;
+        }
+        catch(_error)
+        {
+            _global.__allow_gamepad_tester = false;
+        }
+    }
+    
+    if not (__INPUT_SILENT)
+    {
+        __input_trace(_global.__allow_gamepad_tester? "Allowing native gamepad tester" : "Native gamepad tester is unavailable");
+    }
+    
+    if (_global.__allow_gamepad_tester) __input_gamepad_tester_init();
+    
+    #endregion
+    
+    
+    
+    #region On-boot warnings and errors
+    
+    //Set up a time source to manage input_controller_object
+    _global.__time_source = time_source_create(time_source_global, 1, time_source_units_frames, function()
+    {
+        //Ensure existance of our controller object
+        if (!instance_exists(input_controller_object))
+        {
+            //Try to detect deactivation of the controller object
+            instance_activate_object(input_controller_object);
+            if (instance_exists(input_controller_object))
+            {
+                if (GM_build_type == "run")
+                {
+                    //Be nasty when running from the IDE >:(
+                    __input_error("input_controller_object has been deactivated\nPlease ensure that input_controller_object is never deactivated\nYou may need to use instance_activate_object(input_controller_object)");
+                }
+                else
+                {
+                    //Be nice when in production <:)
+                    __input_trace("Warning! input_controller_object has been deactivated. Please ensure that input_controller_object is never deactivated. You may need to use instance_activate_object(input_controller_object)");
+                }
+            }
+            else
+            {
+                static _created = false;
+                if (!_created)
+                {
+                    //Don't throw an error if we haven't made the instance yet
+                    _created = true;
+                }
+                else if (__input_restart_get())
+                {
+                    __input_trace("Warning! Please consider an alternative method to reset game state: avoid using \"game_restart()\"");
+                }
+                else
+                {
+                    if (GM_build_type == "run")
+                    {
+                        //Be nasty when running from the IDE >:(
+                        __input_error("input_controller_object has been destroyed\nPlease ensure that input_controller_object is never destroyed");
+                    }
+                    else
+                    {
+                        //Be nice when in production <:)
+                        __input_trace("Warning! input_controller_object has been destroyed. Please ensure that input_controller_object is never destroyed");
+                    }
+                }
+                
+                instance_create_depth(0, -__INPUT_CONTROLLER_OBJECT_DEPTH, __INPUT_CONTROLLER_OBJECT_DEPTH, input_controller_object);
+            }
+        }
+        
+        //Detect if the controller object has been set to non-persistent
+        if (!input_controller_object.persistent)
+        {
+            if (GM_build_type == "run")
+            {
+                //Be nasty when running from the IDE >:(
+                __input_error("input_controller_object has been set as non-persistent\nPlease ensure that input_controller_object is always persistent");
+            }
+            else
+            {
+                //Be nice when in production <:)
+                __input_trace("Warning! input_controller_object has been set as non-persistent. Please ensure that input_controller_object is always persistent");
+                input_controller_object.persistent = true;
+            }
+        }
+        
+        //Detect if the controller object depth has been set
+        if (input_controller_object.depth != __INPUT_CONTROLLER_OBJECT_DEPTH)
+        {
+            if (GM_build_type == "run")
+            {
+                //Be nasty when running from the IDE >:(
+                __input_error("input_controller_object depth has been changed (expected ", __INPUT_CONTROLLER_OBJECT_DEPTH, ", got ", input_controller_object.depth ,")\nPlease ensure that input_controller_object is never manually created and depth is not manually set");
+            }
+            else
+            {
+                //Be nice when in production <:)
+                __input_trace("Warning! input_controller_object depth has been changed (expected ", __INPUT_CONTROLLER_OBJECT_DEPTH, ", got ", input_controller_object.depth ,")\nPlease ensure that input_controller_object is never manually created and depth is not manually set");
+                input_controller_object.depth = __INPUT_CONTROLLER_OBJECT_DEPTH;
+            }
+        }
+    }, [], -1);
+    
+    time_source_start(_global.__time_source);
+    
+    if (((string_pos("127.0.0.1", parameter_string(0)) > 0) || (string_pos("localhost", parameter_string(0)) > 0)) && (os_browser != browser_not_a_browser))
+    {
+        show_message("Due to changes in security policy, some browsers may not permit the use of gamepads when testing locally.\n \nPlease host on a remote web service (itch.io, GX.games, etc.) if you are encountering problems.");
+    }
+    
+    if ((GM_build_type == "run") && (os_type == os_operagx))
+    {
+        show_message("Due to changes in security policy, some browsers may not permit the use of gamepads when testing locally.\n \nPlease host on a remote web service (itch.io, GX.games, etc.) if you are encountering problems.");
+    }
+    
+    #endregion
+    
+    
+    
     //Global frame counter and realtime tracker. This is used for input buffering
-    global.__input_frame = 0;
-    global.__input_current_time = current_time;
-    global.__input_previous_current_time = current_time;
+    _global.__frame = 0;
+    _global.__current_time = current_time;
+    _global.__previous_current_time = current_time;
+    
+    //Time the game was restarted
+    _global.__restart_time = -infinity;
     
     //Whether momentary input has been cleared
-    global.__input_cleared = false;
+    _global.__cleared = false;
     
-    //Windows focus tracking
-    global.__input_window_focus = true;
-    
+    //Focus tracking
+    _global.__window_focus       = true;
+    _global.__overlay_focus      = false;
+    _global.__game_input_allowed = true;
+
     //Accessibility state
-    global.__input_toggle_momentary_dict  = {};
-    global.__input_toggle_momentary_state = false;
-    global.__input_cooldown_dict          = {};
-    global.__input_cooldown_state         = false;
+    _global.__toggle_momentary_dict  = {};
+    _global.__toggle_momentary_state = false;
+    _global.__cooldown_dict          = {};
+    _global.__cooldown_state         = false;
     
     //Windows tap-to-click tracking
-    global.__input_tap_presses  = 0;
-    global.__input_tap_releases = 0;
-    global.__input_tap_click    = false;
+    _global.__tap_presses  = 0;
+    _global.__tap_releases = 0;
+    _global.__tap_click    = false;
     
     //Touch pointer tracking
-    global.__input_pointer_index         = 0;
-    global.__input_pointer_pressed       = false;
-    global.__input_pointer_released      = false;
-    global.__input_pointer_pressed_index = undefined;
-    global.__input_pointer_durations     = array_create(INPUT_MAX_TOUCHPOINTS, 0);
-    global.__input_pointer_coord_space   = INPUT_COORD_SPACE.ROOM;
-    global.__input_pointer_x             = array_create(INPUT_COORD_SPACE.__SIZE, 0);
-    global.__input_pointer_y             = array_create(INPUT_COORD_SPACE.__SIZE, 0);
-    global.__input_pointer_dx            = array_create(INPUT_COORD_SPACE.__SIZE, 0);
-    global.__input_pointer_dy            = array_create(INPUT_COORD_SPACE.__SIZE, 0);
-    global.__input_pointer_moved         = false;
+    _global.__pointer_index          = 0;
+    _global.__pointer_index_previous = 0;
+    _global.__pointer_pressed        = false;
+    _global.__pointer_released       = false;
+    _global.__pointer_pressed_index  = undefined;
+    _global.__pointer_coord_space    = INPUT_COORD_SPACE.ROOM;
+    _global.__pointer_held_time      = array_create(INPUT_MAX_TOUCHPOINTS, -1);
+    _global.__pointer_held_buffer    = array_create(INPUT_MAX_TOUCHPOINTS, false);
+    _global.__pointer_x              = array_create(INPUT_COORD_SPACE.__SIZE, 0);
+    _global.__pointer_y              = array_create(INPUT_COORD_SPACE.__SIZE, 0);
+    _global.__pointer_dx             = array_create(INPUT_COORD_SPACE.__SIZE, 0);
+    _global.__pointer_dy             = array_create(INPUT_COORD_SPACE.__SIZE, 0);
+    _global.__pointer_moved          = false;
     
-    global.__input_mouse_capture             = false;
-    global.__input_mouse_capture_sensitivity = false;
-    global.__input_mouse_capture_frame       = false;
+    //Cursor capture state
+    _global.__mouse_capture             = false;
+    _global.__mouse_capture_blocked     = false;
+    _global.__mouse_capture_sensitivity = 1;
+    _global.__mouse_capture_frame       = 0;
+    
+    //Combos
+    _global.__combo_params = {};
+    input_combo_params_reset();
+    _global.__combo_verb_dict = {};
+    
+    //Identify mobile and desktop
+    _global.__on_desktop = (__INPUT_ON_WINDOWS || __INPUT_ON_MACOS || __INPUT_ON_LINUX || __INPUT_ON_OPERAGX);
+    _global.__on_mobile  = (__INPUT_ON_ANDROID || __INPUT_ON_IOS);
+    
+    //OperaGX mobile identity
+    if (__INPUT_ON_OPERAGX)
+    {
+        var _map = os_get_info();
+        if (ds_exists(_map, ds_type_map))
+        {
+            if (_map[? "mobile"])
+            {
+                _global.__on_mobile  = true;
+                _global.__on_desktop = false;
+                if (!__INPUT_SILENT) __input_trace("Browser indicates OperaGX mobile");
+            }
+
+            ds_map_destroy(_map);
+        }
+    }
     
     //Whether to strictly verify bindings match auto profiles
     //This is set to <true> on boot, causing Input to throw an error, otherwise this is <false>
     //If an invalid binding is set during normal gameplay then a warning message is emitted to the console
-    global.__input_strict_binding_check = false;
+    _global.__strict_binding_check = false;
     
     //Whether these particular input sources are valid
     //This is determined by what default keybindings are set up
-    global.__input_any_keyboard_binding_defined = false;
-    global.__input_any_mouse_binding_defined    = false;
-    global.__input_any_gamepad_binding_defined  = false;
+    _global.__any_keyboard_binding_defined = false;
+    _global.__any_mouse_binding_defined    = false;
+    _global.__any_touch_binding_defined    = false;
+    _global.__any_gamepad_binding_defined  = false;
     
-    //Disallow keyboard bindings on specified platforms unless explicitly enabled
-    global.__input_keyboard_allowed = (__INPUT_KEYBOARD_SUPPORT && ((os_type != os_android) || INPUT_ANDROID_KEYBOARD_ALLOWED) && ((os_type != os_switch) || INPUT_SWITCH_KEYBOARD_ALLOWED));
-
-    //Disallow mouse bindings on specified platforms (unless explicitly enabled)
-    global.__input_mouse_allowed = !(__INPUT_ON_PS || __INPUT_ON_XBOX || (__INPUT_TOUCH_SUPPORT && !INPUT_TOUCH_POINTER_ALLOWED));
-
+    
+    
+    //Allow features per platform specification
+    _global.__gamepad_allowed   = ((INPUT_ON_PC && INPUT_PC_GAMEPAD)  || (INPUT_ON_MOBILE && INPUT_MOBILE_GAMEPAD)    ||  INPUT_ON_CONSOLE);
+    _global.__keyboard_allowed  = ((INPUT_ON_PC && INPUT_PC_KEYBOARD) || (__INPUT_ON_SWITCH && INPUT_SWITCH_KEYBOARD) || (INPUT_ON_MOBILE && INPUT_MOBILE_WEB_KEYBOARD && INPUT_ON_WEB) || (__INPUT_ON_ANDROID && INPUT_ANDROID_KEYBOARD));
+    _global.__mouse_allowed     = ((INPUT_ON_PC && INPUT_PC_MOUSE)    || (__INPUT_ON_SWITCH && INPUT_SWITCH_MOUSE)    || (INPUT_ON_MOBILE && INPUT_MOBILE_MOUSE));
+    _global.__touch_allowed     = (INPUT_ON_MOBILE                    || (__INPUT_ON_SWITCH && INPUT_SWITCH_TOUCH));
+    
+    //No gamepad, no vibration
+    _global.__vibration_allowed = false;
+    if (_global.__gamepad_allowed)
+    {
+        _global.__vibration_allowed = ((__INPUT_ON_WINDOWS && INPUT_WINDOWS_VIBRATION) || (__INPUT_ON_SWITCH && INPUT_SWITCH_VIBRATION) || (__INPUT_ON_XBOX  && INPUT_XBOX_VIBRATION) || ((os_type == os_ps4) && INPUT_PS4_VIBRATION) || ((os_type == os_ps5) && INPUT_PS5_VIBRATION));
+    }
+    
+    //Mouse overrides touch
+    if (_global.__mouse_allowed && _global.__touch_allowed)
+    {
+        _global.__touch_allowed = false;
+        if not (INPUT_MOUSE_ALLOW_VIRTUAL_BUTTONS)
+        {
+            if (!__INPUT_SILENT) __input_trace("Warning! Mouse configuration overrides touch. Virtual buttons may not work as expected.");
+        }
+    }
+    
+    
+    
     //Whether mouse is blocked due to Window focus state
-    global.__input_mouse_blocked = false;
+    _global.__window_focus_block_mouse = false;
     
-    global.__input_cursor_verbs_valid = false;
+    //Focus frame to prevent gamepad source swap on change
+    _global.__window_focus_frame = -infinity;
     
-    //Whether to swap A/B gamepad buttons for default bindings
-    global.__input_swap_ab = false;
+    _global.__cursor_verbs_valid = false;
     
-    //Arrays/dictionaries to track verbs, chords, and combos
-    global.__input_all_verb_dict  = {};
-    global.__input_all_verb_array = [];
+    //Arrays/dictionaries to track basic verbs and chords
+    _global.__all_verb_dict  = {};
+    _global.__all_verb_array = [];
     
-    global.__input_basic_verb_dict  = {};
-    global.__input_basic_verb_array = [];
+    _global.__basic_verb_dict  = {};
+    _global.__basic_verb_array = [];
     
-    global.__input_chord_verb_dict  = {};
-    global.__input_chord_verb_array = [];
+    _global.__chord_verb_dict  = {};
+    _global.__chord_verb_array = [];
     
-    global.__input_combo_verb_dict  = {};
-    global.__input_combo_verb_array = [];
+    _global.__combo_verb_dict  = {};
+    _global.__combo_verb_array = [];
     
     //Struct to store keyboard key names
-     global.__input_key_name_dict = {};
+     _global.__key_name_dict = {};
     
     //Struct to store all the keyboard keys we want to ignore
-    global.__input_ignore_key_dict = {};
+    _global.__ignore_key_dict = {};
     
     //Struct to store ignored gamepad types
-    global.__input_ignore_gamepad_types = {};
+    _global.__ignore_gamepad_types = {};
+    
+    //Array of created virtual buttons
+    _global.__virtual_array       = [];
+    _global.__virtual_background  = input_virtual_create().__set_as_background();
+    _global.__virtual_order_dirty = false;
+    
+    //Which player has the INPUT_TOUCH source, if any
+    //This can also work with INPUT_MOUSE if INPUT_MOUSE_ALLOW_VIRTUAL_BUTTONS is set to <true>
+    _global.__touch_player = undefined;
     
     //Two structs that are returned by input_players_get_status() and input_gamepads_get_status()
-    //These are "static" structs that are reset and populated by input_tick()
-    global.__input_players_status = {
+    //These are "static" structs that are reset and populated by __input_system_tick()
+    _global.__players_status = {
         any_changed: false,
         new_connections: [],
         new_disconnections: [],
         players: array_create(INPUT_MAX_PLAYERS, INPUT_STATUS.DISCONNECTED),
     }
     
-    global.__input_gamepads_status = {
+    _global.__gamepads_status = {
         any_changed: false,
         new_connections: [],
         new_disconnections: [],
@@ -149,52 +442,51 @@ function __input_initialize()
     }
     
     //The default player. This player struct holds default binding data
-    global.__input_default_player = new __input_class_player();
+    _global.__default_player = new __input_class_player();
     
     //Array of players. Each player is a struct (instanceof __input_class_player) that contains lotsa juicy information
-    global.__input_players = array_create(INPUT_MAX_PLAYERS, undefined);
+    _global.__players = array_create(INPUT_MAX_PLAYERS, undefined);
     
     var _p = 0;
     repeat(INPUT_MAX_PLAYERS)
     {
         with(new __input_class_player())
         {
-            global.__input_players[@ _p] = self;
+            _global.__players[@ _p] = self;
             __index = _p;
         }
         
         ++_p;
     }
     
-    enum INPUT_SOURCE_MODE
-    {
-        FIXED,        //Player sources won't change unless manually editted
-        JOIN,         //Starts source assignment, typically used for multiplayer
-        HOTSWAP,      //Player 0's source is determined by most recent input
-        MIXED,        //Player 0 can use a mixture of keyboard, mouse, and any gamepad
-        MULTIDEVICE, //Player 0 can use a mixture of keyboard, mouse, and any gamepad, but gamepad bindings are specific to each device
-    }
+    _global.__source_mode          = undefined;
+    _global.__previous_source_mode = INPUT_STARTING_SOURCE_MODE;
     
-    global.__input_source_mode = undefined;
+    //Hotswap source assignment parameters
+    //This is set by input_hotswap_params_set()
+    _global.__hotswap_callback = undefined;
     
-    //Multiplayer source assignment state
-    //This is set by input_multiplayer_set()
-    global.__input_multiplayer_min       = 1;
-    global.__input_multiplayer_max       = INPUT_MAX_PLAYERS;
-    global.__input_multiplayer_drop_down = true;
+    //Multiplayer source assignment parameters
+    //This is set by input_join_params_set()
+    _global.__join_player_min     = 1;
+    _global.__join_player_max     = INPUT_MAX_PLAYERS;
+    _global.__join_leave_verb     = "cancel";
+    _global.__join_abort_callback = undefined;
+    _global.__join_drop_down      = true;
     
     //Array of currently connected gamepads. If an element is <undefined> then the gamepad is disconnected
     //Each gamepad in this array is an instance of __input_class_gamepad
     //Gamepad structs contain remapping information and current button state
-    global.__input_gamepads = array_create(INPUT_MAX_GAMEPADS, undefined);
+    _global.__gamepads = array_create(INPUT_MAX_GAMEPADS, undefined);
     
     //Our database of SDL2 definitions, used for the aforementioned remapping information
-    global.__input_sdl2_database = {
+    _global.__sdl2_database = {
         by_guid           : {},
         by_vendor_product : {},
+        by_description    : {},
     };
     
-    global.__input_sdl2_look_up_table = {
+    _global.__sdl2_look_up_table = {
         a:             gp_face1,
         b:             gp_face2,
         x:             gp_face3,
@@ -215,24 +507,20 @@ function __input_initialize()
         rightstick:    gp_stickr,
         start:         gp_start,
         back:          gp_select,
-    }
-    
-    if (INPUT_SDL2_ALLOW_EXTENDED)
-    {
-        global.__input_sdl2_look_up_table.guide    = gp_guide;
-        global.__input_sdl2_look_up_table.misc1    = gp_misc1;
-        global.__input_sdl2_look_up_table.touchpad = gp_touchpad;
-        global.__input_sdl2_look_up_table.paddle1  = gp_paddle1;
-        global.__input_sdl2_look_up_table.paddle2  = gp_paddle2;
-        global.__input_sdl2_look_up_table.paddle3  = gp_paddle3;
-        global.__input_sdl2_look_up_table.paddle4  = gp_paddle4;
+        guide:         gp_guide,
+        misc1:         gp_misc1,
+        touchpad:      gp_touchpad,
+        paddle1:       gp_paddle1,
+        paddle2:       gp_paddle2,
+        paddle3:       gp_paddle3,
+        paddle4:       gp_paddle4,
     }
     
     #region Gamepad mapping database
     
     if (!__INPUT_SDL2_SUPPORT || !INPUT_SDL2_REMAPPING)
     {
-        __input_trace("Skipping loading SDL database");
+        if (!__INPUT_SILENT) __input_trace("Skipping loading SDL database");
     }
     else
     {
@@ -252,6 +540,11 @@ function __input_initialize()
 
             if (_external_string != "")
             {
+                if (!extension_exists("Steamworks") && (GM_build_type == "run") && (environment_get_variable("SteamEnv") == "1") && (environment_get_variable("EnableConfiguratorSupport") != "0") && !gamepad_is_connected(0))
+                {
+                    __input_trace("Warning! Steam Input may block gamepads when GameMaker IDE is run through Steam.");
+                }
+                
                 __input_trace("External SDL2 string found");
             
                 try
@@ -268,72 +561,18 @@ function __input_initialize()
     
     #endregion
   
-    var _default_xbox_type = "xbox one"; //Default type assigned to XInput and Xbox-like gamepads
-    
     #region Gamepad type identification
     
-    //Lookup table for simple gamepad types based on raw types
-    global.__input_simple_type_lookup = {
-    
-        //Xbox
-        CommunityLikeXBox: _default_xbox_type,
-
-        XBoxOneController: "xbox one",
-        SteamControllerV2: "xbox one",
-        CommunityXBoxOne:  "xbox one",
-        AppleController:   "xbox one", // Apple uses Xbox One iconography excepting 'View' button, shoulders, triggers
-        CommunityStadia:   "xbox one", //Stadia uses Xbox One iconography excepting 'View' button, shoulders, triggers
-        CommunityLuna:     "xbox one", //  Luna uses Xbox One iconography excepting 'View' button
-        
-        XBox360Controller:  "xbox 360",
-        CommunityXBox360:   "xbox 360",
-        CommunityDreamcast: "xbox 360", //        Xbox 360 uses Dreamcast iconography
-        SteamController:    "xbox 360", //Steam Controller uses X-Box 360 iconography
-        MobileTouch:        "xbox 360", //      Steam Link uses X-Box 360 iconography
-        
-        //PlayStation
-        PS5Controller: "ps5",
-        PS4Controller: "ps4",
-        CommunityPS4:  "ps4",
-        PS3Controller: "psx",
-        CommunityPSX:  "psx",
-        
-        //Switch
-        SwitchHandheld:            "switch", //Attached JoyCon pair or Switch Lite
-        SwitchJoyConPair:          "switch",
-        SwitchProController:       "switch",
-        XInputSwitchController:    "switch",
-        SwitchInputOnlyController: "switch",
-        CommunityLikeSwitch:       "switch",
-        Community8BitDo:           "switch", //8BitDo are Switch gamepads (exceptions typed appropriately)
-        WiiClassic:                "switch",
-
-        SwitchJoyConLeft:  "switch joycon left",
-        SwitchJoyConRight: "switch joycon right",
-        
-        //Legacy
-        CommunityGameCube:     "gamecube",
-        CommunityN64:          "n64",
-        CommunitySaturn:       "saturn",
-        CommunitySNES:         "snes",
-        CommunitySuperFamicom: "snes",
-        
-        Unknown: "unknown",
-        unknown: "unknown",
-        
-        UnknownNonSteamController: "unknown",
-        CommunityUnknown:          "unknown",
-        CommunitySteam:            "unknown"
-        
-    }
+    //Set up controller type database
+    __input_define_gamepad_types();
     
     //Parse controller type database
-    global.__input_raw_type_dictionary = { none : _default_xbox_type };
+    _global.__raw_type_dictionary = {};
 
     //Load the controller type database
-    if (__INPUT_ON_CONSOLE || __INPUT_ON_OPERAGX || (os_type == os_ios) || (os_type == os_tvos))
+    if (INPUT_ON_CONSOLE || __INPUT_ON_OPERAGX || __INPUT_ON_IOS)
     {
-        __input_trace("Skipping loading controller type database");
+        if (!__INPUT_SILENT) __input_trace("Skipping loading controller type database");
     }
     else if (file_exists(INPUT_CONTROLLER_TYPE_PATH))
     {
@@ -350,10 +589,10 @@ function __input_initialize()
     
     #region Gamepad device blocklist
     
-    global.__input_blacklist_dictionary = {};
+    _global.__blacklist_dictionary = {};
     if (!__INPUT_SDL2_SUPPORT)
     {
-        __input_trace("Skipping loading controller blacklist database");
+        if (!__INPUT_SILENT) __input_trace("Skipping loading controller blacklist database");
     }
     else
     {
@@ -367,6 +606,38 @@ function __input_initialize()
             __input_trace("Warning! \"", INPUT_BLACKLIST_PATH, "\" not found in Included Files");
         }
     }
+    
+    #endregion
+    
+    
+    #region Gamepad LED patterns by device type
+    
+    var _dict = {};
+    
+    _dict[$ INPUT_GAMEPAD_TYPE_PS5] = [       //PS5
+        [false, false, true,  false, false],  //P1: --X--
+        [false, true,  false, true,  false],  //P2: -X-X-
+        [true,  false, true,  false, true ],  //P3: X-X-X
+        [true,  true,  false, true,  true ],  //P4: XX-XX
+    ];
+    _dict[$ INPUT_GAMEPAD_TYPE_SWITCH] = [    //Switch
+        [true,  false, false, false],         //P1: X---
+        [true,  true,  false, false],         //P2: XX--
+        [true,  true,  true,  false],         //P3: XXX-
+        [true,  true,  true,  true ],         //P4: XXXX
+        [true,  false, false, true ],         //P5: X--X
+        [true,  false, true,  false],         //P6: X-X-
+        [true,  false, true,  true ],         //P7: X-XX
+        [false, true,  true,  false],         //P8: -XX-
+    ];
+    _dict[$ INPUT_GAMEPAD_TYPE_XBOX_360] = [  //Xbox 360
+        [true,  false, false, false],         //P1: X---
+        [false, true,  false, false],         //P2: -X--
+        [false, false, true,  false],         //P3: --X-
+        [false, false, false, true ],         //P4: ---X
+    ];
+    
+    _global.__gamepad_led_pattern_dict = _dict;
     
     #endregion
 
@@ -456,23 +727,23 @@ function __input_initialize()
     __input_key_name_set(vk_end,      "end");
    
     //Name newline character after Enter
-    __input_key_name_set(10, global.__input_key_name_dict[$ vk_enter]);
+    __input_key_name_set(10, _global.__key_name_dict[$ vk_enter]);
     
     //Reset F11 and F12 keycodes on certain platforms
-    if ((os_type == os_switch) || (os_type == os_linux) || (os_type == os_macosx))
+    if (__INPUT_ON_SWITCH || __INPUT_ON_LINUX || __INPUT_ON_MACOS)
     {
         __input_key_name_set(128, "f11");
         __input_key_name_set(129, "f12");
     }
    
     //F13 to F32 on Windows and Web
-    if ((os_type == os_windows) || (__INPUT_ON_WEB))
+    if (__INPUT_ON_WINDOWS || INPUT_ON_WEB)
     {
         for(var _i = vk_f1 + 12; _i < vk_f1 + 32; _i++) __input_key_name_set(_i, "f" + string(_i));
     }
     
     //Numeric keys 2-7 on Switch
-    if (os_type == os_switch)
+    if (__INPUT_ON_SWITCH)
     {
         for(var _i = 2; _i <= 7; _i++) __input_key_name_set(_i, __input_key_get_name(ord(_i)));
     }
@@ -494,12 +765,22 @@ function __input_initialize()
         
         input_ignore_key_add(0xFF); //Vendor key
         
-        if (__INPUT_ON_MOBILE && __INPUT_ON_APPLE)
+        if (__INPUT_ON_WINDOWS)
         {
-            input_ignore_key_add(124); //Screenshot
+            input_ignore_key_add(0xE6); //OEM key (Power button on Steam Deck)
         }
         
-        if (__INPUT_ON_WEB)
+        if (__INPUT_ON_ANDROID)
+        {
+            input_ignore_key_add(vk_backspace); //Emmitted by hard and soft "Back" buttons, gamepad "B" button
+        }
+        
+        if (INPUT_ON_MOBILE && __INPUT_ON_APPLE)
+        {
+            input_ignore_key_add(0x7C); //Screenshot
+        }
+        
+        if (INPUT_ON_WEB)
         {
             if (__INPUT_ON_APPLE)
             {
@@ -519,7 +800,7 @@ function __input_initialize()
         input_ignore_key_add(vk_numlock);   //Num Lock
         input_ignore_key_add(vk_scrollock); //Scroll Lock
         
-        if (__INPUT_ON_WEB || (os_type == os_windows))
+        if (INPUT_ON_WEB || __INPUT_ON_WINDOWS)
         {
             input_ignore_key_add(0x15); //IME Kana/Hanguel
             input_ignore_key_add(0x16); //IME On
@@ -551,7 +832,7 @@ function __input_initialize()
             
             input_ignore_key_add(0xB4); //Launch Mail
             input_ignore_key_add(0xB5); //Launch Media
-            input_ignore_key_add(0xB6); //Laumch App 1
+            input_ignore_key_add(0xB6); //Launch App 1
             input_ignore_key_add(0xB7); //Launch App 2
             
             input_ignore_key_add(0xFB); //Zoom
@@ -564,33 +845,137 @@ function __input_initialize()
     
     #region Steam Input
     
-    if (((os_type == os_linux) || (os_type == os_macosx)) && !__INPUT_ON_WEB)
+    _global.__steam_switch_labels = false;
+    _global.__using_steamworks    = false;
+    _global.__on_steam_deck       = false;
+    _global.__on_wine             = false;
+    
+    _global.__steam_handles       = [];
+    _global.__steam_type_to_raw   = {};
+    _global.__steam_type_to_name  = {};
+    _global.__steam_trigger_mode  = {};
+    
+    if (__INPUT_STEAMWORKS_SUPPORT && INPUT_ALLOW_STEAMWORKS && extension_exists("Steamworks"))
+    {
+        try
+        {
+            //Using Steamworks extension
+            _global.__using_steamworks = steam_input_init(true);
+            _global.__on_steam_deck    = steam_utils_is_steam_running_on_steam_deck();
+        }
+        catch(_error)
+        {
+            if (!__INPUT_SILENT) __input_trace("Steamworks extension unavailable");
+        }
+        
+        if (_global.__using_steamworks && (string(steam_get_app_id()) == "480"))
+        {
+            __input_trace_loud("Error!\nSteamworks extension incorrectly configured (Application ID 480).\nYou may see unexpected behaviour when using gamepads.\n\nTo remove this error, set Application ID.\n\nInput ", __INPUT_VERSION, "   @jujuadams and @offalynne ", __INPUT_DATE);
+        }
+    }
+    
+    //Identify Steam Deck in absence of Steamworks
+    if (!_global.__on_steam_deck)
+    {
+        var _deck_envar = environment_get_variable("SteamDeck");
+        if (_deck_envar != "")
+        {
+            //Try Deck environment variable
+            _global.__on_steam_deck = (_deck_envar == "1");
+        }
+        else
+        {
+            //Try Deck hardware identity
+            var _map = os_get_info();
+            if (ds_exists(_map, ds_type_map))
+            {
+                var _identifier = undefined;
+                if (__INPUT_ON_LINUX  ) _identifier = _map[? "gl_renderer_string"];
+                if (__INPUT_ON_WINDOWS) _identifier = _map[? "video_adapter_description"];
+            
+                //Steam Deck GPU identifier
+                if ((_identifier != undefined) && __input_string_contains(_identifier, "AMD Custom GPU 04"))
+                {
+                    _global.__on_steam_deck = true;
+                }
+            
+                ds_map_destroy(_map);
+            }
+        }
+    }
+    
+    var _switch_labels = environment_get_variable("SDL_GAMECONTROLLER_USE_BUTTON_LABELS");
+    if (_switch_labels != "")
+    {
+        //Use environment variable
+        _global.__steam_switch_labels = (_switch_labels == "1");
+    }
+    else
+    {
+        //Default enabled on Deck and disabled on desktop
+        _global.__steam_switch_labels = _global.__on_steam_deck;
+    }
+    
+    if (_global.__using_steamworks)
+    {
+        _global.__on_wine = (environment_get_variable("WINEDLLPATH") != "");
+        
+        __input_steam_type_set(steam_input_type_xbox_360_controller,   "XBox360Controller",      "Xbox 360 Controller");
+        __input_steam_type_set(steam_input_type_xbox_one_controller,   "XBoxOneController",      "Xbox One Controller");
+        __input_steam_type_set(steam_input_type_ps3_controller,        "PS3Controller",          "PS3 Controller");
+        __input_steam_type_set(steam_input_type_ps4_controller,        "PS4Controller",          "PS4 Controller");
+        __input_steam_type_set(steam_input_type_ps5_controller,        "PS5Controller",          "PS5 Controller");
+        __input_steam_type_set(steam_input_type_steam_controller,      "SteamController",        "Steam Controller");
+        __input_steam_type_set(steam_input_type_steam_deck_controller, "SteamControllerNeptune", "Steam Deck Controller");
+        __input_steam_type_set(steam_input_type_mobile_touch,          "MobileTouch",            "Steam Link");
+        
+        if (_global.__steam_switch_labels)
+        {
+            //This is weird, but dictated by Steam Input
+            __input_steam_type_set(steam_input_type_switch_pro_controller, "XBox360Controller", "Switch Pro Controller");
+            __input_steam_type_set(steam_input_type_switch_joycon_single,  "XBox360Controller", "Joy-Con");
+            __input_steam_type_set(steam_input_type_switch_joycon_pair,    "XBox360Controller", "Joy-Con Pair");
+        }
+        else
+        {   
+            __input_steam_type_set(steam_input_type_switch_pro_controller, "SwitchProController", "Switch Pro Controller");
+            __input_steam_type_set(steam_input_type_switch_joycon_single,  "SwitchJoyConSingle",  "Joy-Con");
+            __input_steam_type_set(steam_input_type_switch_joycon_pair,    "SwitchJoyConPair",    "Joy-Con Pair");
+        }
+                
+        __input_steam_type_set("unknown", "UnknownNonSteamController", "Controller");
+        
+        _global.__steam_trigger_mode[$ string(__INPUT_TRIGGER_EFFECT.__TYPE_OFF)]       = steam_input_sce_pad_trigger_effect_mode_off;
+        _global.__steam_trigger_mode[$ string(__INPUT_TRIGGER_EFFECT.__TYPE_FEEDBACK)]  = steam_input_sce_pad_trigger_effect_mode_feedback;
+        _global.__steam_trigger_mode[$ string(__INPUT_TRIGGER_EFFECT.__TYPE_WEAPON)]    = steam_input_sce_pad_trigger_effect_mode_weapon;
+        _global.__steam_trigger_mode[$ string(__INPUT_TRIGGER_EFFECT.__TYPE_VIBRATION)] = steam_input_sce_pad_trigger_effect_mode_vibration;
+    }
+    
+    if (__INPUT_ON_MACOS || __INPUT_ON_LINUX)
     {
         //Define the virtual controller's identity
-        var _os = ((os_type == os_macosx)? "macos"    : "linux");
-        var _id = ((os_type == os_macosx)? "5e048e02" : "de28ff11");
+        var _os = (__INPUT_ON_MACOS? "macos"                            : "linux");
+        var _id = (__INPUT_ON_MACOS? "030000005e0400008e02000001000000" : "03000000de280000ff11000001000000");
     
         //Access the blacklist
-        var _blacklist_os = (is_struct(global.__input_blacklist_dictionary)? global.__input_blacklist_dictionary[$ _os] : undefined);
-        var _blacklist_id = (is_struct(_blacklist_os)? _blacklist_os[$ "vid+pid"] : undefined);
+        var _blacklist_os = (is_struct(_global.__blacklist_dictionary)? _global.__blacklist_dictionary[$ _os] : undefined);
+        var _blacklist_id = (is_struct(_blacklist_os)? _blacklist_os[$ "guid"] : undefined);
     
         if (is_struct(_blacklist_os) && (_blacklist_id == undefined))
         {
-            //Add 'Vendor ID + Product ID' category
-            _blacklist_os[$ "vid+pid"] = {};
-            _blacklist_id = (is_struct(_blacklist_os)? _blacklist_os[$ "vid+pid"] : undefined);
+            //Add category if inaccessible
+            _blacklist_os[$ "guid"] = {};
+            _blacklist_id = (is_struct(_blacklist_os)? _blacklist_os[$ "guid"] : undefined);
         }
     
         //Blacklist the Steam virtual controller
-        if (is_struct(_blacklist_id)) _blacklist_id[$ _id] = true;   
-    }
+        if (is_struct(_blacklist_id)) _blacklist_id[$ _id] = true;
     
-    if ((os_type == os_linux) && !__INPUT_ON_WEB)
-    {
         var _steam_environ = environment_get_variable("SteamEnv");
         var _steam_configs = environment_get_variable("EnableConfiguratorSupport");
-    
-        if ((_steam_environ != "") && (_steam_environ == "1")
+        
+        if (__INPUT_ON_LINUX
+        && ((_steam_environ != "") && (_steam_environ == "1") || _global.__using_steamworks)
         &&  (_steam_configs != "") && (_steam_configs == string_digits(_steam_configs)))
         {
             //If run through Steam remove Steam virtual controller from the blocklist
@@ -606,30 +991,30 @@ function __input_initialize()
             
             var _ignore_list = [];
         
-            if (environment_get_variable("SDL_GAMECONTROLLER_IGNORE_DEVICES") == "")
+            if (_global.__using_steamworks || (environment_get_variable("SDL_GAMECONTROLLER_IGNORE_DEVICES") == ""))
             {
                 //If ignore hint isn't set, GM accesses controllers meant to be blocked
                 //We address this by adding the Steam config types to our own blocklist
-                if (_steam_switch)  array_push(_ignore_list, "switch");
-                if (_steam_ps)      array_push(_ignore_list, "ps4", "ps5");
-                if (_steam_xbox)    array_push(_ignore_list, "xbox 360", "xbox one");        
-                if (_steam_generic) array_push(_ignore_list, "snes", "saturn", "n64", "gamecube", "psx", "xbox", "switch joycon left", "switch joycon right", "unknown");
+                if (_steam_ps)      array_push(_ignore_list, INPUT_GAMEPAD_TYPE_PSX, INPUT_GAMEPAD_TYPE_PS4, INPUT_GAMEPAD_TYPE_PS5);
+                if (_steam_xbox)    array_push(_ignore_list, INPUT_GAMEPAD_TYPE_XBOX_360, INPUT_GAMEPAD_TYPE_XBOX_ONE);
+                if (_steam_switch)  array_push(_ignore_list, INPUT_GAMEPAD_TYPE_SWITCH, INPUT_GAMEPAD_TYPE_JOYCON_LEFT, INPUT_GAMEPAD_TYPE_JOYCON_RIGHT);
+                if (_steam_generic) array_push(_ignore_list, INPUT_GAMEPAD_TYPE_GAMECUBE, INPUT_GAMEPAD_TYPE_UNKNOWN);
              
                 var _i = 0;
                 repeat(array_length(_ignore_list))
                 {
-                    global.__input_ignore_gamepad_types[$ _ignore_list[_i]] = true;
+                    _global.__ignore_gamepad_types[$ _ignore_list[_i]] = true;
+                    ++_i;
                 }
             }
             
             //Check for a reducible type configuration
-            var _steam_switch_labels = environment_get_variable("SDL_GAMECONTROLLER_USE_BUTTON_LABELS");
-            if (!_steam_generic && !_steam_ps
-            && (!_steam_switch || ((_steam_switch_labels != "") && (_steam_switch_labels == "1"))))
+            if (!_steam_generic && !_steam_ps && (!_steam_switch || _global.__steam_switch_labels))
             {
                 //The remaining configurations are in the Xbox Controller style including:
                 //Steam Controller, Steam Link, Steam Deck, Xbox or Switch with AB/XY swap
-                global.__input_simple_type_lookup[$ "CommunitySteam"] = _default_xbox_type;
+                _global.__simple_type_lookup[$ "UnknownNonSteamController"] = INPUT_GAMEPAD_TYPE_XBOX_ONE;
+                if (!__INPUT_SILENT) __input_trace("Steam Input configuration indicates Xbox-like identity for virtual controllers");
             }
         }
     }
@@ -638,22 +1023,35 @@ function __input_initialize()
     
     
     
-    #region Keyboard locale
+    #region Device locale
+        
+    //Gamepad region
+    _global.__ps_region_swap = false;
+    if (INPUT_PS_REGION_SWAP_CONFIRM && (os_type == os_ps4))
+    {
+        var _map = os_get_info();
+        if (ds_exists(_map, ds_type_map))
+        {
+            if (_map[? "enter_button_assign"] == 0)
+            {
+                _global.__ps_region_swap = true;
+            }
+            
+            ds_map_destroy(_map);
+        }
+    }
     
-    var _locale = os_get_language() + "-" + os_get_region();
+    //Keyboard locale
+    _global.__keyboard_locale = "QWERTY";
+    var _locale = os_get_language() + "-" + os_get_region();;
     switch(_locale)
     {
-        case "en-US": case "en-":
-        case "en-GB": case "-":
-            INPUT_KEYBOARD_LOCALE = "QWERTY";
-        break;
-
         case "ar-DZ": case "ar-MA": case "ar-TN":
         case "fr-BE": case "fr-FR": case "fr-MC":
         case "co-FR": case "oc-FR": case "ff-SN": 
         case "wo-SN": case "gsw-FR": 
         case "nl-BE": case "tzm-DZ":
-            INPUT_KEYBOARD_LOCALE = "AZERTY";
+            _global.__keyboard_type = "AZERTY";
         break;  
 
         case "cs-CZ": case "de-AT": case "de-CH": 
@@ -663,11 +1061,7 @@ function __input_initialize()
         case "lb-LU": case "rm-CH": case "sk-SK": 
         case "sl-SI": case "dsb-DE":
         case "sr-BA": case "hsb-DE":
-            INPUT_KEYBOARD_LOCALE = "QWERTZ";
-        break;
-
-        default:
-            INPUT_KEYBOARD_LOCALE = "QWERTY";
+            _global.__keyboard_type = "QWERTZ";
         break;
     }
     
@@ -677,72 +1071,91 @@ function __input_initialize()
     
     #region Keyboard type
     
-    if (__INPUT_ON_CONSOLE || (__INPUT_ON_WEB && !__INPUT_ON_DESKTOP))
+    if (INPUT_ON_CONSOLE || (INPUT_ON_WEB && !INPUT_ON_PC))
     {
-        INPUT_KEYBOARD_TYPE = "async";
+        _global.__keyboard_type = "async";
     }
-    else if (__INPUT_ON_MOBILE)
+    else if (INPUT_ON_MOBILE)
     {
-        var _ret = "virtual";
-        if (os_type == os_android)
+        _global.__keyboard_type = "virtual";
+        if (__INPUT_ON_ANDROID)
         {
             var _map = os_get_info();
             if (ds_exists(_map, ds_type_map))
             {
-                if (_map[? "PHYSICAL_KEYBOARD"])
+                //Android on Chromebook form factor (ARC) test via Google
+                //matches(".+_cheets|cheets_.+")
+                var _device = string(_map[? "DEVICE"]);
+                if ((string_pos("_cheets", _device) > 1) || ((string_pos("cheets_", _device) > 0) && (string_pos("cheets_", _device) < (string_length(_device) - 6))))
                 {
-                    _ret = "keyboard";
+                    _global.__keyboard_type = "keyboard";
                 }
 
-                ds_map_destroy(_map);
+                ds_map_destroy(_map)
             }
         }
-
-        INPUT_KEYBOARD_TYPE = _ret;
     }
     else
     {
-        INPUT_KEYBOARD_TYPE = "keyboard";
+        _global.__keyboard_type = "keyboard";
     }
     
     #endregion
     
     
     
+    #region Pointer type
+    
+    if (__input_global().__on_steam_deck || __INPUT_ON_SWITCH || INPUT_ON_MOBILE || (__INPUT_ON_WINDOWS && _global.__touch_allowed))
+    {
+        _global.__pointer_type = "touch";
+    }
+    else if (INPUT_ON_CONSOLE)
+    {
+        _global.__pointer_type = "none";
+    }
+    else
+    {
+        _global.__pointer_type = "mouse";
+    }
+    
+    #endregion
+    
+    
+    //Whether gamepad motion is supported
+    _global.__gamepad_motion_support = (__INPUT_ON_PS || __INPUT_ON_SWITCH || _global.__using_steamworks);
+
     //By default GameMaker registers double click (or tap) as right mouse button
     //We want to be able to identify the actual mouse buttons correctly, and have our own double-input handling
     device_mouse_dbclick_enable(false);
     
-    global.__input_profile_array         = undefined;
-    global.__input_profile_dict          = undefined;
-    global.__input_default_profile_dict  = undefined;
-    global.__input_verb_to_group_dict    = {};
-    global.__input_group_to_verbs_dict   = {};
-    global.__input_verb_group_array      = [];
-    global.__input_null_binding          = input_binding_empty();
-    global.__input_icons                 = {};
+    _global.__profile_array        = undefined;
+    _global.__profile_dict         = undefined;
+    _global.__default_profile_dict = undefined;
+    _global.__verb_to_group_dict   = {};
+    _global.__group_to_verbs_dict  = {};
+    _global.__verb_group_array     = [];
+    _global.__icons                = {};
     
     
     
     //Build out the sources
-    INPUT_KEYBOARD = new __input_class_source(__INPUT_SOURCE.KEYBOARD);
-    INPUT_MOUSE = INPUT_ASSIGN_KEYBOARD_AND_MOUSE_TOGETHER? INPUT_KEYBOARD : (new __input_class_source(__INPUT_SOURCE.MOUSE));
+    _global.__source_keyboard = new __input_class_source(__INPUT_SOURCE.KEYBOARD);
+    _global.__source_mouse    = INPUT_ASSIGN_KEYBOARD_AND_MOUSE_TOGETHER? INPUT_KEYBOARD : (new __input_class_source(__INPUT_SOURCE.MOUSE));
+    _global.__source_touch    = new __input_class_source(__INPUT_SOURCE.TOUCH);
     
-    INPUT_GAMEPAD = array_create(INPUT_MAX_GAMEPADS, undefined);
+    _global.__source_gamepad = array_create(INPUT_MAX_GAMEPADS, undefined);
     var _g = 0;
     repeat(INPUT_MAX_GAMEPADS)
     {
-        INPUT_GAMEPAD[@ _g] = new __input_class_source(__INPUT_SOURCE.GAMEPAD, _g);
+        _global.__source_gamepad[@ _g] = new __input_class_source(__INPUT_SOURCE.GAMEPAD, _g);
         ++_g;
     }
     
     
     
-    global.__input_initialization_phase = "__input_finalize_default_profiles";
-    __input_config_profiles_and_default_bindings();
-    
-    global.__input_initialization_phase = "__input_finalize_verb_groups";
-    __input_config_verbs();
+    __input_finalize_default_profiles();
+    __input_finalize_verb_groups();
     
     
     
@@ -751,12 +1164,12 @@ function __input_initialize()
     
     if (INPUT_STARTING_SOURCE_MODE == INPUT_SOURCE_MODE.MIXED)
     {
-        if (!variable_struct_exists(global.__input_profile_dict, INPUT_AUTO_PROFILE_FOR_MIXED)) __input_error("Default profile for mixed \"", INPUT_AUTO_PROFILE_FOR_MIXED, "\" has not been defined in INPUT_DEFAULT_PROFILES");
+        if (!variable_struct_exists(_global.__profile_dict, INPUT_AUTO_PROFILE_FOR_MIXED)) __input_error("Default profile for mixed \"", INPUT_AUTO_PROFILE_FOR_MIXED, "\" has not been defined in __input_config_verbs()");
         input_profile_set(INPUT_AUTO_PROFILE_FOR_MIXED);
     }
     else if (INPUT_STARTING_SOURCE_MODE == INPUT_SOURCE_MODE.MULTIDEVICE)
     {
-        if (!variable_struct_exists(global.__input_profile_dict, INPUT_AUTO_PROFILE_FOR_MULTIDEVICE)) __input_error("Default profile for multidevice \"", INPUT_AUTO_PROFILE_FOR_MULTIDEVICE, "\" has not been defined in INPUT_DEFAULT_PROFILES");
+        if (!variable_struct_exists(_global.__profile_dict, INPUT_AUTO_PROFILE_FOR_MULTIDEVICE)) __input_error("Default profile for multidevice \"", INPUT_AUTO_PROFILE_FOR_MULTIDEVICE, "\" has not been defined in __input_config_verbs()");
         input_profile_set(INPUT_AUTO_PROFILE_FOR_MULTIDEVICE);
     }
     
@@ -764,8 +1177,6 @@ function __input_initialize()
     
     //Make sure we're not misconfigured
     __input_validate_macros();
-    
-    global.__input_initialization_phase = "Complete";
     
     return true;
 }

@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Binding Access",
-    "path": "folders/Coalition Engine/Addons/Input/Binding Access.yy",
+    "name": "06  Binding Access",
+    "path": "folders/Coalition Engine/Addons/Input/06  Binding Access.yy",
   },
 }

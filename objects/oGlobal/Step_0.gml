@@ -1,43 +1,41 @@
-///@desc Camera movement
+// Camera movement
+with MainCamera
 {
 	var cam = view_camera[0],
 	
-		cam_scale_x = camera_scale_x,
-		cam_scale_y = camera_scale_y,
+		cam_scale_x = Scale[0], cam_scale_y = Scale[1],
 		
-		cam_width  = camera_view_width / cam_scale_x,
-		cam_height = camera_view_height / cam_scale_y,
+		cam_width  = view_width / cam_scale_x,
+		cam_height = view_height / cam_scale_y,
 		
-		cam_angle  = camera_angle,
+		cam_angle  = angle,
+		cam_target = target,
 		
-		cam_target = camera_target,
-		
-		cam_shake_x = 0,
-		cam_shake_y = 0;
+		cam_shake_x = 0, cam_shake_y = 0;
 	
 	// Targetting
-	var camToX = camera_x,
-		camToY = camera_y;
-	if cam_target != camera_previous_target
+	var camToX = x, camToY = y;
+	if cam_target != previous_target
 		camera_set_view_target(cam, cam_target);
-	if (cam_target != noone and instance_exists(cam_target)) {
+	if (cam_target != noone && instance_exists(cam_target)) {
 		camToX = cam_target.x - cam_width / 2;
 		camToY = cam_target.y - cam_height / 2;
 	}
 	
 	// Shaking
-	var shake = 0;
-	if camera_shake_i > 0
+	if shake_i > 0
 	{
-		shake = round(camera_shake_i);
-		if shake camera_shake_i--;
-		cam_shake_x = random_range(-shake, shake);
-		cam_shake_y = random_range(-shake, shake);
+		cam_shake_x = random_range(-shake_i, shake_i);
+		cam_shake_y = random_range(-shake_i, shake_i);
+		camera_set_view_target(cam, noone);
+		shake_i -= decrease_i;
+		if shake_i == 0
+			camera_set_view_target(cam, previous_target);
 	}
 	camera_set_view_pos(cam, camToX + cam_shake_x, camToY + cam_shake_y);
 	
 	// You know
-	camera_set_view_size (cam,	cam_width, cam_height);
-	camera_set_view_angle(cam,	cam_angle);
-	camera_previous_target = cam_target;
+	camera_set_view_size(cam, cam_width, cam_height);
+	camera_set_view_angle(cam, cam_angle);
+	previous_target = cam_target;
 }

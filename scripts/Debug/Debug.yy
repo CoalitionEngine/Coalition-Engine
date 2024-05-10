@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Scripts",
-    "path": "folders/Coalition Engine/Scripts.yy",
+    "name": "Global",
+    "path": "folders/Coalition Engine/Scripts/Global.yy",
   },
 }

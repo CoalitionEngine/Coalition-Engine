@@ -1,0 +1,2 @@
+LoadCameraLockPositions();
+SetRoomNames();

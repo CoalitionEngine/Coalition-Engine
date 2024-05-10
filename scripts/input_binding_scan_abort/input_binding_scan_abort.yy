@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Binding Creators",
-    "path": "folders/Coalition Engine/Addons/Input/Binding Creators.yy",
+    "name": "07  Binding Scanner",
+    "path": "folders/Coalition Engine/Addons/Input/07  Binding Scanner.yy",
   },
 }

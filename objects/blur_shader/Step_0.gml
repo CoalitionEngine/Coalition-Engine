@@ -1,0 +1,1 @@
+if var_blur_amount <= 0 instance_destroy();

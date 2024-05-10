@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Mouse (Direct)",
-    "path": "folders/Coalition Engine/Addons/Input/Mouse (Direct).yy",
+    "name": "24  Mouse (Direct)",
+    "path": "folders/Coalition Engine/Addons/Input/24  Mouse (Direct).yy",
   },
 }

@@ -1,15 +1,10 @@
-var cam = view_camera[0],
-	view_x = camera_get_view_x(cam),
-	view_y = camera_get_view_y(cam),
-	view_w = camera_get_view_width(cam),
-	view_h = camera_get_view_height(cam),
-	destroy = false;
+///@desc Auto destroy
+var cam = oGlobal.MainCamera,
+	view_x = cam.x, view_y = cam.y,
+	view_w = cam.view_width, view_h = cam.view_height,
+	destroy = hspeed < 0 && bbox_left + 16 < view_x
+			|| hspeed > 0 && bbox_right - 16 > view_x + view_w
+			|| vspeed < 0 && bbox_bottom - 16 < view_y
+			|| vspeed > 0 && bbox_top + 16 > view_y + view_h;
 
-if hspeed < 0 and bbox_left + 16 < view_x
-or hspeed > 0 and bbox_right - 16 > view_x + view_w
-or vspeed < 0 and bbox_bottom - 16 < view_y
-or vspeed > 0 and bbox_top + 16 > view_y + view_h 
-	destroy = true;
-
-if destroy and destroyable
-	instance_destroy();
+if destroy && destroyable instance_destroy();

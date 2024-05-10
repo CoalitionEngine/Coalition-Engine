@@ -1,61 +1,83 @@
 function len_load()
 {
-	len = 0;
-	len_x = 0;
-	len_y = 0;
-	lenable = false;
-	len_angle = false;
-	len_angle_extra = 0;
-	len_dir = 0;
-	len_speed = 0;
-	len_dir_move = 0;
-	len_target = noone;
-	len_hspeed = 0;
-	len_vspeed = 0;
+	gml_pragma("forceinline");
+	Len = {};
+	with Len
+	{
+		len = 0;
+		x = 0;
+		y = 0;
+		activate = false;
+		angle = false;
+		angle_extra = 0;
+		dir = 0;
+		speed = 0;
+		dir_move = 0;
+		target = noone;
+		hspeed = 0;
+		vspeed = 0;
+	}
 }
 
 function len_step()
 {
-	if lenable
+	gml_pragma("forceinline");
+	with Len
 	{
-		if len_target != noone
-			if instance_exists(len_target)
+		if activate
+		{
+			if target != noone && instance_exists(target)
 			{
-				len_x = len_target.x;
-				len_y = len_target.y;
+				x = target.x;
+				y = target.y;
 			}
-		len_x += len_hspeed;
-		len_y += len_vspeed;
-	    len_dir += len_dir_move;
-	    len += len_speed;
-	    x = len_x + len * dcos(len_dir);  
-	    y = len_y + len * -dsin(len_dir);
-	    if len_angle image_angle += len_dir_move;
+			x += hspeed;
+			y += vspeed;
+		    dir += dir_move;
+		    len += speed;
+		    other.x = x + lengthdir_x(len, dir);
+		    other.y = y + lengthdir_y(len, dir);
+		    if angle other.image_angle += dir_move;
+		}
 	}
 }
 
+#macro len_clean delete Len
+
 function axis_load()
 {
-	axis = 0;
-	axis_x = x;
-	axis_y = y;
-	axis_angle = 0;
-	axis_override = false;
-	axis_override_angle = 0;
+	gml_pragma("forceinline");
+	Axis = {};
+	with Axis
+	{
+		activate = false;
+		X = other.x;
+		Y = other.y;
+		angle = 0;
+		override = false;
+		override_angle = 0;
+	}
+	target_board = BattleBoardList[TargetBoard];
 }
 
 function axis_step()
 {
-	if axis
+	gml_pragma("forceinline");
+	with Axis
 	{
-		var board = oBoard,
-			_ang = axis_override ? axis_override_angle : board.image_angle;
-		axis_x += hspeed;
-		axis_y += vspeed;
-		var dis = point_distance(board.x, board.y, axis_x, axis_y),
-			dir = point_direction(board.x, board.y, axis_x, axis_y);
-		x = dis * dcos(dir + _ang) + board.x;
-		y = dis * -dsin(dir + _ang) + board.y;
-		axis_angle = _ang;
+		if activate
+		{
+			var board = target_board,
+				_ang = override ? override_angle : board.image_angle;
+			X += other.hspeed;
+			Y += other.vspeed;
+			var dis = point_distance(board.x, board.y, X, Y),
+				dir = point_direction(board.x, board.y, X, Y);
+			other.x = lengthdir_x(dis, dir + _ang) + board.x;
+			other.y = lengthdir_y(dis, dir + _ang) + board.y;
+			angle = _ang;
+		}
 	}
 }
+
+#macro axis_clean delete Axis

@@ -1,109 +1,85 @@
 event_inherited();
-enemy_name = "Sans";
-enemy_act = ["Check", "Heal"];
-enemy_act_text = ["Sans[delay,100] 2650 ATK 2650 DEF[delay,500]\n  You don't know what he's up to.", "You Healed."];
-enemy_act_function[1] = function()
-{
-	global.hp = global.hp_max - global.kr;
-	audio_play(snd_item_heal);
-}
+enemy_name = "Migosip";
+enemy_act = ["Check", "Run", "Encourage", "Insult"];
+enemy_act_text = ["Migosip[delay,100] 4 ATK 5 DEF[delay,500]\n  He looks tired.",
+"",
+"",
+""];
 
+/*
+他的一般攻击和原版类似，一开始并不会有什么动作，只是一只蟑螂在下面平静的站着
+
+这是第一回合，但在第二回合会有许多忧郁虫虫的小光粒子盘旋
+
+下面依然站着一只蟑螂
+
+第三回合是一只蟑螂在一张工作台前睡觉，头顶不断有zzzzzz飞出
+
+第四回合玩家要操纵红心不断飞过蟑螂人群，还要躲避头上的掉落物(小光球)
+
+截下来就是后三回合不断重复直达怪物被杀死
+
+
+
+有三个选项:
+逃跑(跳出来文本:你永远无法逃避职场)
+
+鼓励(1，你告诉焦虑蟑螂它马上就要放假了 2，你告诉焦虑蟑螂它可以带薪休假 3，你告诉焦虑蟑螂它你很努力了)
+
+辱骂(你痛批了一顿资本主义)
+
+到达鼓励2后必须辱骂两次
+
+才能触发鼓励3达成饶恕
+
+鼓励1
+角色文本:“真，真的吗...？”
+鼓励2
+角色文本:“这真的...但你真的懂我吗...？”
+鼓励3
+角色文本:“谢谢你！伟大的社会主义战士！”
+
+辱骂
+角色文本:“对！太对了！”
+*/
 enemy_sprites =
 [
-	sprOSTLegs,
-	sprOSTBody,
-	sprOSTHead,
+	sprNET,
 ];
 enemy_sprite_draw_method =
 [
-	"ext",
-	"ext",
-	"ext",
+	"",
 ];
 enemy_sprite_scale = [
-	[2, 2],
-	[2, 2],
 	[2, 2],
 ];
 enemy_sprite_pos =
 [
 	[0, 0],
-	[0, -50],
-	[0, -115],
 ];
-enemy_sprite_wiggle = [
-	["sin", 0, 0, 0, 0],
-	["sin", .1, .2, 2.1, 1.4],
-	["sin", .1, .2, 1.7, 1.2],
-];
-
-SlamSprites = [
-	[sprOSTBodyRight],
-	[sprOSTBodyUp],
-	[sprOSTBodyLeft],
-	[sprOSTBodyDown],
-];
-SlamSpriteTargetIndex = [
-	[0, 1, 1, 1, 2],
-	[0, 1, 2, 3, 3],
-	[0, 1, 1, 1, 2],
-	[0, 1, 2, 3, 3],
-];
+enemy_sprite_wiggle = [];
 
 dialog_y_from_top = 20;
 dialog_size[2] += 15;
 dialog_size[3] += 85;
-dialog_box_color = make_color_rgb(183, 190, 182);
 
-dodge_method = function()
-{
-	TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 0, 20, "damage_y", damage_y, damage_y - 30);
-	TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 40, 20, "damage_y", damage_y - 30, damage_y);
-	TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 0, 25, "x", x, x - dodge_to);
-	TweenFire(id, EaseOutQuad, TWEEN_MODE_ONCE, false, 55, 25, "x", x - dodge_to, x);
-}
-
-oBoard.image_blend = make_color_rgb(47, 47, 47);
-
-Enemy_SetHPStats(680, 680, 0);
-damage = irandom_range(300,500);
-is_dodge = true;
-begin_at_turn = true;
-BGM = audio_create_stream("Music/MusOST1.ogg");
+damage = 20;
+EnemyData.SetHPStats(self, 100, 100, 0);
+EnemyData.SetDefense(self, 28);
+is_dodge = false;
 wiggle = false;
-
-Set_BoardSize(75, 75, 75, 75, 0);
-oSoul.visible = false;
+enemy_is_spareable = false;
 
 Battle_SetTurnTime(
 [
 	500,
-	910,
-	1300,
 ]
 );
 Battle_SetTurnBoardSize(
 [
 	[75, 75, 75, 75],
-	[30, 30, 30, 30],
-	[90, 40, 65, 65],
 ]);
-
-LoadTextFromFile("OSTSans.txt");
-ButtonSprites("OST");
-with oBattleController
-{
-	activate_heal = [0, 1, 0, 0];
-	allow_run = false;
-	button_color_target = [
-						[[255, 255, 255], [255, 255, 0]],
-						[[255, 255, 255], [255, 255, 0]],
-						[[255, 255, 255], [255, 255, 0]],
-						[[255, 255, 255], [255, 255, 0]]
-					  ];
-	button_color = [[255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255]];
-}
-spare_function = function() {global.hp = 0;}
+EnemyData.SetReward(self, irandom_range(10, 20) ,irandom_range(3, 7))
 
 TurnData.HealAttacks[0] = 
 function()
@@ -119,16 +95,15 @@ function()
 TurnData.HealTime = [600];
 
 global.data.name = "Chara";
-global.data.lv = 20;
-global.hp_max = 99;
-global.hp = 99;
+global.data.lv = 1;
+global.hp_max = 20;
+global.hp = 20;
 global.kr_activation = false;
 global.inv = 1;
-global.assign_inv = 1;
-global.damage = 2;
+global.assign_inv = 30;
+global.damage = 3;
 global.item = [0];
 global.RGBBlaster = false;
 
-window_set_caption("OverSave Tale - Sans Fight");
+window_set_caption("NexteraTale");
 
-base_bone_col = make_color_rgb(183, 190, 182);

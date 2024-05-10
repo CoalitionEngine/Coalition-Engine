@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Binding Access",
-    "path": "folders/Coalition Engine/Addons/Input/Binding Access.yy",
+    "name": "08  Icons",
+    "path": "folders/Coalition Engine/Addons/Input/08  Icons.yy",
   },
 }

@@ -1,7 +1,7 @@
 //If allowC is on then it will skip the gameover sequence by pressing C/Ctrl
-if allowC and state < 3
+if allowC && state < 3
 {
-	if input_check_pressed("menu")
+	if PRESS_MENU
 	{
 		audio_stop_all();
 		gameover_writer.page(gameover_writer.get_page_count());

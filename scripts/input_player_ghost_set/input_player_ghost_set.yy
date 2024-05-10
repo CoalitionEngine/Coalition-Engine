@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Players",
-    "path": "folders/Coalition Engine/Addons/Input/Players.yy",
+    "name": "15  Players",
+    "path": "folders/Coalition Engine/Addons/Input/15  Players.yy",
   },
 }

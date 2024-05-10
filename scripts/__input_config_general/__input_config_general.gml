@@ -1,60 +1,47 @@
-//Maximum number of players that the game supports
-//For a singleplayer only game, this macro should be set to 1
-#macro INPUT_MAX_PLAYERS  4
+//PC platforms: Windows, MacOS, Linux, Steam Deck, HTML5 or OperaGX
+#macro INPUT_PC_KEYBOARD          true
+#macro INPUT_PC_MOUSE             true
+#macro INPUT_PC_GAMEPAD           true
+#macro INPUT_WINDOWS_VIBRATION    true   //Partially supported (XInput and Steam)
 
-//Maximum number of alternate bindings per verb per profile
-#macro INPUT_MAX_ALTERNATE_BINDINGS  2
+//Mobile platforms: Android, iOS, iPadOS, tvOS, HTML5 or OperaGX
+#macro INPUT_MOBILE_GAMEPAD       false
+
+#macro INPUT_MOBILE_MOUSE         false  //Maps touchscreen to mouse
+#macro INPUT_MOBILE_WEB_KEYBOARD  false  //Partially supported
+#macro INPUT_ANDROID_KEYBOARD     false  //Partially supported
+
+//Switch console platform
+#macro INPUT_SWITCH_VIBRATION     false   //Legacy support (simulated with HD Rumble)
+
+#macro INPUT_SWITCH_KEYBOARD      false  //Partially supported over USB
+#macro INPUT_SWITCH_MOUSE         false  //Maps touchscreen to mouse
+#macro INPUT_SWITCH_TOUCH         false  //Supported for handheld touchscreen
+
+//PlayStation 4 and PlayStation 5 console platforms
+#macro INPUT_PS4_VIBRATION        false
+#macro INPUT_PS5_VIBRATION        false   //Legacy support (simulated with PS5 haptics)
+
+//Xbox One and Xbox Series console platforms
+#macro INPUT_XBOX_VIBRATION       false
+
+
+
+//Whether to allow input while game window is out of focus on desktop platforms
+#macro INPUT_ALLOW_OUT_OF_FOCUS  false
+
+//Default setting for whether the debug overlay blocks input
+#macro INPUT_DEFAULT_DEBUG_OVERLAY_BLOCKS_INPUT  false
 
 //Set to true to use milliseconds instead of frames throughout the library
 #macro INPUT_TIMER_MILLISECONDS  false
 
-//Whether to allow (problematic) keyboard input on Android platform
-#macro INPUT_ANDROID_KEYBOARD_ALLOWED  false
-
-//Whether to allow keyboard input on Switch platform
-#macro INPUT_SWITCH_KEYBOARD_ALLOWED  false
+//Whether to allow using Steamworks extension when available
+//This feature requires the Steamworks extension: https://github.com/YoYoGames/GMEXT-Steamworks
+#macro INPUT_ALLOW_STEAMWORKS  true
 
 //Time (in milliseconds) to wait for a new binding before automatically cancelling the binding scan
 #macro INPUT_BINDING_SCAN_TIMEOUT  10000
 
-//The following macro controls default key filtering behaviour on platforms supporting keyboard
-//Expected values are:
-//  0 = Don't ignore any keys
-//  1 = Ignore select nonfunctional keys:
-//      - Alt/Options (Mac)
-//      - Windows/Command (Mac)
-//      - PrintSc on iOS/tvOS
-//      - Caps lock in browser on Apple platforms
-//      - F10 in browser on Apple platforms
-//      - F11 in browser on other platforms
-//      - Vendor-reserved (0xFF)
-//  2 = Ignore all above keys, and reserved and/or system keys:
-//      - Num lock & Scroll lock
-//      - IME keys
-//      - Browser keys
-//      - Media keys
-//You can modify this list at any time by calling input_ignore_key_add() or input_ignore_key_remove()
-//This setting only affects Input and will not filter these keys from native GameMaker functions
-#macro INPUT_IGNORE_RESERVED_KEYS_LEVEL  2
-
-
-
-
-
-#region Forbidden Fruit
-
-#macro INPUT_2D_CHECKER_STATIC_RESULT  true
-
-#macro INPUT_DEBUG_PROFILES  false
-#macro INPUT_DEBUG_SOURCES   false
-#macro INPUT_DEBUG_BINDING   false
-#macro INPUT_DEBUG_VERBS     false
-
-#macro INPUT_EXTERNAL_DEBUG_LOG  false  //Do NOT set to <true> unless directed (!)
-#macro INPUT_WARNING_DEPRECATED  true   //Whether to show errors when using deprecated functions
-
-//How many frames to wait before scanning for connected gamepads
-//This works around Steam sometimes reporting confusing connection/disconnection events on boot
-#macro INPUT_GAMEPADS_TICK_PREDELAY  10     
-
-#endregion
+//What source mode to start the game in
+#macro INPUT_STARTING_SOURCE_MODE  INPUT_SOURCE_MODE.HOTSWAP

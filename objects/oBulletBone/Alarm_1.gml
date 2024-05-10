@@ -1,1 +1,1 @@
-instance_destroy();
+ins_dest id;

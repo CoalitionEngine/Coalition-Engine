@@ -1,1 +1,1 @@
-if place_meeting(x, y, oSoul) Soul_Hurt();
+if place_meeting(x, y, oSoul) Soul_Hurt(damage);

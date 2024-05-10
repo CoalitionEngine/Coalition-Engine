@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "(System)",
-    "path": "folders/Coalition Engine/Addons/Input/(System).yy",
+    "name": "Ticks",
+    "path": "folders/Coalition Engine/Addons/Input/(System)/Ticks.yy",
   },
 }

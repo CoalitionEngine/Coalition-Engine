@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Coalition Engine/Objects.yy",
+    "name": "Extras",
+    "path": "folders/Coalition Engine/Objects/Extras.yy",
   },
   "parentObjectId": null,
   "persistent": false,

@@ -1,13 +1,13 @@
 if t >= 0 && time < 19640
 {
 	t = time / 60;
-	AudioStickToTime(bgm, t)
+	AudioStickToTime(bgm, t);
 }
 if time and time < 2780
 	if keyboard_check_pressed(ord("S"))
 	{
 		time = 2780;
-		oBattleController.button_override_alpha=[0.5, 0.5, 0.5, 0.5];
+		oBattleController.Button.OverrideAlpha=[0.5, 0.5, 0.5, 0.5];
 		oBattleController.ui_override_alpha=[1, 1, 1, 1, 1, 1];
 		oBoard.image_alpha = 1;
 		oSoul.image_alpha = 1;
@@ -15,7 +15,7 @@ if time and time < 2780
 		enemy_sprite_index[2] = 0;
 		wiggle = 1;
 		TweenDestroy(oGlobal);
-		Camera_Scale(1, 1);
+		Camera.Scale(1, 1);
 	}
 if time > 5350 and time < 6320
 {
@@ -37,10 +37,10 @@ if time > 9400 and time < 9650
 	else soul_in_button = false;
 	with oBattleController
 	{
-		button_scale[0] += (button_scale_target[other.soul_in_button] - button_scale[0]) / 6;
-		button_alpha[0] += (button_alpha_target[other.soul_in_button] - button_alpha[0]) / 6;
+		Button.Scale[0] += (Button.ScaleTarget[other.soul_in_button] - Button.Scale[0]) / 6;
+		Button.Alpha[0] += (Button.AlphaTarget[other.soul_in_button] - Button.Alpha[0]) / 6;
 		for (var i = 0; i < 3; ++i)
-		button_color[0][i]+=(button_color_target[0][other.soul_in_button][i]-button_color[0][i])/6;
+		Button.Color[0][i]+=(Button.ColorTarget[0][other.soul_in_button][i]-Button.Color[0][i])/6;
 	}
 }
 if time > 13520 and time < 14619

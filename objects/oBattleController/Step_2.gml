@@ -9,15 +9,15 @@ if global.kr_activation
 	{
 		kr_timer++;
 		if
-		(kr_timer == 2 and global.kr >= 40) or
-		(kr_timer == 4 and global.kr >= 30) or 
-		(kr_timer == 10 and global.kr >= 20) or
-		(kr_timer == 30 and global.kr >= 10) or
+		(kr_timer == 2 && global.kr >= 40) ||
+		(kr_timer == 4 && global.kr >= 30) || 
+		(kr_timer == 10 && global.kr >= 20) ||
+		(kr_timer == 30 && global.kr >= 10) ||
 		kr_timer == 60
 		{
 			kr_timer = 0;
 			global.kr--;
-			global.hp--
+			global.hp--;
 		}
 		if global.hp <= 0 global.hp = 1;
 	}
@@ -29,7 +29,7 @@ else
 	global.kr = 0;
 }
 
-if global.hp <= 0
+if global.hp <= 0 && global.deadable
 	if !global.debug gameover();
 	else
 	{
