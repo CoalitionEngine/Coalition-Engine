@@ -26,7 +26,7 @@ Fear not, the anti-export and save corruption is already a built-in feature of t
 
 > Canary : This will be getting the cutting edge updates, which means most likely it will cause unexpected errors or crashes.
 
-> Stable : When the feature is **completly** done and stable, It will move to the Stable branch.
+> Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
 
 > Long-Term Support : Specified for GameMaker LTS users! This branch will barely get updates. Its purposes are to maintain stability.
 
