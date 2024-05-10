@@ -16,8 +16,7 @@ instance_destroy(oBulletParents);
 instance_destroy(oPlatform);
 Fader_Fade(,0, 0);
 draw_set_font(fnt_8bitwonder);
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle);
+draw_set_align(fa_center, fa_middle);
 
 window_set_caption("Game Over");
 

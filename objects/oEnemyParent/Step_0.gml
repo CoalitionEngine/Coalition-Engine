@@ -26,7 +26,7 @@ function end_turn()
 		}
 	}
 	//Armor healing
-	if (turn % 2) == 1
+	if is_odd(turn)
 	{
 		if is_val(global.data.DefenseItem, "Temmie Armor", "Stained Apron")
 		{
@@ -61,7 +61,7 @@ function end_turn()
 	array_push(dialog_text, "");
 }
 
-if state == 2 and !__died and enemy_in_battle {
+if state == 2 && !__died && enemy_in_battle {
 	//Timer
 	if start time++;
 	if array_length(AttackFunctions) > BattleData.Turn()
@@ -76,7 +76,7 @@ if state == 2 and !__died and enemy_in_battle {
 if ContainsDust
 {
 	if !surface_exists(__dust_surface) __dust_surface = surface_create(640, 480);
-		if !__died and __is_dying and __death_time >= 1 + attack_end_time {
+		if !__died && __is_dying && __death_time >= 1 + attack_end_time {
 			//Dust height adding
 			if dust_height < enemy_total_height {
 				dust_height += enemy_total_height / dust_speed * 6;
@@ -93,7 +93,7 @@ if ContainsDust
 }
 
 //Calculates the height and width of the enemy, then initalizes the dust particles (Will only run once, don't worry for lag)
-if enemy_total_height == 0 or enemy_max_width == 0
+if enemy_total_height == 0 || enemy_max_width == 0
 {
 	var i = 0;
 	repeat(array_length(enemy_sprites))
@@ -143,3 +143,4 @@ if enemy_total_height == 0 or enemy_max_width == 0
 		}
 	}
 }
+wiggle_timer = wiggle ? wiggle_timer + 1 : 0;

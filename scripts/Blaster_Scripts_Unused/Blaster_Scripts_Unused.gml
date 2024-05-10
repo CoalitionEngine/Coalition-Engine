@@ -1,3 +1,6 @@
+//IMPORTANT
+//These functions are deprecated and should not be used
+
 ///@desc Creates a Blaster
 ///@param {array} xy			Initial x and y position of the Blaster
 ///@param {array} angles		Initial and Target angles of the Blaster
@@ -10,6 +13,7 @@
 ///@param {real} r_sound		Whether the releasing sound plays when firing (Default 1)
 function Bullet_GasterBlaster(XY,ANGLE,SCALE,IDEALXY,MPD,TYPE = 0,BLUR = false,C_SOUND = 1,R_SOUND = 1) 
 {
+	show_error("Coalition Engine:\nBullet_GasterBlaster should not be used.\nThis function is called at\n" + _GMFILE_ + "/" + _GMFUNCTION_ + ":" + string(_GMLINE_), true);
 	var DEPTH = -1000;
 	
 	var blaster = is_array(XY) ? instance_create_depth(XY[0], XY[1], DEPTH, oGB)
@@ -53,6 +57,7 @@ function Bullet_GasterBlaster(XY,ANGLE,SCALE,IDEALXY,MPD,TYPE = 0,BLUR = false,C
 ///@param {real} r_sound			Whether the releasing sound plays when firing (Default 1)
 function Blaster_Circle(aim_xy, len, dir, angle, sc, mpd, col = 0, blur = false, c = 1, r = 1)
 {
+	show_error("Coalition Engine:\nBlaster_Circle should not be used.\nThis function is called at\n" + _GMFILE_ + "/" + _GMFUNCTION_ + ":" + string(_GMLINE_), true);
 	var pos =
 	[
 		[lengthdir_x(len[0], dir[0]) + aim_xy[0], lengthdir_y(len[0], dir[0]) + aim_xy[1]],
@@ -73,6 +78,7 @@ function Blaster_Circle(aim_xy, len, dir, angle, sc, mpd, col = 0, blur = false,
 ///@param {real} r_sound			Whether the releasing sound plays when firing (Default 1)
 function Blaster_Aim(ian, txy, sc, mpd, col = 0, blur = false, c = 1, r = 1)
 {
+	show_error("Coalition Engine:\nBlaster_Aim should not be used.\nThis function is called at\n" + _GMFILE_ + "/" + _GMFUNCTION_ + ":" + string(_GMLINE_), true);
 	var dd = random(360),
 		dir = is_array(txy) ? point_direction(txy[0], txy[1], oSoul.x, oSoul.y)
 				: point_direction(txy.x, txy.y, oSoul.x, oSoul.y),

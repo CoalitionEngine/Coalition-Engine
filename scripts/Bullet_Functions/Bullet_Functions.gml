@@ -26,12 +26,11 @@ function len_step()
 	{
 		if activate
 		{
-			if target != noone
-				if instance_exists(target)
-				{
-					x = target.x;
-					y = target.y;
-				}
+			if target != noone && instance_exists(target)
+			{
+				x = target.x;
+				y = target.y;
+			}
 			x += hspeed;
 			y += vspeed;
 		    dir += dir_move;

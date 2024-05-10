@@ -1,8 +1,8 @@
 function Initialize()
 {
-	show_debug_message("Coalition Engine: This is version " + __COALITION_ENGINE_VERSION);
+	print("Coalition Engine: This is version " + __COALITION_ENGINE_VERSION);
 	__CoalitionCheckCompatibilty();
-	//Set to true when releasing your game
+	//Set to true when releasing your game (Note that bugs will be undisplayed during gameplay)
 	gml_release_mode(RELEASE);
 	randomize();
 	//Pre-bake outline font for damage
@@ -18,7 +18,7 @@ function Initialize()
 	
 	//Debugging (Engine usage)
 	global.debug = false;
-	global.show_hitbox = 0;
+	global.show_hitbox = false;
 	global.timer = 0;
 	
 	//Sets whether slam does damage
@@ -35,16 +35,16 @@ function Initialize()
 	
 	
 	//Save file (Free to edit)
-	global.SaveFile = ds_map_create();
-	global.SaveFile[? "Name"] =		"Chara";
-	global.SaveFile[? "LV"] =		20;
-	global.SaveFile[? "HP"] =		99;
-	global.SaveFile[? "Max HP"] =	99;
-	global.SaveFile[? "Gold"] =		0;
-	global.SaveFile[? "EXP"] =		0;
-	global.SaveFile[? "Wep"] =		"Stick";
-	global.SaveFile[? "Arm"] =		"Bandage";
-	global.SaveFile[? "Kills"] =	0;
+	global.SaveFile = {};
+	global.SaveFile[$ "Name"] =		"Chara";
+	global.SaveFile[$ "Max HP"] =	99;
+	global.SaveFile[$ "HP"] =		99;
+	global.SaveFile[$ "LV"] =		20;
+	global.SaveFile[$ "Gold"] =		0;
+	global.SaveFile[$ "EXP"] =		0;
+	global.SaveFile[$ "Wep"] =		"Stick";
+	global.SaveFile[$ "Arm"] =		"Bandage";
+	global.SaveFile[$ "Kills"] =	0;
 	static Item_Preset = [ITEM.PIE, ITEM.INOODLES, ITEM.STEAK, ITEM.SNOWP, ITEM.SNOWP,
 						ITEM.LHERO, ITEM.LHERO, ITEM.SEATEA],
 		Cell_Preset = [1, 2, 0, 0, 0, 0, 0, 0],
@@ -57,39 +57,38 @@ function Initialize()
 	for (var i = 0; i < 8; i++) {
 		if i < 3
 			for (var ii = 0; ii < 8; ii++)
-				global.SaveFile[? string("Box {0}_{1}", i, ii)];
-		global.SaveFile[? (string("Cell {0}", i))] = Cell_Preset[i];
-		global.SaveFile[? (string("Item {0}", i))] = Item_Preset[i];
+				global.SaveFile[$ $"Box {i}_{ii}"];
 	}
+	global.SaveFile[$ "Cell"] = Cell_Preset;
+	global.SaveFile[$ "Item"] = Item_Preset;
 	
 	//Save file Save/Loading
-	if !file_exists("Data.dat")
-		ds_map_secure_save(global.SaveFile, "Data.dat");
-	else
-		global.SaveFile = ds_map_secure_load("Data.dat");
+	var dat = LoadData("Data.dat");
+	if !struct_empty(dat) global.SaveFile = struct_copy(dat);
+	SaveData("Data.dat", global.SaveFile);
 	
 	
-	global.hp =			global.SaveFile[? "HP"];
-	global.hp_max =		global.SaveFile[? "Max HP"];
+	global.hp =			global.SaveFile[$ "HP"];
+	global.hp_max =		global.SaveFile[$ "Max HP"];
 	global.data = {};
 	with global.data
 	{
-		name =			global.SaveFile[? "Name"];
-		lv =			global.SaveFile[? "LV"];
-		Gold =			global.SaveFile[? "Gold"];
-		Exp =			global.SaveFile[? "EXP"];
-		AttackItem =	global.SaveFile[? "Wep"];
-		DefenseItem =	global.SaveFile[? "Arm"];
-		Kills =			global.SaveFile[? "Kills"];
+		name =			global.SaveFile[$ "Name"];
+		lv =			global.SaveFile[$ "LV"];
+		Gold =			global.SaveFile[$ "Gold"];
+		Exp =			global.SaveFile[$ "EXP"];
+		AttackItem =	global.SaveFile[$ "Wep"];
+		DefenseItem =	global.SaveFile[$ "Arm"];
+		Kills =			global.SaveFile[$ "Kills"];
 	}
 	
 	for (var i = 0; i < 10; i++) {
 		for (var ii = 0; ii < 3; ii++)
-			global.Box[ii, i] = global.SaveFile[? string("Box {0}_{1}", i, ii)];
+			global.Box[ii][i] = global.SaveFile[$ $"Box {i}_{ii}"];
 		if i < 8
 		{
-			global.item[i] = global.SaveFile[? ("Item " + string(i))];
-			global.cell[i] = global.SaveFile[? ("Cell " + string(i))];
+			global.item[i] = global.SaveFile[$ "Item"][i];
+			global.cell[i] = global.SaveFile[$ "Cell"][i];
 		}
 	}
 	
@@ -107,8 +106,12 @@ function Initialize()
 	global.ShowFPS = false;
 	//Input keys are defined at __input_config_profiles_and_default_bindings
 	
-	global.TempData = ds_map_create();
-	if file_exists("TempData.dat") LoadData();
+	global.TempData = {};
+	//Loads tempoary data
+	var dat = LoadData();
+	//If there exists data to be loaded, store it into the TempData
+	if !struct_empty(dat) global.TempData = struct_copy(dat);
+	//Saves the data for reshuffling
 	SaveData();
 	
 	//Battle
@@ -127,15 +130,15 @@ function Initialize()
 	ConvertItemNameToStat();
 	Player.GetBaseStats();
 	//Example on how to set up an ecounter
-	EnemyData.SetEncoutner(,,oEnemySansExample,);
+	EnemyData.SetEncoutner(,, oEnemySansExample,);
+	
 	global.kr = 0;
 	global.kr_activation = false;
-	global.damage = 1;
-	global.krdamage = 1;
-	global.bar_count = 1;
-	global.last_dmg_time = 0;
-	global.spd = 2; // Speed
-	global.inv = 2; // Invincibility frames
+	global.damage = 1;		//Base attack damage
+	global.krdamage = 1;	//Base KR damage
+	global.bar_count = 1;	//Number of bars in attacking
+	global.spd = 2;			//Playeer movement speed
+	global.inv = 2;			//Invincibility frames
 	//Player stats
 	global.player_attack_boost = 0;
 	global.player_def_boost = 0;
@@ -166,7 +169,7 @@ function Initialize()
 		lexicon_index_fallback_language_set("English")
 		LangLoaded = true;
 	}
-	SetLanguage(0);
+	SetLanguage(LANGUAGE.ENGLISH);
 	
 	//Extras
 	Load3DNodesAndEdges();
@@ -175,6 +178,7 @@ function Initialize()
 	//BPM of the song (Rhythm usage)
 	global.SongBPM = 0;
 	
-	global.MinFPS = undefined;
+	//FPS for debug display
+	global.MinFPS = 60;
 	global.MaxFPS = 60;
 }

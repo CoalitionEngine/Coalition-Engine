@@ -42,16 +42,18 @@ function Item_Use(item) {
 	heal_text = is_array(heal_text) ? heal_text[global.item_uses_left[item] - 1] : heal_text;
 	if variable_struct_exists(global.ItemLibrary[| item], "effect")
 		global.ItemLibrary[| item].effect();
-	
+	//Reduce item use count
 	if global.item_uses_left[item] > 0 global.item_uses_left[item]--;
+	//Update item info
 	Item_Info(item);
 	audio_play(snd_item_heal);
-	
-	if global.item_heal_override_kr and global.hp + heal >= global.hp_max global.kr = 0;
-	
+	//Set kr value
+	if global.item_heal_override_kr && global.hp + heal >= global.hp_max global.kr = 0;
+	//Update hp
 	global.hp = min(global.hp + heal, global.hp_max);
+	//Healing text
 	var hp_text = "[delay, 333]\n* You recovered " + string(heal) + " HP!";
-	
+	//Max hp heal text
 	if global.hp >= global.hp_max hp_text = "[delay, 333]\n* Your HP has been maxed out."
 	
 	//If is in battle

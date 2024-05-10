@@ -56,10 +56,14 @@ with Border
 	Alpha = 1;
 	AlphaPrevious = 0;
 	//Whether the border is the game itself
-	AutoCapture = false;
+	AutoCapture = true;
 	//Whether the border is blurred, if so how much
-	Blur = 0;
+	Blur = 5;
 	__BlurShaderSize = shader_get_uniform(shdGaussianBlur, "size");
+	EaseMethod = "";
+	EaseDuration = 0;
+	EaseTimer = 0;
+	EaseTweens = array_create(2);
 }
 
 #region Effects

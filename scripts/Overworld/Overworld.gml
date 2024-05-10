@@ -22,68 +22,32 @@ function OverworldDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, 
 		}
 		dialog_option = false;
 		dialog_font = font;
-		scribble_typists_add_event("skippable", textsetskippable);
-		scribble_typists_add_event("end", enddialog);
 		dialog_typist = scribble_typist()
 			.in(0.5, 0)
-			.sound_per_char(char_sound, 1, 1," ^!.?,:/\\|*")
+			.sound_per_char(char_sound, 1, 1, " ^!.?,:/\\|*")
 		
 		var dialog_width = 580, dialog_height = 150;
-		__text_writer = scribble(text)
-			.scale_to_box(dialog_width - 20 - dis, dialog_height - 20)
-		if __text_writer.get_page() != 0 __text_writer.page(0);
+		__text_writer = scribble(text).page(0);
 		
+		dialog_text = text;
 		dialog_is_down = top_bottom;
 		dialog_exists = true;
 	}
 }
-
-/**
-	Sets the name of the options
-	@param {string} question			The question in the box
-	@param {Array<string>} text			The text in the box
-	@param {Array<function>} event		The event after selecting said option
-	@param {string} font				The font of the text (Default is dt_mono)
-	@param {asset.GMSound}  char_sound	The sound of the text (Default snd_txt_typer)
-	@param {real}   top_bottom			Decide whether the box is up or down (Default up)
-	@param {bool} is_vertical			Whether the options are verical or not
-*/
-function Dialog_BeginOption(question, option_texts, event, font = "fnt_dt_mono", char_sound = snd_txtTyper, top_bottom = 0, ver = false)
+///Sets events of each function
+///@param {function}	option_1	Functions for the first option
+///@param {function}	option_2	Functions for the second option
+///@param ...
+function SetOptionEvent(option_1, option_2)
 {
 	gml_pragma("forceinline");
-	with oOWController
+	var i = 0;
+	repeat argument_count
 	{
-		dialog_font = font;
-		dialog_typist = scribble_typist()
-			.in(0.5, 0)
-			.sound_per_char(char_sound, 1, 1," ^!.?,:/\\|*")
-		
-		var dialog_width = 580, dialog_height = 150;
-		__text_writer = scribble("* " + question)
-			.scale_to_box(dialog_width - 20, dialog_height - 20)
-		if __text_writer.get_page() != 0 __text_writer.page(0);
-		
-		option_name = option_texts;
-		option_length[0] = 25;
-		option_amount = array_length(option_name);
-		var i = 1, text = "[c_white][fa_left][fa_middle]", spacing = (ver ? "\n" : "          "), len = 25;
-		repeat option_amount
-		{
-			text += option_name[i - 1] + spacing;
-			len = string_width(text) / 2;
-			option_length[i++] = len + option_length[0];
-		}
-		option_typist = scribble_typist().in(0.5, 0.1)
-		option_text = scribble(text).starting_format(font, c_white)
-		option_event = event;
-		option_buffer = 20;
-		option = 0;
-		dialog_is_down = top_bottom;
-		dialog_exists = true;
-		dialog_option = true;
+		oOWController.option_event[i] = argument[i];
+		++i;
 	}
 }
-
 #region Tile Collision
 /**
 	Checks whether an object position is colliding with a tile (Rectangle collision)

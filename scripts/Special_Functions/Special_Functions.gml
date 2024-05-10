@@ -7,8 +7,8 @@ function check_outside(){
 	
 	return !rectangle_in_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom,
 									view_x, view_y, view_x + view_w, view_y + view_h) 
-	and ((x < -sprite_width) or (x > room_width + sprite_width) or
-			(y > room_height + sprite_height) or(y < -sprite_height));
+	and ((x < -sprite_width) || (x > room_width + sprite_width) ||
+			(y > room_height + sprite_height) || (y < -sprite_height));
 }
 
 ///Takes a screenshot and saves it with given filename + current time
@@ -263,6 +263,48 @@ function is_rectangle(a, b, c, d)
 		(Slope1 * Slope3 == -1) && (Slope3 * Slope2 == -1) && (Slope2 * Slope4 == -1) && (Slope4 * Slope1 == -1)
 		//idk are there more cases
 	);
+}
+function lines_intersect(x1, y1, x2, y2, x3, y3, x4, y4, segment)
+{
+    var ua, ub, ud, ux, uy, vx, vy, wx, wy;
+    ua = 0;
+    ux = x2 - x1;
+    uy = y2 - y1;
+    vx = x4 - x3;
+    vy = y4 - y3;
+    wx = x1 - x3;
+    wy = y1 - y3;
+    ud = vy * ux - vx * uy;
+    if (ud != 0) 
+    {
+        ua = (vx * wy - vy * wx) / ud;
+        if (segment) 
+        {
+            ub = (ux * wy - uy * wx) / ud;
+            if (ua < 0 || ua > 1 || ub < 0 || ub > 1) ua = 0;
+        }
+    }
+    return ua;
+}
+/**
+	Checks the nearest point to an edge
+	@param {real} The x coordinate of the point to check
+	@param {real} The y coordinate of the point to check
+	@param {real} The x coordinate of the start of the edge
+	@param {real} The y coordinate of the start of the edge
+	@param {real} The x coordinate of the end of the edge
+	@param {real} The y coordinate of the end of the edge
+*/
+function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
+{
+	gml_pragma("forceinline");
+	var DeltaX = pointX - StartX,
+		DeltaY = pointY - StartY,
+		DiffX = EndX - StartX,
+		DiffY = EndY - StartY,
+		Lambda = (DeltaX * DiffX + DeltaY * DiffY) / (DiffX * DiffX + DiffY * DiffY);
+		Lambda = clamp(Lambda, 0, 1);
+	return new Vector2(StartX + Lambda * DiffX, StartY + Lambda * DiffY);
 }
 #endregion
 

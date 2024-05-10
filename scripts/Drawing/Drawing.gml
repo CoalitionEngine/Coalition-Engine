@@ -1,22 +1,17 @@
 /**
 	Draws a rectagle with given width and color
-	@param {real} x1		The x coordinate of the top left coordinate of the rectangle
-	@param {real} y1		The y coordinate of the top left coordinate of the rectangle
-	@param {real} x2		The x coordinate of the bottom right coordinate of the rectangle
-	@param {real} y2		The y coordinate of the bottom right coordinate of the rectangle
-	@param {real} width		The width of the outline of the rectangle (Default 1)
-	@param {color} color	The color of the rectangle (Default white)
-	@param {bool} full		Whether the rectangle is a semi-round angled rectangle or a full right-angled rectangle (Default former)
+	@param {real} x1				The x coordinate of the top left coordinate of the rectangle
+	@param {real} y1				The y coordinate of the top left coordinate of the rectangle
+	@param {real} x2				The x coordinate of the bottom right coordinate of the rectangle
+	@param {real} y2				The y coordinate of the bottom right coordinate of the rectangle
+	@param {real} width				The width of the outline of the rectangle (Default 1)
+	@param {Constant.Color} color	The color of the rectangle (Default white)
+	@param {real} alpha				The alpha of the rectangle frame
+	@param {real} rounding			The rounding of the rectangle corners
 */
-function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, full = false) {
+function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, alpha = 1, rounding = 0) {
 	gml_pragma("forceinline");
-	var dis = real(full) * width / 2, prev_col = draw_get_color();
-	draw_set_color(color);
-	draw_line_width(x1 - dis, y1, x2 + dis, y1, width);
-	draw_line_width(x1 - dis, y2, x2 + dis, y2, width);
-	draw_line_width(x1, y1 - dis, x1, y2 + dis, width);
-	draw_line_width(x2, y1 - dis, x2, y2 + dis, width);
-	draw_set_color(prev_col);
+	return CleanRectangle(x1, y1, x2, y2).Blend(c_black, 1).Border(width, color, alpha).Rounding(rounding).Draw();
 }
 /**
 	Draws a rectangle with a outline color and background color
@@ -24,34 +19,15 @@ function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, full =
 	@param {real} y1							The y coordinate of the top left coordinate of the rectangle
 	@param {real} x2							The x coordinate of the bottom right coordinate of the rectangle
 	@param {real} y2							The y coordinate of the bottom right coordinate of the rectangle
-	@param {real} width							The width of the outline of the rectangle (Default 1)
-	@param {color} outline_color				The color of the outline of the rectangle (Default white)
-	@param {real} outline_alpha					The alpha of the outline (Default 1)
-	@param {color} background_color				The color of the background of the rectangle (Default black)
+	@param {real} width							The width of the frame of the rectangle (Default 1)
+	@param {Constant.Color} frame_color			The color of the frame of the rectangle (Default white)
+	@param {Constant.Color} background_color	The color of the background of the rectangle (Default black)
+	@param {real} frame_alpha					The alpha of the frame (Default 1)
 	@param {real} background_alpha				The alpha of the background (Default 1)
-	@param {bool} full							Whether the rectangle is a semi-round angled rectangle
-												or a full right-angled rectangle (Default former)
 */
-function draw_rectangle_width_background(x1, y1, x2, y2, width = 1, ocolor = c_white, oalpha = 1, bcolor = c_black, balpha = 1, full = false) {
+function draw_rectangle_width_background(x1, y1, x2, y2, width = 6, frame_color = c_white, fill_color = c_black, frame_alpha = 1, fill_alpha = 1, rounding = 0) {
 	gml_pragma("forceinline");
-	if !full && oalpha != 1 && balpha != 1 {
-		var al = draw_get_alpha(), col = draw_get_color();
-		draw_set_alpha(balpha);
-		draw_set_color(bcolor);
-		draw_rectangle(x1, y1, x2, y2, false);
-		draw_set_alpha(oalpha);
-		draw_rectangle_width(x1, y1, x2, y2, width, ocolor, full);
-		draw_set_alpha(al);
-		draw_set_color(col);
-	}
-	else {
-		var col = draw_get_color();
-		draw_set_color(ocolor);
-		draw_rectangle(x1, y1, x2, y2, false);
-		draw_set_color(bcolor);
-		draw_rectangle(x1 + width, y1 + width, x2 - width, y2 - width, false);
-		draw_set_color(col);
-	}
+	return CleanRectangle(x1, y1, x2 + width, y2 + width).Blend(fill_color, fill_alpha).Border(width, frame_color, frame_alpha).Rounding(rounding).Draw();
 }
 /**
 	Draws a circle with a hollow center
@@ -105,12 +81,10 @@ function draw_circular_bar(x, y, value, max, colour, radius, transparency, width
 */
 function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, color = c_white, move = dsin, intensity = 20, rate = 1) {
 	gml_pragma("forceinline");
-	static displace = 0;
-	static time = 0;
-	time++;
-	displace = move(time * rate) * intensity;
+	static displace = 0, time = 0;
+	displace = move(time++ * rate) * intensity;
 	height += displace;
-	oGlobal.GradientSurf.DrawExt(x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
+	draw_surface_ext(oGlobal.GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
 }
 ///Sets the noise sprite to use for a noise fade
 function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
@@ -129,24 +103,22 @@ function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
 	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
 */
 function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_sprite = sprNoiseRect) {
-	if !variable_instance_exists(id, "NoiseVars")
-	NoiseVars = new SpriteNoiseSet(noise_sprite);
-	if time < duration {
-		var UV = shader_get_uniform(shdNoiseFade, "mainuv"),
+	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
 			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
 			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
-			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise"),
-			NoiseFadeLevel = 1 - time / duration,
-			gettexture = sprite_get_texture(sprite, subimg),
-			texuvs = texture_get_uvs(gettexture);
+			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise");
+	if !variable_instance_exists(id, "NoiseVars")
+		NoiseVars = new SpriteNoiseSet(noise_sprite);
+	if time < duration {
+		var gettexture = sprite_get_texture(sprite, subimg),
+			texuvs = texture_get_uvs(gettexture),
+			NoiseFadeLevel = 1 - time / duration;
 		shader_set(shdNoiseFade);
 		texture_set_stage(Sampler, NoiseVars.NoiseTexture);
 		shader_set_uniform_f(Level, NoiseFadeLevel);
 		shader_set_uniform_f(UV, NoiseVars.Noiseuvs[0], NoiseVars.Noiseuvs[1], texuvs[0], texuvs[1]);
 		shader_set_uniform_f(Rat, (NoiseVars.Noiseuvs[2] - NoiseVars.Noiseuvs[0]) / (texuvs[2] - texuvs[0]), (NoiseVars.Noiseuvs[3] - NoiseVars.Noiseuvs[1]) / (texuvs[3] - texuvs[1]));
-		draw_set_alpha(1 - NoiseFadeLevel);
-		draw_sprite(sprite, subimg, x, y);
-		draw_set_alpha(1);
+		draw_sprite_ext(sprite, subimg, x, y, 1, 1, 0, c_white, 1 - NoiseFadeLevel);
 		shader_reset();
 	}
 	else draw_sprite(sprite, subimg, x, y);
@@ -166,14 +138,14 @@ function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_spri
 	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
 */
 function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, time, duration, noise_sprite = sprNoiseRect) {
-	if !variable_instance_exists(id, "NoiseVars")
-	NoiseVars = new SpriteNoiseSet(noise_sprite);
-	if time < duration {
-		var UV = shader_get_uniform(shdNoiseFade, "mainuv"),
+	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
 			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
 			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
-			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise"),
-			NoiseFadeLevel = 1 - time / duration,
+			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise");
+	if !variable_instance_exists(id, "NoiseVars")
+		NoiseVars = new SpriteNoiseSet(noise_sprite);
+	if time < duration {
+		var NoiseFadeLevel = 1 - time / duration,
 			gettexture = sprite_get_texture(sprite, subimg),
 			texuvs = texture_get_uvs(gettexture);
 		shader_set(shdNoiseFade);
@@ -196,7 +168,7 @@ function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, c
 function draw_invert_rect(x1, y1, x2, y2) {
 	gml_pragma("forceinline");
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
-	draw_rectangle(x1, y1, x2, y2, false);
+	draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, c_white, 1);
 	gpu_set_blendmode(bm_normal);
 }
 /**
@@ -232,8 +204,8 @@ function draw_invert_cricle(x, y, radius) {
 */
 function draw_invert_polygon(vertexes) {
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
-	var i = 1, n = array_length(vertexes) - 2;
-	repeat n
+	var i = 1;
+	repeat array_length(vertexes) - 2
 	{
 		draw_triangle(vertexes[0][0], vertexes[0][1], vertexes[i][0], vertexes[i][1],
 			vertexes[i + 1][0], vertexes[i + 1][1], false);

@@ -5,8 +5,8 @@
 function string_to_array(str)
 {
 	gml_pragma("forceinline");
-	var i = 1, n = string_length(str), arr = [];
-	repeat n array_push(arr, string_copy(str, i++, 1));
+	var i = 1, arr = [];
+	repeat string_length(str) array_push(arr, string_copy(str, i++, 1));
 	return arr;
 }
 /**
@@ -16,8 +16,8 @@ function string_to_array(str)
 function array_to_string(arr)
 {
 	gml_pragma("forceinline");
-	var i = 0, n = array_length(arr), txt = "";
-	repeat n txt += arr[i++];
+	var i = 0, txt = "";
+	repeat array_length(arr) txt += arr[i++];
 	return txt;
 }
 

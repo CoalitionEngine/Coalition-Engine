@@ -3,6 +3,7 @@ function Cell() constructor {
 		Gets the amount of phone numbers you have
 	*/
 	static Count = function() {
+		gml_pragma("forceinline");
 		for (var i = 0, cnt = 0; i < 8; i++)
 			if global.cell[i] != 0 cnt++;
 		return cnt;
@@ -12,6 +13,7 @@ function Cell() constructor {
 		@param {real} slot The slot to get the name of
 	*/
 	static GetName = function(slot) {
+		gml_pragma("forceinline");
 		static name = ["", "Phone", "Dimensional Box A"];
 		return name[global.cell[slot - 1]];
 	}
@@ -20,6 +22,7 @@ function Cell() constructor {
 		@param {real} slot The slot to get the dialog of
 	*/
 	static GetText = function(slot) {
+		gml_pragma("forceinline");
 		static text = ["", "Test Phone text 1", ""];
 		return text[global.cell[slot]];
 	}
@@ -28,7 +31,8 @@ function Cell() constructor {
 		@param {real} slot The slot to get the data of
 	*/
 	static IsBox = function(slot) {
-		static is_box = [0, 0, 1];
+		gml_pragma("forceinline");
+		static is_box = [false, false, true];
 		return is_box[global.cell[slot]];
 	}
 	/**
@@ -36,8 +40,8 @@ function Cell() constructor {
 		@param {real} slot The slot to get the data of
 	*/
 	static GetBoxID = function(slot) {
-		static NameToID = ["Dimensional Box A"],
-			ID = [1, 2];
+		gml_pragma("forceinline");
+		static NameToID = ["Dimensional Box A"], ID = [1, 2];
 		var i = 0, Name = CellData.GetText(slot), target = 0;
 		repeat(array_length(NameToID))
 		{

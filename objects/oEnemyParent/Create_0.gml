@@ -54,18 +54,16 @@ dialog_box_color = c_white;
 dialog_at_mid_turn = false;
 default_font = "";
 default_sound = snd_txtDefault;
+SpikeScaleAngle =
+[
+	-1, 1, 0,
+	-1, 1, 90,
+	1, 1, 0,
+	1, 1, 90
+];
 
 function dialog_init(text = "")
 {
-	//This prevents the debug window to be flooded by scribble warning messages
-	static LoadedFunctions = false;
-	if !LoadedFunctions
-	{
-		scribble_typists_add_event("skippable", textsetskippable);
-		scribble_typists_add_event("SpriteSet", setsprite);
-		scribble_typists_add_event("flash", flash);
-		LoadedFunctions = true;
-	}
 	__text_writer = scribble(text)
 		.wrap(dialog_size[2] + dialog_size[3] - 15, dialog_size[0] + dialog_size[1] - 15)
 	if __text_writer.get_page() != 0 __text_writer.page(0);
@@ -83,8 +81,8 @@ function MidTurnDialog(text, events = [])
 {
 	dialog_at_mid_turn = true;
 	time++;
-	var i = 0, n = array_length(events);
-	repeat n
+	var i = 0;
+	repeat array_length(events)
 	{
 		scribble_typists_add_event(events[i][0], events[i][1]);
 		++i;

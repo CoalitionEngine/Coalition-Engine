@@ -6,8 +6,7 @@ __CoalitionEngineError(!is_struct(menu_text_typist), "'menu_text_typist' is not 
 #endregion
 if !audio_group_is_loaded(audgrpbattle) audio_group_load(audgrpbattle);
 Button.Update();
-var DefaultFontNB = lexicon_text("Font"),
-	DefaultFont = $"[{DefaultFontNB}]",
+var DefaultFont = "[" + DefaultFontNB + "]",
 	input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
 	input_confirm = PRESS_CONFIRM,
@@ -40,7 +39,7 @@ switch battle_state {
 					audio_play(snd_menu_confirm);
 					menu_state = _button_slot + 1;
 					//If target state is item and there are none left, return
-					if menu_state == MENU_STATE.ITEM and item_space == 0 {
+					if menu_state == MENU_STATE.ITEM && item_space == 0 {
 						menu_state = MENU_STATE.BUTTON_SELECTION;
 						
 						if item_scroll_type == ITEM_SCROLL.VERTICAL menu_choice[MENU_STATE.ITEM] = 0;
@@ -96,8 +95,8 @@ switch battle_state {
 				var choice = menu_choice[6 / menu_state], len = 0;
 				if menu_state == 3 {
 					//Get valid item amount
-					var i = 0, n = array_length(global.item);
-					repeat n
+					var i = 0;
+					repeat array_length(global.item)
 					{
 						if global.item[i] != 0 len++;
 						i++;
@@ -187,8 +186,7 @@ switch battle_state {
 					audio_play(snd_menu_confirm);
 					if menu_state == MENU_STATE.ITEM // Item-consuming code
 					{
-						var ItemID = choice;
-						Item_Use(global.item[ceil(ItemID)]);
+						Item_Use(global.item[ceil(choice)]);
 						last_choice = 2;
 						item_space = Item_Space();
 						// If no item left then item button commit gray
@@ -240,8 +238,8 @@ switch battle_state {
 		}
 		//Soul angle lerping
 		var target_soul_angle = 0;
-		if (menu_state == MENU_STATE.FIGHT or menu_state == MENU_STATE.ACT or
-			menu_state == MENU_STATE.ITEM or menu_state == MENU_STATE.MERCY or
+		if (menu_state == MENU_STATE.FIGHT || menu_state == MENU_STATE.ACT ||
+			menu_state == MENU_STATE.ITEM || menu_state == MENU_STATE.MERCY ||
 			menu_state == MENU_STATE.ACT_SELECT)
 			target_soul_angle = 90;
 		oSoul.image_angle = lerp(oSoul.image_angle, target_soul_angle, lerp_speed == 1 ? 1 : lerp_speed / 3);
@@ -274,7 +272,7 @@ if global.debug {
 		if keyboard_check(ord("R")) game_set_speed(60, gamespeed_fps);
 		if keyboard_check(ord("F")) game_set_speed(600, gamespeed_fps);
 	}
-	if battle_state == 0 and keyboard_check(vk_control)
+	if battle_state == 0 && keyboard_check(vk_control)
 		battle_turn = max(0, battle_turn + input_horizontal);
 	if global.hp <= 1 {
 		global.hp = global.hp_max;

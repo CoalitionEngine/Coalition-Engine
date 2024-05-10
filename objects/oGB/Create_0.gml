@@ -1,6 +1,6 @@
 event_inherited();
 kr = 10;
-
+//Set this to 0 if you want the beam to increase in length over time
 image_xscale = 800;
 image_yscale = 1;
 image_speed = 0;
@@ -45,8 +45,8 @@ function auto_destroy()
 	
 		return !rectangle_in_rectangle(x - 57/2, y - 22, x + 57/2, y + 22,
 										view_x, view_y, view_x + view_w, view_y + view_h) 
-		and ((x < -57) or (x > room_width + 57) or (y > room_height + 44) or(y < -44));
+		&& ((x < -57) || (x > room_width + 57) || (y > room_height + 44) || (y < -44));
 	}
-	if checkoutside(gbx, gby, gb_xscale, gb_yscale) and timer_exit >= time_stay and destroy
+	if checkoutside(gbx, gby, gb_xscale, gb_yscale) && timer_exit >= time_stay && destroy
 		instance_destroy();
 }

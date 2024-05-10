@@ -7,8 +7,8 @@ repeat ShaderAmount
 	//Set the shader
 	shader_set(ShaderList[i]);
 	//Apply parameters
-	var ParamNames = variable_struct_get_names(ShaderParams[i]), ParamAmount = array_length(ParamNames), j = 0;
-	repeat ParamAmount
+	var ParamNames = variable_struct_get_names(ShaderParams[i]), j = 0;
+	repeat array_length(ParamNames)
 	{
 		if is_array(ShaderParams[i][$ ParamNames[j]])
 			shader_set_uniform_f_array(shader_get_uniform(ShaderList[i], ParamNames[j]), ShaderParams[i][$ ParamNames[j]]);
@@ -30,7 +30,7 @@ repeat ShaderAmount
 	
 	if IsDrawnToSurf
 	{
-		draw_clear(c_black);
+		draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_black, 1);
 		draw_surface(SurfaceList[i], 0, 0);
 	}
 	++i;

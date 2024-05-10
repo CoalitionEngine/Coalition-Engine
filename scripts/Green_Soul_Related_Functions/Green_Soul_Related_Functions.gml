@@ -20,10 +20,7 @@ function __Shield() constructor
 			ds_grid_resize(Input, Amount + 1, 4);
 			var i = 0;
 			repeat 4
-			{
-				Input[# Amount, i] = input[i];
-				++i;
-			}
+				Input[# Amount, i] = input[i++];
 			var shield = instance_create_depth(oSoul.x, oSoul.y, oSoul.depth, oGreenShield);
 			shield.ID = Amount;
 			ds_list_add(List, shield);
@@ -57,10 +54,7 @@ function __Shield() constructor
 				if Input[# k, 0] != noone
 				{
 					repeat 4
-					{
-						temp[# i, ii] = Input[# k, ii];
-						++ii;
-					}
+						temp[# i, ii] = Input[# k, ii++];
 					k++;
 				}
 			}
@@ -104,7 +98,7 @@ function Bullet_Arrow(Time, Spd, Dir, Mode = 0, color = 0)
 		len = Time * spd;
 		index += color * 4;
 		Color = color;
-		var dir_e = ((mode == 2 or mode == 3) ? 45 : 0);
+		var dir_e = (mode == 2 || mode == 3) ? 45 : 0;
 		x = lengthdir_x(len, dir + dir_e + dir_a) + oSoul.x;
 		y = lengthdir_y(len, dir + dir_e + dir_a) + oSoul.y;
 	}

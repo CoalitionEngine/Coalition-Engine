@@ -11,14 +11,14 @@ repeat array_length(Fade.Activate)
 			case FADE.CIRCLE:
 				if Fade.Timer <= duration
 					FadeTime += 1 / duration;
-				if Fade.Timer >= duration + delay and FadeTime > 0
+				if Fade.Timer >= duration + delay && FadeTime > 0
 					FadeTime -= 1 / duration;
 				draw_circular_bar(320, 240, FadeTime * 60, 60, c_black, 900, 1, 900);
 			break
 			case FADE.LINES:
 				if Fade.Timer <= duration
 					FadeTime += 1 / duration
-				if Fade.Timer >= duration + delay and FadeTime > 0
+				if Fade.Timer >= duration + delay && FadeTime > 0
 					FadeTime -= 1 / duration;
 				for(var ii = 0, nn = Fade.Activate[i][3]; ii < nn; ++ii)
 				{
@@ -33,7 +33,7 @@ repeat array_length(Fade.Activate)
 #endregion
 
 //Draws above shaders
-if global.ShowFPS and !global.debug and room != rRestart  //Prevent debug UI overlap
+if global.ShowFPS && !global.debug && room != rRestart  //Prevent debug UI overlap
 {
 	draw_text_scribble(635, 5, "[fnt_dotum][fa_right][c_red]FPS: " + string(fps));
 }

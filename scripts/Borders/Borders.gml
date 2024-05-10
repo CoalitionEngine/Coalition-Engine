@@ -7,15 +7,15 @@
 function BorderSetEnable(enable, func = "", dur = 0)
 {
 	gml_pragma("forceinline");
-	oGlobal.Border.Enabled = enable;
-	for (var i = 0,  w = enable ? 960 : 640, h = enable ? 540 : 480,
-		iw = window_get_width(), ih = window_get_height(); i < dur; ++i) {
-		DoLater(dur, function(func, w, h, dur, i, iw, ih) {
-			window_set_size(func(i, iw, w - iw, dur), func(i, ih, h - ih, dur));
-			window_center();
-		}, func, w, h, dur, i, iw, ih);
+	with oGlobal.Border
+	{
+		Enabled = enable;
+		EaseMethod = func;
+		EaseDuration = dur;
+		EaseTimer = 0;
+		EaseTweens = TweenFire(self, func, 0, 0, 0, dur, "", enable ? 640 : 960, enable ? 960 : 640, "", enable ? 480 : 540, enable ? 540 : 480)
 	}
-	oGlobal.alarm[0] = dur + 1;
+	oGlobal.alarm[1] = 1;
 }
 
 /**

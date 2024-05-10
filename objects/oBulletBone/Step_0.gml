@@ -20,22 +20,14 @@ if !Len.activate
 	switch mode
 	{
 		case 0: break;
-		case 1:
-			y = board.y - board.up + half_len;
-			break;
-		case 2:
-			y = board.y + board.down - half_len;
-			break;
-		case 3:
-			x = board.x - board.left + half_len;
-			break;
-		case 4:
-			x = board.x + board.right - half_len;
-			break;
+		case 1: y = board.y - board.up + half_len;		break;
+		case 2: y = board.y + board.down - half_len;	break;
+		case 3: x = board.x - board.left + half_len;	break;
+		case 4: x = board.x + board.right - half_len;	break;
 	}
 }
 else len_step();
 //Auto destroy when turn ends or duration is met
-if (at_turn_end and length < 11) or (duration != -1 and DurationTimer >= duration)
+if (at_turn_end && length < 11) || (duration != -1 && DurationTimer >= duration)
 	instance_destroy();
 

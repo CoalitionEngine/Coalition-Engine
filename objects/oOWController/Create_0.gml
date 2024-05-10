@@ -1,4 +1,3 @@
-live;
 //Load texture
 texturegroup_load("texoverworld");
 Fader_Fade(1, 0, 15);
@@ -9,6 +8,8 @@ OverworldSprite = sprUTDemo;
 OverworldSubRoom = 0;
 OverworldTransitioning = false;
 OverworldTransitionSpeed = 20;
+OverworldRoomTransitionMethod = -1;
+OverworldRoomTransitionArguments = [];
 
 enum INTERACT_STATE
 {
@@ -18,14 +19,18 @@ enum INTERACT_STATE
 global.interact_state = INTERACT_STATE.IDLE;
 Item_Info_Load(); // Loading item's info
 
-#region // Dialog properties 
+#region Dialog properties 
 dialog_exists = false;
 dialog_option = false;
 dialog_sprite = -1;
 dialog_sprite_index = 0;
+dialog_text = "";
+option_pos = ds_grid_create(2, 2);
+option_amount = 0;
+option_text_height = "1";
 #endregion
 
-#region // Menu properties
+#region Menu properties
 enum MENU_MODE
 {
 	IDLE,
@@ -58,9 +63,10 @@ menu_color =
 	[c_white, c_white],
 	[c_black, c_white],
 ];
+item_interact_positions = [217, 315, 429];
 #endregion
 
-#region // Box properties
+#region Box properties
 enum BOX_STATE
 {
 	INVENTORY,
@@ -74,10 +80,11 @@ Box_ID = 0;
 
 ForceNotDisplayUI = false;
 save_state = 0;
+save_function = function(){};
 Choice = 0;
 WaitTime = 0;
 
-#region // Debug properties
+#region Debug properties
 if ALLOW_DEBUG
 {
 	debug = false;
@@ -85,3 +92,11 @@ if ALLOW_DEBUG
 }
 #endregion
 global.lerp_speed = 1;
+
+function ExitSave() {
+	Choice = 0;
+	save_state = SAVE_STATE.NOT_SAVING
+	menu_disable = false;
+	oOWPlayer.moveable = true;
+	oOWCollision.Collided = false;
+}

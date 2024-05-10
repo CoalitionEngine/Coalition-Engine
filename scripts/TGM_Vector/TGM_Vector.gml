@@ -139,9 +139,9 @@ function Vector2(x, y=x) constructor {
 	}
 	
 	/// @desc Scales the vector.
-	static Scale = function(vector2) {
+	static Scale = function(scalar) {
 		gml_pragma("forceinline");
-		return new Vector2(x*vector2.x, y*vector2.y);
+		return new Vector2(x*scalar, y*scalar);
 	}
 	
 	/// @desc Normalise (magnitude set to 1) all the components of this
@@ -271,9 +271,9 @@ function Vector2(x, y=x) constructor {
 		return min(x, y);
 	};
 	/// Returns the projection of the vector
-	static Project = function(origin, vector2) {
+	static Project = function(vector2) {
 		gml_pragma("forceinline");
-		return origin.Dot(vector2) / origin.Magnitude();
+		return vector2.Scale(self.Dot(vector2) / vector2.SqrMagnitude());
 	}
 }
 

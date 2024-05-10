@@ -1,7 +1,6 @@
 Camera.Scale(1, 1);
 audio_stop_all();
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
+draw_set_align();
 enum DEBUG_STATE
 {
 	MAIN = 0,
@@ -76,7 +75,7 @@ array_sort(SpriteList, true);
 
 function LoadSubOptions(listnum)
 {
-	var Lists =
+	static Lists =
 		[
 			RoomList,
 			AudioList,
@@ -93,44 +92,45 @@ function LoadSubOptions(listnum)
 		DisplaceYTarget = 0;
 		Choice = -1;
 		Lerp = 0;
-		var SubOptionMaxHeight = 440;
+		static SubOptionMaxHeight = 440;
 		TotalHeight = 70 * array_length(Options);
 		MaxY = -max(0, TotalHeight - SubOptionMaxHeight);
 		DrawSprite = -1;
 		Stream = -1;
-		self.Audio = -1;
+		Audio = -1;
 		AudioLength = -1;
 	}
 }
 
 function SubOptionAction(index)
 {
+	audio_stop_sound(SubOption.Audio);
 	switch State
 	{
 		case DEBUG_STATE.ROOMS:
 			room_goto(asset_get_index(RoomList[index]));
-		break
+			break;
 		case DEBUG_STATE.SOUNDS:
+			var curAudio = AudioList[index];
 			with SubOption
 			{
-				audio_stop_all();
-				if string_ends_with(other.AudioList[index], ".ogg")
+				if string_ends_with(curAudio, ".ogg")
 				{
-					Stream = audio_create_stream("Music/" + string(other.AudioList[index]));
-					self.Audio = audio_play(Stream);
+					Stream = audio_create_stream("Music/" + string(curAudio));
+					Audio = audio_play(Stream);
 				}
-				else self.Audio = audio_play(asset_get_index(other.AudioList[index]));
-				AudioLength = audio_sound_length(self.Audio);
+				else Audio = audio_play(asset_get_index(curAudio));
+				AudioLength = audio_sound_length(Audio);
 				AudioLengthMin = string(AudioLength div 60);
 				AudioLengthSec = string(round(AudioLength mod 60));
 				if AudioLengthSec < 10 AudioLengthSec = "0" + AudioLengthSec;
 			}
-		break
+			break;
 		case DEBUG_STATE.SPRITES:
 			MainOption.DisplaceXTarget = -260;
 			SubOption.DisplaceXTarget = -250;
 			SubOption.DrawSprite = asset_get_index(SpriteList[index]);
-		break
+			break;
 		
 	}
 }

@@ -1,11 +1,13 @@
 #region Engine
 //Here are the macros for the engine
-#macro __COALITION_ENGINE_VERSION "v0.6.0 Beta 1"
+#macro __COALITION_ENGINE_VERSION "v0.6.0"
 #macro ALLOW_DEBUG  true
 //This automatically set DEBUG into false when you build the game
-#macro DEBUG !game_is_standalone()
+//#macro DEBUG !game_is_standalone()
+#macro DEBUG true
 #macro RELEASE !DEBUG
 #macro __COALITION_ENGINE_ERROR_LOG true || DEBUG
+#macro __COALITION_VERBOSE true || DEBUG
 #macro __COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR true
 #endregion
 #region Input
@@ -14,6 +16,7 @@
 #macro CHECK_VERTICAL (global.diagonal_speed ? input_check_opposing("up", "down") : input_y("left", "right", "up", "down"))
 #macro PRESS_HORIZONTAL input_check_opposing_pressed("left", "right")
 #macro PRESS_VERTICAL input_check_opposing_pressed("up", "down")
+#macro CHECK_MOVING input_distance("left", "right", "up", "down") != 0
 #macro PRESS_CONFIRM input_check_pressed("confirm")
 #macro HOLD_CONFIRM input_check("confirm")
 #macro PRESS_CANCEL input_check_pressed("cancel")
@@ -32,7 +35,8 @@
 #macro is ==
 //Handy GMLive macro for users who have GMlive
 #macro COALITION_ENABLE_GMLIVE DEBUG
-#macro live if COALITION_ENABLE_GMLIVE && asset_get_index("obj_gmlive") != -1 {\
+#macro live if COALITION_ENABLE_GMLIVE \
+	if asset_get_index("obj_gmlive") != -1 {\
 	instance_check_create(obj_gmlive);\
 	if live_call() return live_result\
 }
@@ -52,6 +56,7 @@ enum FONTS {
 }
 
 //Soul
+//guys trust me im working on it
 enum SOUL_MODE
 {
 	RED = 1,

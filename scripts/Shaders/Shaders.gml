@@ -53,8 +53,8 @@ function __Shader() constructor
 	{
 		with oShaderController
 		{
-			var i = 0, n = array_length(ShaderParams);
-			repeat n
+			var i = 0;
+			repeat array_length(ShaderParams)
 			{
 				if array_length(SurfaceList) > 0 && surface_exists(SurfaceList[i]) surface_free(SurfaceList[i]);
 				delete ShaderParams[i++];

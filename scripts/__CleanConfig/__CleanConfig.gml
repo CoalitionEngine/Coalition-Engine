@@ -27,8 +27,8 @@
 #macro CLEAN_DEFAULT_TRIANGLE_BORDER_COLOUR          c_white
 #macro CLEAN_DEFAULT_TRIANGLE_BORDER_ALPHA           draw_get_alpha()
 #macro CLEAN_DEFAULT_TRIANGLE_ROUNDING               0
-#macro CLEAN_TRIANGLE_FIX_COUNTERCLOCKWISE_POINTS    false
-#macro CLEAN_TRIANGLE_ERROR_COUNTERCLOCKWISE_POINTS  true
+#macro CLEAN_TRIANGLE_FIX_COUNTERCLOCKWISE_POINTS    true
+#macro CLEAN_TRIANGLE_ERROR_COUNTERCLOCKWISE_POINTS  false
 
 #macro CLEAN_DEFAULT_POLYLINE_COLOUR                 draw_get_colour()
 #macro CLEAN_DEFAULT_POLYLINE_ALPHA                  draw_get_alpha()
@@ -50,8 +50,8 @@
 #macro CLEAN_DEFAULT_CONVEX_BORDER_COLOUR            c_white
 #macro CLEAN_DEFAULT_CONVEX_BORDER_ALPHA             draw_get_alpha()
 #macro CLEAN_DEFAULT_CONVEX_ROUNDING                 0
-#macro CLEAN_CONVEX_FIX_COUNTERCLOCKWISE_POINTS      false
-#macro CLEAN_CONVEX_ERROR_COUNTERCLOCKWISE_POINTS    true
+#macro CLEAN_CONVEX_FIX_COUNTERCLOCKWISE_POINTS      true
+#macro CLEAN_CONVEX_ERROR_COUNTERCLOCKWISE_POINTS    false
 
 #macro CLEAN_DEFAULT_NGON_COLOUR                     draw_get_colour()
 #macro CLEAN_DEFAULT_NGON_ALPHA                      draw_get_alpha()

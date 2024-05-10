@@ -17,7 +17,7 @@ with MainCamera
 	var camToX = x, camToY = y;
 	if cam_target != previous_target
 		camera_set_view_target(cam, cam_target);
-	if (cam_target != noone and instance_exists(cam_target)) {
+	if (cam_target != noone && instance_exists(cam_target)) {
 		camToX = cam_target.x - cam_width / 2;
 		camToY = cam_target.y - cam_height / 2;
 	}

@@ -5,6 +5,7 @@ function __Box() constructor
 		@param {real} Box_ID The ID of the box
 	*/
 	static ItemCount = function(Box_ID) {
+		gml_pragma("forceinline");
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		return array_length(global.Box[Box_ID]);
 	}
@@ -13,6 +14,7 @@ function __Box() constructor
 		@param {real} Box_ID The Box ID to check (0 - Overworld, 1 - D.Box A, 2 - D.Box B)
 	*/
 	static GetFirstEmptySlot = function(Box_ID) {
+		gml_pragma("forceinline");
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		for (var i = 0, num = 0; i < 10; ++i)
 			if global.Box[Box_ID, i] num = i + 1;
@@ -20,6 +22,7 @@ function __Box() constructor
 	}
 	///@desc Loads the Info of the Items of the Box
 	static InfoLoad = function() {
+		gml_pragma("forceinline");
 		with oOWController
 		{
 			__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
@@ -34,6 +37,7 @@ function __Box() constructor
 		@param {real} Item The Item to get the info
 	*/
 	static Info = function(item) {
+		gml_pragma("forceinline");
 		with oOWController
 		{
 			name = "";
@@ -53,6 +57,7 @@ function __Box() constructor
 		@param ID The ID of the Box
 	*/
 	static Count = function(ID) {
+		gml_pragma("forceinline");
 		for (var i = 0, num = 0; i < 10; ++i)
 			if global.Box[ID, i] num++;
 		return num;
@@ -60,8 +65,8 @@ function __Box() constructor
 	/**
 		idk
 	*/
-	static Shift = function(Box_ID)
-	{
+	static Shift = function(Box_ID) {
+		gml_pragma("forceinline");
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		var i = 0;
 		repeat BoxData.ItemCount(Box_ID) - 1

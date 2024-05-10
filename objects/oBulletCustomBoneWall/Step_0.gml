@@ -2,7 +2,7 @@
 if warn_color_swap
 {
 	WarnTimer++;
-	if !(WarnTimer % 5) and time_warn
+	if !(WarnTimer % 5) && time_warn
 	{
 		var change = (WarnTimer % 10) == 5;
 		warn_color = change ? c_yellow : c_red;
@@ -44,18 +44,18 @@ else if state == 1
 	state = 2;
 	for (var i = round(-width / 2),
 			sprite = object_get_sprite(object),
-			spacing = sprite_get_height(sprite); i < width / 2; i += spacing) {
-		var X = x + lengthdir_x(i, image_angle + 90),
-			Y = y + lengthdir_y(i, image_angle + 90),
+			spacing = sprite_get_height(sprite),
 			MoveTime = time_move, StayTime = time_stay,
-			bone = Bullet_Bone(X, Y, height, 0, 0, type,,, image_angle,, false, StayTime + MoveTime * 2 + time_warn),
-			EaseIn = ease[0], EaseOut = ease[1], InitDistance = distance[0], Displace = distace[1];
-		with bone
+			EaseIn = ease[0], EaseOut = ease[1],
+			InitDistance = distance[0], Displace = distance[1]; i < width / 2; i += spacing) {
+		var X = x + lengthdir_x(i, image_angle + 90),
+			Y = y + lengthdir_y(i, image_angle + 90);
+		with Bullet_Bone(X, Y, height, 0, 0, type,,, image_angle,, false, StayTime + MoveTime * 2 + time_warn)
 		{
 			TweenFire(self, EaseIn, 0, 0, 0, MoveTime,
 			"x>", x - lengthdir_x(InitDistance - Displace, image_angle),
 			"y>", y - lengthdir_y(InitDistance - Displace, image_angle));
-			TweenFire(self, EaseOut, 0, 0, MoveTime + StayTime, MoveTime,
+			TweenFire(self, EaseOut, 0, 0, StayTime, MoveTime,
 			"x>", x + lengthdir_x(InitDistance, image_angle),
 			"y>", y + lengthdir_y(InitDistance, image_angle));
 		}
@@ -63,6 +63,6 @@ else if state == 1
 }
 if state >= 2
 {
-	if timer == ceil(time_move + time_stay + time_move) instance_destroy();
+	if timer == ceil(time_move * 2 + time_stay + time_move) instance_destroy();
 	timer++;
 }

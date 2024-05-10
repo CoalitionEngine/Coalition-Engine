@@ -1,15 +1,15 @@
-live;
 if !audio_group_is_loaded(audgrpoverworld) audio_group_load(audgrpoverworld);
 #region Culling
 CullObject(oOWCollision);
 ProcessCulls();
 #endregion
 #region Overworld Camera Lock
-var target_x = oOWPlayer.x - camera_get_view_width(view_camera[0]) / 2,
-	target_y = oOWPlayer.y - camera_get_view_height(view_camera[0]) / 2,
-	half_rwidth = room_width / 2, curLock = CameraLockPositions[| OverworldSubRoom];
+var target_x = oOWPlayer.x - Camera.GetAspect("w") / Camera.GetScale("x") / 2,
+	target_y = oOWPlayer.y - Camera.GetAspect("h") / Camera.GetScale("y") / 2,
+	half_rwidth = room_width / 2, curLock = CameraLockPositions[| OverworldSubRoom],
+	half_sprwidth = sprite_get_width(OverworldSprite) / 2;
 //Entire room clamping
-target_x = clamp(target_x, half_rwidth - sprite_get_width(OverworldSprite) / 2, half_rwidth + sprite_get_width(OverworldSprite) / 2 - 320);
+target_x = clamp(target_x, half_rwidth - half_sprwidth, half_rwidth + half_sprwidth - 320);
 target_y = clamp(target_y, 0, sprite_get_height(OverworldSprite) - 240);
 //Sub room clamping
 target_x = clamp(target_x, curLock[0], curLock[2] - 320);
@@ -17,14 +17,11 @@ target_y = clamp(target_y, curLock[1], curLock[3] - 240);
 //Relax, clamp does basically 0ms to it won't matter, it looks cleaner than min(xxx), max(xxx) inside one clamp
 Camera.SetPos(target_x, target_y, 0);
 #endregion
-#region // Menu lerping
-if instance_exists(oOWPlayer)
-{
-	var menu_at_top = oOWPlayer.y < camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) / 2 + 10;
-}
-
+#region Menu lerping
+var menu_at_top = oOWPlayer.y < Camera.ViewY() + Camera.GetAspect("h") / 2 + 10;
+//Lerps the position of the menu ui before every logic
 menu_ui_x = lerp(menu_ui_x, menu ? 32 : -640, global.lerp_speed);
-
+//Check if the player is in ITEM ui
 var is_iteming = false;
 if is_val(menu_state, MENU_MODE.ITEM, MENU_MODE.ITEM_INTERACTING)
 {
@@ -33,17 +30,15 @@ if is_val(menu_state, MENU_MODE.ITEM, MENU_MODE.ITEM_INTERACTING)
 }
 for (var i = is_iteming ? 2 : 1; i < 4; ++i)
 {
-	if menu_state == i
-		menu_ui_y[menu_state] = lerp(menu_ui_y[menu_state], 52, global.lerp_speed);
-	else
-		menu_ui_y[i] = lerp(menu_ui_y[i], -480, global.lerp_speed);
+	var isCurState = menu_state == i, tarState = isCurState ? menu_state : i;
+		menu_ui_y[tarState] = lerp(menu_ui_y[tarState], isCurState ? 52 : -480, global.lerp_speed);
 }
 #endregion
-#region // Input to navigate through menu 
+#region Input to navigate through menu 
 var	menu_soul_target = [-606, 205 + (36 * menu_choice[MENU_MODE.IDLE])],
 	menu_soul_alpha_target = 1;
 
-if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
+if menu && global.interact_state == INTERACT_STATE.MENU // If menu is open
 {
 	// Input check, horizontal and vertical using vector method
 	var input_horizontal = PRESS_HORIZONTAL,
@@ -55,26 +50,25 @@ if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
 	// Switching between ITEM - STAT - CELL and confirm input
 	if menu_state == MENU_MODE.IDLE
 	{
-		var exist_check = 3,
-			// Soul positioning and lerping
-			menu_soul_target = [menu_ui_x + 34, 205 + (36 * menu_choice[MENU_MODE.IDLE])];
+		// Soul positioning and lerping
+		var menu_soul_target = [menu_ui_x + 34, 205 + (36 * menu_choice[MENU_MODE.IDLE])];
 		if input_vertical != 0
 		{
-			menu_choice[MENU_MODE.IDLE] = posmod(menu_choice[MENU_MODE.IDLE] + input_vertical, exist_check);
+			menu_choice[MENU_MODE.IDLE] = posmod(menu_choice[MENU_MODE.IDLE] + input_vertical, 3);
 			audio_play(snd_menu_switch);
 		}
 		if input_confirm
 		{
 			menu_state = menu_choice[MENU_MODE.IDLE] + 1;
 			audio_play(snd_menu_confirm);
-			
-			if menu_state == MENU_MODE.ITEM and Item_Count() == 0
+			//Return immediately if there are no items
+			if menu_state == MENU_MODE.ITEM && !Item_Count()
 			{
 				menu_state = MENU_MODE.IDLE;
 				audio_stop_sound(snd_menu_confirm);
 			}
 		}
-		if input_menu or input_cancel // This closes the menu
+		if input_menu || input_cancel // This closes the menu
 		{
 			menu = false;
 			global.interact_state = INTERACT_STATE.IDLE;
@@ -106,12 +100,11 @@ if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
 	}
 	elif menu_state == MENU_MODE.ITEM_INTERACTING
 	{
-		var len = 3, gap = [217, 315, 429],
-			menu_soul_target = [gap[menu_choice[MENU_MODE.ITEM_INTERACTING]] , 377];
+		var menu_soul_target = [item_interact_positions[menu_choice[MENU_MODE.ITEM_INTERACTING]], 377];
 			
 		if input_horizontal != 0
 		{
-			menu_choice[MENU_MODE.ITEM_INTERACTING] = posmod(menu_choice[MENU_MODE.ITEM_INTERACTING] + input_horizontal, len);
+			menu_choice[MENU_MODE.ITEM_INTERACTING] = posmod(menu_choice[MENU_MODE.ITEM_INTERACTING] + input_horizontal, 3);
 			audio_play(snd_menu_switch);
 		}
 		if input_confirm
@@ -120,7 +113,7 @@ if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
 			healing_text = "";
 			if menu_choice[MENU_MODE.ITEM_INTERACTING] == 0 // USE
 				Item_Use(global.item[menu_choice[MENU_MODE.ITEM]]);
-			if menu_choice[MENU_MODE.ITEM_INTERACTING] == 2 // DROP
+			elif menu_choice[MENU_MODE.ITEM_INTERACTING] == 2 // DROP
 			{
 				Item_Remove(menu_choice[MENU_MODE.ITEM]);
 				audio_play(snd_menu_confirm);
@@ -128,6 +121,7 @@ if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
 			var item_use_text = [healing_text, item_desc[menu_choice[MENU_MODE.ITEM]], item_throw_txt[menu_choice[MENU_MODE.ITEM]]];
 			OverworldDialog(item_use_text[menu_choice[MENU_MODE.ITEM_INTERACTING]], "fnt_dt_mono", snd_txtTyper, !menu_at_top);
 			Item_Info_Load();
+			//Reset item choice if it is not INFO
 			if menu_choice[MENU_MODE.ITEM_INTERACTING] != 1 menu_choice[MENU_MODE.ITEM] = 0;
 		}
 		if input_cancel
@@ -138,14 +132,16 @@ if menu and global.interact_state == INTERACT_STATE.MENU // If menu is open
 	}
 	elif menu_state == MENU_MODE.ITEM_DONE
 	{
+		//Nesting the array to prevent incorrect else if checking
 		if !dialog_exists
 		{
 			menu_choice[MENU_MODE.ITEM_INTERACTING] = 0;
-			menu_state = Item_Count() == 0 ? MENU_MODE.IDLE : MENU_MODE.ITEM;
+			menu_state = !Item_Count() ? MENU_MODE.IDLE : MENU_MODE.ITEM;
 		}
 	}
 	elif menu_state == MENU_MODE.STAT
-	{	
+	{
+		//Sets soul to be invisible when STAT is visible
 		menu_soul_alpha_target = 0;
 		menu_soul_target = [menu_ui_x + 34, 241]
 		if input_cancel // Go back to menu idle mode
@@ -243,7 +239,67 @@ menu_soul_pos[0] = lerp(menu_soul_pos[0], menu_soul_target[0], global.lerp_speed
 menu_soul_pos[1] = lerp(menu_soul_pos[1], menu_soul_target[1], global.lerp_speed);
 menu_soul_alpha = lerp(menu_soul_alpha, menu_soul_alpha_target, global.lerp_speed);
 #endregion
-
-
-
-
+#region Dialog skipping and option
+if dialog_exists
+{
+	oOWPlayer.moveable = false;
+	var _writer = __text_writer, _typist = dialog_typist,
+		input_confirm =    PRESS_CONFIRM,
+		input_cancel =     PRESS_CANCEL,
+		input_horizontal = PRESS_HORIZONTAL;
+	
+	//Check if the dialog is currently an option and draw if question is asked and buffer time has expired
+	if dialog_option && _typist.get_state() == 1
+	{
+		if option_buffer > 0 option_buffer--;
+		if !option_buffer && input_horizontal != 0
+		{
+			audio_play(snd_menu_switch);
+			option = posmod(option + input_horizontal, option_amount);
+		}
+	}
+	//Dialog skipping
+	if input_cancel && global.TextSkipEnabled
+	{
+		_writer.page(_writer.get_page_count() - 1);
+		_typist.skip_to_pause();
+	}
+	if _typist.get_paused() && input_confirm _typist.unpause();
+	if _typist.get_state() == 1 && _writer.get_page() < (_writer.get_page_count() - 1)
+		_writer.page(_writer.get_page() + 1)
+	//Ends dialog when dialog reaches it's end
+	if _typist.get_state() == 1 && input_confirm
+	{
+		dialog_exists = false;
+		Choice = 0;
+		oOWPlayer.moveable = true;
+		//Executes the event of the option
+		if dialog_option option_event[option]();
+	}
+}
+#endregion
+#region Saving
+if save_state == SAVE_STATE.CHOOSING
+{
+	//Change choices
+	if PRESS_HORIZONTAL != 0
+	{
+		audio_play(snd_menu_switch);
+		Choice = !Choice;
+	}
+	//Confirm choices
+	if PRESS_CONFIRM && WaitTime > 5
+	{
+		WaitTime = 0;
+		if !Choice //Saving
+		{
+			save_function();
+			save_state = SAVE_STATE.FINISHED;
+			audio_play(snd_save);
+		}
+		else ExitSave();
+	}
+}
+//Exit save state
+elif save_state == SAVE_STATE.FINISHED && input_confirm && WaitTime ExitSave();
+#endregion

@@ -1,6 +1,6 @@
 /**
 	Draws a surface normally (top-left origin), but rotates around the center origin
-	@param {surface} surface	The surface to draw
+	@param {Id.Surface} surface	The surface to draw
 	@param {real} x				The top-left X position of the surface
 	@param {real} y				The top-left Y position of the surface
 	@param {real} x_scale		The x scale of the surface
@@ -22,7 +22,7 @@ function draw_surface_rotated_ext(_surf, _x, _y, _xscale, _yscale, _rot, _col, _
 }
 /**
 	Draws a surface that fills the entire area like tiles
-	@param {surface} surface		The surface to draw
+	@param {Id.Surface} surface		The surface to draw
 	@param {real} x					The x position of the surface
 	@param {real} y					The y position of the surface
 	@param {real} x1				The x coordinate of the top left corner of the rectangle

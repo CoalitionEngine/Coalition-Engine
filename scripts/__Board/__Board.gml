@@ -1,87 +1,75 @@
 ///Board data
 function __Board() constructor {
-	/**
-		Gets the x position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the x position of the board
+	///@param {real} target	The target board to get the data from
 	static GetX = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].x;
 	}
-	/**
-		Gets the y position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the y position of the board
+	///@param {real} target	The target board to get the data from
 	static GetY = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].y;
 	}
-	/**
-		Gets the upwards distance of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the upwards distance of the board
+	///@param {real} target	The target board to get the data from
 	static GetUp = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].up;
 	}
-	/**
-		Gets the downwards distance of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the downwards distance of the board
+	///@param {real} target	The target board to get the data from
 	static GetDown = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].down;
 	}
-	/**
-		Gets the leftwards distance of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the leftwards distance of the board
+	///@param {real} target	The target board to get the data from
 	static GetLeft = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].left;
 	}
-	/**
-		Gets the rightwards distance of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the rightwards distance of the board
+	///@param {real} target	The target board to get the data from
 	static GetRight = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return BattleBoardList[target].right;
 	}
-	/**
-		Gets the upwards position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the upwards position of the board
+	///@param {real} target	The target board to get the data from
 	static GetUpPos = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetY(target) - Board.GetUp(target);
 	}
-	/**
-		Gets the downwards position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the downwards position of the board
+	///@param {real} target	The target board to get the data from
 	static GetDownPos = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetY(target) + Board.GetDown(target);
 	}
-	/**
-		Gets the leftwards position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the leftwards position of the board
+	///@param {real} target	The target board to get the data from
 	static GetLeftPos = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetX(target) - Board.GetLeft(target);
 	}
-	/**
-		Gets the rightwards position of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the rightwards position of the board
+	///@param {real} target	The target board to get the data from
 	static GetRightPos = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetX(target) + Board.GetRight(target);
 	}
-	/**
-		Gets the height of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the height of the board
+	///@param {real} target	The target board to get the data from
 	static GetHeight = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetUp(target) + Board.GetDown(target);
 	}
-	/**
-		Gets the width of the board
-		@param {real} target	The target board to get the data from
-	*/
+	///Gets the width of the board
+	///@param {real} target	The target board to get the data from
 	static GetWidth = function(target = TargetBoard) {
+		gml_pragma("forceinline");
 		return Board.GetLeft(target) + Board.GetRight(target);
 	}
 	/**
@@ -132,18 +120,17 @@ function __Board() constructor {
 	*/
 	static GetID = function(board)
 	{
-		var i = 0, n = array_length(BattleBoardList);
-		repeat n if BattleBoardList[i] != board.id i++; else return i;
+		var i = 0;
+		repeat array_length(BattleBoardList) if BattleBoardList[i] != board.id i++; else return i;
 	}
 	///Automatically masks the board with the default background color
-	static Mask = function(obj = oEnemyParent)
+	static Mask = function()
 	{
-		with obj
+		gml_pragma("forceinline");
+		with other
 		{
 			Battle_Masking_Start();
-			draw_set_color(oBoard.bg_color);
-			draw_rectangle(0, 0, 640, 480, false);
-			draw_set_color(c_white);
+			draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, oBoard.bg_color, 1);
 			Battle_Masking_End();
 		}
 	}

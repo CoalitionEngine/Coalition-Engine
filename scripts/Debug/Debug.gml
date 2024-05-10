@@ -9,6 +9,7 @@ function show_hitbox(col = c_white)
 		draw_vertex_color(bbox_left, bbox_top, col, 0.4);
 		draw_vertex_color(bbox_left, bbox_bottom, col, 0.4);
 		draw_vertex_color(bbox_right, bbox_bottom, col, 0.4);
+		
 		draw_vertex_color(bbox_left, bbox_top, col, 0.4);
 		draw_vertex_color(bbox_right, bbox_top, col, 0.4);
 		draw_vertex_color(bbox_right, bbox_bottom, col, 0.4);
@@ -27,14 +28,14 @@ function DrawDebugUI()
 	}
 	//Set debug alpha
 	debug_alpha = lerp(debug_alpha, ALLOW_DEBUG ? global.debug : 0, 0.12);
+	
+	global.MinFPS = min(global.MinFPS, fps_real);
+	global.MaxFPS = max(global.MaxFPS, fps_real);
 	//Don't run anything if debug ui is not visible or debug is disabled
 	if debug_alpha <= 0 exit;
 	
 	draw_set_alpha(debug_alpha);
 	draw_set_font(fnt_mnc);
-	global.MinFPS ??= fps_real;
-	global.MinFPS = min(global.MinFPS, fps_real);
-	global.MaxFPS = max(global.MaxFPS, fps_real);
 	//If is in battle
 	if instance_exists(oBattleController)
 	{
@@ -48,8 +49,8 @@ function DrawDebugUI()
 		}
 		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)");
 		draw_debug_color_text(5, 35, $"FPS: {fps} ({fps_real} / {global.MinFPS} / {global.MaxFPS} / {fps_average})");
-		draw_debug_color_text(5, 60, $"TURN: {battle_turn}");
-		draw_debug_color_text(5, 85, $"INSTANCES: {instance_count}");
+		draw_debug_color_text(5, 60, "TURN: " + string(battle_turn));
+		draw_debug_color_text(5, 85, "INSTANCES: " + string(instance_count));
 		gpu_set_blendmode(bm_normal);
 	}
 	//If is in overworld
@@ -100,6 +101,7 @@ function __CoalitionEngineError(check, text)
 }
 
 function __CoalitionGMVersion() {
+	gml_pragma("forceinline");
 	static _version = undefined;
 	if _version != undefined return _version;
 	
@@ -135,9 +137,10 @@ function __CoalitionGMVersion() {
 
 function __CoalitionCheckCompatibilty()
 {
+	gml_pragma("forceinline");
 	var version = __CoalitionGMVersion();
 	if version.major >= 2024 || (version.major == 2023 && version.minor > 11)
 		print("Coalition Engine ", __COALITION_ENGINE_VERSION, "was designed for Game Maker versions 2023.8+, you are in ", GM_runtime_version);
-	if version.major < 2023 && version.minor < 8
+	else if version.major < 2023 && version.minor < 8
 		print("Coalition Engine ", __COALITION_ENGINE_VERSION, "is incompatible for Game Maker versions earlier than 2023.8, you are in ", GM_runtime_version);
 }

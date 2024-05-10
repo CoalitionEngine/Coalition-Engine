@@ -12,6 +12,7 @@ flipped = 0;
 Color = 0;
 RotateDirection = 1;
 RotateEasing = "";
+image_speed = 0;
 
 
 //Copying Rhythm Recall let's go~

@@ -32,7 +32,6 @@ function CullObject(object) {
 ///Checks for all currently culled instances to see if they are now in view
 function ProcessCulls() {
 	gml_pragma("forceinline");
-	var t0 = get_timer();
 	var i = 0;
 	repeat ds_list_size(global.deactivatedInstances) {
 		var _inst = global.deactivatedInstances[| i],

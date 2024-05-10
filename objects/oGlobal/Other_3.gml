@@ -4,9 +4,9 @@ if surface_exists(RGBSurf) surface_free(RGBSurf);
 if surface_exists(GradientSurf) surface_free(GradientSurf);
 instance_destroy(oBulletParents);
 global.Settings[? "Volume"] = global.Volume;
-ds_map_destroy(global.SaveFile);
+delete global.SaveFile;
+delete global.TempData;
 ds_map_destroy(global.Settings);
-ds_map_destroy(global.TempData);
 
 part_system_destroy(global.TrailS);
 part_type_destroy(global.TrailP);

@@ -11,7 +11,7 @@ type = 0;
 ///add the nodes to the list
 function add_vert(X, Y, Z, list = vert_list)
 {
-	var _prop = [X, Y, Z];
+	var _prop = new Vector3(X, Y, Z);
 	array_push(list, _prop);
 }
 
@@ -21,10 +21,10 @@ function update_vert()
 	var X, Y, Z, XX, YY, ZZ, i = 0;
 	repeat(array_length(vert_list))
 	{
-		_prop = vert_list[i];
-		X = _prop[0] * scalex;
-		Y = _prop[1] * scaley;
-		Z = _prop[2] * scalez;
+		var _prop = vert_list[i];
+		X = _prop.x * scalex;
+		Y = _prop.y * scaley;
+		Z = _prop.z * scalez;
 		YY = lengthdir_x(Y, angles[0]) + lengthdir_y(Z, angles[0]);
 		ZZ = -lengthdir_y(Y, angles[0]) + lengthdir_x(Z, angles[0]);
 		Y = YY;
@@ -45,7 +45,7 @@ function update_vert()
 ///add the edges of the nodes (connect the nodes)
 function add_edge()
 {
-	_prop = [argument0, argument1, Bullet_Bone(0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0)];
+	var _prop = [argument0, argument1, Bullet_Bone(0, 0, 0, 0, 0, 0, depth < oBoard.depth, 0, 0, 0, 0)];
 	_prop[2].retract_on_end = true;
 	array_push(edge_list, _prop);
 }
@@ -54,8 +54,8 @@ function add_edge()
 if !variable_instance_exists(id, "shape") shape = SHAPES.CUBE;
 
 //Automatically adds the edges and nodes/vertexes of the bone based on the loaded 3d shapes
-var i = 0, n = array_length(global.Nodes[shape]), k = array_length(global.Edges[shape]);
-repeat k
+var i = 0, n = array_length(global.Nodes[shape]);
+repeat array_length(global.Edges[shape])
 {
 	script_execute_ext(add_edge, global.Edges[shape][i]);
 	if i < n script_execute_ext(add_vert, global.Nodes[shape][i]);

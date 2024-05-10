@@ -34,7 +34,8 @@ function SoulSetMode(soul_mode, effect = true)
 	@param {real} target_x			The target X position
 	@param {real} target_y			The target Y position
 	@param {real} duration			The duration of the Anim (Default 0, which is instant movement)
-	@param {function,string} Easing	The Tween Ease of the Animation (Use TweenGMS structs, i.e. EaseOutQuad, Default EaseLinear)
+	@param {function,string} Easing	The Tween Ease of the Animation
+									(Use TweenGMS structs, i.e. EaseOutQuad, Default EaseLinear)
 	@param {real} delay				The delay of executing the Anim (Default 0)
 */
 function SetSoulPos(target_x, target_y, duration = 0, Easing = "", delay = 0)
@@ -50,11 +51,7 @@ function IsSoulMoving(input_based = false) {
 	gml_pragma("forceinline");
 	var target_soul = BattleSoulList[TargetSoul];
 	return (input_based ?
-	(CHECK_HORIZONTAL != 0 || CHECK_VERTICAL != 0) :
-	floor(target_soul.x) != floor(target_soul.xprevious) or floor(target_soul.y) != floor(target_soul.yprevious));
-}
-
-function LimitSoulInVertexBoard()
-{
-	
+	(input_distance("left", "right", "up", "down") != 0) :
+	floor(target_soul.x) != floor(target_soul.xprevious) ||
+	floor(target_soul.y) != floor(target_soul.yprevious));
 }

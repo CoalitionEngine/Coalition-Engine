@@ -8,7 +8,7 @@ function __Camera() constructor
 		{
 			x = 0;
 			y = 0;
-			Scale = [1, 1];
+			Scale = array_create(2, 1);
 			view_width = 640;
 			view_height = 480;
 			shake_i = 0;
@@ -16,15 +16,15 @@ function __Camera() constructor
 			angle = 0;
 			target = noone;
 			previous_target = noone;
-			//camera angle will not matter when z is enabled
+			//Camera angle will not matter when z is enabled
 			enable_z = false;
-			// Set up 3D camera
+			//Set up 3D camera
 			camDist	= -240;
 			camFov	= 90;
 			camAsp	= view_width / view_height;
 			camXDisplace = 0;
 			camYDisplace = 0;
-			// Rotation
+			//Z Rotation
 			camAngleXRaw = 90;
 			camAngleYRaw = 0;
 			camAngleX = camAngleXRaw;
@@ -40,6 +40,7 @@ function __Camera() constructor
 	*/
 	static Shake = function(amount, decrease = 1)
 	{
+		gml_pragma("forceinline");
 		with oGlobal.MainCamera
 		{
 			shake_i = ceil(amount);
@@ -60,7 +61,10 @@ function __Camera() constructor
 	*/
 	static Scale = function(sx, sy, duration = 0, ease = "")
 	{
-		with oGlobal.MainCamera TweenFire("~", ease, "$", duration, TPArray(Scale, 0), Scale[0], sx, TPArray(Scale, 1), Scale[1], sy);
+		gml_pragma("forceinline");
+		with oGlobal.MainCamera
+			TweenFire("~", ease, "$", duration, TPArray(Scale, 0), Scale[0], sx,
+												TPArray(Scale, 1), Scale[1], sy);
 	}
 	/**
 		Sets the X and Y position of the Camera
@@ -72,6 +76,7 @@ function __Camera() constructor
 	*/
 	static SetPos = function(x, y, duration, delay = 0, ease = "")
 	{
+		gml_pragma("forceinline");
 		with oGlobal.MainCamera TweenFire(self, ease, 0, 0, delay, duration, "x>", x, "y>", y);
 	}
 	/**
@@ -84,17 +89,32 @@ function __Camera() constructor
 	*/
 	static RotateTo = function(start = oGlobal.MainCamera.angle, target, duration, ease = "", delay = 0)
 	{
+		gml_pragma("forceinline");
 		TweenFire(oGlobal.MainCamera, ease, 0, 0, delay, duration, "angle", start, target);
 	}
-	///Gets the x position of the main camera
+	///Gets the x position of the current view
 	static ViewX = function()
 	{
+		gml_pragma("forceinline");
 		return camera_get_view_x(view_camera[0]);
 	}
-	///Gets the y position of the main camera
+	///Gets the y position of the current view
 	static ViewY = function()
 	{
+		gml_pragma("forceinline");
 		return camera_get_view_y(view_camera[0]);
+	}
+	///Gets the width of the current view
+	static ViewWidth = function()
+	{
+		gml_pragma("forceinline");
+		return camera_get_view_width(view_camera[0]);
+	}
+	///Gets the height of the current view
+	static ViewHeight = function()
+	{
+		gml_pragma("forceinline");
+		return camera_get_view_height(view_camera[0]);
 	}
 	/**
 		Sets the width and height of the view
@@ -103,6 +123,7 @@ function __Camera() constructor
 	*/
 	static SetAspect = function(width, height)
 	{
+		gml_pragma("forceinline");
 		with oGlobal.MainCamera
 		{
 			view_width = width;
@@ -126,9 +147,9 @@ function __Camera() constructor
 	{
 		switch val
 		{
-			case 0: case "width":  case "w": return oGlobal.MainCamera.view_width; break;
+			case 0: case "width":	case "w": return oGlobal.MainCamera.view_width; break;
 			case 1: case "height":  case "h": return oGlobal.MainCamera.view_height; break;
-			case 2: case "ratio":  case "r":
+			case 2: case "ratio":	case "r":
 				return oGlobal.MainCamera.view_width / oGlobal.MainCamera.view_height; break;
 		}
 	}///Gets the position of the camera
@@ -144,6 +165,7 @@ function __Camera() constructor
 	///Gets the angle of the camera
 	static GetAngle = function()
 	{
+		gml_pragma("forceinline");
 		return oGlobal.MainCamera.angle;
 	}
 }

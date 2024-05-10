@@ -50,7 +50,7 @@ function CollideWithBullet(exceptions = []) {
 				{
 					if state == 4 && beam_alpha >= 0.5
 					{
-						if type != 0 and type != 3
+						if type != 0 && type != 3
 						{
 							collision = IsSoulMoving();
 							collision = (type == 1 ? collision : !collision);
@@ -81,10 +81,11 @@ function AddBulletCollision(bullet, func = "")
 		CollList = static_script.CheckFunctions;
 	if !array_contains(ObjList, bullet)
 	{
+		static_script.size++;
 		array_push(ObjList, bullet);
 		var FinPushFunc = func;
 		if is_string(func)
 			FinPushFunc = func == "" ? static_script.DefaultPlaceMeetingFunction : static_script.DefaultColorPlaceMeetingFunction;
-		array_push(ObjList, func);
+		array_push(CollList, func);
 	}
 }

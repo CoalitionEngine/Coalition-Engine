@@ -1,3 +1,4 @@
+//Destroy green shield variables
 with GreenShield
 {
 	ds_list_destroy(Angle);

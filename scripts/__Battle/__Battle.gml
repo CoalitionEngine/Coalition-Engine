@@ -23,7 +23,7 @@ function Set_GreenBox()
 function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 {
 	gml_pragma("forceinline");
-	if !global.inv and can_hurt
+	if !global.inv && can_hurt
 	{
 		audio_play(snd_hurt);
 		global.inv = global.assign_inv + global.player_inv_boost;
@@ -68,15 +68,22 @@ function Slam(Direction, move = 20, hurt = false, target_enemy = oEnemyParent)
 ///@param {bool} sprite					Whether a sprite used for masking
 ///@param {Asset.GMObject,Array} board	Which board to mask in
 function Battle_Masking_Start(spr = false, board = undefined) {
-	gml_pragma("forceinline");
 	board ??= BattleBoardList[TargetBoard];
+	var target_surf = board.surface;
+	if board.VertexMode
+	{
+		board = VertexBoardList[TargetBoard];
+		//target_surf = board.ClipSurfTex;
+		target_surf = board.ClipSurf;
+	}
 	if oGlobal.MainCamera.enable_z exit;
-	if instance_exists(board) and depth >= board.depth
+	if depth >= board.depth
 	{
 		var shader = spr ? shdClipMaskSpr : shdClipMask;
 		shader_set(shader);
 		var u_mask = shader_get_sampler_index(shader, "u_mask");
-		texture_set_stage(u_mask, surface_get_texture(board.surface));
+		//texture_set_stage(u_mask, is_ptr(target_surf) ? target_surf: surface_get_texture(target_surf));
+		texture_set_stage(u_mask, surface_get_texture(target_surf));
 		var u_rect = shader_get_uniform(shader, "u_rect"),
 			window_width = 640, window_height = 480;
 		shader_set_uniform_f(u_rect, 0, 0, window_width, window_height);
@@ -86,10 +93,9 @@ function Battle_Masking_Start(spr = false, board = undefined) {
 ///Ends the masked drawing
 ///@param {Asset.GMObject,Array} board	Which board that was used to mask in
 function Battle_Masking_End(board = undefined) {
-	gml_pragma("forceinline");
 	board ??= BattleBoardList[TargetBoard];
 	if oGlobal.MainCamera.enable_z exit;
-	if instance_exists(board) shader_reset();
+	shader_reset();
 }
 
 ///Battle data
@@ -97,21 +103,22 @@ function __Battle() constructor
 {
 	///Gets/Sets the turn of the battle
 	///@param {real} turn The turn to set it to
-	static Turn = function(turn = infinity) {
-		if turn != infinity
+	static Turn = function(turn = NaN) {
+		if !is_nan(turn)
 			oBattleController.battle_turn = turn + 1;
 		else return oBattleController.battle_turn - 1;
 	}
 	///Gets/Sets the State of the battle
 	///@param {real} state	The state to set it to
-	static State = function(state = infinity) {
-		if state != infinity
+	static State = function(state = NaN) {
+		if !is_nan(state)
 			oBattleController.battle_state = state;
 		else return oBattleController.battle_state;
 	}
 	///Sets the menu dialog of the battle
 	///@param {string} text The Menu text
 	static SetMenuDialog = function(text) {
+		gml_pragma("forceinline");
 		with oBattleController
 		{
 			__text_writer = scribble("* " + text);
@@ -122,12 +129,14 @@ function __Battle() constructor
 	///@param {real} target	The ID of the target board
 	static SetBoardTarget = function(target)
 	{
+		gml_pragma("forceinline");
 		TargetBoard = target;
 	}
 	///Sets the target soul globally
 	///@param {real} target	The ID of the target soul
 	static SetSoulTarget = function(target)
 	{
+		gml_pragma("forceinline");
 		TargetSoul = target;
 	}
 	/**
@@ -151,11 +160,11 @@ function __Battle() constructor
 ///@param {string} Format	Format of the sprites (Default .png)
 function ButtonSprites(fname = "Normal", format = ".png")
 {
-	for (var i = 0, buttons, ButtonNames = ["Fight", "Act", "Item", "Mercy"]; i < 4; ++i) {
-		buttons[i] = sprite_add("./Sprites/Buttons/"+ fname + "/" + ButtonNames[i] + format, 2, 0, 0, 55, 21);
+	gml_pragma("forceinline");
+	static ButtonNames = ["Fight", "Act", "Item", "Mercy"];
+	for (var i = 0, buttons; i < 4; ++i) {
+		buttons[i] = sprite_add("./Sprites/Buttons/" + fname + "/" + ButtonNames[i] + format, 2, 0, 0, 55, 21);
 	}
-	with oBattleController
-	{
-		Button.Sprites = buttons;
-	}
+	with oBattleController.Button
+		Sprites = buttons;
 }

@@ -50,24 +50,30 @@ function SetRoomNames()
 function MoveToRoom(Main, Sub, PlayerX, PlayerY)
 {
 	oOWPlayer.moveable = false;
-	var transSpd = oOWController.OverworldTransitionSpeed,
-		_f = room != Main ?
-		function(Main)
-		{
-			//If the room is different, move to that room
-			room_goto(Main);
-		}
-		:
-		function(Sub, PlayerX, PlayerY)
-		{
-			//If the target is a sub-room, move to target position
-			oOWPlayer.x = PlayerX;
-			oOWPlayer.y = PlayerY;
-			oOWController.OverworldSubRoom = Sub;
-		},
-	Arguments = room != Main ? [transSpd, _f, Main] : [transSpd, _f, Sub, PlayerX, PlayerY];
-	script_execute_ext(DoLater, Arguments);
-	DoLater(transSpd * 2, function() { oOWPlayer.moveable = true;});
+	with oOWController
+	{
+		var transSpd = OverworldTransitionSpeed;
+		OverworldRoomTransitionArguments = room != Main ? [Main] : [Sub, PlayerX, PlayerY];
+		OverworldRoomTransitionMethod = room != Main ?
+			function(Main)
+			{
+				//If the room is different, move to that room
+				room_goto(Main);
+			}
+			:
+			function(Sub, PlayerX, PlayerY)
+			{
+				//If the target is a sub-room, move to target position
+				with oOWPlayer
+				{
+					x = PlayerX;
+					y = PlayerY;
+				}
+				OverworldSubRoom = Sub;
+			}
+		alarm[0] = transSpd;
+		alarm[1] = transSpd * 2;
+	}
 	//Fade to black and fades back out
 	Fader_Fade_InOut(0, 1, 0, transSpd, 0, transSpd,, c_black);
 }

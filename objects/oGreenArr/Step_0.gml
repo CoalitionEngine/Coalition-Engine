@@ -1,13 +1,13 @@
 event_inherited();
 
 var soul = oSoul,
-	dir_e = ((mode == 2 or mode == 3) ? 45 : 0);
+	dir_e = ((mode == 2 || mode == 3) ? 45 : 0);
 image_index = index + mode;
 image_angle = dir + dir_e + dir_a;
 len -= spd;
 
 //Yellow or Diagonal Yellow
-if mode == 1 or mode == 3
+if mode == 1 || mode == 3
 {
 	switch RotateEasing
 	{

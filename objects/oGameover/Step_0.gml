@@ -1,5 +1,5 @@
 //If allowC is on then it will skip the gameover sequence by pressing C/Ctrl
-if allowC and state < 3
+if allowC && state < 3
 {
 	if PRESS_MENU
 	{

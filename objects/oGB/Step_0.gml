@@ -1,3 +1,4 @@
+//Moving state
 if state = 0
 {
 	var _x = gbx, _y = gby, _angle = image_angle;
@@ -22,7 +23,7 @@ if state = 0
 		if abs(_y - target_y) < 1.5  _y = target_y;
 		if abs(_angle - target_angle) < 1.5  _angle = target_angle;
 	}
-	if timer_move++ == time_move or !time_move
+	if timer_move++ == time_move || !time_move
 	{
 		//Wait for shoot
 		state = 1;
@@ -34,30 +35,37 @@ if state = 0
 	}
 	gbx = _x; gby = _y; image_angle = _angle;
 }
+//Just fire
 if state = 2 
 {
 	state = 3;
 	alarm[0] = 8;
-	alarm[1] = 9;
 }
-if state == 3  gb_index += 0.5;
+//Increase index for expansion
+if state == 3 gb_index += 0.5;
+//Firing
 if state == 4
 {
 	var _angle = image_angle, _yscale = gb_yscale;
 	//Auto index
-	if gb_index = sprite_get_number(gb_sprite) - 1 gb_index--;
+	if gb_index == sprite_get_number(gb_sprite) - 1 gb_index--;
 	gb_index += 0.5;
 	direction = _angle - 180;
+	//Movement
 	x = gbx + lengthdir_x(50, image_angle);
 	y = gby + lengthdir_y(50, image_angle);
 	
-	if timer_blast == 0
+	//Fire events
+	if timer_blast++ == 0
 	{
 		if _yscale > 1
 		{
+			//Camera shaking
 			Camera.Shake(5 * _yscale);
+			//Screen blurring if needed
 			if blurring	Blur_Screen(time_blast, _yscale);
 		}
+		//RGB shaking
 		if global.RGBBlaster oGlobal.RGBShake = 5 * _yscale;
 		if release_sound
 		{
@@ -66,9 +74,9 @@ if state == 4
 			release_sound = false;
 		}
 	}
-	timer_blast++; timer_exit++;
-	if timer_exit >= time_stay and timer_exit < time_stay + 10 speed += 0.5;
-	else if (timer_exit >= time_stay + 10 and !check_outside()) speed *= 1.1;
+	//Speed changing of blaster according to time after blasted
+	if timer_exit++ >= time_stay && timer_exit < time_stay + 10 speed += 0.5;
+	else if (timer_exit >= time_stay + 10 && !check_outside()) speed *= 1.1;
 	gbx += lengthdir_x(speed, direction); gby += lengthdir_y(speed, direction);
 	//Blaster scale
 	if timer_blast < 10 beam_scale += (gb_yscale / 16);

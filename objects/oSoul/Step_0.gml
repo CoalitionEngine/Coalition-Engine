@@ -1,4 +1,3 @@
-live;
 // Invincibility
 if global.inv > 0 {
 	global.inv--;
@@ -20,10 +19,10 @@ else {
 var STATE = oBattleController.battle_state;
 
 if STATE == 2 {
-	var h_spd = CHECK_HORIZONTAL,
-		v_spd = CHECK_VERTICAL,
+	h_spd = CHECK_HORIZONTAL;
+	v_spd = CHECK_VERTICAL;
 		
-		move_spd = global.spd / (input_check("cancel") + 1),
+	var move_spd = global.spd / (input_check("cancel") + 1),
 		
 		x_offset = sprite_width / 2,
 		y_offset = sprite_height / 2,
@@ -47,20 +46,27 @@ if STATE == 2 {
 		x += board_x - oBoard.xprevious;
 		y += board_y - oBoard.yprevious;
 	}
-	//Disable green shields
+	//Disable green shields when not in turn
 	if mode != SOUL_MODE.GREEN || BattleData.State() != BATTLE_STATE.IN_TURN instance_deactivate_object(oGreenShield);
 	else instance_activate_object(oGreenShield);
 	
 	switch mode
 	{
 		case SOUL_MODE.RED: {
+			//Basic movement for red soul
 			BasicMovement();
-		break
+			break;
 		}
 
 		case SOUL_MODE.BLUE : {
+			//Reassign the input checking for blue soul because the diagonal movement does not apply
+			//to it
+			h_spd = input_check_opposing("left", "right");
+			v_spd = input_check_opposing("up", "down");
 			dir %= 360;
 			image_angle = (dir + 90) % 360;
+			//Collision for vertex boards are in End-Step
+			if oBoard.VertexMode break;
 
 			var _on_ground = false,
 				_on_ceil = false,
@@ -68,85 +74,107 @@ if STATE == 2 {
 				_fall_spd = fall_spd,
 				_fall_grav = fall_grav,
 
-				_angle = image_angle,
-
-				platform_check = [[0, 0], [0, 0]];
-		
+				_angle = image_angle;
+			
+			platform_check = array_create(4, 0);
 			//Soul Gravity
-			if _fall_spd < 4 and _fall_spd > 0.25 _fall_grav = 0.15;
-			if _fall_spd <= 0.25 and _fall_spd > -0.5 _fall_grav = 0.05;
-			if _fall_spd <= -0.5 and _fall_spd > -2 _fall_grav = 0.125;
-			if _fall_spd <= -2 _fall_grav = 0.05;
+			if _fall_spd < 4 && _fall_spd > 0.25 _fall_grav = 0.15;
+			else if _fall_spd <= 0.25 && _fall_spd > -0.5 _fall_grav = 0.05;
+			else if _fall_spd <= -0.5 && _fall_spd > -2 _fall_grav = 0.125;
+			else if _fall_spd <= -2 _fall_grav = 0.05;
 
 			_fall_spd += _fall_grav;
 
 			var _dist = point_distance(board_x, board_y, x, y),
-				_dir = point_direction(board_x, board_y, x, y),
-				r_x = lengthdir_x(_dist, _dir - board_dir) + board_x,
-				r_y = lengthdir_y(_dist, _dir - board_dir) + board_y;
+				_dir = point_direction(board_x, board_y, x, y) - board_dir,
+				r_x = lengthdir_x(_dist, _dir) + board_x,
+				r_y = lengthdir_y(_dist, _dir) + board_y,
+				displace_x = lengthdir_x(10.5, _angle - 90) + 2 * dcos(board_angle % 90 - 90),
+				displace_y = lengthdir_y(10.5, _angle - 90) + 2 * dsin(board_angle % 90),
+				TL = new Vector2(board.left, board.up).Rotated(board_angle + 180),
+				TR = new Vector2(board.right, board.up).Rotated(board_angle + 90),
+				BL = new Vector2(board.left, board.down).Rotated(board_angle - 90),
+				BR = new Vector2(board.right, board.down).Rotated(board_angle),
+				board_vertices =
+				[
+					board_x + TL.x, board_y + TL.y,
+					board_x + TR.x, board_y + TR.y,
+					board_x + BR.x, board_y + BR.y,
+					board_x + BL.x, board_y + BL.y,
+				];
+				//print(board_vertices);
 			//Input and collision check of different directions of soul
+			//Down
 			if _angle == 0 {
 				if check_board {
-					_on_ground = r_y >= board_bottom_limit - 0.1;
-					_on_ceil = r_y <= board_top_limit + 0.1;
+					_on_ground = !point_in_parallelogram(r_x, r_y + displace_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x, r_y - displace_y, board_vertices);
 				}
 
-				platform_check[1] = [y_offset + 1, y_offset];
+				platform_check[2] = y_offset + 1;
+				platform_check[3] = y_offset;
 
 				jump_input = input_check("up");
 				move_input = h_spd * move_spd;
 			}
-			if _angle == 180 {
+			//Up
+			else if _angle == 180 {
 				if check_board {
-					_on_ground = r_y <= board_top_limit + 0.1;
-					_on_ceil = r_y >= board_bottom_limit - 0.1;
+					_on_ground = !point_in_parallelogram(r_x, r_y - displace_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x, r_y + displace_y, board_vertices);
 				}
 
-				platform_check[1] = [-10, -y_offset];
+				platform_check[2] = -10;
+				platform_check[3] = -y_offset;
 				
 
 				jump_input = input_check("down");
 				move_input = h_spd * -move_spd;
 			}
-			if _angle == 90 {
+			//Right
+			else if _angle == 90 {
 				if check_board {
-					_on_ground = r_x >= board_right_limit - 0.1;
-					_on_ceil = r_x <= board_left_limit + 0.1;
+					//print(r_x + displace_x, r_y + displace_y)
+					_on_ground = !point_in_parallelogram(r_x + displace_x, r_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x - displace_x, r_y, board_vertices);
 				}
 
-				platform_check[0] = [x_offset + 1, -x_offset];
+				platform_check[0] = x_offset + 1;
+				platform_check[1] = -x_offset;
 
 				jump_input = input_check("left");
 				move_input = v_spd * -move_spd;
 			}
-			if _angle == 270 {
+			//Left
+			else if _angle == 270 {
 				if check_board {
-					_on_ground = r_x <= board_left_limit + 0.1;
-					_on_ceil = r_x >= board_right_limit - 0.1;
+					_on_ground = !point_in_parallelogram(r_x - displace_x, r_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x + displace_x, r_y, board_vertices);
 				}
 
-				platform_check[0] = [-10, x_offset];
+				platform_check[0] = -10;
+				platform_check[1] = x_offset;
 
 				jump_input = input_check("right");
 				move_input = v_spd * move_spd;
 			}
-
+			//If the board doesn't exist, it will never be on the ground or touching the ceiling
 			if !check_board {
 				_on_ground = false;
 				_on_ceil = false;
 			}
 		
 			//Platform checking
-			var RelativePositionX = x + platform_check[0, 0],
-				RelativePositionY = y + platform_check[1, 0],
+			var RelativePositionX = x + platform_check[0],
+				RelativePositionY = y + platform_check[2],
 				RespecitvePlatform = instance_position(RelativePositionX, RelativePositionY, oPlatform);
 			
-			if position_meeting(RelativePositionX, RelativePositionY, oPlatform) and _fall_spd >= 0 {
+			if position_meeting(RelativePositionX, RelativePositionY, oPlatform) && _fall_spd >= 0 {
 				_on_platform = true;
-				while position_meeting(x + platform_check[0, 1], y + platform_check[1, 1], oPlatform) {
+				while position_meeting(x + platform_check[1], y + platform_check[3], oPlatform) {
 					with RespecitvePlatform {
-						other.x -= lengthdir_y(0.1, image_angle);
-						other.y -= lengthdir_x(0.1, image_angle);
+						other.x -= lengthdir_y(0.1, _angle);
+						other.y -= lengthdir_x(0.1, _angle);
 					}
 				}
 			}
@@ -157,27 +185,26 @@ if STATE == 2 {
 				}
 			}
 			//Slamming
-			if _on_ground or _on_platform or (_fall_spd < 0 and _on_ceil) {
+			if _on_ground || _on_platform || (_fall_spd < 0 && _on_ceil) {
 				if slam {
 					slam = false;
-					Camera.Shake(global.slam_power / 2);
-					if global.slam_damage {
+					Camera.Shake(global.slam_power);
+					if global.slam_damage
 						global.hp = global.hp > 1 ? global.hp-- : 1;
-					}
-					
 					audio_play(snd_impact, true);
 				}
 
-				_fall_spd = (_on_ground or _on_platform) and jump_input ? -3 : 0;
+				_fall_spd = (_on_ground || _on_platform) && jump_input ? -3 : 0;
 			}
 			else if !jump_input and _fall_spd < -0.5
 				_fall_spd = -0.5;
-
+			//Rotate the movement by the soul's angle
 			move_x = lengthdir_x(move_input, _angle) - lengthdir_y(_fall_spd, _angle);
 			move_y = lengthdir_y(move_input, _angle) + lengthdir_x(_fall_spd, _angle);
 
 			on_ground = _on_ground;
 			on_ceil = _on_ceil;
+			//print(on_ground, on_ceil);
 			on_platform = _on_platform;
 			fall_spd = _fall_spd;
 			fall_grav = _fall_grav;
@@ -187,47 +214,48 @@ if STATE == 2 {
 				x += move_x;
 				y += move_y;
 			}
-		break
+			break;
 		}
 
 		case SOUL_MODE.ORANGE : {
-			//Movement particle
 			if moveable {
-				if !(global.timer % 5)
-					//TrailStep(25);
-					TrailEffect(25,,,,,,,, c_orange);
+				//Movement particle
+				if !(global.timer % 5) TrailEffect(25,,,,,,,, c_orange);
 				//Movement
 				dir = input_direction(dir, "left", "right", "up", "down",, true);
 				var FinalAngle = dir + image_angle + draw_angle;
 				x += lengthdir_x(move_spd, FinalAngle);
 				y += lengthdir_y(move_spd, FinalAngle);
 			}
-		break
+			break;
 		}
 
 		case SOUL_MODE.YELLOW : {
 			BasicMovement();
-		
 			//Shooting the bullet
 			if !timer {
-				if input_check_pressed("confirm") {
+				if PRESS_CONFIRM {
 					with instance_create_depth(x, y, 0, oYellowBullet) image_angle = other.image_angle;
 					//The delay until you can shoot the next bullet
 					timer = 15;
 				}
 			}
 			else timer--;
-		break
+			break;
 		}
 
 		case SOUL_MODE.GREEN : {
+			//testing
 			if !(global.timer % 60)
 			{
-				var a = Bullet_Arrow(60, 6, irandom(3), irandom(3));
-				TweenFire(a, "io", 0, 0, 45, 90, "spd", -6, 6);
+				var dirs = irandom(3);
+				var a = Bullet_Arrow(60, 6, dirs, irandom(3));
+				a = Bullet_Arrow(60, 6, dirs, irandom(3), 1);
+				//TweenFire(a, "io", 0, 0, 45, 90, "spd", -6, 6);
 			}
 			x = board.x;
 			y = board.y;
+			var X = x, Y = y;
 			with GreenShield
 			{
 				for (var i = 0, shield; i < Amount; ++i) {
@@ -237,8 +265,8 @@ if STATE == 2 {
 					shield.image_alpha = Alpha[| i];
 					shield.image_blend = Color[| i];
 					shield.HitColor = HitColor[| i];
-					shield.x = other.x + lengthdir_x(Distance[| i], Angle[| i]);
-					shield.y = other.y + lengthdir_y(Distance[| i], Angle[| i]);
+					shield.x = X + lengthdir_x(Distance[| i], Angle[| i]);
+					shield.y = Y + lengthdir_y(Distance[| i], Angle[| i]);
 					//Auto rotate
 					if Auto
 					{
@@ -264,10 +292,11 @@ if STATE == 2 {
 					Angle[| i] = posmod(Angle[| i], 360);
 				}
 			}
-		break
+			break;
 		}
 		
 		case SOUL_MODE.PURPLE : {
+			//Switch between horizontal and vertical
 			if keyboard_check_pressed(vk_space)
 			{
 				Purple.Mode = !Purple.Mode;
@@ -299,97 +328,37 @@ if STATE == 2 {
 				Purple.XTarget = LeftLine + Purple.CurrentHLine * XDifference;
 				x = lerp(x, Purple.XTarget, LerpSpeed);
 			}
-		break
+			break;
 		}
 		
 	}
 	
-	var CheckMode = 0;
-	if CheckMode == 0
-	{
-		//Collision check of the Main Board
-		if check_board && !board.VertexMode {
-			var _dist = point_distance(board_x, board_y, x, y),
-				_dir = point_direction(board_x, board_y, x, y),
-				r_x = clamp(lengthdir_x(_dist, _dir - board_angle) + board_x, board_left_limit, board_right_limit),
-				r_y = clamp(lengthdir_y(_dist, _dir - board_angle) + board_y, board_top_limit, board_bottom_limit);
+	//Collision check of the Main Board
+	if check_board && !board.VertexMode {
+		var _dist = point_distance(board_x, board_y, x, y),
+			_dir = point_direction(board_x, board_y, x, y) - board_angle,
+			r_x = clamp(lengthdir_x(_dist, _dir) + board_x, board_left_limit, board_right_limit),
+			r_y = clamp(lengthdir_y(_dist, _dir) + board_y, board_top_limit, board_bottom_limit);
 
-			_dist = point_distance(board_x, board_y, r_x, r_y);
-			_dir = point_direction(board_x, board_y, r_x, r_y);
-
-			x = lengthdir_x(_dist, _dir + board_angle) + board_x;
-			y = lengthdir_y(_dist, _dir + board_angle) + board_y;
-			
-			//BoardClampSoul();
-			
-		}
-		else
-		{
-			
-		}
-	}
-	else if CheckMode == 1
-	{
-		//Creates an array to check whether the 4 bounds of the soul is inside the board
-		var check_arr = array_create(4, false);
-		//Include the thickness of the board for the bound width for for accurate calculation
-		if board.VertexMode
-		{
-			x_offset += board.thickness_frame / 2;
-			y_offset += board.thickness_frame / 2;
-		}
-		var i = 0, check_list =
-		[
-			[x - x_offset, y],
-			[x + x_offset, y],
-			[x, y - y_offset],
-			[x, y + y_offset],
-		];
-		repeat 4
-		{
-			check_arr[i] = board.contains(check_list[i][0], check_list[i][1]);
-			++i;
-		}
-		i = 0;
-		repeat 4
-		{
-			if !check_arr[i]
-			{
-				var TarPos, TarDist = -1,
-					arr = board.limit(check_list[i][0], check_list[i][1]),
-					dist = point_distance(check_list[i][0], check_list[i][1], arr[0], arr[1]);
-				if dist < TarDist || TarDist == -1
-				{
-					TarPos = arr;
-					TarDist = dist;
-				}
-				x = arr[0] + x - check_list[i][0];
-				y = arr[1] + y - check_list[i][1];
-			}
-			++i;
-		}
-		if board.VertexMode
-		{
-			x_offset -=  board.thickness_frame / 2;
-			y_offset -=  board.thickness_frame / 2;
-		}
-	}
-	else if CheckMode == 2
-	{
+		_dist = point_distance(board_x, board_y, r_x, r_y);
+		_dir = point_direction(board_x, board_y, r_x, r_y) + board_angle;
+		//Clamps the soul inside the rectangle board
+		x = lengthdir_x(_dist, _dir) + board_x;
+		y = lengthdir_y(_dist, _dir) + board_y;
 			
 	}
 	
 	//Check if the soul is allowed to go outside the screen
 	if !allow_outside {
-		x = clamp(x, oGlobal.MainCamera.x + x_offset, oGlobal.MainCamera.x + 640 - x_offset);
-		y = clamp(y, oGlobal.MainCamera.y + y_offset, oGlobal.MainCamera.y + 480 - y_offset);
+		var cam = oGlobal.MainCamera, camX = cam.x, camY = cam.y;
+		x = clamp(x, camX + x_offset, camX + 640 - x_offset);
+		y = clamp(y, camY + y_offset, camY + 480 - y_offset);
 	}
 }
 
 if global.EnableGrazing
 {
-	if !instance_exists(oGrazer)
-		instance_create_depth(x, y, depth, oGrazer);
+	instance_check_create(oGrazer);
 	oGrazer.x = x;
 	oGrazer.y = y;
 }

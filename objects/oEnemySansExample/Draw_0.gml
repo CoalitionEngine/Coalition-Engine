@@ -1,7 +1,6 @@
-live;
 //draw_clear(c_teal);
 event_inherited();
-Board.Mask();
+//Board.Mask();
 if (BattleData.State() == 2)
 	tutorial_text.draw(60, 30, writer);
 

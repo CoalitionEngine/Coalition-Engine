@@ -13,15 +13,15 @@ if state == 2
 		
 		if gameover_typist.get_paused() gameover_typist.unpause();
 
-		if gameover_typist.get_state() == 1 and input_check_pressed("confirm") and
+		if gameover_typist.get_state() == 1 && PRESS_CONFIRM &&
 		   gameover_writer.get_page() < (gameover_writer.get_page_count() - 1)
 			gameover_writer.page(gameover_writer.get_page() + 1)
-		else if input_check_pressed("confirm") and 
-				gameover_typist.get_state() == 1 and 
+		else if PRESS_CONFIRM && 
+				gameover_typist.get_state() == 1 && 
 				gameover_writer.get_page() >= (gameover_writer.get_page_count() - 1)
 		{
 			state++;
-			audio_sound_gain(bgm,0,2800);
+			audio_sound_gain(bgm, 0, 2800);
 		}
 	}
 }

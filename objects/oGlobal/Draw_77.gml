@@ -25,8 +25,7 @@ with Border
 				draw_surface_ext(application_surface, BorderX, BorderY, 960 * WindowRatio / 640, 540 * WindowRatio / 480, 0, c_white, Alpha);
 			else
 				draw_sprite_stretched_ext(Sprite, 0, BorderX, BorderY, 960 * WindowRatio, 540 * WindowRatio, c_white, Alpha);
-			if Blur != 0
-				shader_reset();
+			if Blur != 0 shader_reset();
 		}
 		gpu_set_blendenable(false);
 		draw_surface_ext(application_surface, BorderX + 160 * WindowRatio, BorderY + 30 * WindowRatio, WindowRatio, WindowRatio, 0, c_white, 1);

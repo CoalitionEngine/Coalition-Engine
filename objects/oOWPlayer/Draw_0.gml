@@ -1,12 +1,11 @@
 ///@desc Drawing
-var input_horizontal = CHECK_HORIZONTAL,
-	input_vertical =   CHECK_VERTICAL,
-	//input_confirm =    input_check("confirm"),
-	input_cancel =     input_check("cancel"),
-	input_menu =	   input_check_pressed("menu"),
-	spd = (global.spd + (allow_run ? input_cancel : 0)) * speed_multiplier,
-	scale_x = last_dir,
-	assign_sprite = last_sprite;
+var input_horizontal =	CHECK_HORIZONTAL,
+	input_vertical =	CHECK_VERTICAL,
+	input_cancel =		HOLD_CANCEL,
+	input_menu =		PRESS_MENU,
+	spd =				(allow_run && input_cancel) ? run_speed : global.spd,
+	scale_x =			last_dir,
+	assign_sprite =		last_sprite;
 
 //Sets a black mask on player, similar to the Last Corridor
 if room == room_overworld shader_set(shdBlackMask);

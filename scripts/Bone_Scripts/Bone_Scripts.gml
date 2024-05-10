@@ -180,6 +180,7 @@ function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = 0, destroyable = 0, du
 	@param {bool} create_sound	Whether the create sound plays (Default True)
 */
 function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true) {
+	print("Coalition Engine: Usage of Bullet_Bonewall is discouraged, please use Bullet_CustomBoneWall");
 	gml_pragma("forceinline");
 	var DEPTH = -10;
 	if instance_exists(oBoard)  DEPTH = oBoard.depth + 1;
@@ -310,10 +311,11 @@ function Bullet_BoneWaveV(x, y, amount, func = sin, multiply, ydisplace, spd, xd
 	@param {real} Scale_Z			The z scale of the cube
 	@param {real} Anim_Time			The time of the scaling animation (Default 0 - Instant)
 	@param {function,string} Easing	The easing of the scaling animation (Default EaseLinear)
+	@param {bool} Out				Whether the cube will be masked by the board
 */
-function Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rot_x, rot_y, rot_z, scale_x, scale_y, scale_z, anim_time = 0, ease = "") {
+function Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rot_x, rot_y, rot_z, scale_x, scale_y, scale_z, anim_time = 0, ease = "", out = false) {
 	gml_pragma("forceinline");
-	var inst = instance_create_depth(x, y, -2, o3DBone);
+	var inst = instance_create_depth(x, y, out ? oBoard.depth - 1 : oBoard.depth, o3DBone);
 	with inst
 	{
 		angles = [angle_x, angle_y, angle_z];

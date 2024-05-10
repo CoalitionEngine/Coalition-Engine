@@ -2,26 +2,25 @@ var input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
 	input_confirm = PRESS_CONFIRM,
 	input_cancel = PRESS_CANCEL,
-	DefaultFontNB = lexicon_text("Font"),
-	DefaultFont = $"[{DefaultFontNB}]";
+	DefaultFont = "[" + DefaultFontNB + "]";
 // Text Functions
 if battle_state == BATTLE_STATE.MENU {
 	var target_option = enemy_instance[menu_choice[0]].__enemy_slot;
 
-	if menu_state == MENU_STATE.BUTTON_SELECTION or menu_state == -1 {
+	if menu_state == MENU_STATE.BUTTON_SELECTION || menu_state == -1 {
 		//Initalize menu text typer
 		__text_writer.starting_format(DefaultFontNB, c_white)
 		__text_writer.draw(52, 272, menu_text_typist)
 		//Set the skip function of the menu text typer
-		if input_cancel and global.TextSkipEnabled
+		if input_cancel && global.TextSkipEnabled
 		{
 			__text_writer.page(__text_writer.get_page_count() - 1);
 			menu_text_typist.skip();
 		}
 		//Proceed page
-		if menu_text_typist.get_state() == 1 and __text_writer.get_page() < (__text_writer.get_page_count() - 1)
+		if menu_text_typist.get_state() == 1 && __text_writer.get_page() < (__text_writer.get_page_count() - 1)
 			__text_writer.page(__text_writer.get_page() + 1)
-		if menu_state == -1 and menu_text_typist.get_state() == 1 {
+		if menu_state == -1 && menu_text_typist.get_state() == 1 {
 			if input_confirm
 			{
 				BattleData.SetMenuDialog(default_menu_text);
@@ -30,10 +29,10 @@ if battle_state == BATTLE_STATE.MENU {
 		}
 	}
 
-	if is_val(menu_state, MENU_STATE.FIGHT, MENU_STATE.ACT) // Fight - Act
+	else if is_val(menu_state, MENU_STATE.FIGHT, MENU_STATE.ACT) // Fight - Act
 	{
-		var decrease_y = 0, i = 0, n = array_length(enemy_name);
-		repeat n // Draw enemy hp bar in Fight state
+		var decrease_y = 0, i = 0;
+		repeat array_length(enemy_name) // Draw enemy hp bar in Fight state
 		{
 			var _enemy_name = string(enemy_name[i]) + enemy_name_extra[i];
 			if instance_exists(enemy[i]) // Check if the enemy slot is valid before name drawing
@@ -44,7 +43,7 @@ if battle_state == BATTLE_STATE.MENU {
 				draw_text_scribble(96, 272 + (32 * i) - decrease_y, $"{spare_col}{DefaultFont}* {_enemy_name}");
 				//Draw HP bar
 				var xwrite = 450;
-				if menu_state == MENU_STATE.FIGHT and enemy_draw_hp_bar[i] == 1 {
+				if menu_state == MENU_STATE.FIGHT && enemy_draw_hp_bar[i] == 1 {
 					decrease_y -= 32;
 					var lineheight = 32, y_start = 247,
 						remaining_hp_width = xwrite + ((enemy_hp[i] / enemy_hp_max[i]) * 100);
@@ -58,7 +57,7 @@ if battle_state == BATTLE_STATE.MENU {
 			i++;
 		}
 	}
-	if menu_state == MENU_STATE.ITEM // Item list
+	else if menu_state == MENU_STATE.ITEM // Item list
 	{
 		Item_Info_Load();
 		var coord = menu_choice[2], c_div = floor(coord / 4),
@@ -66,57 +65,57 @@ if battle_state == BATTLE_STATE.MENU {
 		switch item_scroll_type
 		{
 			case ITEM_SCROLL.DEFAULT:
-			//Item name text
-			for (var i = 0, n = min(4, itm_ln - _coord); i < n; ++i) {
-				var xx = (64 + ((i % 2) * 256)) + 32,
-					yy = 272 + (floor(i / 2) * 32);
-				draw_text_scribble(xx, yy, $"{DefaultFont}* {item_name[i + _coord]}");
-			}
-			// Heal text and Page
-			if show_predict_hp
-				draw_text_scribble(128, 341, $"{DefaultFont}[c_lime](+{item_heal[coord]})");
-			draw_text_scribble(384, 341, DefaultFont + lexicon_text("Battle.ItemPage", string(c_div + 1)));
-			break
+				//Item name text
+				for (var i = 0, n = min(4, itm_ln - _coord); i < n; ++i) {
+					var xx = (64 + ((i % 2) * 256)) + 32,
+						yy = 272 + (floor(i / 2) * 32);
+					draw_text_scribble(xx, yy, $"{DefaultFont}* {item_name[i + _coord]}");
+				}
+				// Heal text and Page
+				if show_predict_hp
+					draw_text_scribble(128, 341, $"{DefaultFont}[c_lime](+{item_heal[coord]})");
+				draw_text_scribble(384, 341, DefaultFont + LangItemPageText[c_div]);
+				break;
 			
 			case ITEM_SCROLL.VERTICAL:
-			c_div = coord;
-			_coord = c_div;
-			Battle_Masking_Start(true);
-			for (var i = 0; i < itm_ln; ++i)
-			{	
-				var xx = item_lerp_x[i],
-					yy = item_lerp_y[0] + (32 * (i));
-				draw_set_font(asset_get_index(DefaultFontNB));
-				var color = merge_color(c_black, c_white, item_lerp_color_amount[i]);
-				draw_set_color(color);
-				draw_text(xx, yy, "* " + item_name[i]);
-				//Item description
-				draw_set_alpha(item_desc_alpha);
-				draw_set_color(c_gray);
-				if i == c_div draw_text(item_desc_x, yy, item_battle_desc[coord]);
-				draw_set_alpha(1);
-				draw_set_color(c_white);
-			}	
-			Battle_Masking_End();
-			break
+				c_div = coord;
+				_coord = c_div;
+				Battle_Masking_Start(true);
+				for (var i = 0; i < itm_ln; ++i)
+				{	
+					var xx = item_lerp_x[i],
+						yy = item_lerp_y[0] + (32 * (i));
+					draw_set_font(asset_get_index(DefaultFontNB));
+					var color = merge_color(c_black, c_white, item_lerp_color_amount[i]);
+					draw_set_color(color);
+					draw_text(xx, yy, "* " + item_name[i]);
+					//Item description
+					draw_set_alpha(item_desc_alpha);
+					draw_set_color(c_gray);
+					if i == c_div draw_text(item_desc_x, yy, item_battle_desc[coord]);
+					draw_set_alpha(1);
+					draw_set_color(c_white);
+				}	
+				Battle_Masking_End();
+				break;
 		}
 	}
-	if menu_state == MENU_STATE.MERCY {
+	else if menu_state == MENU_STATE.MERCY {
 		//Sets the color of Spare
 		i = 0;
-		var spare_col = "[c_white]", n = array_length(enemy);
-		repeat n
+		var spare_col = "[c_white]";
+		repeat array_length(enemy)
 		{
-			if enemy[i] != noone and enemy[i].enemy_is_spareable spare_col = global.SpareTextColor;
+			if enemy[i] != noone && enemy[i].enemy_is_spareable spare_col = global.SpareTextColor;
 			++i;
 		}
 		//Draw spare text, flee if needed
-		draw_text_scribble(96, 272, spare_col + DefaultFont + lexicon_text("Battle.Spare") + (allow_run ? "[c_white]\n" + lexicon_text("Battle.Flee") : ""));
+		draw_text_scribble(96, 272, spare_col + DefaultFont + LangSpareText + (allow_run ? "[c_white]\n" + LangFleeText : ""));
 	}
-	if menu_state == MENU_STATE.ACT_SELECT // Draw Act Texts
+	else if menu_state == MENU_STATE.ACT_SELECT // Draw Act Texts
 	{
-		var i = 0, enemy_check_texts = "", n = array_length(enemy_act[target_option]);
-		repeat n
+		var i = 0, enemy_check_texts = "";
+		repeat array_length(enemy_act[target_option])
 		{
 			var assign_act_text = enemy_act[target_option, i];
 			if assign_act_text != "" enemy_check_texts += "* " + assign_act_text;
@@ -130,7 +129,7 @@ if battle_state == BATTLE_STATE.MENU {
 		draw_text_scribble(96, 272, DefaultFont + enemy_check_texts);
 	}
 
-	if menu_state == MENU_STATE.FIGHT_AIM //Fight Anim
+	else if menu_state == MENU_STATE.FIGHT_AIM //Fight Anim
 	{
 		if Target.Count == 1 //If only 1 bar is used
 		{
@@ -164,7 +163,7 @@ if battle_state == BATTLE_STATE.MENU {
 							battle_state = 0;
 						}
 						//If an input is pressed
-						elif input_confirm and Target.buffer < 0 {
+						elif input_confirm && Target.buffer < 0 {
 							battle_turn++;
 							Target.buffer = 3;
 							_target_state = 2;
@@ -196,7 +195,7 @@ if battle_state == BATTLE_STATE.MENU {
 					else _aim_scale = 0;
 					_aim_angle += _aim_retract * 3;
 					//Begin enemy dialog when the target is retracted
-					if _target_xscale < 0.08 or _target_yscale < 0.08 {
+					if _target_xscale < 0.08 || _target_yscale < 0.08 {
 						_target_state = 0;
 						dialog_start();
 						menu_state = -1;
@@ -256,7 +255,7 @@ if battle_state == BATTLE_STATE.MENU {
 					//Multiply the distance by -1 if the bar comes form the other side
 					if Aim.InitialX[i] > 320 distance *= -1;
 					
-					if !Aim.HasBeenPressed[i] and !_aim_force_index
+					if !Aim.HasBeenPressed[i] && !_aim_force_index
 					{
 						_aim_index = 0;
 						_aim_force_index = true;
@@ -291,7 +290,7 @@ if battle_state == BATTLE_STATE.MENU {
 					{
 						with Aim
 						{
-							if !HasBeenPressed[i] and !Fade[i]
+							if !HasBeenPressed[i] && !Fade[i]
 							{
 								_attack_confirm = false;
 								HasBeenPressed[i] = true;
@@ -333,7 +332,7 @@ if battle_state == BATTLE_STATE.MENU {
 						}
 					}
 						
-					if Aim.HitCount + Aim.Miss == Target.Count and _target_state == 1
+					if Aim.HitCount + Aim.Miss == Target.Count && _target_state == 1
 					{
 						_target_state = 2;
 						battle_turn++;
@@ -367,7 +366,7 @@ if battle_state == BATTLE_STATE.MENU {
 							}
 						}
 					}
-					if distance < -28 and !Aim.Fade[i]
+					if distance < -28 && !Aim.Fade[i]
 					{
 						Aim.Fade[i] = true;
 						Aim.Miss++;
@@ -492,7 +491,7 @@ if battle_state == BATTLE_STATE.MENU {
 									draw_sprite_ext(sprGunStar, posmod(_time / 2, 2), 320, Aim.Attack.EnemyY, 2, 2, 0, _color, 1);
 								if _time > 7
 									DrawMultibarAttackStar(sprGunStar);
-								if _time > 9 and _time < 60
+								if _time > 9 && _time < 60
 									DrawMultiAttackMain(sprGunCircle);
 								if _time = 10
 									if Aim.Attack.Crit
@@ -527,7 +526,7 @@ if battle_state == BATTLE_STATE.MENU {
 					if _target_retract_method == 0 _target_xscale -= 0.03;
 					else _target_yscale -= 0.03;
 					
-					if _target_xscale < 0.08 or _target_yscale < 0.08 {
+					if _target_xscale < 0.08 || _target_yscale < 0.08 {
 						_target_state = 0;
 						dialog_start();
 						menu_state = -1;
@@ -551,22 +550,22 @@ if battle_state == BATTLE_STATE.MENU {
 			Aim.Time = _aim_time;
 		}
 	}
-	if menu_state = MENU_STATE.FLEE
+	else if menu_state = MENU_STATE.FLEE
 	{
 		draw_text_scribble(96, 272, $"{DefaultFont}* {FleeText[FleeTextNum]}");
-		if oSoul.x <= 10 and FleeState == 1
+		if oSoul.x <= 10 && FleeState == 1
 		{
 			Fader_Fade(0, 1, 30);
 			FleeState++;
 		}
-		if FleeState == 2 and oGlobal.fader_alpha == 1
+		if FleeState == 2 && oGlobal.fader_alpha == 1
 		{
 			//Event after fight ends
 			game_restart();
 		}
 	}
 }
-if battle_state == BATTLE_STATE.RESULT {
+else if battle_state == BATTLE_STATE.RESULT {
 	if !global.BossFight {
 		battle_end_text_writer.starting_format(DefaultFontNB, c_white)
 		battle_end_text_writer.draw(52, 272, battle_end_text_typist)
@@ -575,7 +574,7 @@ if battle_state == BATTLE_STATE.RESULT {
 			battle_end_text_writer.page(battle_end_text_writer.get_page_count() - 1);
 			battle_end_text_typist.skip();
 		}
-		if battle_end_text_typist.get_state() == 1 and battle_end_text_writer.get_page() < (battle_end_text_writer.get_page_count() - 1)
+		if battle_end_text_typist.get_state() == 1 && battle_end_text_writer.get_page() < (battle_end_text_writer.get_page_count() - 1)
 			battle_end_text_writer.page(battle_end_text_writer.get_page() + 1)
 		if battle_end_text_typist.get_state() == 1 {
 			if input_confirm
@@ -599,12 +598,12 @@ var _button_spr =	Button.Sprites,
 	_button_angle = Button.Angle,
 	_state =		menu_state,
 	_menu =			menu_button_choice,
-	i = 0, n = array_length(_button_spr);
+	i = 0;
 
-repeat n // Button initialize
+repeat array_length(_button_spr) // Button initialize
 {
 	// Check if the button is chosen
-	var select = (_menu == i) and _state >= 0;
+	var select = (_menu == i) && _state >= 0;
 
 	// Draw the button by array order
 	if Button.BackgroundCover
@@ -628,8 +627,8 @@ repeat n // Button initialize
 if board_cover_button {
 	Battle_Masking_Start(true);
 	var board = oBoard;
-	if !(board.left + board.right >= 640 and board.up + board.down >= 480 and board_full_cover)
-		draw_rectangle_color(23, 432, 640, 480, c_black, c_black, c_black, c_black, 0);
+	if !(board.left + board.right >= 640 && board.up + board.down >= 480 && board_full_cover)
+		draw_sprite_ext(sprPixel, 0, 23, 432, 617, 48, 0, c_black, 1);
 	Battle_Masking_End();
 }
 #endregion
@@ -683,22 +682,23 @@ if board_cover_button {
 	f_alpha = min(ui_override_alpha[1], _alpha);
 	if f_alpha > 0
 	{
-		draw_text_color(name_x + string_width(name), name_y, "   LV ", lv_col, lv_col, lv_col, lv_col, f_alpha);
+		var str_width = string_width(name);
+		draw_text_color(name_x + str_width, name_y, "   LV ", lv_col, lv_col, lv_col, lv_col, f_alpha);
 		// LV Counter
-		draw_text_color(name_x + string_width(name + "   LV "), name_y, string(Player.LV()), lv_counter_col, lv_counter_col, lv_counter_col, lv_counter_col, f_alpha);
+		str_width += string_width("   LV ");
+		draw_text_color(name_x + str_width, name_y, Player.LV(), lv_counter_col, lv_counter_col, lv_counter_col, lv_counter_col, f_alpha);
 	}
 
 	draw_set_font(fnt_uicon); // Icon Font
 	// HP Icon
 	f_alpha = min(ui_override_alpha[2], _alpha);
 	if f_alpha > 0
-		draw_text_color((hp_x - 31), hp_y + 5, hp_text, default_col, default_col, default_col, default_col, f_alpha);
+		draw_text_color(hp_x - 31, hp_y + 5, hp_text, default_col, default_col, default_col, default_col, f_alpha);
 
 	// Background bar
 	f_alpha = min(ui_override_alpha[3], _alpha);
 	if f_alpha > 0
 	{
-		draw_set_alpha(f_alpha);
 		draw_sprite_ext(sprPixel, 0, hp_x, hp_y, _hp_max, 20, 0, hp_max_col, f_alpha);
 		// HP bar
 		draw_sprite_ext(sprPixel, 0, hp_x, hp_y, _hp, 20, 0, hp_col, f_alpha);
@@ -713,9 +713,7 @@ if board_cover_button {
 				{
 					hp_predict += (item_heal[coord] - hp_predict) * refill_speed;
 					//Healing Prediction
-					draw_set_alpha(abs(dsin(global.timer * 2) * .5) + .2);
-					draw_rectangle_color(hp_x + _hp, hp_y, hp_x + min(hp + hp_predict, hp_max) * bar_multiplier, hp_y + 20, hp_pre_col, hp_pre_col, hp_pre_col, hp_pre_col, false);
-					draw_set_alpha(1);
+					draw_sprite_ext(sprPixel, 0, hp_x + _hp, hp_y, min(hp + hp_predict, hp_max) * bar_multiplier - _hp, 20, 0, hp_pre_col, abs(dsin(global.timer * 2) * .5) + .2);
 				}
 			break
 		}
@@ -723,16 +721,16 @@ if board_cover_button {
 
 	// KR bar
 	if global.kr_activation {
-		krr_col = (round(kr) ? kr_col : krr_col);
+		krr_col = round(kr) ? kr_col : krr_col;
 		
 		// Draw icon
 		f_alpha = min(ui_override_alpha[4], _alpha);
 		draw_set_alpha(f_alpha);
 		// Draw the bar
 		if round(kr)
-			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, hp_y, max(-_kr - 1, -_hp - 1), 20, 0, krr_col, 1);
+			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, hp_y, max(-_kr, -_hp) - 1, 20, 0, krr_col, 1);
 
-		draw_text_color((hp_x + 10) + _hp_max, hp_y + 5, kr_text, krr_col, krr_col, krr_col, krr_col, f_alpha);
+		draw_text_color(hp_x + 10 + _hp_max, hp_y + 5, kr_text, krr_col, krr_col, krr_col, krr_col, f_alpha);
 	}
 	draw_set_alpha(ui_alpha);
 
@@ -760,7 +758,7 @@ draw_set_alpha(1);
 if board_cover_hp_bar {
 	Battle_Masking_Start(true);
 	var board = oBoard;
-	if !(board.left + board.right >= 640 and board.up + board.down >= 480 and board_full_cover)
+	if !(board.left + board.right >= 640 && board.up + board.down >= 480 && board_full_cover)
 		draw_sprite_ext(sprPixel, 0, hp_y, hp_y, 640, 20, 0, c_black, 1);
 	Battle_Masking_End();
 }

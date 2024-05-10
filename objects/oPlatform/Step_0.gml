@@ -1,8 +1,8 @@
 len_step();
 axis_step();
+image_xscale = length / 4;
 //Set angle
-var angle = image_angle % 360;
-angle = round(angle / 90);
+var angle = round(image_angle % 360 / 90);
 //Set direction of auto destroy
 switch angle
 {

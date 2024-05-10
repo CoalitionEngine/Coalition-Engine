@@ -7,7 +7,7 @@ function Enemy_Function_Load(encounter_number = global.battle_encounter) {
 	enemy_hp = [];
 	enemy_hp_max = [];
 	enemy_draw_hp_bar = [];
-	enemy_name_extra = ["", "", ""];
+	enemy_name_extra = array_create(3, "");
 	
 	var enemy_presets = global.enemy_presets;
 	
@@ -23,7 +23,7 @@ function Enemy_Function_Load(encounter_number = global.battle_encounter) {
 			enemy_hp[i] =			enemies[i].enemy_hp;
 			enemy_hp_max[i] =		enemies[i].enemy_hp_max;
 			enemy_draw_hp_bar[i] =	enemies[i].enemy_draw_hp_bar;
-			array_last(enemy_instance).__enemy_slot = i;
+			enemy[i].__enemy_slot = i;
 			var ii = 0;
 			repeat array_length(enemies[i].enemy_act) - 1
 			{
@@ -59,6 +59,7 @@ function Enemy() constructor
 		@param {Asset.GMObject} Right	The enemy on the right (Default none)
 	*/
 	static SetEncoutner = function(encounter = array_length(global.enemy_presets), left = noone, middle = noone, right = noone) {
+		gml_pragma("forceinline");
 		global.enemy_presets[encounter] = [left, middle, right];
 	}
 	/**
@@ -68,6 +69,7 @@ function Enemy() constructor
 	*/
 	static SetName = function(enemy, text)
 	{
+		gml_pragma("forceinline");
 		enemy.enemy_name = text;
 	}
 	/**
@@ -81,6 +83,7 @@ function Enemy() constructor
 	*/
 	static SetAct = function(enemy, act, name, text, func = -1, trigger = oBattleController.activate_turn[1])
 	{
+		gml_pragma("forceinline");
 		with enemy
 		{
 			enemy_act[act] = name;
@@ -98,6 +101,7 @@ function Enemy() constructor
 	*/
 	static SetHPStats = function(enemy, max_hp, current_hp = max_hp, draw_hp_bar = true)
 	{
+		gml_pragma("forceinline");
 		with enemy
 		{
 			enemy_hp_max = max_hp;
@@ -113,6 +117,7 @@ function Enemy() constructor
 	*/
 	static SetDefense = function(enemy, value)
 	{
+		gml_pragma("forceinline");
 		enemy.enemy_defense = value;
 	}
 	/**
@@ -122,6 +127,7 @@ function Enemy() constructor
 	*/
 	static SetDamage = function(enemy, damage)
 	{
+		gml_pragma("forceinline");
 		enemy.damage = damage;
 	}
 	/**
@@ -131,6 +137,7 @@ function Enemy() constructor
 	*/
 	static SetSpareable = function(enemy, spareable)
 	{
+		gml_pragma("forceinline");
 		enemy.enemy_is_spareable = spareable;
 	}
 	/**
@@ -141,6 +148,7 @@ function Enemy() constructor
 	*/
 	static SetReward = function(enemy, Exp, Gold)
 	{
+		gml_pragma("forceinline");
 		with enemy
 		{
 			Exp_Give = Exp;

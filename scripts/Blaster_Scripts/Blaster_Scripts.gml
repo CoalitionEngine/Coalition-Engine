@@ -20,7 +20,7 @@
 function CreateBlaster(x, y, t_x, t_y, i_angle = undefined, t_angle, s_x, s_y, move, pause, dur, col = 0, blur = false, c_sound = true, r_sound = true) {
 	gml_pragma("forceinline");
 	i_angle ??= t_angle + choose(180, -180);
-	var blaster = instance_create_depth(x, y, -1000, oGB);
+	var blaster = instance_create_depth(x, y, -10, oGB);
 	with blaster
 	{
 		gbx = x; gby = y;

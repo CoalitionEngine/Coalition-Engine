@@ -18,6 +18,8 @@ global.kr_activation = true;
 global.hp = global.hp_max;
 max_kr = 40;
 
+ReloadTexts();
+
 #region Fight Aiming Functions
 Target = {};
 with Target
@@ -361,7 +363,7 @@ function end_battle() {
 	battle_state = BATTLE_STATE.RESULT;
 	if !global.BossFight {
 		battle_end_text = lexicon_text("Battle.Win", string(Result.Exp), string(Result.Gold));
-		if Player.LV() < 20 and global.data.Exp + Result.Exp >= Player.GetExpNext() {
+		if Player.LV() < 20 && global.data.Exp + Result.Exp >= Player.GetExpNext() {
 			global.data.lv++;
 			if Player.HP() == Player.HPMax()
 				Player.HPMax(Player.LV() == 20 ? 99 : Player.LV() * 4 + 16);

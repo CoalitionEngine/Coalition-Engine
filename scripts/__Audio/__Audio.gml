@@ -69,7 +69,8 @@ function audio_destroy_stream_array(arr)
 function audio_transition(init_aud, target_aud, time, single = false, loop = false, volume = 1, pitch = 1, position = 0)
 {
 	gml_pragma("forceinline");
-	if !audio_is_playing(init_aud) show_debug_message("The audio is not playing");
+	if !audio_is_playing(init_aud) && __COALITION_VERBOSE
+		show_debug_message("The audio is not playing");
 	else audio_sound_gain(init_aud, 0, time);
 	return audio_play(target_aud, single, loop, volume, pitch, time, position);
 }

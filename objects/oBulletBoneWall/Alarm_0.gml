@@ -9,12 +9,12 @@ var board = target_board,
 	board_l = board_x - board.left,
 	board_r = board_x + board.right;
 //Initalize position
-if dir == DIR.UP or dir == DIR.DOWN
+if dir == DIR.UP || dir == DIR.DOWN
 {
 	x = board_x;
 	y = (dir == DIR.UP) ? board_u - height : board_d + height;
 }
-if dir == DIR.LEFT or dir == DIR.RIGHT
+else if dir == DIR.LEFT || dir == DIR.RIGHT
 {
 	y = board_y;
 	x = (dir == DIR.LEFT) ? board_l - height : board_r + height;

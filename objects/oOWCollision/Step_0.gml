@@ -2,7 +2,7 @@ var input_confirm = CheckConfirm(), collide = CheckCollide();
 switch sprite_index
 {
 	case sprPixel:
-		if collide and !Collided
+		if collide && !Collided
 		{
 			if Event != -1
 			{
@@ -10,10 +10,10 @@ switch sprite_index
 				Event();
 			}
 		}
-		elif collide and Collided
+		elif collide && Collided
 		{
 			Collided = 2;
 		}
-		if !collide and Collided == 2 Collided = false;
+		if !collide && Collided == 2 Collided = false;
 	break
 }

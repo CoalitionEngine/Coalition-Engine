@@ -8,4 +8,4 @@
 
 //Whether to output debug info when using combos
 //This can help identify bugs and misconfigurations but should be turned off for production builds
-#macro INPUT_COMBO_DEBUG  true
+#macro INPUT_COMBO_DEBUG  false

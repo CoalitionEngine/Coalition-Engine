@@ -7,11 +7,11 @@ function posmod(a, b)
 {
 	gml_pragma("forceinline");
 	var value = a % b;
-	while (value < 0 and b > 0) or (value > 0 and b < 0) value += b;
+	while (value < 0 && b > 0) || (value > 0 && b < 0) value += b;
 	return value;
 }
 
-///Calculating the legnthdir_xy position of the points
+///Rotate the coordinates by the angle
 function point_xy(p_x, p_y)
 {
 	gml_pragma("forceinline");
@@ -60,18 +60,8 @@ function Sigma(arr, n, k)
 function is_val()
 {
 	gml_pragma("forceinline");
-	//for (var i = 1; i < argument_count; ++i)
-	//{
-	//	if argument[0] == argument[i]
-	//	{
-	//		return true;
-	//	}
-	//}
-	//return false;
-	//If you encounter an error saying array_contains don't exist, use the above method instead
 	var arr = [], i = 1;
-	repeat argument_count - 1
-		array_push(arr, argument[i++]);
+	repeat argument_count - 1 array_push(arr, argument[i++]);
 	return array_contains(arr, argument[0]);
 }
 
@@ -83,9 +73,8 @@ function is_val()
 function array_multiply(arr, num)
 {
 	gml_pragma("forceinline");
-	var i = 0, n = array_length(arr);
-	repeat n
-		arr[i++] *= num;
+	var i = 0;
+	repeat array_length(arr) arr[i++] *= num;
 	return arr;
 }
 
@@ -116,4 +105,34 @@ function quick_pow(x, n)
 		n = n >> 1;
 	}
 	return ret;
+}
+
+///Checks whether two structs are equal (Does not support static variables)
+///@param {struct}	a	The index of the first struct
+///@param {struct}	b	The index of the struct struct
+function struct_equals(struct_a, struct_b)
+{
+	var struct_a_names = struct_get_names(struct_a),
+		struct_b_names = struct_get_names(struct_a),
+		a_count = struct_names_count(struct_a),
+		i = 0, val_a, val_b;
+	//Must not be equal when they have different amount of names
+	if a_count != struct_names_count(struct_b) return false;
+	//Compare values
+	repeat a_count
+	{
+		val_a = struct_a[$ struct_a_names[i]];
+		val_b = struct_b[$ struct_b_names[i]];
+		if is_array(val_a)
+		{
+			if !array_equals(val_a, val_b) return false;
+		}
+		else if is_struct(val_a)
+		{
+			if !struct_equals(val_a, val_b) return false;
+		}
+		else if val_a != val_b return false;
+		++i;
+	}
+	return true;
 }

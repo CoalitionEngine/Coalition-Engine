@@ -2,7 +2,7 @@
 if warn_color_swap
 {
 	WarnTimer++;
-	if !(WarnTimer % 5) and time_warn
+	if !(WarnTimer % 5) && time_warn
 	{
 		var change = (WarnTimer % 10) == 5
 		warn_color = change ? c_yellow : c_red;
@@ -14,7 +14,7 @@ if state == 2
 {
 	var dir_ang_x = -dsin(dir), dir_ang_y = dcos(dir);
 	//Plays the sound
-	if !timer and sound_create
+	if !timer && sound_create
 	{
 		audio_play(snd_bonewall);
 	}
@@ -27,7 +27,7 @@ if state == 2
 			x -= lengthdir_x(spd, dir);
 			y -= lengthdir_y(spd, dir);
 		}
-		if (timer >= time_move and timer <= time_move + time_stay)
+		if (timer >= time_move && timer <= time_move + time_stay)
 		{
 			x = target_x - lengthdir_x(height, dir);
 			y = target_y - lengthdir_y(height, dir);

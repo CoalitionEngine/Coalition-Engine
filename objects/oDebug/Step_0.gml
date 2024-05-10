@@ -1,71 +1,71 @@
-
 var Main = MainOption, Sub = SubOption;
 //Surfaces
-if !surface_exists(Main.Surf) Main.Surf = surface_create(640, 480);
 if !surface_exists(Sub.Surf) Sub.Surf = surface_create(640, 480);
 
 //Main Option Scrolling
-if Main.DisplaceYTarget < Main.MaxY
+with Main
 {
-	Main.Lerp = lerp(Main.Lerp, 0.12, 0.09);
-	Main.DisplaceYTarget = round(lerp(Main.DisplaceYTarget, Main.MaxY, Main.Lerp));
-}
-else if Main.DisplaceYTarget > 0
-{
-	Main.Lerp = lerp(Main.Lerp, 0.12, 0.09);
-	Main.DisplaceYTarget = round(lerp(Main.DisplaceYTarget, 0, Main.Lerp));
-}
-else
-{
-	Main.Lerp = 0.16;
-}
-Main.DisplaceX = lerp(Main.DisplaceX, Main.DisplaceXTarget, 0.16);
-Main.DisplaceY = lerp(Main.DisplaceY, Main.DisplaceYTarget, 0.16);
-
-if mouse_in_rectangle(20, 20, 240, 460)
-{
-	var displace = mouse_wheel_up() - mouse_wheel_down();
-	Main.DisplaceYTarget += displace * 20;
+	if !surface_exists(Surf) Surf = surface_create(640, 480);
+	if DisplaceYTarget < MaxY
+	{
+		Lerp = lerp(Lerp, 0.12, 0.09);
+		DisplaceYTarget = round(lerp(DisplaceYTarget, MaxY, Lerp));
+	}
+	else if DisplaceYTarget > 0
+	{
+		Lerp = lerp(Lerp, 0.12, 0.09);
+		DisplaceYTarget = round(lerp(DisplaceYTarget, 0, Lerp));
+	}
+	else Lerp = 0.16;
+	DisplaceX = lerp(DisplaceX, DisplaceXTarget, 0.16);
+	DisplaceY = lerp(DisplaceY, DisplaceYTarget, 0.16);
+	
+	if mouse_in_rectangle(20, 20, 240, 460)
+	{
+		var displace = mouse_wheel_up() - mouse_wheel_down();
+		DisplaceYTarget += displace * 20;
+	}
 }
 
 //Sub-Option Scrolling
 if State != DEBUG_STATE.MAIN
 {
-	if Sub.DisplaceYTarget < Sub.MaxY
+	with Sub
 	{
-		Sub.Lerp = lerp(Sub.Lerp, 0.12, 0.09);
-		Sub.DisplaceYTarget = round(lerp(Sub.DisplaceYTarget, Sub.MaxY, Sub.Lerp));
-	}
-	else if Sub.DisplaceYTarget > 0
-	{
-		Sub.Lerp = lerp(Sub.Lerp, 0.12, 0.09);
-		Sub.DisplaceYTarget = round(lerp(Sub.DisplaceYTarget, 0, Sub.Lerp));
-	}
-	else
-	{
-		Sub.Lerp = 0.16;
-	}
-	Sub.DisplaceX = lerp(Sub.DisplaceX, Sub.DisplaceXTarget, 0.16);
-	Sub.DisplaceY = lerp(Sub.DisplaceY, Sub.DisplaceYTarget, 0.16);
-	
-	var BaseX = 270 + Sub.DisplaceX,
-		RightX = BaseX + 200;
-	if mouse_in_rectangle(BaseX, 20, RightX, 460)
-	{
-		var displace = mouse_wheel_up() - mouse_wheel_down();
-		displace *= 60;
-		Sub.DisplaceYTarget += displace;
-		if State == DEBUG_STATE.SPRITES && mouse_check_button_pressed(mb_right)
+		if DisplaceYTarget < MaxY
 		{
-			Main.DisplaceXTarget = 0;
-			Sub.DisplaceXTarget = 0;
-			Sub.DrawSprite = -1;
-			if Sub.Stream != -1
+			Lerp = lerp(Lerp, 0.12, 0.09);
+			DisplaceYTarget = round(lerp(DisplaceYTarget, MaxY, Lerp));
+		}
+		else if DisplaceYTarget > 0
+		{
+			Lerp = lerp(Lerp, 0.12, 0.09);
+			DisplaceYTarget = round(lerp(DisplaceYTarget, 0, Lerp));
+		}
+		else Lerp = 0.16;
+		DisplaceX = lerp(DisplaceX, DisplaceXTarget, 0.16);
+		DisplaceY = lerp(DisplaceY, DisplaceYTarget, 0.16);
+	
+		var BaseX = 270 + DisplaceX,
+			RightX = BaseX + 200;
+		if mouse_in_rectangle(BaseX, 20, RightX, 460)
+		{
+			var displace = mouse_wheel_up() - mouse_wheel_down();
+			displace *= 60;
+			DisplaceYTarget += displace;
+			if mouse_check_button_pressed(mb_right) && other.State == DEBUG_STATE.SPRITES
 			{
-				audio_destroy_stream(Sub.Stream);
-				Sub.Stream = -1;
+				audio_stop_all();
+				Main.DisplaceXTarget = 0;
+				DisplaceXTarget = 0;
+				DrawSprite = -1;
+				if Stream != -1
+				{
+					audio_destroy_stream(Stream);
+					Stream = -1;
+				}
+				Audio = -1;
 			}
-			Sub.Audio = -1;
 		}
 	}
 }

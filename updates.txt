@@ -1,6 +1,38 @@
 Update Logs (This is the beta builds)
 
-v6.0.0 (Eden)
+v0.6.0 (Eden)
+Fixed:
+Custom bullet collision function bug
+Platform masking
+Masking of bonewalls
+Debug UI surface order (also optimised)
+Debug UI audio doesn't stop
+Naming UI bugs
+Blue soul does not return correct on ground/ceiling when board is tilted
+
+Updated:
+Engine icon
+Polygon board masking
+Polygon board soul clamping (flexing calculus knowledge)
+Language based texts are now only reloaded when needed
+New data saving/loading method (less cancerous but still secure)
+Changed draw_rectangle_width and draw_rectangle_width_ext into CleanRectangle
+Overworld dialog options have been remade
+Converted all 'and' and 'or'' into '&&' and '||'
+Optimised codes for performance and compiling
+Added comments to codes for better understanding
+
+Removed:
+Line system (not useful)
+DoLater (not useful)
+GPU controlling (I believe in the level of intelligence of users)
+Deprecated Scribble and Input functions
+
+Notes:
+Input debug is disabled
+Gamepad input is disabled
+
+v0.6.0 Beta 1 (Eden)
 Removed:
 GMLive functions on green soul
 Some deprecated codes
