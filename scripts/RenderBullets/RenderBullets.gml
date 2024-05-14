@@ -21,6 +21,14 @@ function RenderBullets() {
 	if instance_exists(oBulletCustomBoneWall)
 		with oBulletCustomBoneWall if depth >= oBoard.depth && active && time_warn && oBoard.VertexMode
 			event_user(0);
+	with oBulletParents
+	{
+		if depth >= oBoard.depth && sprite_index != -1
+		{
+			if RenderCheck == -1 event_user(0);
+			else if RenderCheck() event_user(0);
+		}
+	}
 	
 	//End masking
 	if !oBoard.VertexMode Battle_Masking_End();

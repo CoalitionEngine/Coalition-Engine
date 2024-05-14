@@ -1,8 +1,8 @@
 //Collision event with bulets
 with(oBulletParents)
-	if place_meeting(x, y, other)
+	if YellowCollidable && place_meeting(x, y, other)
 	{
-		instance_destroy();
+		if YellowDestroyable instance_destroy();
 		instance_destroy(other);
 	}
 //Draw trail

@@ -1,5 +1,25 @@
 Update Logs (This is the beta builds)
 
+v0.6.1 (Eden)
+Fixed:
+Incorrect overworld player argument for camera
+Disabling draw damage should be instantaneous instead of constant
+Button update function should be based on amount of buttons
+Activating turn in ACT does not process user defined turn function
+Colored bullets do damage anyways
+Incorrect usage of blue soul on ground/ceiling
+Incorrect order for PostAttackFunctions to execute
+Purple soul referenced a variable outside scope
+
+Updated:
+Added a variable for purple soul for disabling vertical lines'
+Added variables to bullets to set whether it is collidable and destroyable by yellow soul bullets
+Changed the drawing method of the dialog box in battle for better customability
+Added 'RenderCheck' as a function for checking whether the bullet should be rendered (oBulletParents exclusive for now)
+
+Notes:
+You may notice more missing references to Tome related assets during project load, it is due to me making documentation for the engine
+
 v0.6.0 (Eden)
 Fixed:
 Custom bullet collision function bug

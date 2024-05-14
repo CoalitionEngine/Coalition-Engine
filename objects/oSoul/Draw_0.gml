@@ -40,15 +40,18 @@ if STATE == BATTLE_STATE.IN_TURN
 		draw_set_color(c_purple);
 		for (var i = TopLine; i <= BottomLine; i += YDifference)
 			draw_line(LeftLine, i, RightLine, i);
-		//Vertical lines
-		draw_set_alpha(Purple.Mode == 1 ? 1 : 0.3);
-		for(var i = LeftLine; i <= RightLine; i += XDifference)
-			draw_line(i, TopLine, i, BottomLine);
-		//Fading effect when line changes
-		Purple.ForceAlpha = lerp(Purple.ForceAlpha, 0, Purple.BoxLerpSpeed);
-		Battle_Masking_Start();
-		draw_sprite_ext(sprPixel, 0, board_x - b_left, board_y - b_up, b_left + b_right, b_up + b_down, 0, c_purple, Purple.ForceAlpha);
-		Battle_Masking_End();
+		if Purple.AllowVertical
+		{
+			//Vertical lines
+			draw_set_alpha(Purple.Mode == 1 ? 1 : 0.3);
+			for(var i = LeftLine; i <= RightLine; i += XDifference)
+				draw_line(i, TopLine, i, BottomLine);
+			//Fading effect when line changes
+			Purple.ForceAlpha = lerp(Purple.ForceAlpha, 0, Purple.BoxLerpSpeed);
+			Battle_Masking_Start();
+			draw_sprite_ext(sprPixel, 0, board_x - b_left, board_y - b_up, b_left + b_right, b_up + b_down, 0, c_purple, Purple.ForceAlpha);
+			Battle_Masking_End();
+		}
 		draw_set_color(c_white);
 		draw_set_alpha(1);
 	}

@@ -168,3 +168,52 @@ function ButtonSprites(fname = "Normal", format = ".png")
 	with oBattleController.Button
 		Sprites = buttons;
 }
+///Draws the speech bubble
+function DrawSpeechBubble(x, y, width, height, color, dir)
+{
+	static SpikeSprite = sprSpeechBubbleSpike,
+		SpikeWidth = sprite_get_width(SpikeSprite),
+		SpikeHeight = sprite_get_height(SpikeSprite),
+		CornerSprite = sprSpeechBubbleCorner,
+		CornerWidth = sprite_get_width(CornerSprite),
+		CornerHeight = sprite_get_height(CornerSprite),
+		SpikeScaleAngle = [
+			[-1, 1, 0],
+			[-1, 1, 90],
+			[1, 1, 0],
+			[1, 1, 90],
+		];
+	//UDLR
+	var CornerPosition = [y - height, y, x, x + width];
+	for (var i = 0; i < 4; ++i) {
+		draw_sprite_ext(CornerSprite, 0, CornerPosition[2 + (i % 2)], CornerPosition[i >= 2],
+							(i % 2 ? -1 : 1), (i < 2 ? 1 : -1), 0, color, 1);
+	}
+	draw_set_color(c_black);
+	draw_line_width(CornerPosition[2] + CornerWidth - 1, CornerPosition[0],
+					CornerPosition[3] - CornerWidth, CornerPosition[0], 1);
+	draw_line_width(CornerPosition[2] + CornerWidth - 1, CornerPosition[1] - 1,
+					CornerPosition[3] - CornerWidth - 1, CornerPosition[1] - 1, 1);
+	draw_line_width(CornerPosition[2], CornerPosition[0] + CornerHeight - 1,
+					CornerPosition[2], CornerPosition[1] - CornerHeight, 1);
+	draw_line_width(CornerPosition[3] - 1, CornerPosition[0] + CornerHeight - 1,
+					CornerPosition[3] - 1, CornerPosition[1] - CornerHeight - 1, 1);
+	draw_set_color(color);
+	var SpikePosition = [
+			[CornerPosition[3], CornerPosition[1] - SpikeHeight - 10],
+			[CornerPosition[2] + SpikeWidth + 10, CornerPosition[0]],
+			[CornerPosition[2], CornerPosition[1] - SpikeHeight - 10],
+			[CornerPosition[3] - SpikeWidth - 10, CornerPosition[1]],
+		],
+		FinalDirection = dir;
+	draw_sprite_ext(SpikeSprite, 0, SpikePosition[FinalDirection, 0], SpikePosition[FinalDirection, 1],
+					SpikeScaleAngle[FinalDirection, 0], SpikeScaleAngle[FinalDirection, 1],
+					SpikeScaleAngle[FinalDirection, 2], color, 1);
+	//Fill ins
+	draw_set_color(color);
+	draw_rectangle(CornerPosition[2] + CornerWidth, CornerPosition[0] + 1,
+					CornerPosition[3] - CornerWidth, CornerPosition[1] - 2, 0);
+	draw_rectangle(CornerPosition[2] + 1, CornerPosition[0] + CornerHeight,
+					CornerPosition[3] - 2, CornerPosition[1] - CornerHeight, 0);
+	draw_set_color(c_white);
+}

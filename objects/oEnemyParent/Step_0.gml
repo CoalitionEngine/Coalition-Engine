@@ -2,8 +2,6 @@
 function end_turn()
 {
 	var turn = BattleData.Turn();
-	if array_length(PostAttackFunctions) > DetermineTurn()
-		PostAttackFunctions[DetermineTurn()]();
 	with oBattleController
 	{
 		//Set menu dialog
@@ -59,6 +57,7 @@ function end_turn()
 	dialog_init(dialog_text[turn + 1]);
 	//Code to prevent crash
 	array_push(dialog_text, "");
+	if array_length(PostAttackFunctions) > DetermineTurn() PostAttackFunctions[DetermineTurn()]();
 }
 
 if state == 2 && !__died && enemy_in_battle {

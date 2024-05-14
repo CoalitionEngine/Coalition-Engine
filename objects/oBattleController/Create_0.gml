@@ -163,7 +163,7 @@ Button.Update = function(duration = global.battle_lerp_speed == 1 ? 1 : 30) {
 		Button.Color[i] = merge_color(c_black, Button.Color[i], Button.Alpha[i]);
 	}
 	var i = 0;
-	repeat 4
+	repeat array_length(Button.Sprites)
 	{
 		if battle_state != BATTLE_STATE.MENU
 		{
@@ -310,6 +310,7 @@ function begin_turn() {
 			oEnemyParent.state = 1;
 			last_choice = 0;
 			battle_turn++;
+			BattleData.Turn(oEnemyParent.DetermineTurn());
 			with oEnemyParent
 			{
 				if array_length(PreAttackFunctions) > BattleData.Turn()

@@ -27,8 +27,9 @@ function CollideWithBullet(exceptions = []) {
 					{
 						collision = IsSoulMoving();
 						collision = (type == 1 ? collision : !collision);
+						if collision Soul_Hurt(damage);
 					}
-					if collision Soul_Hurt(damage);
+					else if type == 0 Soul_Hurt(damage);
 				}
 			}
 			return collision;

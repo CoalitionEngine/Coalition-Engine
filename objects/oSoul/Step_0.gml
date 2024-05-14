@@ -91,9 +91,9 @@ if STATE == 2 {
 				r_y = lengthdir_y(_dist, _dir) + board_y,
 				displace_x = lengthdir_x(10.5, _angle - 90) + 2 * dcos(board_angle % 90 - 90),
 				displace_y = lengthdir_y(10.5, _angle - 90) + 2 * dsin(board_angle % 90),
-				TL = new Vector2(board.left, board.up).Rotated(board_angle + 180),
-				TR = new Vector2(board.right, board.up).Rotated(board_angle + 90),
-				BL = new Vector2(board.left, board.down).Rotated(board_angle - 90),
+				TL = new Vector2(-board.left, -board.up).Rotated(board_angle),
+				TR = new Vector2(board.right, -board.up).Rotated(board_angle),
+				BL = new Vector2(-board.left, board.down).Rotated(board_angle),
 				BR = new Vector2(board.right, board.down).Rotated(board_angle),
 				board_vertices =
 				[
@@ -297,7 +297,7 @@ if STATE == 2 {
 		
 		case SOUL_MODE.PURPLE : {
 			//Switch between horizontal and vertical
-			if keyboard_check_pressed(vk_space)
+			if keyboard_check_pressed(vk_space) && Purple.AllowVertical
 			{
 				Purple.Mode = !Purple.Mode;
 				x = Purple.XTarget;
@@ -314,7 +314,7 @@ if STATE == 2 {
 				Purple.CurrentVLine += PRESS_VERTICAL;
 				Purple.CurrentVLine = clamp(Purple.CurrentVLine, 0, Purple.VLineAmount - 1);
 				Purple.YTarget = TopLine + Purple.CurrentVLine * YDifference;
-				y = lerp(y, Purple.YTarget, LerpSpeed);
+				y = lerp(y, Purple.YTarget, Purple.LerpSpeed);
 			}
 			else
 			{
@@ -326,7 +326,7 @@ if STATE == 2 {
 				Purple.CurrentHLine += PRESS_HORIZONTAL;
 				Purple.CurrentHLine = clamp(Purple.CurrentHLine, 0, Purple.HLineAmount - 1);
 				Purple.XTarget = LeftLine + Purple.CurrentHLine * XDifference;
-				x = lerp(x, Purple.XTarget, LerpSpeed);
+				x = lerp(x, Purple.XTarget, Purple.LerpSpeed);
 			}
 			break;
 		}

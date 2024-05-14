@@ -122,6 +122,7 @@ with Purple
 	YTarget = 320;
 	LerpSpeed = 0.3;
 	BoxLerpSpeed = 0.08;
+	AllowVertical = true;
 }
 
 //Polygon board collision

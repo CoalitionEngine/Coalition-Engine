@@ -47,25 +47,26 @@ __dust_being_drawn = false;
 dust_speed = 60;
 
 //Dialog
+dialog = {};
+with dialog
+{
+	x = other.x;
+	y = other.y;
+	width = 190;
+	height = 85;
+	dir = DIR.LEFT;
+	color = c_white;
+}
 dialog_size = [20, 65, 0, 190]; // UDLR
-dialog_dir = DIR.LEFT;
 dialog_text = [""];
-dialog_box_color = c_white;
 dialog_at_mid_turn = false;
 default_font = "";
 default_sound = snd_txtDefault;
-SpikeScaleAngle =
-[
-	-1, 1, 0,
-	-1, 1, 90,
-	1, 1, 0,
-	1, 1, 90
-];
 
 function dialog_init(text = "")
 {
 	__text_writer = scribble(text)
-		.wrap(dialog_size[2] + dialog_size[3] - 15, dialog_size[0] + dialog_size[1] - 15)
+		.wrap(dialog.width - 15, dialog.height - 15);
 	if __text_writer.get_page() != 0 __text_writer.page(0);
 }
 dialog_init(dialog_text[0]);
@@ -88,7 +89,7 @@ function MidTurnDialog(text, events = [])
 		++i;
 	}
 	__text_writer = scribble(text)
-		.wrap(dialog_size[2] + dialog_size[3] - 15, dialog_size[0] + dialog_size[1] - 15)
+		.wrap(dialog.width - 15, dialog.height - 15);
 	if __text_writer.get_page() != 0 __text_writer.page(0);
 }
 //Under Attack

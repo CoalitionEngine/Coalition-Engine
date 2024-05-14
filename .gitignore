@@ -6,3 +6,8 @@ extensions/GMLive/
 datafiles/GMLive
 objects/obj_gmlive*
 To Do List.txt
+github_token.txt
+scripts/__tome*
+scripts/tome*
+datafiles/Tome*
+objects/__tome*

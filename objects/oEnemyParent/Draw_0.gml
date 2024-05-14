@@ -77,55 +77,12 @@ if (state == 1 || (state == 2 && dialog_at_mid_turn)) && !__died && !is_spared
 		oBattleController.begin_turn();
 		exit;
 	}
-	var SpikeSprite = sprSpeechBubbleSpike,
-		SpikeWidth = sprite_get_width(SpikeSprite),
-		SpikeHeight = sprite_get_height(SpikeSprite),
-		CornerSprite = sprSpeechBubbleCorner,
-		CornerWidth = sprite_get_width(CornerSprite),
-		CornerHeight = sprite_get_height(CornerSprite),
-		e_height = enemy_total_height - dialog_y_from_top,
-		CornerPosition;
-		//Top Left, Top Right, Bottom Left, Bottom Right
-		CornerPosition = [
-			y - e_height - dialog_size[0],
-			y - e_height + dialog_size[1],
-			x + 35 + dialog_size[2] + CornerWidth,
-		];
-		CornerPosition[3] = CornerPosition[2] + dialog_size[3];
-	for (var i = 0; i < 4; ++i) {
-		draw_sprite_ext(CornerSprite, 0, CornerPosition[2 + (i % 2)], CornerPosition[i >= 2],
-							(i % 2 ? -1 : 1), (i < 2 ? 1 : -1), 0, dialog_box_color, 1);
-	}
-	draw_set_color(c_black);
-	draw_line(CornerPosition[2] + CornerWidth - 1, CornerPosition[0],
-				CornerPosition[3] - CornerWidth, CornerPosition[0]);
-	draw_line(CornerPosition[2] + CornerWidth - 1, CornerPosition[1] - 1,
-				CornerPosition[3] - CornerWidth - 1, CornerPosition[1] - 1);
-	draw_line(CornerPosition[2], CornerPosition[0] + CornerHeight - 1,
-				CornerPosition[2], CornerPosition[1] - CornerHeight);
-	draw_line(CornerPosition[3] - 1, CornerPosition[0] + CornerHeight - 1,
-				CornerPosition[3] - 1, CornerPosition[1] - CornerHeight - 1);
-	var SpikePosition = [
-			CornerPosition[3], CornerPosition[1] - SpikeHeight - 10,
-			CornerPosition[2] + SpikeWidth + 10, CornerPosition[0],
-			CornerPosition[2], CornerPosition[1] - SpikeHeight - 10,
-			CornerPosition[3] - SpikeWidth - 10, CornerPosition[1],
-		], FinalDirection = dialog_dir / 90;
-	draw_sprite_ext(SpikeSprite, 0, SpikePosition[FinalDirection * 2], SpikePosition[FinalDirection * 2 + 1],
-					SpikeScaleAngle[FinalDirection * 3], SpikeScaleAngle[FinalDirection * 3 + 1],
-					SpikeScaleAngle[FinalDirection * 3 + 2], dialog_box_color, 1);
-	//Fill ins
-	draw_set_color(dialog_box_color);
-	draw_rectangle(CornerPosition[2] + CornerWidth, CornerPosition[0] + 1,
-					CornerPosition[3] - CornerWidth, CornerPosition[1] - 2, 0);
-	draw_rectangle(CornerPosition[2] + 1, CornerPosition[0] + CornerHeight,
-					CornerPosition[3] - 2, CornerPosition[1] - CornerHeight, 0);
-	draw_set_color(c_white);
+	DrawSpeechBubble(dialog.x, dialog.y, dialog.width, dialog.height, dialog.color, dialog.dir / 90);
 
 	//Text
 	__dialog_text_typist.sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*");
 	__text_writer.starting_format(default_font, c_black)
-	__text_writer.draw(CornerPosition[2] + CornerWidth, CornerPosition[0] + CornerHeight, __dialog_text_typist)
+	__text_writer.draw(dialog.x + 11, dialog.y - dialog.height + 11, __dialog_text_typist)
 
 
 	if PRESS_CANCEL && global.TextSkipEnabled
@@ -157,12 +114,13 @@ if !__died && !is_spared {
 	{
 		if is_dodge // The movement for dodge
 		{
-			draw_damage = true;
-			damage_color = c_ltgray;
-			damage = "MISS";
-			//Executes the custom dodging animation
-			if attack_time++ == 0 && !is_miss
+			if !attack_time and !is_miss {
+				draw_damage = true;
+				damage_color = c_ltgray;
+				damage = "MISS";
 				dodge_method();
+			}
+			attack_time++;
 		}
 		else
 		{
