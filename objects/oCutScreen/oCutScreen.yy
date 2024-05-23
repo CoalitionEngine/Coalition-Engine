@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Required",
-    "path": "folders/Coalition Engine/Objects/Effects/Required.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Effects/Required.yy",
   },
   "parentObjectId": null,
   "persistent": false,

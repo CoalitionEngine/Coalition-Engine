@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "20  Color",
-    "path": "folders/Coalition Engine/Addons/Input/20  Color.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/20  Color.yy",
   },
 }

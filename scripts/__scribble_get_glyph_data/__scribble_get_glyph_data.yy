@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Global Static Getters",
-    "path": "folders/Coalition Engine/Addons/Scribble/(System - don't call these functions)/Global Static Getters.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Scribble/(System - don't call these functions)/Global Static Getters.yy",
   },
 }

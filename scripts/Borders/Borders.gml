@@ -6,14 +6,15 @@
 */
 function BorderSetEnable(enable, func = "", dur = 0)
 {
-	gml_pragma("forceinline");
+	forceinline
 	with oGlobal.Border
 	{
 		Enabled = enable;
 		EaseMethod = func;
 		EaseDuration = dur;
 		EaseTimer = 0;
-		EaseTweens = TweenFire(self, func, 0, 0, 0, dur, "", enable ? 640 : 960, enable ? 960 : 640, "", enable ? 480 : 540, enable ? 540 : 480)
+		EaseTweens = TweenFire(self, func, 0, 0, 0, dur, "", enable ? 640 : 960, enable ? 960 : 640,
+														"", enable ? 480 : 540, enable ? 540 : 480)
 	}
 	oGlobal.alarm[1] = 1;
 }
@@ -26,7 +27,7 @@ function BorderSetEnable(enable, func = "", dur = 0)
 */
 function BorderSetSprite(spr, trans_time = 0)
 {
-	gml_pragma("forceinline");
+	forceinline
 	with oGlobal.Border
 	{
 		if Sprite != -1 SpritePrevious = Sprite;

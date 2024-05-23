@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "In Game Datas",
-    "path": "folders/Coalition Engine/Scripts/In Game Datas.yy",
+    "name": "Quick Functions",
+    "path": "folders/Coalition Engine/Scripts/Quick Functions.yy",
   },
 }

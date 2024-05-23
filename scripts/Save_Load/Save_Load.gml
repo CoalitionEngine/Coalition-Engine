@@ -31,6 +31,7 @@ function GetTempData(name)
 ///@param {function} function		The custom function for encoding (Input: string, Output: string)
 function SaveData(fname = "TempData.dat", struct = global.TempData, func = undefined)
 {
+	aggressive_forceinline
 	//Check whether it is a map (Legacy)
 	if !is_struct(struct) && ds_exists(struct, ds_type_map) struct = ds_map_to_struct(struct);
 	if struct_empty(struct)
@@ -61,6 +62,7 @@ function SaveData(fname = "TempData.dat", struct = global.TempData, func = undef
 ///@param {function} function	The custom function for decoding (Input: string, Output: string)
 function LoadData(fname = "TempData.dat", func = undefined)
 {
+	aggressive_forceinline
 	//If file doesn't exist, exit
 	if !file_exists(fname) return {};
 	//Loads the buffer

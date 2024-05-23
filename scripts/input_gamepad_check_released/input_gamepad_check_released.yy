@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "25  Gamepads (Direct)",
-    "path": "folders/Coalition Engine/Addons/Input/25  Gamepads (Direct).yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/25  Gamepads (Direct).yy",
   },
 }

@@ -15,7 +15,7 @@ target_y = clamp(target_y, 0, sprite_get_height(OverworldSprite) - 240);
 target_x = clamp(target_x, curLock[0], curLock[2] - 320);
 target_y = clamp(target_y, curLock[1], curLock[3] - 240);
 //Relax, clamp does basically 0ms to it won't matter, it looks cleaner than min(xxx), max(xxx) inside one clamp
-Camera.SetPos(target_x, target_y, 0);
+Camera.SetPos(target_x, target_y);
 #endregion
 #region Menu lerping
 var menu_at_top = oOWPlayer.y < Camera.ViewY() + Camera.GetAspect("h") / 2 + 10;
@@ -203,7 +203,7 @@ if menu && global.interact_state == INTERACT_STATE.MENU // If menu is open
 		if input_horizontal != 0 // Moving between 2 side during box mode
 		{
 			box_state = (box_state == BOX_STATE.INVENTORY) ? BOX_STATE.BOX : BOX_STATE.INVENTORY;
-			box_choice[box_state] = clamp(box_choice[!box_state], 0, box_state ? 10 : 8);
+			box_choice[box_state] = clamp(box_choice[!box_state], 0, box_state ? 10 : 7);
 		}
 		if input_vertical != 0
 		{

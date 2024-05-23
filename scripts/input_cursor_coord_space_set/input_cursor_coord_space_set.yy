@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "09  Cursor",
-    "path": "folders/Coalition Engine/Addons/Input/09  Cursor.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/09  Cursor.yy",
   },
 }

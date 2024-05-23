@@ -5,7 +5,7 @@
 */
 function posmod(a, b)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var value = a % b;
 	while (value < 0 && b > 0) || (value > 0 && b < 0) value += b;
 	return value;
@@ -14,7 +14,7 @@ function posmod(a, b)
 ///Rotate the coordinates by the angle
 function point_xy(p_x, p_y)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var angle = image_angle;
 	
 	point_x = lengthdir_x(p_x - x, angle) + lengthdir_y(p_y - y, -angle) + x;
@@ -24,7 +24,7 @@ function point_xy(p_x, p_y)
 ///Calculating the legnthdir_xy position of the points
 function point_xy_array(p_x, p_y)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var angle = image_angle;
 	
 	return [lengthdir_x(p_x - x, angle) + lengthdir_y(p_y - y, -angle) + x,
@@ -34,7 +34,7 @@ function point_xy_array(p_x, p_y)
 ///Returns the lengthdir_x/y values in a Vector2 (stupidly useless)
 function lengthdir_xy(length, dir) constructor
 {
-	gml_pragma("forceinline");
+	forceinline
 	return new Vector2(lengthdir_x(length, dir), lengthdir_y(length, dir));
 }
 
@@ -46,7 +46,7 @@ function lengthdir_xy(length, dir) constructor
 */
 function Sigma(arr, n, k)
 {
-	gml_pragma("forceinline");
+	forceinline
 	for(var i = n, value = 0; i <= k; ++i)
 		value += arr[i];
 	return value;
@@ -59,7 +59,7 @@ function Sigma(arr, n, k)
 */
 function is_val()
 {
-	gml_pragma("forceinline");
+	forceinline
 	var arr = [], i = 1;
 	repeat argument_count - 1 array_push(arr, argument[i++]);
 	return array_contains(arr, argument[0]);
@@ -72,7 +72,7 @@ function is_val()
 */
 function array_multiply(arr, num)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var i = 0;
 	repeat array_length(arr) arr[i++] *= num;
 	return arr;
@@ -85,7 +85,7 @@ function array_multiply(arr, num)
 */
 function is_bit(val, bit)
 {
-	gml_pragma("forceinline");
+	forceinline
 	return (val & bit) != 0;
 }
 
@@ -96,7 +96,7 @@ function is_bit(val, bit)
 */
 function quick_pow(x, n)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var ret = 1, pow = x;
 	while n
 	{
@@ -112,6 +112,7 @@ function quick_pow(x, n)
 ///@param {struct}	b	The index of the struct struct
 function struct_equals(struct_a, struct_b)
 {
+	aggressive_forceinline
 	var struct_a_names = struct_get_names(struct_a),
 		struct_b_names = struct_get_names(struct_a),
 		a_count = struct_names_count(struct_a),
@@ -131,7 +132,11 @@ function struct_equals(struct_a, struct_b)
 		{
 			if !struct_equals(val_a, val_b) return false;
 		}
-		else if val_a != val_b return false;
+		else if val_a != val_b
+		{
+			//Check for obscure variable types
+			if !(is_nan(val_a) && is_nan(val_b)) return false;
+		}
 		++i;
 	}
 	return true;

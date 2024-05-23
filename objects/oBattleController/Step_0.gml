@@ -47,7 +47,7 @@ switch battle_state {
 						audio_stop_sound(snd_menu_confirm);
 					}
 				}
-			break
+				break;
 			case MENU_STATE.FIGHT:
 			case MENU_STATE.ACT:
 			case MENU_STATE.MERCY:
@@ -89,7 +89,7 @@ switch battle_state {
 				//Soul lerping
 				oSoul.x = lerp(oSoul.x, 72, lerp_speed);
 				oSoul.y = lerp(oSoul.y, 288 + floor(coord) * 32, lerp_speed);
-			break
+				break;
 			case MENU_STATE.ITEM:
 			case MENU_STATE.ACT_SELECT:
 				var choice = menu_choice[6 / menu_state], len = 0;
@@ -134,8 +134,7 @@ switch battle_state {
 									menu_choice[2] = choice;
 									audio_play(snd_menu_switch);
 							}
-						break
-
+						break;
 						case ITEM_SCROLL.VERTICAL:
 							if input_vertical != 0
 							{
@@ -145,7 +144,7 @@ switch battle_state {
 								item_desc_x = 360;
 								item_desc_alpha = 0;
 							}
-						break
+							break;
 					}
 				}
 				//Soul lerping
@@ -217,11 +216,11 @@ switch battle_state {
 						menu_state = MENU_STATE.ACT;
 					} // Reset back to Act
 				}
-			break
+				break;
 			case MENU_STATE.MERCY_END:
 				//Activate turn if needed
 				begin_spare(activate_turn[3]);
-			break
+				break;
 			case MENU_STATE.FLEE:
 				if FleeState == 0 {
 					with oSoul {
@@ -234,7 +233,7 @@ switch battle_state {
 					}
 					FleeState++;
 				}
-			break
+				break;
 		}
 		//Soul angle lerping
 		var target_soul_angle = 0;
@@ -243,14 +242,14 @@ switch battle_state {
 			menu_state == MENU_STATE.ACT_SELECT)
 			target_soul_angle = 90;
 		oSoul.image_angle = lerp(oSoul.image_angle, target_soul_angle, lerp_speed == 1 ? 1 : lerp_speed / 3);
-	break
+		break;
 	//Reset menu text typer
 	case BATTLE_STATE.DIALOG:
 		menu_text_typist.reset();
 		if !menu_text_typist.get_paused() menu_text_typist.pause();
 	case BATTLE_STATE.IN_TURN:
 		oSoul.visible = true;
-	break
+		break;
 }
 with Target
 {

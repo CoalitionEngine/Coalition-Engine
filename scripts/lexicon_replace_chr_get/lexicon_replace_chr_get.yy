@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "General",
-    "path": "folders/Coalition Engine/Addons/Lexicon/General.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/General.yy",
   },
 }

@@ -4,6 +4,6 @@
   "name": "what you are doing!",
   "parent": {
     "name": "Addons",
-    "path": "folders/Coalition Engine/Addons.yy",
+    "path": "folders/Coalition Engine/(System)/Addons.yy",
   },
 }

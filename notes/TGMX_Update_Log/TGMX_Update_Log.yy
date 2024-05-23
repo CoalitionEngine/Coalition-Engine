@@ -4,6 +4,6 @@
   "name": "TGMX_Update_Log",
   "parent": {
     "name": "Docs",
-    "path": "folders/Coalition Engine/Addons/TweenGMX/Docs.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/TweenGMX/Docs.yy",
   },
 }

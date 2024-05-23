@@ -2,7 +2,7 @@
 event_inherited();
 #region Turn 0
 TurnCreate(0,0,1,function(){
-	SoulSetMode(SOUL_MODE.GREEN)
+	Soul_SetMode(SOUL_MODE.GREEN)
 	oSoul.ShieldAmount = 2;
 	CreateArrows(60, 60, 7, 
 	["/", "R", "$1", "ads"], ["ads"], [method(id, function(){global.hp = 1})])

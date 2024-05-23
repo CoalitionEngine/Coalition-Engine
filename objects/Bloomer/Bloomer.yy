@@ -10,7 +10,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Bloom",
-    "path": "folders/Coalition Engine/Addons/Bloom.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Bloom.yy",
   },
   "parentObjectId": null,
   "persistent": false,

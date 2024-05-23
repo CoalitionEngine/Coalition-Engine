@@ -1,6 +1,6 @@
 function len_load()
 {
-	gml_pragma("forceinline");
+	forceinline
 	Len = {};
 	with Len
 	{
@@ -21,7 +21,7 @@ function len_load()
 
 function len_step()
 {
-	gml_pragma("forceinline");
+	forceinline
 	with Len
 	{
 		if activate
@@ -46,7 +46,7 @@ function len_step()
 
 function axis_load()
 {
-	gml_pragma("forceinline");
+	forceinline
 	Axis = {};
 	with Axis
 	{
@@ -62,7 +62,7 @@ function axis_load()
 
 function axis_step()
 {
-	gml_pragma("forceinline");
+	forceinline
 	with Axis
 	{
 		if activate

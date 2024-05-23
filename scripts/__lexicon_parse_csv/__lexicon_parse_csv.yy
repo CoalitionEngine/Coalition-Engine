@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Parsers",
-    "path": "folders/Coalition Engine/Addons/Lexicon/Internal/Parsers.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Internal/Parsers.yy",
   },
 }

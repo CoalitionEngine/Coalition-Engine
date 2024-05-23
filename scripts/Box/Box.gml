@@ -5,7 +5,7 @@ function __Box() constructor
 		@param {real} Box_ID The ID of the box
 	*/
 	static ItemCount = function(Box_ID) {
-		gml_pragma("forceinline");
+		forceinline
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		return array_length(global.Box[Box_ID]);
 	}
@@ -14,7 +14,7 @@ function __Box() constructor
 		@param {real} Box_ID The Box ID to check (0 - Overworld, 1 - D.Box A, 2 - D.Box B)
 	*/
 	static GetFirstEmptySlot = function(Box_ID) {
-		gml_pragma("forceinline");
+		forceinline
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		for (var i = 0, num = 0; i < 10; ++i)
 			if global.Box[Box_ID, i] num = i + 1;
@@ -22,7 +22,7 @@ function __Box() constructor
 	}
 	///@desc Loads the Info of the Items of the Box
 	static InfoLoad = function() {
-		gml_pragma("forceinline");
+		forceinline
 		with oOWController
 		{
 			__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
@@ -37,19 +37,12 @@ function __Box() constructor
 		@param {real} Item The Item to get the info
 	*/
 	static Info = function(item) {
-		gml_pragma("forceinline");
+		forceinline
 		with oOWController
 		{
-			name = "";
-			switch item {
-				case ITEM.PIE: name = "Pie"; break;
-				case ITEM.INOODLES: name = "I. Noodles"; break;
-				case ITEM.STEAK: name = "Steak"; break;
-				case ITEM.SNOWP: name = "SnowPiece"; break;
-				case ITEM.LHERO: name = "L. Hero"; break;
-				case ITEM.SEATEA: name = "Sea Tea"; break;
-			}
-			if global.item_uses_left[item] > 1 name += " x" + string(global.item_uses_left[item])
+			name = global.ItemLibrary[| item].name;
+			var uses_left = global.ItemLibrary[| item].item_uses_left;
+			if uses_left > 1 name += " x" + string(uses_left);
 		}
 	}
 	/**
@@ -57,16 +50,15 @@ function __Box() constructor
 		@param ID The ID of the Box
 	*/
 	static Count = function(ID) {
-		gml_pragma("forceinline");
+		forceinline
 		for (var i = 0, num = 0; i < 10; ++i)
 			if global.Box[ID, i] num++;
 		return num;
 	}
-	/**
-		idk
-	*/
+	///Shifts all empty slots to the bottom
+	///@param {real} box_id	The box to shift empty slots of
 	static Shift = function(Box_ID) {
-		gml_pragma("forceinline");
+		forceinline
 		__CoalitionEngineError(array_length(global.Box) <= Box_ID, "Box does not exist");
 		var i = 0;
 		repeat BoxData.ItemCount(Box_ID) - 1

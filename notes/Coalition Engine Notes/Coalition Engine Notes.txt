@@ -1,0 +1,9 @@
+/// @title Important
+/// @category Misc
+
+## Need to know
+You should not edit anything in (System) unless you have some degree of GMl knowledge.
+Folders marked with '()' i.e. (Camera) can be removed if you do not need them as the only
+acts as easy access to static functions for more advanced users.
+Everything else is what you should edit, but beware that engine updates may overwrite your code,
+so you should create backups of your project before updating the engine version.

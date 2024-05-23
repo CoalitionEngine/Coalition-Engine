@@ -4,7 +4,7 @@ function __CoalitionSetTextSkippable(_element, _parameter_array, _character_inde
 	global.TextSkipEnabled = _parameter_array[0];
 }
 ///Sets current ememy sprite index (engine internal, fix soon)
-function __CoalitionSetENemySprite(_element, _parameter_array, _character_index)
+function __CoalitionSetEnemySprite(_element, _parameter_array, _character_index)
 {
 	if instance_exists(oBattleController)
 	{
@@ -84,16 +84,13 @@ function __CoalitionFormatOptionText(_element, _parameter_array, _character_inde
 	with oOWController
 	{
 		option_text_height = string(diff / height);
-		var text_before = string_copy(dialog_text, 1, _character_index),
-			index_after = _character_index + 16,
-			text_after = string_copy(dialog_text, index_after, string_length(dialog_text) - index_after + 1);
 		dialog_text = string_replace(dialog_text, "[format_option]", "\n[scale," + option_text_height + "][zwsp]\n[fdelay,30][scale,1]	");
 		__text_writer.overwrite(dialog_text);
 	}
 }
 //Adds scribble typists events
 scribble_typists_add_event("skippable", __CoalitionSetTextSkippable);
-scribble_typists_add_event("SpriteSet", __CoalitionSetENemySprite);
+scribble_typists_add_event("SpriteSet", __CoalitionSetEnemySprite);
 scribble_typists_add_event("flash", __CoalitionFlashScreen);
 scribble_typists_add_event("to_save", __CoalitionToSaveState);
 scribble_typists_add_event("end", __CoalitionEndDialog);

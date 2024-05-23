@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "23  Other",
-    "path": "folders/Coalition Engine/Addons/Input/23  Other.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/23  Other.yy",
   },
 }

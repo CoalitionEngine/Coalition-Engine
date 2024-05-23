@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "(System)",
-    "path": "folders/Coalition Engine/Addons/Input/(System).yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System).yy",
   },
   "parentObjectId": null,
   "persistent": true,

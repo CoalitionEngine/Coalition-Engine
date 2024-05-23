@@ -12,7 +12,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Boards",
-    "path": "folders/Coalition Engine/Objects/Battle/Boards.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Battle/Boards.yy",
   },
   "parentObjectId": null,
   "persistent": false,

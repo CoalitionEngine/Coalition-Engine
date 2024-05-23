@@ -4,6 +4,6 @@
   "name": "TGM_Credits",
   "parent": {
     "name": "Others",
-    "path": "folders/Coalition Engine/Addons/TurboGML/Others.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/TurboGML/Others.yy",
   },
 }

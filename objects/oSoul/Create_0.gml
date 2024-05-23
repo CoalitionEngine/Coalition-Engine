@@ -106,7 +106,8 @@ Shield.Add(c_red, c_yellow, [
 	ord("A"),
 	ord("S")
 ]);
-//Shield.Remove(1);
+Shield.Remove(1);
+Shield.Remove(0);
 
 //Purple soul variables
 Purple = {};

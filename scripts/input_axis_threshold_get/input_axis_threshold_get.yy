@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "12  Accessibility",
-    "path": "folders/Coalition Engine/Addons/Input/12  Accessibility.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/12  Accessibility.yy",
   },
 }

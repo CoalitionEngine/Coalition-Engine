@@ -50,7 +50,7 @@
   "origin": 4,
   "parent": {
     "name": "Platform",
-    "path": "folders/Coalition Engine/Sprites/Battle/Platform.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Battle/Platform.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

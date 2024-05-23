@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Initialization",
-    "path": "folders/Coalition Engine/Addons/Input/(System)/Initialization.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System)/Initialization.yy",
   },
 }

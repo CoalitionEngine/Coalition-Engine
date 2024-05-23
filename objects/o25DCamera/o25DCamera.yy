@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Extras",
-    "path": "folders/Coalition Engine/Objects/Extras.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Extras.yy",
   },
   "parentObjectId": null,
   "persistent": false,

@@ -323,7 +323,7 @@ function begin_turn() {
 			oEnemyParent.state = 2;
 		}
 		oSoul.image_angle = 0;
-		SetSoulPos(320, 320, 0);
+		Soul_SetPos(320, 320, 0);
 	}
 	else //Reset to menu
 	{
@@ -391,6 +391,6 @@ function dialog_start() {
 		state = 1;
 	}
 	battle_state = BATTLE_STATE.DIALOG;
-	SetSoulPos(320, 320, 0);
+	Soul_SetPos(320, 320, 0);
 }
 #endregion

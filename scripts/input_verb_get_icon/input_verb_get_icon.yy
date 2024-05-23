@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "08  Icons",
-    "path": "folders/Coalition Engine/Addons/Input/08  Icons.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/08  Icons.yy",
   },
 }

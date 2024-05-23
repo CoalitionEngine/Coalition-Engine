@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Gamepads and Steam",
-    "path": "folders/Coalition Engine/Addons/Input/(System)/Gamepads and Steam.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System)/Gamepads and Steam.yy",
   },
 }

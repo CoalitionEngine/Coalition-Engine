@@ -1,4 +1,3 @@
-Battle_Masking_Start(true);
 var color = image_blend;
 switch type
 {
@@ -10,4 +9,3 @@ switch type
 if state == 4
 	draw_sprite_ext(beam_sprite, 0, x, y, image_xscale, beam_scale, image_angle, color, beam_alpha);
 draw_sprite_ext(gb_sprite, gb_index, gbx, gby, gb_xscale, gb_yscale, image_angle, color, gb_alpha);
-Battle_Masking_End();

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "14  Virtual Buttons",
-    "path": "folders/Coalition Engine/Addons/Input/14  Virtual Buttons.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/14  Virtual Buttons.yy",
   },
 }

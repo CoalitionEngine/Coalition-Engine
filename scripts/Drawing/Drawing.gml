@@ -10,7 +10,7 @@
 	@param {real} rounding			The rounding of the rectangle corners
 */
 function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, alpha = 1, rounding = 0) {
-	gml_pragma("forceinline");
+	forceinline
 	return CleanRectangle(x1, y1, x2, y2).Blend(c_black, 1).Border(width, color, alpha).Rounding(rounding).Draw();
 }
 /**
@@ -26,7 +26,7 @@ function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, alpha 
 	@param {real} background_alpha				The alpha of the background (Default 1)
 */
 function draw_rectangle_width_background(x1, y1, x2, y2, width = 6, frame_color = c_white, fill_color = c_black, frame_alpha = 1, fill_alpha = 1, rounding = 0) {
-	gml_pragma("forceinline");
+	forceinline
 	return CleanRectangle(x1, y1, x2 + width, y2 + width).Blend(fill_color, fill_alpha).Border(width, frame_color, frame_alpha).Rounding(rounding).Draw();
 }
 /**
@@ -80,7 +80,7 @@ function draw_circular_bar(x, y, value, max, colour, radius, transparency, width
 	@param {real} rate		The rate of the movement (Multiplies to the function declared in 'move')
 */
 function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, color = c_white, move = dsin, intensity = 20, rate = 1) {
-	gml_pragma("forceinline");
+	forceinline
 	static displace = 0, time = 0;
 	displace = move(time++ * rate) * intensity;
 	height += displace;
@@ -88,6 +88,7 @@ function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, 
 }
 ///Sets the noise sprite to use for a noise fade
 function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
+	forceinline
 	NoiseSprite = sprite;
 	NoiseTexture = sprite_get_texture(sprite, 0);
 	Noiseuvs = texture_get_uvs(NoiseTexture);
@@ -103,6 +104,7 @@ function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
 	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
 */
 function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_sprite = sprNoiseRect) {
+	aggressive_forceinline
 	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
 			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
 			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
@@ -138,6 +140,7 @@ function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_spri
 	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
 */
 function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, time, duration, noise_sprite = sprNoiseRect) {
+	aggressive_forceinline
 	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
 			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
 			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
@@ -166,7 +169,7 @@ function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, c
 	@param {real} y2	The bottom right y position of the rectangle
 */
 function draw_invert_rect(x1, y1, x2, y2) {
-	gml_pragma("forceinline");
+	forceinline
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, c_white, 1);
 	gpu_set_blendmode(bm_normal);
@@ -181,7 +184,7 @@ function draw_invert_rect(x1, y1, x2, y2) {
 	@param {real} y3	The y coordinate of the triangle's third corner
 */
 function draw_invert_triangle(x1, y1, x2, y2, x3, y3) {
-	gml_pragma("forceinline");
+	forceinline
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_triangle(x1, y1, x2, y2, x3, y3, false);
 	gpu_set_blendmode(bm_normal);
@@ -193,7 +196,7 @@ function draw_invert_triangle(x1, y1, x2, y2, x3, y3) {
 	@param {real} radius The radius of the circle
 */
 function draw_invert_cricle(x, y, radius) {
-	gml_pragma("forceinline");
+	forceinline
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_circle(x, y, radius, false);
 	gpu_set_blendmode(bm_normal);
@@ -203,6 +206,7 @@ function draw_invert_cricle(x, y, radius) {
 	@param {Array<Array<Real>>} Vertexes	The vertexes of the polygon in the form of [[x1, y1], [x2, y2]...]
 */
 function draw_invert_polygon(vertexes) {
+	aggressive_forceinline
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	var i = 1;
 	repeat array_length(vertexes) - 2
@@ -223,6 +227,7 @@ function draw_invert_polygon(vertexes) {
 	@param {real} offset		The displacement of the splice
 */
 function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset) {
+	forceinline
 	var true_line_start = [line_start_x / 640, line_start_y / 480],
 		true_line_end = [line_end_x / 640, line_end_y / 480],
 		dir = point_direction(line_start_x, line_start_y, line_end_x, line_end_y);
@@ -244,6 +249,7 @@ function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset
 	@param {real} y2				The y coordinate of the bottom right corner of the rectangle
 */
 function draw_sprite_tiled_area(sprite, subimg, xx, yy, x1, y1, x2, y2) {
+	aggressive_forceinline
 	var left, top, width, height, X, Y,
 		sw = sprite_get_width(sprite),
 		sh = sprite_get_height(sprite),
@@ -280,6 +286,7 @@ function draw_sprite_tiled_area(sprite, subimg, xx, yy, x1, y1, x2, y2) {
 	@param {real} alpha				The alpha of the sprite
 */
 function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xscale, yscale, color, alpha) {
+	aggressive_forceinline
 	var left, top, width, height, X, Y,
 		sw = sprite_get_width(sprite) * xscale,
 		sh = sprite_get_height(sprite) * yscale,
@@ -302,7 +309,7 @@ function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xsca
 
 ///Resets the GPU state to default
 function reset_gpu_state() {
-	gml_pragma("forceinline");
+	forceinline
 	gpu_set_state(global.DefaultGPUState);
 }
 
@@ -313,7 +320,7 @@ function reset_gpu_state() {
 */
 function draw_set_align(halign = fa_left, valign = fa_top)
 {
-	gml_pragma("forceinline");
+	forceinline
 	draw_set_halign(halign);
 	draw_set_valign(valign);
 }

@@ -1,56 +1,59 @@
-///Loads the datas of an encounter that you have stored in this script
-///@param {real} encounter_number Loads the data of the argument
-function Enemy_Function_Load(encounter_number = global.battle_encounter) {
-	gml_pragma("forceinline");
-	enemy = array_create(3, noone);
-	enemy_name = [];
-	enemy_hp = [];
-	enemy_hp_max = [];
-	enemy_draw_hp_bar = [];
-	enemy_name_extra = array_create(3, "");
-	
-	var enemy_presets = global.enemy_presets;
-	
-	enemy_instance = [];
-	for (var i = 0, enemies = []; i < 3; ++i)
-	{
-		enemies[i] = enemy_presets[encounter_number][i];
-		if enemies[i] != noone
-		{
-			array_push(enemy_instance, instance_create_depth(160 * (i + 1), 250, 1, enemies[i]));
-			enemy[i] = array_last(enemy_instance);
-			enemy_name[i] =			enemies[i].enemy_name;
-			enemy_hp[i] =			enemies[i].enemy_hp;
-			enemy_hp_max[i] =		enemies[i].enemy_hp_max;
-			enemy_draw_hp_bar[i] =	enemies[i].enemy_draw_hp_bar;
-			enemy[i].__enemy_slot = i;
-			var ii = 0;
-			repeat array_length(enemies[i].enemy_act) - 1
-			{
-				enemy_act[i, ii] =			enemies[i].enemy_act[ii];
-				enemy_act_text[i, ii] =		enemies[i].enemy_act_text[ii];
-				enemy_act_function[i, ii] = enemies[i].enemy_act_function[ii];
-				++ii;
-			}
-			global.BossFight = enemies[i].is_boss;
-			if enemies[i].begin_at_turn {
-				menu_state = -1;
-				battle_turn++;
-				begin_at_turn = true;
-				dialog_start();
-				oSoul.visible = true;
-			}
-		}
-		else
-		{
-			enemy_act[i] = [""];
-		}
-	}
-}
-
 ///Enemy data
 function Enemy() constructor
 {
+	///Loads the datas of an encounter that you have stored in this script
+	///@param {real} encounter_number Loads the data of the argument
+	static LoadEncounter = function(encounter_number = global.battle_encounter) {
+		forceinline
+		with oBattleController
+		{
+			enemy = array_create(3, noone);
+			enemy_name = [];
+			enemy_hp = [];
+			enemy_hp_max = [];
+			enemy_draw_hp_bar = [];
+			enemy_name_extra = array_create(3, "");
+	
+			var enemy_presets = global.enemy_presets;
+	
+			enemy_instance = [];
+			for (var i = 0, enemies = []; i < 3; ++i)
+			{
+				enemies[i] = enemy_presets[encounter_number][i];
+				if enemies[i] != noone
+				{
+					array_push(enemy_instance, instance_create_depth(160 * (i + 1), 250, 1, enemies[i]));
+					enemy[i] = array_last(enemy_instance);
+					enemy_name[i] =			enemies[i].enemy_name;
+					enemy_hp[i] =			enemies[i].enemy_hp;
+					enemy_hp_max[i] =		enemies[i].enemy_hp_max;
+					enemy_draw_hp_bar[i] =	enemies[i].enemy_draw_hp_bar;
+					enemy[i].__enemy_slot = i;
+					var ii = 0;
+					repeat array_length(enemies[i].enemy_act) - 1
+					{
+						enemy_act[i, ii] =			enemies[i].enemy_act[ii];
+						enemy_act_text[i, ii] =		enemies[i].enemy_act_text[ii];
+						enemy_act_function[i, ii] = enemies[i].enemy_act_function[ii];
+						++ii;
+					}
+					global.BossFight = enemies[i].is_boss;
+					if enemies[i].begin_at_turn {
+						menu_state = -1;
+						battle_turn++;
+						begin_at_turn = true;
+						dialog_start();
+						oSoul.visible = true;
+					}
+				}
+				else
+				{
+					enemy_act[i] = [""];
+				}
+			}
+		}
+	}
+	
 	/**
 		Sets the enemies in the said encounter
 		@param {real}	Encounter		The encounter to set from (Default max)
@@ -59,7 +62,7 @@ function Enemy() constructor
 		@param {Asset.GMObject} Right	The enemy on the right (Default none)
 	*/
 	static SetEncoutner = function(encounter = array_length(global.enemy_presets), left = noone, middle = noone, right = noone) {
-		gml_pragma("forceinline");
+		forceinline
 		global.enemy_presets[encounter] = [left, middle, right];
 	}
 	/**
@@ -69,7 +72,7 @@ function Enemy() constructor
 	*/
 	static SetName = function(enemy, text)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		enemy.enemy_name = text;
 	}
 	/**
@@ -83,12 +86,12 @@ function Enemy() constructor
 	*/
 	static SetAct = function(enemy, act, name, text, func = -1, trigger = oBattleController.activate_turn[1])
 	{
-		gml_pragma("forceinline");
+		forceinline
 		with enemy
 		{
 			enemy_act[act] = name;
 			enemy_act_text[act] = text;
-			if func != -1 enemy_act_function[act] = func;
+			enemy_act_function[act] = func;
 			oBattleController.action_trigger_turn[act] = trigger;
 		}
 	}
@@ -101,7 +104,7 @@ function Enemy() constructor
 	*/
 	static SetHPStats = function(enemy, max_hp, current_hp = max_hp, draw_hp_bar = true)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		with enemy
 		{
 			enemy_hp_max = max_hp;
@@ -117,7 +120,7 @@ function Enemy() constructor
 	*/
 	static SetDefense = function(enemy, value)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		enemy.enemy_defense = value;
 	}
 	/**
@@ -127,7 +130,7 @@ function Enemy() constructor
 	*/
 	static SetDamage = function(enemy, damage)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		enemy.damage = damage;
 	}
 	/**
@@ -137,7 +140,7 @@ function Enemy() constructor
 	*/
 	static SetSpareable = function(enemy, spareable)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		enemy.enemy_is_spareable = spareable;
 	}
 	/**
@@ -148,7 +151,7 @@ function Enemy() constructor
 	*/
 	static SetReward = function(enemy, Exp, Gold)
 	{
-		gml_pragma("forceinline");
+		forceinline
 		with enemy
 		{
 			Exp_Give = Exp;

@@ -1,6 +1,7 @@
 ///Converts the Item name into stats of the Item
 function ConvertItemNameToStat()
 {
+	aggressive_forceinline
 	global.MultiBarAttackSprite = -1;
 	global.MultiBarCritSound = snd_multiattack_crit;
 	switch global.data.AttackItem
@@ -76,14 +77,14 @@ function __Player() constructor
 	///Gets the base ATK and DEF of the player and then automatically sets it
 	static GetBaseStats = function()
 	{
-		gml_pragma("forceinline");
+		forceinline
 		global.player_base_atk = Player.LV() * 2 - 2;
 		global.player_base_def = floor(Player.LV() / 5);
 	}
 	///Gets the exp needed for the current lv
 	static GetLvBaseExp = function()
 	{
-		gml_pragma("forceinline");
+		forceinline
 		static base_exp = [
 			0, 10, 30, 70, 120, 200, 300, 500, 800, 1200, 1700,
 			2500, 3500, 5000, 7000, 10000, 15000, 25000, 50000, 99999
@@ -93,7 +94,7 @@ function __Player() constructor
 	///Gets the exp needed for the lext lv
 	static GetExpNext = function()
 	{
-		gml_pragma("forceinline");
+		forceinline
 		static _exp = [
 			10, 20, 40, 50, 80, 100, 200, 300, 400, 500,
 			800, 1000, 1500, 2000, 3000, 5000, 10000, 25000, 49999
@@ -104,7 +105,6 @@ function __Player() constructor
 	///@param {string} name The name to set (If needed)
 	static Name = function(name = NaN)
 	{
-		gml_pragma("forceinline");
 		//I have strong trust that nobody is going to name the player '~'
 		if !is_nan(name) global.data.name = name;
 		else return global.data.name;
@@ -113,7 +113,6 @@ function __Player() constructor
 	///@param {real} lv The lv to set (If needed)
 	static LV = function(lv = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(lv) global.data.lv = lv;
 		else return global.data.lv;
 	}
@@ -121,7 +120,6 @@ function __Player() constructor
 	///@param {real} amount The amount of gold to set (If needed)
 	static Gold = function(amount = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(amount) global.data.Gold = amount;
 		else return global.data.Gold;
 	}
@@ -129,7 +127,6 @@ function __Player() constructor
 	///@param {real} amount The amount of exp to set (If needed)
 	static Exp = function(amount = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(amount) global.data.Exp = amount;
 		else return global.data.Exp;
 	}
@@ -137,7 +134,6 @@ function __Player() constructor
 	///@param {real} spd The speed to set (If needed)
 	static Spd = function(spd = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(spd) global.spd = spd;
 		else return global.spd;
 	}
@@ -145,16 +141,13 @@ function __Player() constructor
 	///@param {real} hp The HP to set (If needed)
 	static HP = function(hp = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(hp) global.hp = hp;
 		else return global.hp;
 	}
-
 	///Sets/Gets the max hp of the player
 	///@param {real} maxhp The max HP to set (If needed)
 	static HPMax = function(maxhp = NaN)
 	{
-		gml_pragma("forceinline");
 		if !is_nan(maxhp) global.hp_max = maxhp;
 		else return global.hp_max;
 	}

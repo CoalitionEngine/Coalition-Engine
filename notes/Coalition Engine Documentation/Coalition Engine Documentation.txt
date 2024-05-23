@@ -9,14 +9,11 @@ or
 Post a public issue on Github: https://github.com/RTFTR/Coalition-Engine/issues
 
 For details on how to use this engine, please read this:
-https://github.com/RTFTR/Coalition-Engine/wiki
+(Documentation WIP)
 
 Official Github repositories:
-Stable Build: When the feature is completly done and stable, It will be moved to the Stable branch.
+(Deprecated) Stable Build: When the feature is completly done and stable, It will be moved to the Stable branch.
 https://github.com/RTFTR/Coalition-Engine
-Canary Builds: This will be getting the cutting edge updates,
+Bleeding Edge Builds: This will be getting the cutting edge updates,
 			   which means most likely it will contain unexpected errors or crashes.
 https://github.com/RTFTR/Coalition-Engine/tree/Bleeding-Edge
-(Deprecated) LTS Builds: Specified for GameMaker LTS users! This branch will barely get updates.
-			Its purposes are to maintain stability.
-https://github.com/RTFTR/Coalition-Engine/tree/Long-Term-Support

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "00  Configuration - Please edit these scripts!",
-    "path": "folders/Coalition Engine/Addons/Input/00  Configuration - Please edit these scripts!.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/00  Configuration - Please edit these scripts!.yy",
   },
 }

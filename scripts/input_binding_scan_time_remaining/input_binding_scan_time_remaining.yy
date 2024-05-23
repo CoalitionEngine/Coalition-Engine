@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "07  Binding Scanner",
-    "path": "folders/Coalition Engine/Addons/Input/07  Binding Scanner.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/07  Binding Scanner.yy",
   },
 }

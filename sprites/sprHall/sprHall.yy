@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "Overworld",
-    "path": "folders/Coalition Engine/Sprites/Overworld.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Overworld.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

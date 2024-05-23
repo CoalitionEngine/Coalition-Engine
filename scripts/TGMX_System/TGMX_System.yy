@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Admin",
-    "path": "folders/Coalition Engine/Addons/TweenGMX/Admin.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/TweenGMX/Admin.yy",
   },
 }

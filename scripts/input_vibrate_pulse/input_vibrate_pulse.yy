@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "19  Vibration",
-    "path": "folders/Coalition Engine/Addons/Input/19  Vibration.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/19  Vibration.yy",
   },
 }

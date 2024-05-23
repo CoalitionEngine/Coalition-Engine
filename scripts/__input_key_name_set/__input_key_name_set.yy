@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Keyboard and Mouse",
-    "path": "folders/Coalition Engine/Addons/Input/(System)/Keyboard and Mouse.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System)/Keyboard and Mouse.yy",
   },
 }

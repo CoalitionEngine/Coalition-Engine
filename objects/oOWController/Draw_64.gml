@@ -207,7 +207,7 @@ if dialog_exists
 	//Dialog Text drawing
 	var dis = 0;
 	//Draws sprite for dialog if the given sprite exists
-	if dialog_sprite != -1
+	if dialog_sprite != noone
 	{
 		dis = 95;
 		var spr_w = sprite_get_width(dialog_sprite),

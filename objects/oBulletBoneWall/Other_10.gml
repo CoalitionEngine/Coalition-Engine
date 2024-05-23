@@ -52,7 +52,7 @@ if _dir == DIR.UP || _dir == DIR.DOWN
 		var collision = true;
 		if type != 0 and type != 3
 		{
-			collision = IsSoulMoving();
+			collision = Soul_IsMoving();
 			collision = (type == 1 ? collision : !collision);
 		}
 		if collision Soul_Hurt(damage);
@@ -82,7 +82,7 @@ else if _dir == DIR.LEFT || _dir == DIR.RIGHT
 		var collision = true;
 		if type != 0 and type != 3
 		{
-			collision = IsSoulMoving();
+			collision = Soul_IsMoving();
 			collision = (type == 1 ? collision : !collision);
 		}
 		if collision Soul_Hurt(damage);

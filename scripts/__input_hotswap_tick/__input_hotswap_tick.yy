@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Ticks",
-    "path": "folders/Coalition Engine/Addons/Input/(System)/Ticks.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System)/Ticks.yy",
   },
 }

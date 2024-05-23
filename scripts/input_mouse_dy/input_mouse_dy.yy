@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "24  Mouse (Direct)",
-    "path": "folders/Coalition Engine/Addons/Input/24  Mouse (Direct).yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/24  Mouse (Direct).yy",
   },
 }

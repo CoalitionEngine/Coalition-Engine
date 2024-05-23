@@ -27,7 +27,7 @@
   "origin": 4,
   "parent": {
     "name": "Objects",
-    "path": "folders/Coalition Engine/Sprites/Overworld/Objects.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Overworld/Objects.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

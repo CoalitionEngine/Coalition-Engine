@@ -49,7 +49,7 @@
   "origin": 4,
   "parent": {
     "name": "Global",
-    "path": "folders/Coalition Engine/Sprites/Global.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Global.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

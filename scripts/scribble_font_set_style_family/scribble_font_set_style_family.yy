@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Fonts",
-    "path": "folders/Coalition Engine/Addons/Scribble/Fonts.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Scribble/Fonts.yy",
   },
 }

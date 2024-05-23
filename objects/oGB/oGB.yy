@@ -12,7 +12,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Bullet",
-    "path": "folders/Coalition Engine/Objects/Battle/Bullet.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Battle/Bullet.yy",
   },
   "parentObjectId": {
     "name": "oBulletParents",

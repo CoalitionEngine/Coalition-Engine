@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Optional",
-    "path": "folders/Coalition Engine/Objects/Effects/Optional.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Effects/Optional.yy",
   },
   "parentObjectId": null,
   "persistent": false,

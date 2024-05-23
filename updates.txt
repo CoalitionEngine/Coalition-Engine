@@ -1,5 +1,23 @@
 Update Logs (This is the beta builds)
 
+v0.6.2 (Eden)
+Fixed:
+Menu text does not reset when attack timed out
+Battle aiming sprite is TML engine sprite instead of base Undertale sprite (me playing too much tml engine games to notice this issue fr)
+Typo in internal function
+Removed unused codes in internal functions
+struct_equals() not accounting for NaN
+
+Updated:
+Updated engine organisation for better user experience
+Updated cell related functions for better readability and is more optimised
+Updated some item library setting functions
+Optimised some functions by returning self in with statements
+Added forceinline and aggressive_forceinline for better YYC compilation optimisation
+
+Notes:
+Last push before testing documentation generator
+
 v0.6.1 (Eden)
 Fixed:
 Incorrect overworld player argument for camera

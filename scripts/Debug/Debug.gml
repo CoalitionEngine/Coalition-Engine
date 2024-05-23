@@ -1,18 +1,48 @@
 ///Shows the hitbox of the object (by it's sprite collision box)
-///@param {color} Color	The color of the collision box
+///@param {Constant.Color} Color	The color of the collision box
 function show_hitbox(col = c_white)
 {
-	gml_pragma("forceinline");
+	forceinline
 	if global.show_hitbox
 	{
-		draw_primitive_begin(pr_trianglelist);
-		draw_vertex_color(bbox_left, bbox_top, col, 0.4);
-		draw_vertex_color(bbox_left, bbox_bottom, col, 0.4);
-		draw_vertex_color(bbox_right, bbox_bottom, col, 0.4);
+		//Get the unmodified mask data
+		var _b1 = sprite_get_bbox_left(sprite_index),
+			_b2 = sprite_get_bbox_top(sprite_index),
+			_b3 = sprite_get_bbox_right(sprite_index),
+			_b4 = sprite_get_bbox_bottom(sprite_index),
+
+			_xoff = sprite_get_xoffset(sprite_index),
+			_yoff = sprite_get_yoffset(sprite_index),
+
+			//Get the unmodified vector for each corner
+			_dis1 = point_distance(_xoff, _yoff, _b1, _b2),
+			_dir1 = point_direction(_xoff, _yoff, _b1, _b2),
+			_dis2 = point_distance(_xoff, _yoff, _b3, _b2),
+			_dir2 = point_direction(_xoff, _yoff, _b3, _b2),
+			_dis3 = point_distance(_xoff, _yoff, _b3, _b4),
+			_dir3 = point_direction(_xoff, _yoff, _b3, _b4),
+			_dis4 = point_distance(_xoff, _yoff, _b1, _b4),
+			_dir4 = point_direction(_xoff, _yoff, _b1, _b4),
+
+			//Now modify the vectors using the current position and image angle
+			_x1 = x + lengthdir_x(_dis1, image_angle + _dir1),
+			_y1 = y + lengthdir_y(_dis1, image_angle + _dir1),
+			_x2 = x + lengthdir_x(_dis2, image_angle + _dir2),
+			_y2 = y + lengthdir_y(_dis2, image_angle + _dir2),
+			_x3 = x + lengthdir_x(_dis3, image_angle + _dir3),
+			_y3 = y + lengthdir_y(_dis3, image_angle + _dir3),
+			_x4 = x + lengthdir_x(_dis4, image_angle + _dir4),
+			_y4 = y + lengthdir_y(_dis4, image_angle + _dir4);
+
+		//Draw the mask box
+		draw_primitive_begin(pr_trianglestrip);
+		draw_vertex_color(_x1, _y1, col, 0.4);
+		draw_vertex_color(_x2, _y2, col, 0.4);
+		draw_vertex_color(_x3, _y3, col, 0.4);
 		
-		draw_vertex_color(bbox_left, bbox_top, col, 0.4);
-		draw_vertex_color(bbox_right, bbox_top, col, 0.4);
-		draw_vertex_color(bbox_right, bbox_bottom, col, 0.4);
+		draw_vertex_color(_x3, _y3, col, 0.4);
+		draw_vertex_color(_x4, _y4, col, 0.4);
+		draw_vertex_color(_x1, _y1, col, 0.4);
 		draw_primitive_end();
 	}
 }
@@ -21,6 +51,7 @@ function show_hitbox(col = c_white)
 ///Draws the debug UI with respect to the room you are in (by checking the controller isntance)
 function DrawDebugUI()
 {
+	aggressive_forceinline
 	static draw_debug_color_text = function(x, y, text)
 	{
 		var color = make_color_hsv(global.timer % 255, 255, 255);
@@ -34,7 +65,6 @@ function DrawDebugUI()
 	//Don't run anything if debug ui is not visible or debug is disabled
 	if debug_alpha <= 0 exit;
 	
-	draw_set_alpha(debug_alpha);
 	draw_set_font(fnt_mnc);
 	//If is in battle
 	if instance_exists(oBattleController)
@@ -85,7 +115,6 @@ function DrawDebugUI()
 		draw_set_halign(fa_left);
 		gpu_set_blendmode(bm_normal);
 	}
-	draw_set_alpha(1);
 	draw_set_color(c_white);
 }
 
@@ -101,7 +130,7 @@ function __CoalitionEngineError(check, text)
 }
 
 function __CoalitionGMVersion() {
-	gml_pragma("forceinline");
+	forceinline
 	static _version = undefined;
 	if _version != undefined return _version;
 	
@@ -137,10 +166,10 @@ function __CoalitionGMVersion() {
 
 function __CoalitionCheckCompatibilty()
 {
-	gml_pragma("forceinline");
-	var version = __CoalitionGMVersion();
+	forceinline
+	static version = __CoalitionGMVersion();
 	if version.major >= 2024 || (version.major == 2023 && version.minor > 11)
-		print("Coalition Engine ", __COALITION_ENGINE_VERSION, "was designed for Game Maker versions 2023.8+, you are in ", GM_runtime_version);
+		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "was designed for Game Maker versions 2023.8+, you are in ", GM_runtime_version);
 	else if version.major < 2023 && version.minor < 8
-		print("Coalition Engine ", __COALITION_ENGINE_VERSION, "is incompatible for Game Maker versions earlier than 2023.8, you are in ", GM_runtime_version);
+		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "is incompatible for Game Maker versions earlier than 2023.8, you are in ", GM_runtime_version);
 }

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "18  Sources",
-    "path": "folders/Coalition Engine/Addons/Input/18  Sources.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/18  Sources.yy",
   },
 }

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "11  Mouse Capture",
-    "path": "folders/Coalition Engine/Addons/Input/11  Mouse Capture.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/11  Mouse Capture.yy",
   },
 }

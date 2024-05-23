@@ -32,7 +32,7 @@
   "origin": 9,
   "parent": {
     "name": "Sans by Kuri",
-    "path": "folders/Coalition Engine/Sprites/Battle/Enemy/Sans by Kuri.yy",
+    "path": "folders/Coalition Engine/Sprites/Enemy/Sans by Kuri.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

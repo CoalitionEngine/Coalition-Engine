@@ -26,7 +26,7 @@
   "origin": 9,
   "parent": {
     "name": "Speech Bubble",
-    "path": "folders/Coalition Engine/Sprites/Battle/Speech Bubble.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Battle/Speech Bubble.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

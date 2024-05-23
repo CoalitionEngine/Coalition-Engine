@@ -8,3 +8,4 @@ image_speed = 0;
 RenderCheck = -1;
 YellowDestroyable = true;
 YellowCollidable = true;
+__bullet_rendered = false;

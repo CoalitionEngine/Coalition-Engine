@@ -120,7 +120,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "(System - don't call these functions)",
-    "path": "folders/Coalition Engine/Addons/Scribble/(System - don't call these functions).yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Scribble/(System - don't call these functions).yy",
   },
   "pointRounding": 0,
   "ranges": [

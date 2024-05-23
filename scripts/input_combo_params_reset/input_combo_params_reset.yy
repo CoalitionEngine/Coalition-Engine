@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "27  Combos",
-    "path": "folders/Coalition Engine/Addons/Input/27  Combos.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/27  Combos.yy",
   },
 }

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Overworld",
-    "path": "folders/Coalition Engine/Scripts/Overworld.yy",
+    "path": "folders/Coalition Engine/(System)/Scripts/Overworld.yy",
   },
 }

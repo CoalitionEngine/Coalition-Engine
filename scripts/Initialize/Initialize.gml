@@ -1,5 +1,6 @@
 function Initialize()
 {
+	aggressive_forceinline
 	print("Coalition Engine: This is version " + __COALITION_ENGINE_VERSION);
 	__CoalitionCheckCompatibilty();
 	//Set to true when releasing your game (Note that bugs will be undisplayed during gameplay)
@@ -91,13 +92,86 @@ function Initialize()
 			global.cell[i] = global.SaveFile[$ "Cell"][i];
 		}
 	}
-	
+	//Cells
+	CellLibraryInit();
+	//Safety check
+	Cell_Add("OWBox", "this text should not appear");
+	Cell_Add("Phone", "test phone text 1");
+	Cell_Add("Dimensional Box A",, true, 1);
+	Cell_Add("Dimensional Box B",, true, 2);
 	//Items
 	ItemLibraryInit();
+	#region Set basic item info
+	ItemLibrarySetStruct(ITEM.PIE,
+	{
+		name : "Pie",
+		heal : global.hp_max,
+		desc : "* Random slice of pie which is so\n  cold you cant eat it.",
+		throw_txt : "Throw pie",
+		battle_desc : "Heals FULL HP",
+		heal_text : ["* You ate the Butterscotch Pie.", "* You eat the Butterscotch Pie."],
+		item_uses_left: 2
+	});
+	ItemLibrarySetStruct(ITEM.INOODLES,
+	{
+		name : "I. Noodles",
+		heal : 90,
+		desc : "* Hard noodles, your teeth broke",
+		throw_txt : "Throw IN",
+		battle_desc : "Heals 90 HP",
+		heal_text : "* You ate the Instant Noodles."
+	});
+	ItemLibrarySetStruct(ITEM.STEAK,
+	{
+		name : "Steak",
+		heal : 60,
+		desc : "* Steak that looks like a MTT\n  which somehow fits in your\n  pocket",
+		throw_txt : "Throw expensive mis-steak",
+		battle_desc : "Heals 60 HP",
+		heal_text : "* You ate the Face Steak."
+	});
+	ItemLibrarySetStruct(ITEM.SNOWP,
+	{
+		name : "SnowPiece",
+		heal : 45,
+		desc : "* Bring this to the end of the world,\n  but the world isnt round",
+		throw_txt : "snowball fight go brr",
+		battle_desc : "Heals 45 HP",
+		heal_text : "* You ate the Snow Piece."
+	});
+	ItemLibrarySetStruct(ITEM.LHERO,
+	{
+		name : "L. Hero",
+		heal : 40,
+		stats : "Your ATK raised by 4!",
+		desc : "* You arent legendary nor a hero.",
+		throw_txt : "congrats you now bad guy",
+		battle_desc : "Heals 40 HP",
+		heal_text : "* You ate the Legendary Hero.",
+		effect : function() { global.player_attack_boost += 4; }
+	});
+	ItemLibrarySetStruct(ITEM.SEATEA,
+	{
+		name : "Sea Tea",
+		heal : 10,
+		stats : "Your SPD increased!",
+		desc : "* HOW U HOLD A TEA WITHOUT CUP OMG",
+		throw_txt : "you threw liquid.",
+		battle_desc : "+10 HP - SPD+",
+		heal_text : "* You drank the sea tea.",
+		effect : function() {
+			global.spd *= 2;
+			audio_play(snd_spdup);
+			if instance_exists(oBattleController)
+				with oBattleController.Effect
+				{
+					SeaTea = true;
+					SeaTeaTurns = 4;
+				}
+		}
+	});
+	#endregion
 	global.item_heal_override_kr = true; //Does kr reduce when max heal or not
-	global.item_uses_left = array_create(ds_list_size(global.ItemLibrary) + 1, 1);
-	//Demonstration on how to change item usage count
-	global.item_uses_left[ITEM.PIE] = 2;
 	
 	//Custom Settings
 	global.Settings = ds_map_create();

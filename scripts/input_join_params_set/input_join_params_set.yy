@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "17  Source Modes",
-    "path": "folders/Coalition Engine/Addons/Input/17  Source Modes.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/17  Source Modes.yy",
   },
 }

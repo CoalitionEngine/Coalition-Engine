@@ -33,7 +33,7 @@ function end_turn()
 		}
 	}
 	//Reset box
-	ResetBoard();
+	Board_Reset();
 	//Reset soul
 	with oSoul
 		draw_angle = (mode == SOUL_MODE.YELLOW ? 180 : 0);

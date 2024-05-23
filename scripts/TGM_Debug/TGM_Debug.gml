@@ -6,7 +6,6 @@
 
 /// @desc Similar to show_debug_message(), but with multiple arguments separated by commas.
 function print() {
-	if !__COALITION_VERBOSE exit;
 	if (argument_count > 0) {
 		var _log = "", i = 0;
 		repeat(argument_count) {

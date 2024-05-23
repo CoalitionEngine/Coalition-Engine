@@ -21,7 +21,7 @@
   "out_tilevborder": 2,
   "parent": {
     "name": "Tile Sets",
-    "path": "folders/Coalition Engine/Tile Sets.yy",
+    "path": "folders/Coalition Engine/(System)/Tile Sets.yy",
   },
   "spriteId": {
     "name": "sprCollision",

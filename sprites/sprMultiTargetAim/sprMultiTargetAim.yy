@@ -26,7 +26,7 @@
   "origin": 4,
   "parent": {
     "name": "Fight",
-    "path": "folders/Coalition Engine/Sprites/Battle/Menu/Fight.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Battle/Menu/Fight.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

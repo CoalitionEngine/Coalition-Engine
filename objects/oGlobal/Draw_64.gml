@@ -54,16 +54,6 @@ with Song
 	}
 }
 
-//Tip thing
-if room == rRestart
-{
-	var text = "[fa_center][c_white][fnt_dt_mono]Restarting",
-		num = (restart_timer div 10) % 4;
-	repeat num text += ".";
-	draw_text_scribble(320, 240, text);
-	draw_text_scribble(320, 420, "[fa_center][c_ltgray][fnt_dotum]" + restart_tip);
-}
-
 //Gradient, pre-baked (will only run once to store the surface)
 if global.timer == 1
 {

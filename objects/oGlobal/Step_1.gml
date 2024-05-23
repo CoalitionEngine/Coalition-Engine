@@ -10,7 +10,6 @@ global.timer++;
 if keyboard_check_pressed(vk_f2)
 {
 	audio_stop_all();
-	//room_goto(rRestart);
 	game_restart();
 }
 if keyboard_check_pressed(vk_f4)
@@ -29,11 +28,6 @@ if ALLOW_DEBUG
 		if keyboard_check_pressed(ord("S"))
 			Screenshot(room_get_name(room));
 	if keyboard_check_pressed(vk_f5) room_restart();
-}
-
-if room == rRestart
-{
-	if restart_timer++ == restart_ender game_restart();
 }
 
 if RGBShake > 0 RGBShake -= RGBDecrease;

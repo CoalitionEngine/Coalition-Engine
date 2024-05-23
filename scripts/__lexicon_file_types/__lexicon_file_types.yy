@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "File_Types",
-    "path": "folders/Coalition Engine/Addons/Lexicon/Internal/File_Types.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Internal/File_Types.yy",
   },
 }

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Gamepad Tester",
-    "path": "folders/Coalition Engine/Addons/Input/(System)/Gamepad Tester.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/(System)/Gamepad Tester.yy",
   },
 }

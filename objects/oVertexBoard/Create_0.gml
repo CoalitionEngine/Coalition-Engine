@@ -41,7 +41,7 @@ function ConvertToBox(X = x, Y = y, Left = left, Right = right, Up = up, Down = 
 	@param {real} y			The y position of the point
 */
 function InsertPolygonPoint(no, x, y) {
-	gml_pragma("forceinline")
+	forceinline
 	array_insert(Vertex, no * 2, x, y);
 	UpdateEars();
 	return no * 2;
@@ -53,7 +53,7 @@ function InsertPolygonPoint(no, x, y) {
 	@param {real} y			The y position of the point
 */
 function SetPolygonPoint(no, x, y) {
-	gml_pragma("forceinline");
+	forceinline
 	Vertex[no] = x;
 	Vertex[no + 1] = y;
 	UpdateEars();

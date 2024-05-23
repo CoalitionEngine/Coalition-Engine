@@ -1,9 +1,5 @@
 depth = -10000;
 
-restart_timer = 0;
-restart_ender = irandom_range(30, 120);
-restart_tip = tips();
-
 quit_timer = 0;
 
 fader_color = c_black;

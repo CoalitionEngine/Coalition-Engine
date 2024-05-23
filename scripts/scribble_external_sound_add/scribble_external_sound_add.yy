@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "External Assets",
-    "path": "folders/Coalition Engine/Addons/Scribble/External Assets.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Scribble/External Assets.yy",
   },
 }

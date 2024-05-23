@@ -6,12 +6,9 @@ var _color = sticky ? c_lime : c_fuchsia,
 	_image_xscale = image_xscale,
 	_x = x, _y = y;
 
-//Masking
-Battle_Masking_Start(true);
 //Drawing
 draw_sprite_ext(sprite_index, 0, _x, _y, _image_xscale, 1, _angle, c_white, _alpha);
 draw_sprite_ext(sprite_index, 1, _x, _y, _image_xscale, 1, _angle, _color, _alpha);
-Battle_Masking_End();
 
 //Effect drawing (For the one said in Step)
 if effect

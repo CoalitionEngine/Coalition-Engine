@@ -10,7 +10,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Battle",
-    "path": "folders/Coalition Engine/Objects/Battle.yy",
+    "path": "folders/Coalition Engine/(System)/Objects/Battle.yy",
   },
   "parentObjectId": null,
   "persistent": false,

@@ -49,7 +49,7 @@
   "origin": 0,
   "parent": {
     "name": "Tiles",
-    "path": "folders/Coalition Engine/Sprites/Overworld/Tiles.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Overworld/Tiles.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

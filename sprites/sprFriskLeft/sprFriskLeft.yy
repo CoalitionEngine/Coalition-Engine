@@ -27,7 +27,7 @@
   "origin": 7,
   "parent": {
     "name": "Frisk",
-    "path": "folders/Coalition Engine/Sprites/Overworld/Frisk.yy",
+    "path": "folders/Coalition Engine/(System)/Sprites/Overworld/Frisk.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

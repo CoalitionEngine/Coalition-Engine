@@ -7,6 +7,7 @@ enum SHAPES {
 }
 function Load3DNodesAndEdges()
 {
+	aggressive_forceinline
 	global.Nodes =
 	[
 		//Cube
@@ -80,12 +81,13 @@ function Load3DNodesAndEdges()
 	@param {real} size				The size of the cube
 	@param {real} horizontal_angle	The Horizontal Angle of the cube
 	@param {real} vertical_angle	The Vertical Angle of the cube
-	@param {color} color	The Color of the cube
+	@param {Constant.Color} color	The Color of the cube
 	@param {real} width				The Width of the outline of the cube
 	@param {bool} circle_on_edge	Whether the corners of the cube are round
 */
 function draw_cube_width(_draw_x, _draw_y, _size, _point_h, _point_v, _colour, _width, _edge_circ = true)
 {
+	aggressive_forceinline
 	//No you cant preset them in global.Nodes because it will live update and making it go crazy
 	var nodes =
 		[

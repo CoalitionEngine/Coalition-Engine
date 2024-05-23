@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "26  Keyboard (Direct)",
-    "path": "folders/Coalition Engine/Addons/Input/26  Keyboard (Direct).yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/26  Keyboard (Direct).yy",
   },
 }

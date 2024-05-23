@@ -4,7 +4,7 @@
  */
 function string_to_array(str)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var i = 1, arr = [];
 	repeat string_length(str) array_push(arr, string_copy(str, i++, 1));
 	return arr;
@@ -15,7 +15,7 @@ function string_to_array(str)
 */
 function array_to_string(arr)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var i = 0, txt = "";
 	repeat array_length(arr) txt += arr[i++];
 	return txt;
@@ -23,7 +23,7 @@ function array_to_string(arr)
 
 // replaces all Unicode escapes in a string with corresponding characters
 function string_replace_unicode(str) {
-	gml_pragma("forceinline");
+	forceinline
     var ucode_idx = string_pos_ext("\\u", str, 0);
     while ucode_idx >= 1
 	{
@@ -39,7 +39,7 @@ function string_replace_unicode(str) {
 
 // parses a hexadecimal number to a corresponding character
 function chr_from_hex(str) {
-	gml_pragma("forceinline");
+	forceinline
     str = string_upper(str);
     var result = 0, length = string_length(str);
     for (var i = 1; i <= length; i++) {
@@ -58,7 +58,7 @@ function chr_from_hex(str) {
 */
 function dec_to_hex(dec, len = 1) 
 {
-	gml_pragma("forceinline");
+	forceinline
     var hex = "";
 
     if (dec < 0) {
@@ -75,6 +75,7 @@ function dec_to_hex(dec, len = 1)
 }
 
 function buffer_read_utf8(_buffer) { // To help read UTF8 strings
+	aggressive_forceinline
 	var _value = buffer_read(_buffer, buffer_u8);
 	if ((_value & 0xE0) == 0xC0) { //two-byte
 		_value  = (_value & 0x1F) <<  6;
@@ -96,7 +97,7 @@ function buffer_read_utf8(_buffer) { // To help read UTF8 strings
 ///Lowers a string using the buffer method, this is faster than the built-in string_lower()
 //Credits to TabularElf
 function string_lower_buffer(_string) {
-	gml_pragma("forceinline");
+	aggressive_forceinline
 	static _strBuffer = buffer_create(1024, buffer_grow, 1);
 	
 	// Exit early

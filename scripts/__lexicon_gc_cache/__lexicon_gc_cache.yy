@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Cache",
-    "path": "folders/Coalition Engine/Addons/Lexicon/Internal/Cache.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Internal/Cache.yy",
   },
 }

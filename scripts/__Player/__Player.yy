@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "In Game Datas",
-    "path": "folders/Coalition Engine/Scripts/In Game Datas.yy",
+    "path": "folders/Coalition Engine/(System)/Scripts/In Game Datas.yy",
   },
 }

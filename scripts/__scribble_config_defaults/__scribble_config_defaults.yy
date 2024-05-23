@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Configuration - Please edit these!",
-    "path": "folders/Coalition Engine/Addons/Scribble/Configuration - Please edit these!.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Scribble/Configuration - Please edit these!.yy",
   },
 }

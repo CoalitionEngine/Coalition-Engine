@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "04  Further Verb Functions",
-    "path": "folders/Coalition Engine/Addons/Input/04  Further Verb Functions.yy",
+    "path": "folders/Coalition Engine/(System)/Addons/Input/04  Further Verb Functions.yy",
   },
 }

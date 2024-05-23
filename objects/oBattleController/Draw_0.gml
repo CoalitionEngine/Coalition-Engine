@@ -76,7 +76,6 @@ if battle_state == BATTLE_STATE.MENU {
 					draw_text_scribble(128, 341, $"{DefaultFont}[c_lime](+{item_heal[coord]})");
 				draw_text_scribble(384, 341, DefaultFont + LangItemPageText[c_div]);
 				break;
-			
 			case ITEM_SCROLL.VERTICAL:
 				c_div = coord;
 				_coord = c_div;
@@ -161,6 +160,7 @@ if battle_state == BATTLE_STATE.MENU {
 							menu_state = 0;
 							_target_state = 3;
 							battle_state = 0;
+							menu_text_typist.reset();
 						}
 						//If an input is pressed
 						elif input_confirm && Target.buffer < 0 {
@@ -394,14 +394,14 @@ if battle_state == BATTLE_STATE.MENU {
 								case sprFrypanStar:
 									size = 1.5;
 									_time += 7;
-								break;
+									break;
 								case sprGunStar:
 									size = 0.75;
-								break;
+									break;
 							}
 							for (var i = 0; i < 8; ++i) {
-								var _star_data = Aim.Attack.StarData[i];
-								var _star_speed = _star_data[4] - _star_data[5] * _time;
+								var _star_data = Aim.Attack.StarData[i],
+									_star_speed = _star_data[4] - _star_data[5] * _time;
 								//Position changing
 								_star_data[3] += _star_speed;
 								var _star_x = 320 + lengthdir_x(_star_data[3], i * 45),
@@ -428,12 +428,12 @@ if battle_state == BATTLE_STATE.MENU {
 									size_increase = 0.3;
 									max_size = 2.8;
 									size_reduction = 0.6;
-								break
+									break;
 								case sprGunCircle:
 									size_increase = 0.5;
 									max_size = 3.5;
 									size_reduction = 0.3;
-								break
+									break;
 							}
 							var time_before_fully_expand = round((max_size - size) / size_increase);
 							if _time < time_before_fully_expand
@@ -451,7 +451,7 @@ if battle_state == BATTLE_STATE.MENU {
 							case sprNotebookAttack:
 								if _time < 15
 									scale_x = cos(_time / 4) * 2;
-								if _time == 15
+								else if _time == 15
 								{
 									audio_play(snd_punchstrong);
 									if Aim.Attack.Crit audio_play(global.MultiBarCritSound);
@@ -459,7 +459,7 @@ if battle_state == BATTLE_STATE.MENU {
 									scale_y = 0.5;
 									_sprite = sprFrypanAttack;
 								}
-								if _time > 15
+								else if _time > 15
 								{
 									_index = posmod(_index + 1, 2);
 									scale_x = 0.5 + (_time - 15) * 0.25;
@@ -479,25 +479,24 @@ if battle_state == BATTLE_STATE.MENU {
 								//Star
 								DrawMultibarAttackStar(sprFrypanStar);
 								//Actual pan
-								if _time < 70
-									DrawMultiAttackMain(sprFrypanAttack);
-								if _time = 70
-									_target_state = 3;
-							break
+								if _time < 70 DrawMultiAttackMain(sprFrypanAttack);
+								else if _time = 70 _target_state = 3;
+								break;
 							case sprGunStar:
 								if _time == 0
 									audio_play(snd_gunshot);
-								if _time < 5
+								else if _time < 5
 									draw_sprite_ext(sprGunStar, posmod(_time / 2, 2), 320, Aim.Attack.EnemyY, 2, 2, 0, _color, 1);
-								if _time > 7
+								else if _time > 7
 									DrawMultibarAttackStar(sprGunStar);
-								if _time > 9 && _time < 60
-									DrawMultiAttackMain(sprGunCircle);
-								if _time = 10
-									if Aim.Attack.Crit
+								else if _time > 9 && _time < 60
+								{
+									if _time == 10 && Aim.Attack.Crit
 										audio_play(snd_multi_crit);
-								if _time = 60 _target_state = 3;
-							break
+									DrawMultiAttackMain(sprGunCircle);
+								}
+								else if _time = 60 _target_state = 3;
+								break;
 						}
 						_time++;
 						
@@ -552,7 +551,7 @@ if battle_state == BATTLE_STATE.MENU {
 	}
 	else if menu_state = MENU_STATE.FLEE
 	{
-		draw_text_scribble(96, 272, $"{DefaultFont}* {FleeText[FleeTextNum]}");
+		draw_text_scribble(96, 272, DefaultFont + "* " + FleeText[FleeTextNum]);
 		if oSoul.x <= 10 && FleeState == 1
 		{
 			Fader_Fade(0, 1, 30);
@@ -568,7 +567,7 @@ if battle_state == BATTLE_STATE.MENU {
 else if battle_state == BATTLE_STATE.RESULT {
 	if !global.BossFight {
 		battle_end_text_writer.starting_format(DefaultFontNB, c_white)
-		battle_end_text_writer.draw(52, 272, battle_end_text_typist)
+								.draw(52, 272, battle_end_text_typist)
 
 		if input_cancel {
 			battle_end_text_writer.page(battle_end_text_writer.get_page_count() - 1);
@@ -635,6 +634,7 @@ if board_cover_button {
 
 #region UI (Name - Lv - Hp - Kr)
 	// Credits to Scarm for all the help and this epico code!
+	//no fuck you
 	var hp_x =				ui_x - global.kr_activation * 20,
 		hp_y =				ui_y,
 		name_x =			ui_x - 245,

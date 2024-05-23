@@ -9,7 +9,7 @@ room_instance_add(room_first, 0, 0, oShaderController);
 */
 function AddShaderEffect(shader, surf = false)
 {
-	gml_pragma("forceinline");
+	forceinline
 	return oShaderController.Main.Add(shader, surf);
 }
 /**
@@ -20,7 +20,7 @@ function AddShaderEffect(shader, surf = false)
 */
 function ShaderSetUniform(ID, name, value)
 {
-	gml_pragma("forceinline");
+	forceinline
 	oShaderController.Main.SetUniform(ID, name, value);
 }
 /**
@@ -29,7 +29,7 @@ function ShaderSetUniform(ID, name, value)
 */
 function RemoveShaderEffect(ID)
 {
-	gml_pragma("forceinline");
+	forceinline
 	oShaderController.Main.Remove(ID);
 }
 function __Shader() constructor
@@ -37,6 +37,7 @@ function __Shader() constructor
 	///Initalizes the shader variables
 	static Init = function()
 	{
+		aggressive_forceinline
 		with oShaderController
 		{
 			//[shader, shader...]
@@ -51,6 +52,7 @@ function __Shader() constructor
 	///Cleans the shader struct of shader parameters
 	static Clean = function()
 	{
+		aggressive_forceinline
 		with oShaderController
 		{
 			var i = 0;
@@ -70,6 +72,7 @@ function __Shader() constructor
 	*/
 	static Add = function(shader, surf = false)
 	{
+		aggressive_forceinline
 		with oShaderController
 		{
 			array_push(ShaderList, shader);
@@ -86,6 +89,7 @@ function __Shader() constructor
 	*/
 	static SetUniform = function(ID, name, value)
 	{
+		aggressive_forceinline
 		oShaderController.ShaderParams[ID][$ name] = value;
 	}
 	/**
@@ -94,6 +98,7 @@ function __Shader() constructor
 	*/
 	static Remove = function(ID)
 	{
+		aggressive_forceinline
 		delete oShaderController.ShaderParams[ID];
 		array_delete(oShaderController.ShaderList, ID, 1);
 	}
@@ -104,13 +109,12 @@ function __Shader() constructor
 ///@param {real} amount		The amount to blur 
 function Blur_Screen(duration, amount)
 {
-	gml_pragma("forceinline");
-	var shader_blur = instance_create_depth(0, 0, -1000, blur_shader);
-	with shader_blur
+	forceinline
+	with instance_create_depth(0, 0, -1000, blur_shader)
 	{
 		self.duration = duration;	//sets duration
 		var_blur_amount = amount;	//sets blur amount
 		TweenFire(self, "o", 0, false, 0, duration, "var_blur_amount>", 0);
+		return self;
 	}
-	return shader_blur;
 }
