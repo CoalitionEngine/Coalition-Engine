@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/970670035569897472/1243556601294753853/newlogo.png?ex=6651e7d5&is=66509655&hm=4fdffb682429a51cf327d3b6a71287ba89b09fb7d6d6f3073c57f0bb78478599&" alt="HelpMePls">
+  <img src="https://user-images.githubusercontent.com/83257329/226114457-a8702e87-0f37-46a4-8b09-f43b12e9511f.png" alt="HelpMePls">
 </p>
 <h1 align="center">Modernized Undertale Engine.</h1>
 <p align="center">
