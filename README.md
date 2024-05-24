@@ -5,7 +5,7 @@
 <p align="center">
 </p>
 
-![About](https://user-images.githubusercontent.com/83257329/226114468-3823b116-01ae-4941-be38-c6683bd428ea.png)
+![newlogo](https://github.com/CoalitionEngine/Collation-Engine/assets/83257329/6634de48-bb0f-41f5-b97d-1a28a01527f1)
 
 This is what you can make your Undertale Fangame ideas come true.
 
