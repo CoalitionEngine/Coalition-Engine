@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/83257329/226114457-a8702e87-0f37-46a4-8b09-f43b12e9511f.png" alt="HelpMePls">
+  <img src="https://user-images.githubusercontent.com/83257329/226114457-a8702e87-0f37-46a4-8b09-f43b12e9511f.png](https://github.com/CoalitionEngine/Collation-Engine/assets/83257329/058303b9-7d01-4037-ad5f-b3d02ae25c00" alt="HelpMePls">
 </p>
 <h1 align="center">Modernized Undertale Engine.</h1>
 <p align="center">
 </p>
 
-![newlogo](https://github.com/CoalitionEngine/Collation-Engine/assets/83257329/6634de48-bb0f-41f5-b97d-1a28a01527f1)
+![About](https://user-images.githubusercontent.com/83257329/226114468-3823b116-01ae-4941-be38-c6683bd428ea.png)
 
 This is what you can make your Undertale Fangame ideas come true.
 
