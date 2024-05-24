@@ -1,2 +1,0 @@
-delete MainOption;
-delete SubOption;

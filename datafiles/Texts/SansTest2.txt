@@ -1,6 +1,0 @@
-@0
-turn 0 text
-@1
-Turn 1 text
-@2
-Turn 2 text

@@ -1,9 +1,0 @@
-{
-  "resourceType": "GMExtensionConfigSet",
-  "configurables": null,
-  "extensionId": {
-    "name": "IrregularForm",
-    "path": "extensions/IrregularForm/IrregularForm.yy"
-  },
-  "resourceVersion": "1.0"
-}

@@ -1,1 +1,0 @@
-ds_grid_destroy(WarningBoxPos);

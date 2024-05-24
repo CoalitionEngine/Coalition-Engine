@@ -1,6 +1,0 @@
-0
-See[delay,400],  it's a beautiful day,[delay,200] isn't it?[pause] [/page][delay,100]On days like these[delay,200].[delay,100].[delay,100].[pause] [/page][flash,true][SpriteSet,oEnemyTest,2,1][delay,500][flash,true][shake][speed,0.5]YOU [delay,100]WILL[delay,100] HAVE [delay,100]A [delay,100]TERRIBLE [delay,100]EXPERIENCE [delay,100]OF [delay,100]FEAR.
-1
-Do you really think your little trick will kill me?[delay,300][pause][/page]hehehe...[delay,200][pause][/page]Impossible.
-2
-Now I have my own soul.[delay,200][pause][/page]And...

@@ -1,9 +1,0 @@
-{
-  "extensionId": {
-    "name": "Chromatic_Aberration_Shader",
-    "path": "extensions/Chromatic_Aberration_Shader/Chromatic_Aberration_Shader.yy"
-  },
-  "resourceVersion": "1.0",
-  "resourceType": "GMExtensionConfigSet",
-  "configurables": null
-}

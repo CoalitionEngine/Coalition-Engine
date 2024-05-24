@@ -1,1 +1,0 @@
-draw_text_colour(8, 8, self.mode_names[self.mode], c_black, c_black, c_black, c_black, 1);

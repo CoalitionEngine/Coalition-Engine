@@ -1,9 +1,0 @@
-{
-  "resourceType": "GMExtensionConfigSet",
-  "configurables": null,
-  "extensionId": {
-    "name": "MuiltWindow",
-    "path": "extensions/MuiltWindow/MuiltWindow.yy"
-  },
-  "resourceVersion": "1.0"
-}
