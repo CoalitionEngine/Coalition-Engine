@@ -1,6 +1,9 @@
-# Bones
+## Bones
 
-## `Bullet_Bone(x, y, length, hspeed, vspeed, [type], [outside], [mode], [angle], [rotate], [destroyable], [duration], [base_color])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_Bone(x, y, length, hspeed, vspeed, [type], [outside], [mode], [angle], [rotate], [destroyable], [duration], [base_color])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Creates a bone as a bullet
 
 | Parameter | Datatype  | Purpose |
@@ -21,7 +24,10 @@ Creates a bone as a bullet
 
 **Returns:** The created bone
 
-## `Bullet_BoneTop(x, length, hspeed, [type], [outside], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneTop(x, length, hspeed, [type], [outside], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Creates a bone at the Top of the board
 
 | Parameter | Datatype  | Purpose |
@@ -37,7 +43,10 @@ Creates a bone at the Top of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneBottom(x, length, hspeed, [type], [outside], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneBottom(x, length, hspeed, [type], [outside], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Creates a bone at the Bottom of the board
 
 | Parameter | Datatype  | Purpose |
@@ -53,7 +62,10 @@ Creates a bone at the Bottom of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneLeft(y, length, vspeed, [type], [out], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneLeft(y, length, vspeed, [type], [out], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Creates a bone at the Left of the board
 
 | Parameter | Datatype  | Purpose |
@@ -69,7 +81,10 @@ Creates a bone at the Left of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneRight(y, length, vspeed, [type], [outside], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneRight(y, length, vspeed, [type], [outside], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Creates a bone at the Right of the board
 
 | Parameter | Datatype  | Purpose |
@@ -85,7 +100,10 @@ Creates a bone at the Right of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneFullV(x, speed, [type], [outside], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneFullV(x, speed, [type], [outside], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Makes a Vertical Bone that is the length of the board
 
 | Parameter | Datatype  | Purpose |
@@ -100,7 +118,10 @@ Makes a Vertical Bone that is the length of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneFullH(y, speed, [type], [outside], [rotate], [destroyable], [duration])` Returns: *Id.Instance\<oBulletBone\>*
+### `Bullet_BoneFullH(y, speed, [type], [outside], [rotate], [destroyable], [duration])`
+---
+ Returns: `Id.Instance<oBulletBone>`
+
 Makes a Horizontal Bone that is the length of the board
 
 | Parameter | Datatype  | Purpose |
@@ -115,7 +136,10 @@ Makes a Horizontal Bone that is the length of the board
 
 **Returns:** The created bone
 
-## `Bullet_BoneGapH(x, y, vspeed, gap, [type], [out], [destroyable], [duration])` Returns: `undefined`
+### `Bullet_BoneGapH(x, y, vspeed, gap, [type], [out], [destroyable], [duration])`
+---
+ Returns: `undefined`
+
 Creates Two Horizontal bones that Makes A Gap In Between Them
 
 | Parameter | Datatype  | Purpose |
@@ -131,7 +155,10 @@ Creates Two Horizontal bones that Makes A Gap In Between Them
 
 **Returns:** Creates two variables for both bones
 
-## `Bullet_BoneGapV(x, y, hspeed, gap, [type], [out], [destroyable], [duration])` Returns: `undefined`
+### `Bullet_BoneGapV(x, y, hspeed, gap, [type], [out], [destroyable], [duration])`
+---
+ Returns: `undefined`
+
 Creates Two Vertical bones that Makes A Gap In Between Them
 
 | Parameter | Datatype  | Purpose |
@@ -147,7 +174,10 @@ Creates Two Vertical bones that Makes A Gap In Between Them
 
 **Returns:** Creates two variables for both bones
 
-## `Bullet_BoneWall(direction, height, delay, duration, [type], [move], [warning_sound], [creation_sound])` Returns: *Id.Instance\<oBulletBoneWall\>*
+### `Bullet_BoneWall(direction, height, delay, duration, [type], [move], [warning_sound], [creation_sound])`
+---
+ Returns: `Id.Instance<oBulletBoneWall>`
+
 Creates a bone wall on a chosen side of the board (Recommended for beginners)
 
 | Parameter | Datatype  | Purpose |
@@ -163,14 +193,17 @@ Creates a bone wall on a chosen side of the board (Recommended for beginners)
 
 **Returns:** The created bonewall
 
-## `Bullet_CustomBoneWall(direction, height, distance, delay, duration, [type], [move], [warning_sound], [creation_sound])` Returns: *Id.Instance\<oBulletCustomBoneWall\>*
+### `Bullet_CustomBoneWall(direction, height, distance, delay, duration, [type], [move], [warning_sound], [creation_sound])`
+---
+ Returns: `Id.Instance<oBulletCustomBoneWall>`
+
 Creates a bone wall on any angle (Recommended for advanced users)
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
 |`direction` |real |The direction of the bone wall |
 |`height` |real |The length of the bones in the bonewall (140 if the desired height is 70) |
-|`distance` |Array\<real\> |The distances of the bonewall in an array (inital and final) |
+|`distance` |Array<real> |The distances of the bonewall in an array (inital and final) |
 |`delay` |real |The Warning duration |
 |`duration` |real |The duration that the bone wall exists |
 |`color` |real |The color of the bones (Default White) |
@@ -183,7 +216,10 @@ Creates a bone wall on any angle (Recommended for advanced users)
 
 **Returns:** The created custom bonewall
 
-## `Bullet_BoneWaveH(x, y, amount, function, multiply, xdisplace, speed, ydisplace, gap, [col], [out], [auto_destroy])` Returns: *Array\<Id.Instance\<oBulletBone\>\>*
+### `Bullet_BoneWaveH(x, y, amount, function, multiply, xdisplace, speed, ydisplace, gap, [col], [out], [auto_destroy])`
+---
+ Returns: `Array<Id.Instance<oBulletBone>>`
+
 Creates a Vertical Bone Wave, returns the array of bones with [left1, right1, left2...]
 
 | Parameter | Datatype  | Purpose |
@@ -203,7 +239,10 @@ Creates a Vertical Bone Wave, returns the array of bones with [left1, right1, le
 
 **Returns:** The array of created bones
 
-## `Bullet_BoneWaveV(x, y, amount, function, multiply, ydisplace, speed, xdisplace, gap, [col], [out], [auto_destroy])` Returns: *Array\<Id.Instance\<oBulletBone\>\>*
+### `Bullet_BoneWaveV(x, y, amount, function, multiply, ydisplace, speed, xdisplace, gap, [col], [out], [auto_destroy])`
+---
+ Returns: `Array<Id.Instance<oBulletBone>>`
+
 Creates a Horizontal Bone Wave, returns the array of bones with [up1, down1, up2...]
 
 | Parameter | Datatype  | Purpose |
@@ -223,7 +262,10 @@ Creates a Horizontal Bone Wave, returns the array of bones with [up1, down1, up2
 
 **Returns:** The array of created bones
 
-## `Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rotation_x, rotation_y, rotation_z, scale_x, scale_y, scale_z, [anim_time], [ease], [out])` Returns: *Id.Instance\<o3DBone\>*
+### `Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rotation_x, rotation_y, rotation_z, scale_x, scale_y, scale_z, [anim_time], [ease], [out])`
+---
+ Returns: `Id.Instance<o3DBone>`
+
 Creates a Bone Cube
 
 | Parameter | Datatype  | Purpose |

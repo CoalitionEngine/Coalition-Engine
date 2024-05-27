@@ -1,6 +1,9 @@
-# Bullet Collision
+## Bullet Collision
 
-## `AddBulletCollision(bullet, [function])` Returns: `undefined`
+### `AddBulletCollision(bullet, [function])`
+---
+ Returns: `undefined`
+
 Adds a bullet collision type and function dynamically, not recommended to put in create event of bullet objects
 
 | Parameter | Datatype  | Purpose |

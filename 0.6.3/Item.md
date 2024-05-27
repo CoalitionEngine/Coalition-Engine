@@ -1,7 +1,10 @@
-# Item
+## Item
 These functions are for setting information for the items globally
 
-## `ItemLibrarySetStruct(item, parameters)` Returns: `undefined`
+### `ItemLibrarySetStruct(item, parameters)`
+---
+ Returns: `undefined`
+
 Sets the information of an item in the global item library
 
 | Parameter | Datatype  | Purpose |
@@ -18,7 +21,10 @@ Sets the information of an item in the global item library
 
 
 
-## `ItemLibrarySet(item, name, heal, description, throw_text, heal_text, effect, battle_description, stats_text, uses)` Returns: `undefined`
+### `ItemLibrarySet(item, name, heal, description, throw_text, heal_text, effect, battle_description, stats_text, uses)`
+---
+ Returns: `undefined`
+
 Sets the information of an item in the global item library
 
 | Parameter | Datatype  | Purpose |
@@ -28,7 +34,7 @@ Sets the information of an item in the global item library
 |`heal` |real |The amount of hp to heal by the item |
 |`desc` |string |The description of the item when checked in the overworld |
 |`throw_text` |stirng |The text displayed when thrown away |
-|`heal_text` |Array\<string\>,string |The text to display when the item is used |
+|`heal_text` |Array<string>,string |The text to display when the item is used |
 |`effect` |function |The effect to apply when the item is used |
 |`battle_desc` |string |The text to display next to the item in battle (if enabled) |
 |`stats` |string |The additional text to display (i.e. Your ATK raised by 4!) |

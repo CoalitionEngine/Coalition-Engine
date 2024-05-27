@@ -1,8 +1,11 @@
-# Data mainipulation
+## Data mainipulation
 You can freely change the encoding/decoding method
 Be sure to keep it consistent
 
-## `SetTempData(name, value)` Returns: `undefined`
+### `SetTempData(name, value)`
+---
+ Returns: `undefined`
+
 Saves tempoary data
 
 | Parameter | Datatype  | Purpose |
@@ -17,7 +20,10 @@ Saves tempoary data
 
 
 
-## `GetTempData(name)` Returns: `undefined`
+### `GetTempData(name)`
+---
+ Returns: `undefined`
+
 Get tempoary data
 
 | Parameter | Datatype  | Purpose |
@@ -31,7 +37,10 @@ Get tempoary data
 
 
 
-## `SaveData(filename, struct, [function])` Returns: `undefined`
+### `SaveData(filename, struct, [function])`
+---
+ Returns: `undefined`
+
 Saves all data from global.TempData into a TempData.dat file
 
 | Parameter | Datatype  | Purpose |
@@ -68,7 +77,10 @@ Saves all data from global.TempData into a TempData.dat file
 
 
 
-## `LoadData(filename, [function])` Returns: `undefined`
+### `LoadData(filename, [function])`
+---
+ Returns: `undefined`
+
 Loads the saved data from the given file name
 
 | Parameter | Datatype  | Purpose |

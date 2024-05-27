@@ -1,10 +1,13 @@
-# Bullet Variable Functions
+## Bullet Variable Functions
 These functions create additional variables for bullet objects
 len_* functions are for creating variables for a circular pattern, dismissing the need for manually calculating.
 To use these functions, simply call len_load() in the create event and call len_step() in step event,
 be sure to add len_clean in the clean up event
 
-## `len_load()` Returns: `undefined`
+### `len_load()`
+---
+ Returns: `undefined`
+
 Loads the variables for len
 After calling this function in the create event, you can access these variables by using Len.\*.
 | Variable name | Datatype  | Purpose |;
@@ -20,13 +23,19 @@ After calling this function in the create event, you can access these variables 
 | `angle_extra` | Real | Sets the angle offset of the bullet while rotating |
 | `target` | Asset.GMObject | Sets the target object that will be set as the center, overriding the defined x/y |
 
-## `len_step()` Returns: `undefined`
+### `len_step()`
+---
+ Returns: `undefined`
+
 Executes the len logic
 axis_* functions are for creating variables for bullets rotating along a certain angle (i.e. when board rotates)
 To use these functions, simply call axis_load() in the create event and call axis_step() in step event,
 be sure to add axis_clean in the clean up event
 
-## `axis_load()` Returns: `undefined`
+### `axis_load()`
+---
+ Returns: `undefined`
+
 Lodas the variables for axis
 After calling this function in the create event, you can access these variables by using Axis.\*.
 | Variable name | Datatype  | Purpose |;
@@ -37,5 +46,8 @@ After calling this function in the create event, you can access these variables 
 | `override_angle` | Real | The angle of the axis rotation |
 The other variables are read only and are for internal use only.
 
-## `axis_step()` Returns: `undefined`
+### `axis_step()`
+---
+ Returns: `undefined`
+
 Executes the axis logic

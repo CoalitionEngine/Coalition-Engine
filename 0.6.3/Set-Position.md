@@ -1,6 +1,9 @@
-# Set Position
+## Set Position
 
-## `Soul_SetPos(target_x, target_y, [duration], [easing], [delay])` Returns: `undefined`
+### `Soul_SetPos(target_x, target_y, [duration], [easing], [delay])`
+---
+ Returns: `undefined`
+
 Sets the position of the soul, can choose to animate the position
 
 | Parameter | Datatype  | Purpose |

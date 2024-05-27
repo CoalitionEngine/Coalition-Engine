@@ -1,6 +1,9 @@
-# Slamming
+## Slamming
 
-## `Slam(direction, [move], [hurt], [target_enemy])` Returns: `undefined`
+### `Slam(direction, [move], [hurt], [target_enemy])`
+---
+ Returns: `undefined`
+
 Slams the soul to the respective direction and other extra functions
 
 | Parameter | Datatype  | Purpose |

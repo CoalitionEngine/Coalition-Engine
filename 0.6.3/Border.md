@@ -1,7 +1,10 @@
-# Border
+## Border
 These funtions are for controlling the border of the game
 
-## `BorderSetEnable(enable, [func], [dur])` Returns: `undefined`
+### `BorderSetEnable(enable, [func], [dur])`
+---
+ Returns: `undefined`
+
 Toggles border on and off, you can choose to have a smooth window size transition
 
 | Parameter | Datatype  | Purpose |
@@ -25,7 +28,10 @@ Toggles border on and off, you can choose to have a smooth window size transitio
 
 
 
-## `BorderSetSprite(sprite, [transition_time])` Returns: `undefined`
+### `BorderSetSprite(sprite, [transition_time])`
+---
+ Returns: `undefined`
+
 Sets the sprite of the border, you can choose to enable a smooth transition between the current
 and the upcoming one
 

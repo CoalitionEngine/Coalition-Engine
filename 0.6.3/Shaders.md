@@ -1,7 +1,10 @@
-# Shaders
+## Shaders
 All engine exclusive shader related functions goes here
 
-## `AddShaderEffect(shader, [surface])` Returns: *real*
+### `AddShaderEffect(shader, [surface])`
+---
+ Returns: `real`
+
 Adds a shader effect, returning the shader ID stored in the controller for
 declaring params and removing the effect
 
@@ -12,7 +15,10 @@ declaring params and removing the effect
 
 **Returns:** The ID of the created shader effect
 
-## `ShaderSetUniform(ID, name, value)` Returns: `undefined`
+### `ShaderSetUniform(ID, name, value)`
+---
+ Returns: `undefined`
+
 Sets the uniform_f values of a shader created using AddShaderEffect()
 
 | Parameter | Datatype  | Purpose |
@@ -26,7 +32,10 @@ Sets the uniform_f values of a shader created using AddShaderEffect()
 
 
 
-## `RemoveShaderEffect(ID)` Returns: `undefined`
+### `RemoveShaderEffect(ID)`
+---
+ Returns: `undefined`
+
 Removes a shader effect added from AddShaderEffect()
 
 | Parameter | Datatype  | Purpose |
@@ -38,17 +47,20 @@ Removes a shader effect added from AddShaderEffect()
 
 
 
-## `__Shader()` (*constructor*)
+### `__Shader()` (*constructor*)
+
 The shader constructor functions
 
 **Methods**
-### `.Init()` Returns: `undefined`
+#### `.Init()` Returns: `undefined`
+
 Initalizes the shader variables
 
-### `.Clean()` Returns: `undefined`
+#### `.Clean()` Returns: `undefined`
+
 Cleans the shader struct of shader parameters
 
-### `.Add(shader, [surface])` Returns: *real*
+#### `.Add(shader, [surface])` Returns: `real`
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
@@ -57,7 +69,8 @@ Cleans the shader struct of shader parameters
 
 **Returns:** The ID of the created shader effect
 
-### `.SetUniform(ID, name, value)` Returns: `undefined`
+#### `.SetUniform(ID, name, value)` Returns: `undefined`
+
 Sets the uniform_f values of a shader created using .Add()
 
 | Parameter | Datatype  | Purpose |
@@ -71,14 +84,18 @@ Sets the uniform_f values of a shader created using .Add()
 
 
 
-### `.Remove(ID)` Returns: *Id.Instance\<blur_shader\>*
+#### `.Remove(ID)` Returns: `Id.Instance<blur_shader>`
+
 Removes a shader effect added from .Add()
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
 |`ID` |real |The ID of the shader (From .Add()) |
 
-## `Blue_Screen(duration, amount)` Returns: {rv}
+### `Blue_Screen(duration, amount)`
+---
+ Returns: {rv}
+
 Blurs the screen
 
 | Parameter | Datatype  | Purpose |

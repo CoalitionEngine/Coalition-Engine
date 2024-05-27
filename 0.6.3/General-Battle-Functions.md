@@ -1,11 +1,13 @@
-# General Battle Functions
+## General Battle Functions
 Below are the functions that are used in battle
 
-## `__Battle()` (*constructor*)
+### `__Battle()` (*constructor*)
+
 Battle data
 
 **Methods**
-### `.Turn([turn])` Returns: `undefined`
+#### `.Turn([turn])` Returns: `undefined`
+
 Gets/Sets the turn of the battle
 
 | Parameter | Datatype  | Purpose |
@@ -17,7 +19,8 @@ Gets/Sets the turn of the battle
 
 
 
-### `.State([state])` Returns: `undefined`
+#### `.State([state])` Returns: `undefined`
+
 Gets/Sets the State of the battle
 
 | Parameter | Datatype  | Purpose |
@@ -29,7 +32,8 @@ Gets/Sets the State of the battle
 
 
 
-### `.SetMenuDialog(text)` Returns: `undefined`
+#### `.SetMenuDialog(text)` Returns: `undefined`
+
 Sets the menu dialog of the battle
 
 | Parameter | Datatype  | Purpose |
@@ -41,7 +45,8 @@ Sets the menu dialog of the battle
 
 
 
-### `.SetBoardTarget(target)` Returns: `undefined`
+#### `.SetBoardTarget(target)` Returns: `undefined`
+
 Sets the target board globally
 
 | Parameter | Datatype  | Purpose |
@@ -53,7 +58,8 @@ Sets the target board globally
 
 
 
-### `.SetSoulTarget(target)` Returns: `undefined`
+#### `.SetSoulTarget(target)` Returns: `undefined`
+
 Sets the target soul globally
 
 | Parameter | Datatype  | Purpose |
@@ -65,7 +71,8 @@ Sets the target soul globally
 
 
 
-### `.EnemyDialog(enemy, turn, text)` Returns: `undefined`
+#### `.EnemyDialog(enemy, turn, text)` Returns: `undefined`
+
 This sets the dialog of the enemy
 
 | Parameter | Datatype  | Purpose |
@@ -85,7 +92,10 @@ This sets the dialog of the enemy
 
 
 
-## `ButtonSprites([file_name], [format])` Returns: `undefined`
+### `ButtonSprites([file_name], [format])`
+---
+ Returns: `undefined`
+
 Sets the sprite of the buttons with external images
 
 | Parameter | Datatype  | Purpose |
@@ -104,7 +114,10 @@ Sets the sprite of the buttons with external images
 
 ?> Note that you can use imported images for changing button sprites as well
 
-## `DrawSpeechBubble(x, y, width, height, color, direction)` Returns: `undefined`
+### `DrawSpeechBubble(x, y, width, height, color, direction)`
+---
+ Returns: `undefined`
+
 Draws the speech bubble
 
 | Parameter | Datatype  | Purpose |

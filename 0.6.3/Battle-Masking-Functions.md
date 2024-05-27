@@ -1,7 +1,10 @@
-# Battle Masking Functions
+## Battle Masking Functions
 Below are the functions you'll use to set up your docs and generate them.
 
-## `Battle_Masking_Start([spr], [board])` Returns: `undefined`
+### `Battle_Masking_Start([spr], [board])`
+---
+ Returns: `undefined`
+
 Begins the drawing of board masking
 
 | Parameter | Datatype  | Purpose |
@@ -30,7 +33,10 @@ Begins the drawing of board masking
 
 
 
-## `Battle_Masking_End([board])` Returns: `undefined`
+### `Battle_Masking_End([board])`
+---
+ Returns: `undefined`
+
 Ends the masked drawing
 
 | Parameter | Datatype  | Purpose |

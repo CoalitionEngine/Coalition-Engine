@@ -1,23 +1,31 @@
-# Player
+## Player
 These functions are for mainipulating player data.
 
-## `ConvertItemNameToStat()` Returns: `undefined`
+### `ConvertItemNameToStat()`
+---
+ Returns: `undefined`
+
 Converts the Item name into stats of the Item and automatically sets the stats of the player
 
-## `__Player()` (*constructor*)
+### `__Player()` (*constructor*)
+
 Player data
 
 **Methods**
-### `.GetBaseStats()` Returns: `undefined`
+#### `.GetBaseStats()` Returns: `undefined`
+
 Gets the base ATK and DEF of the player and then automatically sets it
 
-### `.GetLvBaseExp()` Returns: `undefined`
+#### `.GetLvBaseExp()` Returns: `undefined`
+
 Gets the exp needed for the current lv
 
-### `.GetExpNext()` Returns: `undefined`
+#### `.GetExpNext()` Returns: `undefined`
+
 Gets the exp needed for the lext lv
 
-### `.Name([name])` Returns: `undefined`
+#### `.Name([name])` Returns: `undefined`
+
 Sets/Gets the name of the player
 
 | Parameter | Datatype  | Purpose |
@@ -33,7 +41,8 @@ Sets/Gets the name of the player
 
 
 
-### `.LV([lv])` Returns: `undefined`
+#### `.LV([lv])` Returns: `undefined`
+
 Sets/Gets the lv of the player
 
 | Parameter | Datatype  | Purpose |
@@ -49,7 +58,8 @@ Sets/Gets the lv of the player
 
 
 
-### `.Gold([gold])` Returns: `undefined`
+#### `.Gold([gold])` Returns: `undefined`
+
 Sets/Gets the current Gold the player has
 
 | Parameter | Datatype  | Purpose |
@@ -65,7 +75,8 @@ Sets/Gets the current Gold the player has
 
 
 
-### `.Exp([exp])` Returns: `undefined`
+#### `.Exp([exp])` Returns: `undefined`
+
 Sets/Gets the current Exp the player has
 
 | Parameter | Datatype  | Purpose |
@@ -81,7 +92,8 @@ Sets/Gets the current Exp the player has
 
 
 
-### `.Spd([spd])` Returns: `undefined`
+#### `.Spd([spd])` Returns: `undefined`
+
 Sets/Gets the speed of the player
 
 | Parameter | Datatype  | Purpose |
@@ -97,7 +109,8 @@ Sets/Gets the speed of the player
 
 
 
-### `.HP([hp])` Returns: `undefined`
+#### `.HP([hp])` Returns: `undefined`
+
 Sets/Gets the hp of the player
 
 | Parameter | Datatype  | Purpose |
@@ -113,7 +126,8 @@ Sets/Gets the hp of the player
 
 
 
-### `.HPMax([max_hp])` Returns: `undefined`
+#### `.HPMax([max_hp])` Returns: `undefined`
+
 Sets/Gets the max hp of the player
 
 | Parameter | Datatype  | Purpose |

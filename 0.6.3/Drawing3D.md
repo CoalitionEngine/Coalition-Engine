@@ -1,9 +1,15 @@
-# Drawing3D
+## Drawing3D
 
-## `Load3DNodesAndEdges()` Returns: `undefined`
+### `Load3DNodesAndEdges()`
+---
+ Returns: `undefined`
+
 Loads the nodes and edges for drawing 3D objects
 
-## `draw_cube_width(x, y, size, hor_angle, ver_angle, color, width, round)` Returns: `undefined`
+### `draw_cube_width(x, y, size, hor_angle, ver_angle, color, width, round)`
+---
+ Returns: `undefined`
+
 Draws a outline with given width of a cube
 
 | Parameter | Datatype  | Purpose |

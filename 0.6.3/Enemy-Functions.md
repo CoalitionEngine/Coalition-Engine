@@ -1,11 +1,13 @@
-# Enemy Functions
+## Enemy Functions
 Below are the functions that are related to getting or setting variables of enemies
 
-## `Enemy()` (*constructor*)
+### `Enemy()` (*constructor*)
+
 Enemy data
 
 **Methods**
-### `.LoadEncounter([encounter_number])` Returns: `undefined`
+#### `.LoadEncounter([encounter_number])` Returns: `undefined`
+
 Loads the datas of an encounter that you have stored in this script
 
 | Parameter | Datatype  | Purpose |
@@ -62,7 +64,8 @@ Loads the datas of an encounter that you have stored in this script
 
 
 
-### `.SetEncounter([enconter], [left], [middle], [right])` Returns: `undefined`
+#### `.SetEncounter([enconter], [left], [middle], [right])` Returns: `undefined`
+
 Sets the enemies in the provided encounter
 
 | Parameter | Datatype  | Purpose |
@@ -76,7 +79,8 @@ Sets the enemies in the provided encounter
 
 
 
-### `.SetName(enemy, text)` Returns: `undefined`
+#### `.SetName(enemy, text)` Returns: `undefined`
+
 Sets the name of the enemy
 
 | Parameter | Datatype  | Purpose |
@@ -89,7 +93,8 @@ Sets the name of the enemy
 
 
 
-### `.SetAct(enemy, act, name, text, function, [trigger_turn])` Returns: `undefined`
+#### `.SetAct(enemy, act, name, text, function, [trigger_turn])` Returns: `undefined`
+
 Sets the act data of the enemy
 
 | Parameter | Datatype  | Purpose |
@@ -112,7 +117,8 @@ Sets the act data of the enemy
 
 
 
-### `.SetHPStats(enemy, max_hp, current_hp, [draw_hp_bar])` Returns: `undefined`
+#### `.SetHPStats(enemy, max_hp, current_hp, [draw_hp_bar])` Returns: `undefined`
+
 Sets the HP data of the enemy
 
 | Parameter | Datatype  | Purpose |
@@ -133,7 +139,8 @@ Sets the HP data of the enemy
 
 
 
-### `.SetDefense(enemy, value)` Returns: `undefined`
+#### `.SetDefense(enemy, value)` Returns: `undefined`
+
 Sets the Defense of the enemy
 
 | Parameter | Datatype  | Purpose |
@@ -146,7 +153,8 @@ Sets the Defense of the enemy
 
 
 
-### `.SetDamage(enemy, damage)` Returns: `undefined`
+#### `.SetDamage(enemy, damage)` Returns: `undefined`
+
 Sets the Damage of the enemy (Taken by enemy, not inflicted to player)
 
 | Parameter | Datatype  | Purpose |
@@ -159,7 +167,8 @@ Sets the Damage of the enemy (Taken by enemy, not inflicted to player)
 
 
 
-### `.SetSpareable(enemy, spareable)` Returns: `undefined`
+#### `.SetSpareable(enemy, spareable)` Returns: `undefined`
+
 Sets whether the enemy can be spared
 
 | Parameter | Datatype  | Purpose |
@@ -172,7 +181,8 @@ Sets whether the enemy can be spared
 
 
 
-### `.SetReward(enemy, Exp, Gold)` Returns: `undefined`
+#### `.SetReward(enemy, Exp, Gold)` Returns: `undefined`
+
 Sets the Reward of the enemy
 
 | Parameter | Datatype  | Purpose |

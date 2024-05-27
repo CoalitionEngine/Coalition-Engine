@@ -1,6 +1,9 @@
-# Movement Checking
+## Movement Checking
 
-## `Soul_IsMoving([input_based])` Returns: *bool*
+### `Soul_IsMoving([input_based])`
+---
+ Returns: `bool`
+
 Return whether is soul moving or not
 
 | Parameter | Datatype  | Purpose |

@@ -1,16 +1,19 @@
-# Cell
+## Cell
 These functions are related to cell usage in the overworld
 
-## `Cell()` (*constructor*)
+### `Cell()` (*constructor*)
+
 Cell fucntions
 
 **Methods**
-### `.Count()` Returns: *real*
+#### `.Count()` Returns: `real`
+
 Gets the amount of phone numbers you have
 
 **Returns:** THe amount of phone numbers
 
-### `.GetName(slot)` Returns: *string*
+#### `.GetName(slot)` Returns: `string`
+
 Gets the name of the Cell Slot
 
 | Parameter | Datatype  | Purpose |
@@ -19,7 +22,8 @@ Gets the name of the Cell Slot
 
 **Returns:** The name of the cell
 
-### `.GetText(slot)` Returns: *string*
+#### `.GetText(slot)` Returns: `string`
+
 Gets the dialog of the Cell Slot
 
 | Parameter | Datatype  | Purpose |
@@ -28,7 +32,8 @@ Gets the dialog of the Cell Slot
 
 **Returns:** The dialog of the cell
 
-### `.IsBox(slot)` Returns: *bool*
+#### `.IsBox(slot)` Returns: `bool`
+
 Check if a Cell slot is a Dimensional box
 
 | Parameter | Datatype  | Purpose |
@@ -37,7 +42,8 @@ Check if a Cell slot is a Dimensional box
 
 **Returns:** Whether it is a box
 
-### `.GetBoxID(slot)` Returns: *real*
+#### `.GetBoxID(slot)` Returns: `real`
+
 Get the box ID of the cell
 
 | Parameter | Datatype  | Purpose |
@@ -46,10 +52,16 @@ Get the box ID of the cell
 
 **Returns:** The ID of the box
 
-## `CellLibraryInit` Returns: `undefined`
+### `CellLibraryInit`
+---
+ Returns: `undefined`
+
 Initalizes the cell library
 
-## `Cell_Add(cell_name, [cell_text], [cell_isbox], [cell_box_id])` Returns: *real*
+### `Cell_Add(cell_name, [cell_text], [cell_isbox], [cell_box_id])`
+---
+ Returns: `real`
+
 Add a new cell
 
 | Parameter | Datatype  | Purpose |

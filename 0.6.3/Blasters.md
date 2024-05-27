@@ -1,6 +1,9 @@
-# Blasters
+## Blasters
 
-## `CreateBlaster(x, y, target_x, target_y, [inital_angle], target_angle, scale_x, scale_y, move, pause, duration, [color], [blur], [create_sound], [release_sound])` Returns: *Id.Instance\<oGB\>*
+### `CreateBlaster(x, y, target_x, target_y, [inital_angle], target_angle, scale_x, scale_y, move, pause, duration, [color], [blur], [create_sound], [release_sound])`
+---
+ Returns: `Id.Instance<oGB>`
+
 Creates a Blaster with given parameters
 
 | Parameter | Datatype  | Purpose |
@@ -21,9 +24,12 @@ Creates a Blaster with given parameters
 |`create_sound` |bool |Whether the creation sound plays (Default true) |
 |`release_sound` |bool |Whether the firing sound plays (Default true) |
 
-**Returns:** The createed blaster
+**Returns:** The created blaster
 
-## `CreateBlasterCircle(x, y, len_start, len_end, [direction_start], direction, scale_x, scale_y, move, pause, duration)` Returns: *Id.Instance\<oGB\>*
+### `CreateBlasterCircle(x, y, len_start, len_end, [direction_start], direction, scale_x, scale_y, move, pause, duration)`
+---
+ Returns: `Id.Instance<oGB>`
+
 Creates a blaster in a blaster circle
 
 | Parameter | Datatype  | Purpose |
@@ -40,4 +46,4 @@ Creates a blaster in a blaster circle
 |`pause` |real |The pause time of the blaster before it shoots after it finished moving |
 |`duration` |real |The duration of the blast |
 
-**Returns:** The createed blaster
+**Returns:** The created blaster

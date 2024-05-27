@@ -1,6 +1,9 @@
-# Dialog
+## Dialog
 
-## `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])` Returns: `undefined`
+### `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])`
+---
+ Returns: `undefined`
+
 Creates a dialog box in the Overworld
 
 | Parameter | Datatype  | Purpose |

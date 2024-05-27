@@ -1,11 +1,13 @@
-# Board Functions
+## Board Functions
 Below are the functions that are related to controlling the board
 
-## `__Board()` (*constructor*)
+### `__Board()` (*constructor*)
+
 Board data
 
 **Methods**
-### `.GetX([target])` Returns: `undefined`
+#### `.GetX([target])` Returns: `undefined`
+
 Gets the x position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -16,7 +18,8 @@ Gets the x position of the board
 
 
 
-### `.GetY([target])` Returns: `undefined`
+#### `.GetY([target])` Returns: `undefined`
+
 Gets the y position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -27,7 +30,8 @@ Gets the y position of the board
 
 
 
-### `.GetUp([target])` Returns: `undefined`
+#### `.GetUp([target])` Returns: `undefined`
+
 Gets the upwards distance of the board
 
 | Parameter | Datatype  | Purpose |
@@ -38,7 +42,8 @@ Gets the upwards distance of the board
 
 
 
-### `.GetDown([target])` Returns: `undefined`
+#### `.GetDown([target])` Returns: `undefined`
+
 Gets the downwards distance of the board
 
 | Parameter | Datatype  | Purpose |
@@ -49,7 +54,8 @@ Gets the downwards distance of the board
 
 
 
-### `.GetLeft([target])` Returns: `undefined`
+#### `.GetLeft([target])` Returns: `undefined`
+
 Gets the leftwards distance of the board
 
 | Parameter | Datatype  | Purpose |
@@ -60,7 +66,8 @@ Gets the leftwards distance of the board
 
 
 
-### `.GetRight([target])` Returns: `undefined`
+#### `.GetRight([target])` Returns: `undefined`
+
 Gets the rightwards distance of the board
 
 | Parameter | Datatype  | Purpose |
@@ -71,7 +78,8 @@ Gets the rightwards distance of the board
 
 
 
-### `.GetUpPos([target])` Returns: `undefined`
+#### `.GetUpPos([target])` Returns: `undefined`
+
 Gets the upwards position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -82,7 +90,8 @@ Gets the upwards position of the board
 
 
 
-### `.GetDownPos(target)` Returns: `undefined`
+#### `.GetDownPos(target)` Returns: `undefined`
+
 Gets the downwards position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -93,7 +102,8 @@ Gets the downwards position of the board
 
 
 
-### `.GetLeftPos([target])` Returns: `undefined`
+#### `.GetLeftPos([target])` Returns: `undefined`
+
 Gets the leftwards position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -104,7 +114,8 @@ Gets the leftwards position of the board
 
 
 
-### `.GetRightPos([target])` Returns: `undefined`
+#### `.GetRightPos([target])` Returns: `undefined`
+
 Gets the rightwards position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -115,7 +126,8 @@ Gets the rightwards position of the board
 
 
 
-### `.GetHeight([target])` Returns: `undefined`
+#### `.GetHeight([target])` Returns: `undefined`
+
 Gets the height of the board
 
 | Parameter | Datatype  | Purpose |
@@ -126,7 +138,8 @@ Gets the height of the board
 
 
 
-### `.GetWidth([target])` Returns: `undefined`
+#### `.GetWidth([target])` Returns: `undefined`
+
 Gets the width of the board
 
 | Parameter | Datatype  | Purpose |
@@ -137,7 +150,8 @@ Gets the width of the board
 
 
 
-### `.SetSize([up], [down], [left], [right], [time], [ease], [target])` Returns: `undefined`
+#### `.SetSize([up], [down], [left], [right], [time], [ease], [target])` Returns: `undefined`
+
 Sets the size of the board with Anim
 
 | Parameter | Datatype  | Purpose |
@@ -163,7 +177,8 @@ Sets the size of the board with Anim
 
 
 
-### `.SetAngle([angle], [time], [ease], [target])` Returns: `undefined`
+#### `.SetAngle([angle], [time], [ease], [target])` Returns: `undefined`
+
 Sets the angle of the board with Anim
 
 | Parameter | Datatype  | Purpose |
@@ -180,7 +195,8 @@ Sets the angle of the board with Anim
 
 
 
-### `.SetPos([x], [y], [time], [ease], [board])` Returns: `undefined`
+#### `.SetPos([x], [y], [time], [ease], [board])` Returns: `undefined`
+
 Sets the x and y position of the board
 
 | Parameter | Datatype  | Purpose |
@@ -205,7 +221,8 @@ Sets the x and y position of the board
 
 
 
-### `.GetID(target)` Returns: `undefined`
+#### `.GetID(target)` Returns: `undefined`
+
 Gets the ID of the board in the global board list
 
 | Parameter | Datatype  | Purpose |
@@ -218,5 +235,6 @@ Gets the ID of the board in the global board list
 
 
 
-### `.Mask()` Returns: `undefined`
+#### `.Mask()` Returns: `undefined`
+
 Automatically masks the board with the default background color

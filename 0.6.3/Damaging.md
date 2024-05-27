@@ -1,6 +1,9 @@
-# Damaging
+## Damaging
 
-## `Soul_Hurt([damage], [kr])` Returns: `undefined`
+### `Soul_Hurt([damage], [kr])`
+---
+ Returns: `undefined`
+
 Deals damage to the soul
 
 | Parameter | Datatype  | Purpose |

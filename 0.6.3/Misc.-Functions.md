@@ -1,12 +1,21 @@
-# Misc. Functions
+## Misc. Functions
 
-## `check_outside()` Returns: *bool*
+### `check_outside()`
+---
+ Returns: `bool`
+
 Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
 
-## `Screenshot(filename)` Returns: `undefined`
+### `Screenshot(filename)`
+---
+ Returns: `undefined`
+
 Takes a screenshot and saves it with given filename + current time
 
-## `LoadTextFromFile(filename, [reading_method], [tag])` Returns: *string*
+### `LoadTextFromFile(filename, [reading_method], [tag])`
+---
+ Returns: `string`
+
 Loads the text from an external text file, there are 2 reading methods for now:
 0 is by using numbers to indicate the turn number (during battle)
 1 is by using tags to let the script read which text to load
@@ -17,7 +26,10 @@ Loads the text from an external text file, there are 2 reading methods for now:
 |`Read_Method` |real |The method of reading the text files, default 0 |
 |`Tag` |string |The tag of the string to get |
 
-## `mouse_in_rectangle(x1, y1, x2, y2)` Returns: *bool*
+### `mouse_in_rectangle(x1, y1, x2, y2)`
+---
+ Returns: `bool`
+
 Checks whether the mouse is inside a rectangle
 
 | Parameter | Datatype  | Purpose |
@@ -27,7 +39,10 @@ Checks whether the mouse is inside a rectangle
 |`x2` |real |The x coordinate of the bottom right coordinate of the rectangle |
 |`y2` |real |The y coordinate of the bottom right coordinate of the rectangle |
 
-## `mouse_in_circle(x, y, radius)` Returns: *bool*
+### `mouse_in_circle(x, y, radius)`
+---
+ Returns: `bool`
+
 Checks whether the mouse is inside a circle
 
 | Parameter | Datatype  | Purpose |
@@ -36,7 +51,10 @@ Checks whether the mouse is inside a circle
 |`y` |real |The y coordinate of the circle center |
 |`radius` |real |The radius of the circle |
 
-## `mouse_in_triangle(x1, 1, x2, y2, x3, y3)` Returns: *bool*
+### `mouse_in_triangle(x1, 1, x2, y2, x3, y3)`
+---
+ Returns: `bool`
+
 checks whether the mouse is in a triangle)
 
 | Parameter | Datatype  | Purpose |
@@ -48,7 +66,10 @@ checks whether the mouse is in a triangle)
 |`x3` |real |The x coordinate of the third vertice of the triangle |
 |`y3` |real |The y coordinate of the third vertice of the triangle |
 
-## `instance_check_create(instance)` Returns: `undefined`
+### `instance_check_create(instance)`
+---
+ Returns: `undefined`
+
 Checks whether an instance exists, if not, create at (0, 0)
 
 | Parameter | Datatype  | Purpose |
@@ -62,7 +83,10 @@ Checks whether an instance exists, if not, create at (0, 0)
 
 
 
-## `is_rectangle(a, b, c, d)` Returns: *bool*
+### `is_rectangle(a, b, c, d)`
+---
+ Returns: `bool`
+
 Checks whether the list of points form a rectangle
 
 | Parameter | Datatype  | Purpose |
@@ -72,7 +96,10 @@ Checks whether the list of points form a rectangle
 |`c` |array |The array of coordinates of the third corner |
 |`d` |array |The array of coordinates of the fourth corner |
 
-## `nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)` Returns: *Struct.Vector2*
+### `nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)`
+---
+ Returns: `Struct.Vector2`
+
 Checks the nearest point to an edge
 
 | Parameter | Datatype  | Purpose |
@@ -86,7 +113,10 @@ Checks the nearest point to an edge
 
 **Returns:** The nearest point
 
-## `file_read_all_text(filename)` Returns: `undefined`
+### `file_read_all_text(filename)`
+---
+ Returns: `undefined`
+
 Reads entire content of a given file as a string, or returns undefined if the file doesn't exist.
 
 | Parameter | Datatype  | Purpose |
@@ -105,7 +135,10 @@ Reads entire content of a given file as a string, or returns undefined if the fi
 
 
 
-## `file_write_all_text(filename,content)` Returns: `undefined`
+### `file_write_all_text(filename,content)`
+---
+ Returns: `undefined`
+
 Creates or overwrites a given file with the given string content.
 
 | Parameter | Datatype  | Purpose |
@@ -121,7 +154,9 @@ Creates or overwrites a given file with the given string content.
 
 
 
-## `string_split_lines(str)` Returns: *Array\<String\>*
+### `string_split_lines(str)`
+---
+ Returns: `Array<String>`
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
@@ -129,7 +164,10 @@ Creates or overwrites a given file with the given string content.
 |`remove_empty` |Bool |Determines whether the final result should filter out empty strings or not. |
 |`max_splits` |Real |The maximum number of splits to make. |
 
-## `json_load(filename)` Returns: `undefined`
+### `json_load(filename)`
+---
+ Returns: `undefined`
+
 Loads a given JSON file into a GML value (struct/array/string/real).
 
 | Parameter | Datatype  | Purpose |
@@ -150,7 +188,10 @@ Loads a given JSON file into a GML value (struct/array/string/real).
 
 
 
-## `json_save(filename,value)` Returns: `undefined`
+### `json_save(filename,value)`
+---
+ Returns: `undefined`
+
 Saves a given GML value (struct/array/string/real) into a JSON file.
 
 | Parameter | Datatype  | Purpose |
@@ -163,7 +204,10 @@ Saves a given GML value (struct/array/string/real) into a JSON file.
 
 
 
-## `asset_get_name(asset)` Returns: *String*
+### `asset_get_name(asset)`
+---
+ Returns: `String`
+
 Retrieves a name of the given asset, or returns undefined if the passed value isn't an asset handle.
 
 | Parameter | Datatype  | Purpose |

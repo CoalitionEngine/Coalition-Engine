@@ -1,14 +1,17 @@
-# Camera
+## Camera
 These are the functions to control the camera properties.
 
-## `__Camera()` (*constructor*)
+### `__Camera()` (*constructor*)
+
 Camera data
 
 **Methods**
-### `.Init()` Returns: `undefined`
+#### `.Init()` Returns: `undefined`
+
 Initalizes the camera variables
 
-### `.Shake(amount, [decrease])` Returns: `undefined`
+#### `.Shake(amount, [decrease])` Returns: `undefined`
+
 Shakes the Camera
 
 | Parameter | Datatype  | Purpose |
@@ -30,7 +33,8 @@ Shakes the Camera
 
 
 
-### `.Scale(scale_x, scale_y, [duration], [ease])` Returns: `undefined`
+#### `.Scale(scale_x, scale_y, [duration], [ease])` Returns: `undefined`
+
 Sets the scale of the Camera
 
 | Parameter | Datatype  | Purpose |
@@ -51,7 +55,8 @@ Sets the scale of the Camera
 
 
 
-### `.SetPos(x, y)` Returns: `undefined`
+#### `.SetPos(x, y)` Returns: `undefined`
+
 Sets the X and Y position of the Camera
 
 | Parameter | Datatype  | Purpose |
@@ -68,7 +73,8 @@ Sets the X and Y position of the Camera
 
 
 
-### `.MoveTo(x, y, duration, [delay], [ease])` Returns: `undefined`
+#### `.MoveTo(x, y, duration, [delay], [ease])` Returns: `undefined`
+
 Moves the camera to the given coordinates
 
 | Parameter | Datatype  | Purpose |
@@ -84,7 +90,8 @@ Moves the camera to the given coordinates
 
 
 
-### `.RotateTo([start], target, duration, [ease], [delay])` Returns: `undefined`
+#### `.RotateTo([start], target, duration, [ease], [delay])` Returns: `undefined`
+
 Rotates the camera
 
 | Parameter | Datatype  | Purpose |
@@ -101,19 +108,24 @@ Rotates the camera
 
 
 
-### `.ViewX()` Returns: `undefined`
+#### `.ViewX()` Returns: `undefined`
+
 Gets the x position of the current view
 
-### `.ViewY()` Returns: `undefined`
+#### `.ViewY()` Returns: `undefined`
+
 Gets the y position of the current view
 
-### `.ViewWidth()` Returns: `undefined`
+#### `.ViewWidth()` Returns: `undefined`
+
 Gets the width of the current view
 
-### `.ViewHeight()` Returns: `undefined`
+#### `.ViewHeight()` Returns: `undefined`
+
 Gets the height of the current view
 
-### `.SetAspect(width, height)` Returns: `undefined`
+#### `.SetAspect(width, height)` Returns: `undefined`
+
 Sets the width and height of the camera
 
 | Parameter | Datatype  | Purpose |
@@ -130,7 +142,8 @@ Sets the width and height of the camera
 
 
 
-### `.GetScale([val])` Returns: `undefined`
+#### `.GetScale([val])` Returns: `undefined`
+
 Gets the scale of the camera
 
 | Parameter | Datatype  | Purpose |
@@ -146,7 +159,8 @@ Gets the scale of the camera
 
 
 
-### `.GetAspect([val])` Returns: `undefined`
+#### `.GetAspect([val])` Returns: `undefined`
+
 Gets the aspect of the view
 
 | Parameter | Datatype  | Purpose |
@@ -163,7 +177,8 @@ Gets the aspect of the view
 
 
 
-### `.GetPos([val])` Returns: `undefined`
+#### `.GetPos([val])` Returns: `undefined`
+
 Gets the position of the camera
 
 | Parameter | Datatype  | Purpose |
@@ -178,5 +193,6 @@ Gets the position of the camera
 
 
 
-### `.GetAngle()` Returns: `undefined`
+#### `.GetAngle()` Returns: `undefined`
+
 Gets the angle of the camera

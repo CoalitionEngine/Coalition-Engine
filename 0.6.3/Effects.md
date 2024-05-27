@@ -1,6 +1,9 @@
-# Effects
+## Effects
 
-## `Fader_Fade([start], target, duration, [delay], [color])` Returns: `undefined`
+### `Fader_Fade([start], target, duration, [delay], [color])`
+---
+ Returns: `undefined`
+
 Fades the screen
 
 | Parameter | Datatype  | Purpose |
@@ -17,7 +20,10 @@ Fades the screen
 
 
 
-## `Dader_Fade_InOut([start_alpha], target_alpha, final_alpha, in_duration, hold_duration, out_duration, [delay], [color])` Returns: `undefined`
+### `Dader_Fade_InOut([start_alpha], target_alpha, final_alpha, in_duration, hold_duration, out_duration, [delay], [color])`
+---
+ Returns: `undefined`
+
 Fades the screen and fades back out to destined alpha
 
 | Parameter | Datatype  | Purpose |
@@ -42,7 +48,10 @@ Fades the screen and fades back out to destined alpha
 
 
 
-## `Fade_Out([mode], [duration], [delay])` Returns: `undefined`
+### `Fade_Out([mode], [duration], [delay])`
+---
+ Returns: `undefined`
+
 Fades the screen using custom methods (Probably for cutscenes in the overworld)
 
 | Parameter | Datatype  | Purpose |
@@ -56,7 +65,10 @@ Fades the screen using custom methods (Probably for cutscenes in the overworld)
 
 
 
-## `TrailStep([duration])` Returns: `undefined`
+### `TrailStep([duration])`
+---
+ Returns: `undefined`
+
 Creates a trail of the object using particles (This does not give you much free room)
 
 | Parameter | Datatype  | Purpose |
@@ -71,7 +83,10 @@ Creates a trail of the object using particles (This does not give you much free 
 
 
 
-## `TrailEffect(duration, [sprite], [subimg], [x], [y], [xscale], [yscale], [rotation], [color], [alpha])` Returns: *Id.Instace\<oEffect\>*
+### `TrailEffect(duration, [sprite], [subimg], [x], [y], [xscale], [yscale], [rotation], [color], [alpha])`
+---
+ Returns: `Id.Instace<oEffect>`
+
 Creates a trail of given sprite and params using an instance (This may decrease performance)
 
 | Parameter | Datatype  | Purpose |
@@ -89,7 +104,10 @@ Creates a trail of given sprite and params using an instance (This may decrease 
 
 **Returns:** The created instance
 
-## `SpliceScreen(x, y, direction, in_duration, hold_duration, distance, [easing])` Returns: `undefined`
+### `SpliceScreen(x, y, direction, in_duration, hold_duration, distance, [easing])`
+---
+ Returns: `undefined`
+
 Splices the screen, similar to Edgetale run 3 final attack
 
 | Parameter | Datatype  | Purpose |

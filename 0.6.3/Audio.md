@@ -1,6 +1,9 @@
-# Audio
+## Audio
 
-## `audio_play(soundid, [single], [loop], [volume], [pitch], [time], [position]` Returns: *Id.Sound*
+### `audio_play(soundid, [single], [loop], [volume], [pitch], [time], [position]`
+---
+ Returns: `Id.Sound`
+
 Plays the audio with chosen volume and pitch
 
 | Parameter | Datatype  | Purpose |
@@ -15,7 +18,10 @@ Plays the audio with chosen volume and pitch
 
 **Returns:** The sound you played
 
-## `AudioStickToTime(audio, time, [margin])` Returns: `undefined`
+### `AudioStickToTime(audio, time, [margin])`
+---
+ Returns: `undefined`
+
 Sticks the audio to given time (in seconds, so you have to do divide frame by 60)
 
 | Parameter | Datatype  | Purpose |
@@ -24,17 +30,26 @@ Sticks the audio to given time (in seconds, so you have to do divide frame by 60
 |`Time` |real |The target time to set the audio with |
 |`Margin` |real |The margin of error of the audio, Default 0.05 sec / 3 frames |
 
-## `audio_create_stream_array(names...)` Returns: *Array\<Asset.GMSound\>*
+### `audio_create_stream_array(names...)`
+---
+ Returns: `Array<Asset.GMSound>`
+
 Creates an array of audios from audio_create_stream(), arguments are all strings, no folder name and file format needed
 
-## `audio_destroy_stream_array(array)` Returns: `undefined`
+### `audio_destroy_stream_array(array)`
+---
+ Returns: `undefined`
+
 Destroys all audio that were streams in the array then remove the array
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
 |`array	The` |Array<Asset.GMSound> |array of streamed audio to destroy |
 
-## `audio_transition(inital_audio, target_audio, time, [single], [loop], [volume], [pitch], [position])` Returns: `undefined`
+### `audio_transition(inital_audio, target_audio, time, [single], [loop], [volume], [pitch], [position])`
+---
+ Returns: `undefined`
+
 Transitions an audio to another using fade in/out
 
 | Parameter | Datatype  | Purpose |
