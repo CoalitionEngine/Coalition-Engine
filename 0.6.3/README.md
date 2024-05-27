@@ -15,15 +15,19 @@ This engine features:
 - Anti-UTMT support
 
 **What platforms does this engine support?**
+
 Potentially every, although some platforms are not fully tested due to the lack of use (such as HTML) and platforms we don't do test on a regular basis.
 
 **Which Game Maker version should I use to use this engine?**
+
 Since this engine is developed in 2023.11.1.129 as of now, this will be the minimal version of GM required, note that this engine is rather dependant on external libraries so you may need to update GM to match their minimal versions.
 
 **I encountered a bug on XXX, how do I fix it?**
+
 You can file a bug report on Github using 'Issues', or use the bug report channel on the [official Discord server](https://discord.gg/VyYghseRHf), both are acceptable!
 
-**You didn't add a feather that was in Undertale!/There is a feature that would be cool to add!**
+**You didn't add a feature that was in Undertale!/There is a feature that would be cool to add!**
+
 Good! You proved that we are idiots! Go put your suggestion on the suggestions channel in our server!
 
 ## Need to know

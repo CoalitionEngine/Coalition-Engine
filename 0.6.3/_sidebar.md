@@ -85,13 +85,8 @@
 -    [Effects](Effects)
 -    [Shaders](Shaders)
 -    [Misc. Functions](Misc.-Functions)
--    [Surfaces](Surfaces)
-
----
-
-**Special Scirpts**
-
 -    [Strings](Strings)
+-    [Surfaces](Surfaces)
 
 ---
 

@@ -25,19 +25,19 @@ Check Battle -> Enemy Functions for more information of these functions
 
 There are variables that are not covered in the functions, they will be covered here
 | Variable Name | Type | Purpose |
-| --- | --- | --- |
+| ------ | ------ | ------ |
 | is_boss | `Bool` | Sets whether the enemy is a boss or not |
 | begin_at_turn | `Bool` | Whether the battle will begin in a turn, or at the menu |
 | dodge_method | `Function` | The function to execute when the enemy is being attacked |
 | dialog | `Struct` | A struct containing several variables to alter the behaviour of the speech bubble, they are as follows |
-| --- | --- | --- |
+---
 | x | `Real` | The x coordinate of the speech bubble |
 | y | `Real` | The y coordinate of the speech bubble |
 | width | `Real` | The width of the speech bubble |
 | height | `Real` | The height of the speech bubble |
 | dir | `Real` | The direction of the speech bubble |
 | color | `Real` | The color of the speech bubble |
-| --- | --- | --- |
+---
 | deafult_font | `string` | The name of the default font you want to set the text of |
 | deafult_sound | `Asset.GMSound` | The default sound you want to set the text to |
 | draw_damage | `Asset.GMSound` | The default sound you want to set the text to |
@@ -58,7 +58,7 @@ There are two ways to do that, you use the built-in (almost useless) system, or 
 If you lack knowledge to create one by your own, then you should use the built-in system.
 The following variables are all arrays and should follow the same order, i.e. Top to Bottom
 | Variable Name | Type | Purpose |
-| --- | --- | --- |
+| ------ | ------ | ------ |
 | enemy_sprites | `Asset.GMSprite` | The sprites that will be drawn |
 | enemy_sprite_index | `Real` | The indexes of the sprites that are drawn |
 | enemy_sprite_scale | `Array<Real>` | The array of scales of the sprites to draw in the format of `[xscale, yscale]` |
@@ -71,7 +71,7 @@ If you would like to disable wiggling of sprites, you should set `wiggle` to fal
 There are also variables that are built-in to the engine for slamming animations.
 Slamming are disabled by default, set `SlammingEnabled` to true to enable them.
 | Variable Name | Type | Purpose |
-| --- | --- | --- |
+| ------ | ------ | ------ |
 | SlamSprites | `Array<Asset.GMSprites>` | The sprites of the slamming animation, it is recommended to compile them into 1 sprite per direction |
 | SlamSpriteTargetIndex | `Array<Real>` | The indexes of the sprite during slamming, you should give 5 arguments for this |
 

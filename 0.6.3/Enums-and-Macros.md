@@ -3,13 +3,14 @@
 These macros are for assiting you to code using this engine
 | Macro Name | Purpose |
 | ----------- | ----------- |
-| \_\_COALITION_ENGINE_VERSION | The current version of the engine|
+| \_\_COALITION_ENGINE_VERSION | The current version of the engine |
 | \_\_COALITION_VERBOSE | Show extended debug information in the coutput window |
 | \_\_COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR | Whether or not an error message will be displayed if you are not in the correct GM version |
 | ALLOW_DEBUG | Whether or not the player can access the debug console |
 | DEBUG | Whether or not the currrent build is a debug build or not (Disabling will lead to performance boost) |
 | RELEASE | Whether or not the currrent build is a release build or not (This is automatically set to !DEBUG) |
 | NOOB_MODE | Whether or not the quick functions will be compiled |
+
 These macros are for retrieving player input
 ## Input Macros
 | Macro Name | Purpose | Returns |
@@ -41,12 +42,12 @@ These macros are for ease of coding
 | APPLY_AGGRESSIVE_FORCEINLINE | Whether to apply the aggressive_forceinline or not |
 ## Engine Enums
 These are the list of enums used in this engine
-| -------- |
-| SOUL_MODE |
-| DIR |
-| ITEM |
-| ITEM_SCROLL |
-| OVERWORLD |
-| BATTLE_STATE |
-| MENU_STATE |
-| SAVE_STATE |
+| -------- | ------ |
+| SOUL_MODE | Soul Modes |
+| DIR | Direction |
+| ITEM | |Item ID|
+| ITEM_SCROLL | Item scroll mode in battle |
+| OVERWORLD | Overworld Room |
+| BATTLE_STATE | Battle state |
+| MENU_STATE | Menu State |
+| SAVE_STATE | Saving State |
