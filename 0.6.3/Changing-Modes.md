@@ -1,6 +1,6 @@
-## Changing Modes
+# Changing Modes
 
-### `Soul_SetMode(soul_mode, [effect])`
+## `Soul_SetMode(soul_mode, [effect])`
 ---
  Returns: `undefined`
 

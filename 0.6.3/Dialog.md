@@ -1,6 +1,6 @@
-## Dialog
+# Dialog
 
-### `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])`
+## `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])`
 ---
  Returns: `undefined`
 

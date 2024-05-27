@@ -1,6 +1,6 @@
-## Surfaces
+# Surfaces
 
-### `draw_surface_rotated_ext(surface, x, y, xscale, yscale, rotation, color, alpha)`
+## `draw_surface_rotated_ext(surface, x, y, xscale, yscale, rotation, color, alpha)`
 ---
  Returns: `undefined`
 
@@ -28,7 +28,7 @@ Draws a surface normally (top-left origin), but rotates around the center origin
 
 
 
-### `draw_surfaceftiled_area(surface, x, y, x1, y1, x2, y2)`
+## `draw_surfaceftiled_area(surface, x, y, x1, y1, x2, y2)`
 ---
  Returns: `undefined`
 

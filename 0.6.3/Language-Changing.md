@@ -1,6 +1,6 @@
-## Language Changing
+# Language Changing
 
-### `Setlanguage(language_id)`
+## `Setlanguage(language_id)`
 ---
  Returns: `undefined`
 

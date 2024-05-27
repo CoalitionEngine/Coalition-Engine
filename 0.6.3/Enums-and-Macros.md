@@ -1,4 +1,4 @@
-## Enums and Macros
+# Enums and Macros
 ## Engine Macros
 These macros are for assiting you to code using this engine
 | Macro Name | Purpose |

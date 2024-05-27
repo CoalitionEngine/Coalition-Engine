@@ -1,18 +1,18 @@
-## Misc. Functions
+# Misc. Functions
 
-### `check_outside()`
+## `check_outside()`
 ---
  Returns: `bool`
 
 Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
 
-### `Screenshot(filename)`
+## `Screenshot(filename)`
 ---
  Returns: `undefined`
 
 Takes a screenshot and saves it with given filename + current time
 
-### `LoadTextFromFile(filename, [reading_method], [tag])`
+## `LoadTextFromFile(filename, [reading_method], [tag])`
 ---
  Returns: `string`
 
@@ -26,7 +26,7 @@ Loads the text from an external text file, there are 2 reading methods for now:
 |`Read_Method` |real |The method of reading the text files, default 0 |
 |`Tag` |string |The tag of the string to get |
 
-### `mouse_in_rectangle(x1, y1, x2, y2)`
+## `mouse_in_rectangle(x1, y1, x2, y2)`
 ---
  Returns: `bool`
 
@@ -39,7 +39,7 @@ Checks whether the mouse is inside a rectangle
 |`x2` |real |The x coordinate of the bottom right coordinate of the rectangle |
 |`y2` |real |The y coordinate of the bottom right coordinate of the rectangle |
 
-### `mouse_in_circle(x, y, radius)`
+## `mouse_in_circle(x, y, radius)`
 ---
  Returns: `bool`
 
@@ -51,7 +51,7 @@ Checks whether the mouse is inside a circle
 |`y` |real |The y coordinate of the circle center |
 |`radius` |real |The radius of the circle |
 
-### `mouse_in_triangle(x1, 1, x2, y2, x3, y3)`
+## `mouse_in_triangle(x1, 1, x2, y2, x3, y3)`
 ---
  Returns: `bool`
 
@@ -66,7 +66,7 @@ checks whether the mouse is in a triangle)
 |`x3` |real |The x coordinate of the third vertice of the triangle |
 |`y3` |real |The y coordinate of the third vertice of the triangle |
 
-### `instance_check_create(instance)`
+## `instance_check_create(instance)`
 ---
  Returns: `undefined`
 
@@ -83,7 +83,7 @@ Checks whether an instance exists, if not, create at (0, 0)
 
 
 
-### `is_rectangle(a, b, c, d)`
+## `is_rectangle(a, b, c, d)`
 ---
  Returns: `bool`
 
@@ -96,7 +96,7 @@ Checks whether the list of points form a rectangle
 |`c` |array |The array of coordinates of the third corner |
 |`d` |array |The array of coordinates of the fourth corner |
 
-### `nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)`
+## `nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)`
 ---
  Returns: `Struct.Vector2`
 
@@ -113,7 +113,7 @@ Checks the nearest point to an edge
 
 **Returns:** The nearest point
 
-### `file_read_all_text(filename)`
+## `file_read_all_text(filename)`
 ---
  Returns: `undefined`
 
@@ -135,7 +135,7 @@ Reads entire content of a given file as a string, or returns undefined if the fi
 
 
 
-### `file_write_all_text(filename,content)`
+## `file_write_all_text(filename,content)`
 ---
  Returns: `undefined`
 
@@ -154,7 +154,7 @@ Creates or overwrites a given file with the given string content.
 
 
 
-### `string_split_lines(str)`
+## `string_split_lines(str)`
 ---
  Returns: `Array<String>`
 
@@ -164,7 +164,7 @@ Creates or overwrites a given file with the given string content.
 |`remove_empty` |Bool |Determines whether the final result should filter out empty strings or not. |
 |`max_splits` |Real |The maximum number of splits to make. |
 
-### `json_load(filename)`
+## `json_load(filename)`
 ---
  Returns: `undefined`
 
@@ -188,7 +188,7 @@ Loads a given JSON file into a GML value (struct/array/string/real).
 
 
 
-### `json_save(filename,value)`
+## `json_save(filename,value)`
 ---
  Returns: `undefined`
 
@@ -204,7 +204,7 @@ Saves a given GML value (struct/array/string/real) into a JSON file.
 
 
 
-### `asset_get_name(asset)`
+## `asset_get_name(asset)`
 ---
  Returns: `String`
 

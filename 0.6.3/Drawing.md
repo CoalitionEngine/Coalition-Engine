@@ -1,6 +1,6 @@
-## Drawing
+# Drawing
 
-### `draw_rectangle_width(x1, y1, x2, y2, [width], [color], [alpha], [rounding])`
+## `draw_rectangle_width(x1, y1, x2, y2, [width], [color], [alpha], [rounding])`
 ---
  Returns: `undefined`
 
@@ -21,7 +21,7 @@ Draws a rectagle with given width and color
 
 
 
-### `draw_rectangle_width_background(x1, y1, x2, y2, [width], [frame_color], [fill_color], [frame_alpha], [fill_alpha], [rounding])`
+## `draw_rectangle_width_background(x1, y1, x2, y2, [width], [frame_color], [fill_color], [frame_alpha], [fill_alpha], [rounding])`
 ---
  Returns: `undefined`
 
@@ -43,7 +43,7 @@ Draws a rectangle with a outline color and background color
 
 
 
-### `draw_circular_bar(x, y, value, max_value, color, radius, transparency, width)`
+## `draw_circular_bar(x, y, value, max_value, color, radius, transparency, width)`
 ---
  Returns: `undefined`
 
@@ -87,7 +87,7 @@ Draws a circle with a hollow center
 
 
 
-### `draw_gradient_ext([x], [y], [width], [height], [angle], [color], [movement], [intensity], [rate])`
+## `draw_gradient_ext([x], [y], [width], [height], [angle], [color], [movement], [intensity], [rate])`
 ---
  Returns: `undefined`
 
@@ -113,9 +113,9 @@ Draws a gradient effect using shader (you need to manually add bm_add to apply f
 
 ?> The same effect can be done using draw_rectangle_color(), however this will lead to batch breaks and impact performance.
 
-### `SpriteNoisieSet([sprite])` (*constructor*)
+## `SpriteNoisieSet([sprite])` (*constructor*)
 
-### `draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, [noise_sprite])` (*constructor*)
+## `draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, [noise_sprite])` (*constructor*)
 
 Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite if the duration is reached)
 
@@ -151,7 +151,7 @@ Draws a sprite with a noise fade in (Will automatically convert to normal draw_s
 
 
 
-### `draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rotation, color, time, duration, [noise_sprite])` (*constructor*)
+## `draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rotation, color, time, duration, [noise_sprite])` (*constructor*)
 
 Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite_ext if the duration is reached)
 
@@ -191,7 +191,7 @@ Draws a sprite with a noise fade in (Will automatically convert to normal draw_s
 
 
 
-### `draw_invert_rect(x1, y1, x2, y2)` (*constructor*)
+## `draw_invert_rect(x1, y1, x2, y2)` (*constructor*)
 
 Draws an rectangle with the colors inverted inside of it
 
@@ -209,7 +209,7 @@ Draws an rectangle with the colors inverted inside of it
 
 
 
-### `draw_invert_triangle(x1, y1, x2, y2, x3, y3)` (*constructor*)
+## `draw_invert_triangle(x1, y1, x2, y2, x3, y3)` (*constructor*)
 
 Draws an triangle with the colors inverted inside of it
 
@@ -229,7 +229,7 @@ Draws an triangle with the colors inverted inside of it
 
 
 
-### `draw_invert_polygon(vertices)` (*constructor*)
+## `draw_invert_polygon(vertices)` (*constructor*)
 
 Draws an polygon with the colors inverted inside of it, make sure the points are in a clockwise/anticlockwise order or else there will be visual bugs (no auto sort for now)
 
@@ -250,7 +250,7 @@ Draws an polygon with the colors inverted inside of it, make sure the points are
 
 
 
-### `__cut_screen(start_x, start_y, end_x, end_y, offset)` (*constructor*)
+## `__cut_screen(start_x, start_y, end_x, end_y, offset)` (*constructor*)
 
 (semi-internal) Splices the screen, similar to Edgetale run 3 final attack, returns the first value of the list
 for animating the offset (you have to animate this and the one after it)
@@ -265,7 +265,7 @@ for animating the offset (you have to animate this and the one after it)
 
 **Returns:** The ID of the list for animating
 
-### `draw_sprite_tiled_area(sprite, subimg, x, y, x1, y1, x2, y2)` (*constructor*)
+## `draw_sprite_tiled_area(sprite, subimg, x, y, x1, y1, x2, y2)` (*constructor*)
 
 Draws a sprite that fills the entire area like tiles
 
@@ -302,7 +302,7 @@ Draws a sprite that fills the entire area like tiles
 
 
 
-### `draw_sprite_tiled_area_ext(sprite, subimg, x, y, x1, y1, x2, y2, xscale, yscale, color, alpha)` (*constructor*)
+## `draw_sprite_tiled_area_ext(sprite, subimg, x, y, x1, y1, x2, y2, xscale, yscale, color, alpha)` (*constructor*)
 
 Draws a sprite that fills the entire area like tiles
 
@@ -343,11 +343,11 @@ Draws a sprite that fills the entire area like tiles
 
 
 
-### `reset_gpu_state()` (*constructor*)
+## `reset_gpu_state()` (*constructor*)
 
 Resets the GPU state to default
 
-### `draw_set_align([halign], [valign])` (*constructor*)
+## `draw_set_align([halign], [valign])` (*constructor*)
 
 Sets the drawing alignment (Combination of draw_set_h/valign)
 

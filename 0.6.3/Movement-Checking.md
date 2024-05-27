@@ -1,6 +1,6 @@
-## Movement Checking
+# Movement Checking
 
-### `Soul_IsMoving([input_based])`
+## `Soul_IsMoving([input_based])`
 ---
  Returns: `bool`
 

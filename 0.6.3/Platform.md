@@ -1,6 +1,6 @@
-## Platform
+# Platform
 
-### `MakePlatform(x, y, hspeed, vspeed, length, [outside], [angle], [sticky])`
+## `MakePlatform(x, y, hspeed, vspeed, length, [outside], [angle], [sticky])`
 ---
  Returns: `Id.Instance<oPlatform>`
 

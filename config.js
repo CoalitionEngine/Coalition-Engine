@@ -4,5 +4,5 @@ const config = {
   favicon:"assets/docsIcon.png",
   name:"Coalition Engine",
   latestVersion:"0.6.3",
-  otherVersions:["1.0","0.6.2"],
+  otherVersions:[],
 };

@@ -1,6 +1,6 @@
-## Initalization
+# Initalization
 
-### `Initalize()`
+## `Initalize()`
 ---
  Returns: `undefined`
 

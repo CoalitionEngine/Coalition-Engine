@@ -1,12 +1,12 @@
-## Green Soul Functions
+# Green Soul Functions
 These functions are related to green souls
 
-### `__Shield()` (*constructor*)
+## `__Shield()` (*constructor*)
 
 Shield data
 
 **Methods**
-#### `.Add(color, hit_color, input_keys)` Returns: `Id.Instance<oGreenShield>`
+### `.Add(color, hit_color, input_keys)` Returns: `Id.Instance<oGreenShield>`
 
 Adds a shield
 
@@ -18,7 +18,7 @@ Adds a shield
 
 **Returns:** The created shield
 
-#### `.Remove(ID)` Returns: `Struct.__Shield`
+### `.Remove(ID)` Returns: `Struct.__Shield`
 
 Removes a shield
 
@@ -26,7 +26,7 @@ Removes a shield
 |-----------|-----------|---------|
 |`ID` |real |The id of the shield |
 
-#### `.__RemainingRotateAngle(ID)` Returns: `real`
+### `.__RemainingRotateAngle(ID)` Returns: `real`
 
 Gets the remaining rotating angle of the shield
 
@@ -35,9 +35,8 @@ Gets the remaining rotating angle of the shield
 |`The` |D |ID of the shield |
 
 **Returns:** The remaining angle
-This is an internal function
 
-#### `.__ApplyRotate(ID, direction)` Returns: `real`
+### `.__ApplyRotate(ID, direction)` Returns: `real`
 
 Applies the rotation for the shield
 
@@ -49,7 +48,7 @@ Applies the rotation for the shield
 **Returns:** The remaining angle
 This is an internal function
 
-### `Bullet_Arrow(time, speed, direction, [mode], [color])`
+## `Bullet_Arrow(time, speed, direction, [mode], [color])`
 ---
  Returns: `Id.Instance<oGreenArr>`
 
@@ -63,7 +62,7 @@ Creates a Green Soul Arrow with given params
 |`mode` |real |The mode of the arrow (Macros provided by ARROW_MODE) |
 |`color` |real |The color of the arrow (Default 0) |
 
-### `CreateArrows(delay, beat, speed, tags, [func_name], [functions])`
+## `CreateArrows(delay, beat, speed, tags, [func_name], [functions])`
 ---
  Returns: `undefined`
 

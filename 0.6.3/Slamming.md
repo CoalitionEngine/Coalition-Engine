@@ -1,6 +1,6 @@
-## Slamming
+# Slamming
 
-### `Slam(direction, [move], [hurt], [target_enemy])`
+## `Slam(direction, [move], [hurt], [target_enemy])`
 ---
  Returns: `undefined`
 

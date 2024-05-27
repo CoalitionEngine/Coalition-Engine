@@ -1,7 +1,7 @@
-## Item
+# Item
 These functions are for setting information for the items globally
 
-### `ItemLibrarySetStruct(item, parameters)`
+## `ItemLibrarySetStruct(item, parameters)`
 ---
  Returns: `undefined`
 
@@ -21,7 +21,7 @@ Sets the information of an item in the global item library
 
 
 
-### `ItemLibrarySet(item, name, heal, description, throw_text, heal_text, effect, battle_description, stats_text, uses)`
+## `ItemLibrarySet(item, name, heal, description, throw_text, heal_text, effect, battle_description, stats_text, uses)`
 ---
  Returns: `undefined`
 

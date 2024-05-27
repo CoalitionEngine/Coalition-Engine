@@ -1,6 +1,6 @@
-## Damaging
+# Damaging
 
-### `Soul_Hurt([damage], [kr])`
+## `Soul_Hurt([damage], [kr])`
 ---
  Returns: `undefined`
 

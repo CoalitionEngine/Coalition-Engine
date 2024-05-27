@@ -1,6 +1,6 @@
-## Bullet Collision
+# Bullet Collision
 
-### `AddBulletCollision(bullet, [function])`
+## `AddBulletCollision(bullet, [function])`
 ---
  Returns: `undefined`
 

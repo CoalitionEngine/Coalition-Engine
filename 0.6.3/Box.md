@@ -1,12 +1,12 @@
-## Box
+# Box
 These are the functions that are related to the overworld box.
 
-### `__Box()` (*constructor*)
+## `__Box()` (*constructor*)
 
 Box functions
 
 **Methods**
-#### `.ItemCount(Box_ID)` Returns: `real`
+### `.ItemCount(Box_ID)` Returns: `real`
 
 Gets the amount of items in the box
 
@@ -16,7 +16,7 @@ Gets the amount of items in the box
 
 **Returns:** The amount of items in the box
 
-#### `.GetFirstEmptySlot(Box_ID)` Returns: `real`
+### `.GetFirstEmptySlot(Box_ID)` Returns: `real`
 
 Gets the first empty slot of a box
 
@@ -24,11 +24,11 @@ Gets the first empty slot of a box
 |-----------|-----------|---------|
 |`Box_ID` |real |The Box ID to check (0 - Overworld, 1 - D.Box A, 2 - D.Box B) |
 
-#### `.InfoLoad()` Returns: `undefined`
+### `.InfoLoad()` Returns: `undefined`
 
 Loads the Info of the Items of the Box
 
-#### `.Info(item)` Returns: `undefined`
+### `.Info(item)` Returns: `undefined`
 
 Gets the Infos of the item in the Box
 
@@ -36,7 +36,7 @@ Gets the Infos of the item in the Box
 |-----------|-----------|---------|
 |`Item` |real |The Item to get the info |
 
-#### `.Count(ID)` Returns: `real`
+### `.Count(ID)` Returns: `real`
 
 Gets the number of items in the Box
 
@@ -44,7 +44,7 @@ Gets the number of items in the Box
 |-----------|-----------|---------|
 |`The` |D |ID of the Box |
 
-#### `.Shift(Box_ID)` Returns: `undefined`
+### `.Shift(Box_ID)` Returns: `undefined`
 
 Shifts all empty slots to the bottom
 

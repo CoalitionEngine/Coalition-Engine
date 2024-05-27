@@ -1,6 +1,6 @@
-## Dialog Option Event
+# Dialog Option Event
 
-### `SetOptionEvent(option_1, option_2)`
+## `SetOptionEvent(option_1, option_2)`
 ---
  Returns: `undefined`
 

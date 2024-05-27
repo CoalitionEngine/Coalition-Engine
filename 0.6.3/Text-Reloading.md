@@ -1,6 +1,6 @@
-## Text Reloading
+# Text Reloading
 
-### `ReloadTexts()`
+## `ReloadTexts()`
 ---
  Returns: `undefined`
 

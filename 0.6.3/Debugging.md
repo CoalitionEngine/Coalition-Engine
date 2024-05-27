@@ -1,7 +1,7 @@
-## Debugging
+# Debugging
 These are the functions for debugging the engine
 
-### `show_hitbox([col])`
+## `show_hitbox([col])`
 ---
  Returns: `undefined`
 
@@ -61,7 +61,7 @@ Shows the hitbox of the object (by it's sprite collision box)
 
 
 
-### `DrawDebugUI`
+## `DrawDebugUI`
 ---
  Returns: `undefined`
 

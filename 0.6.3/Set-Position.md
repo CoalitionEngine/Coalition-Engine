@@ -1,6 +1,6 @@
-## Set Position
+# Set Position
 
-### `Soul_SetPos(target_x, target_y, [duration], [easing], [delay])`
+## `Soul_SetPos(target_x, target_y, [duration], [easing], [delay])`
 ---
  Returns: `undefined`
 

@@ -1,6 +1,6 @@
-## Blasters
+# Blasters
 
-### `CreateBlaster(x, y, target_x, target_y, [inital_angle], target_angle, scale_x, scale_y, move, pause, duration, [color], [blur], [create_sound], [release_sound])`
+## `CreateBlaster(x, y, target_x, target_y, [inital_angle], target_angle, scale_x, scale_y, move, pause, duration, [color], [blur], [create_sound], [release_sound])`
 ---
  Returns: `Id.Instance<oGB>`
 
@@ -26,7 +26,7 @@ Creates a Blaster with given parameters
 
 **Returns:** The created blaster
 
-### `CreateBlasterCircle(x, y, len_start, len_end, [direction_start], direction, scale_x, scale_y, move, pause, duration)`
+## `CreateBlasterCircle(x, y, len_start, len_end, [direction_start], direction, scale_x, scale_y, move, pause, duration)`
 ---
  Returns: `Id.Instance<oGB>`
 

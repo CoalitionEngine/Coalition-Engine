@@ -1,6 +1,6 @@
-## Rendering
+# Rendering
 
-### `RenderBullets()`
+## `RenderBullets()`
 ---
  Returns: `undefined`
 
