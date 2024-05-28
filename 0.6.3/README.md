@@ -1,8 +1,11 @@
 # Important
 
 <p align="center">
-**Coalition Engine**
-A modern Undertale engine developed by Eden, Panthervention, RTF
+<h2>
+Coalition Engine
+</h2>
+
+A modern Undertale engine developed by [Eden](https://gamejolt.com/@Edens_studio), [Panthervention](https://gamejolt.com/@Panthervention), [RTF](https://gamejolt.com/@RTFTR)
 </p>
 
 Coalition Engine is an Undertale engine that aims to create the most optimized environment to maximize player experience.
@@ -39,3 +42,5 @@ Everything else is what you should edit, but be aware that engine updates may ov
 so you should create backups of your project before updating the engine version.
 
 If you have little to no GML knowledge, you should look up the Game Maker Manual or at least Google before asking questions like "How do I make an object" or "I don't know how to use this Game Maker function".
+
+

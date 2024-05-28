@@ -24,6 +24,7 @@ To help with accessing enemy variables, `EnemyData` is created to set the variab
 Check Battle -> Enemy Functions for more information of these functions
 
 There are variables that are not covered in the functions, they will be covered here
+
 | Variable Name | Type | Purpose |
 | ------ | ------ | ------ |
 | is_boss | `Bool` | Sets whether the enemy is a boss or not |
@@ -55,6 +56,7 @@ After setting up all these data, the next step would obviously be adding sprites
 There are two ways to do that, you use the built-in (almost useless) system, or be a normal person and override User Event 0 to draw your own sprites.
 If you lack knowledge to create one by your own, then you should use the built-in system.
 The following variables are all arrays and should follow the same order, i.e. Top to Bottom
+
 | Variable Name | Type | Purpose |
 | ------ | ------ | ------ |
 | enemy_sprites | `Asset.GMSprite` | The sprites that will be drawn |
@@ -68,6 +70,7 @@ If you would like to disable wiggling of sprites, you should set `wiggle` to fal
 
 There are also variables that are built-in to the engine for slamming animations.
 Slamming are disabled by default, set `SlammingEnabled` to true to enable them.
+
 | Variable Name | Type | Purpose |
 | ------ | ------ | ------ |
 | SlamSprites | `Array<Asset.GMSprites>` | The sprites of the slamming animation, it is recommended to compile them into 1 sprite per direction |
@@ -91,7 +94,7 @@ SetAttack(0, function() {
 		Bullet_Bone(...);
 });
 ```
-?> that you may access all instance variables in the enemy object you put this function in, so you can type in `time` to get the time elapsed in the turn.
+?> Note that you may access all instance variables in the enemy object you put this function in, so you can type in `time` to get the time elapsed in the turn.
 However, `PreAttackFunction` will only execute before the attack begins, while `PostAttackFunction` will only execute after the attack ends.
 
 To end a turn, simply put `end_turn()`.
