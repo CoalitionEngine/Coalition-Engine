@@ -1,9 +1,7 @@
 # Important
 
 <p align="center">
-<h2>
-Coalition Engine
-</h2>
+<h2 align="center">Coalition Engine.</h2>
 A modern Undertale engine developed by Eden, Panthervention, RTF
 </p>
 
