@@ -2,6 +2,17 @@
 
 ---
 
+**Battle**
+
+-    [Battle Masking Functions](Battle-Masking-Functions)
+-    [General Battle Functions](General-Battle-Functions)
+-    [Board Functions](Board-Functions)
+-    [Enemy Functions](Enemy-Functions)
+-    [Bullet Variable Functions](Bullet-Variable-Functions)
+-    [Bullet Collision](Bullet-Collision)
+
+---
+
 **Soul**
 
 -    [Bullet Collision](Bullet-Collision)
@@ -18,7 +29,7 @@
 
 -    [Camera](Camera)
 -    [Debugging](Debugging)
--    [Item](Item)
+-    [Item Library](Item-Library)
 -    [Border](Border)
 
 ---
@@ -87,17 +98,6 @@
 -    [Misc. Functions](Misc.-Functions)
 -    [Strings](Strings)
 -    [Surfaces](Surfaces)
-
----
-
-**Battle**
-
--    [Battle Masking Functions](Battle-Masking-Functions)
--    [General Battle Functions](General-Battle-Functions)
--    [Board Functions](Board-Functions)
--    [Enemy Functions](Enemy-Functions)
--    [Bullet Variable Functions](Bullet-Variable-Functions)
--    [Bullet Collision](Bullet-Collision)
 
 ---
 

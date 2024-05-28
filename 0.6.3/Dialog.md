@@ -1,6 +1,6 @@
 # Dialog
 
-## `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])`
+### `OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])`
 ---
  Returns: `undefined`
 
@@ -8,12 +8,12 @@ Creates a dialog box in the Overworld
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`text` |string |The text in the box |
-|`font` |string |The font of the text (Default is dt_mono) |
-|`char_sound` |Asset.GMSound |The sound of the text (Default snd_txt_typer) |
-|`top_bottom` |bool |Decide whether the box is up or down (Default up) |
-|`sprite` |Asset.GMSprite |The sprite of the talking character |
-|`index` |real |The index of the sprite |
+|`text` |`String` |The text in the box |
+|`font` |`String` |The font of the text (Default is dt_mono) |
+|`char_sound` |`Asset.GMSound` |The sound of the text (Default snd_txt_typer) |
+|`top_bottom` |`Bool` |Decide whether the box is up or down (Default up) |
+|`sprite` |`Asset.GMSprite` |The sprite of the talking character |
+|`index` |`Real` |The index of the sprite |
 
 
 
@@ -45,6 +45,7 @@ Creates a dialog box in the Overworld
 Since the text writer in this engine is based on [Scribble](https://github.com/JujuAdams/Scribble), the text formatting also follows the format of Scribble.
 Here are the list of command tags that are exclusive on this engine, for furhter information, you should read the documentation of Scribble.
 These command tags are defined in (System)/Scripts/Scribble_Events
+
 | Command Tag | Behaviour |
 | ------ | ------ |
 | `[skippable]` | Whether the current text can be skipped or not |
@@ -56,6 +57,7 @@ These command tags are defined in (System)/Scripts/Scribble_Events
 | `[option,<option_number>]` | Sets the following text as the defined option |
 
 The following are text macros that acts as a shortcut for already built-in functions
+
 | Macros | Behaviour |
 | ------ | ------ |
 | `[fdelay,<frames>]` | Delays the typewriter by the given number of frames, not milliseconds as set in [delay] |

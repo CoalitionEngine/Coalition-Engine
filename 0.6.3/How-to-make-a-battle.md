@@ -31,12 +31,14 @@ There are variables that are not covered in the functions, they will be covered 
 | begin_at_turn | `Bool` | Whether the battle will begin in a turn, or at the menu |
 | dodge_method | `Function` | The function to execute when the enemy is being attacked |
 | dialog | `Struct` | A struct containing several variables to alter the behaviour of the speech bubble, they are as follows |
-| dialog.x | `Real` | The x coordinate of the speech bubble |
-| dialog.y | `Real` | The y coordinate of the speech bubble |
-| dialog.width | `Real` | The width of the speech bubble |
-| dialog.height | `Real` | The height of the speech bubble |
-| dialog.dir | `Real` | The direction of the speech bubble |
-| dialog.color | `Real` | The color of the speech bubble |
+| ------ | ------ | ------ |
+| x | `Real` | The x coordinate of the speech bubble |
+| y | `Real` | The y coordinate of the speech bubble |
+| width | `Real` | The width of the speech bubble |
+| height | `Real` | The height of the speech bubble |
+| dir | `Real` | The direction of the speech bubble |
+| color | `Real` | The color of the speech bubble |
+| ------ | ------ | ------ |
 | deafult_font | `string` | The name of the default font you want to set the text of |
 | deafult_sound | `Asset.GMSound` | The default sound you want to set the text to |
 | draw_damage | `Asset.GMSound` | The default sound you want to set the text to |

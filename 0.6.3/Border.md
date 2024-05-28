@@ -1,7 +1,7 @@
 # Border
 These funtions are for controlling the border of the game
 
-## `BorderSetEnable(enable, [func], [dur])`
+### `BorderSetEnable(enable, [func], [dur])`
 ---
  Returns: `undefined`
 
@@ -9,9 +9,9 @@ Toggles border on and off, you can choose to have a smooth window size transitio
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`enable` |bool |Whether the border is enabled or not |
-|`Easing` |function,string |The easing of the window size change (TweenGMX) |
-|`duration` |real |The duration of the easing |
+|`enable` |`Bool` |Whether the border is enabled or not |
+|`Easing` |`Function,string` |The easing of the window size change (TweenGMX) |
+|`duration` |`Real` |The duration of the easing |
 
 
 
@@ -28,7 +28,7 @@ Toggles border on and off, you can choose to have a smooth window size transitio
 
 
 
-## `BorderSetSprite(sprite, [transition_time])`
+### `BorderSetSprite(sprite, [transition_time])`
 ---
  Returns: `undefined`
 
@@ -37,8 +37,8 @@ and the upcoming one
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`sprite` |Asset.Sprite |The sprite to set the border to |
-|`transition_time` |real |The time to transition from the current one to the upcoming one |
+|`sprite` |`Asset.GMSprite` |The sprite to set the border to |
+|`transition_time` |`Real` |The time to transition from the current one to the upcoming one |
 
 
 

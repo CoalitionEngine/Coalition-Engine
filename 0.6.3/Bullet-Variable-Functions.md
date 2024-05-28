@@ -4,7 +4,7 @@ len_* functions are for creating variables for a circular pattern, dismissing th
 To use these functions, simply call len_load() in the create event and call len_step() in step event,
 be sure to add len_clean in the clean up event
 
-## `len_load()`
+### `len_load()`
 ---
  Returns: `undefined`
 
@@ -23,7 +23,7 @@ After calling this function in the create event, you can access these variables 
 | `angle_extra` | Real | Sets the angle offset of the bullet while rotating |
 | `target` | Asset.GMObject | Sets the target object that will be set as the center, overriding the defined x/y |
 
-## `len_step()`
+### `len_step()`
 ---
  Returns: `undefined`
 
@@ -32,7 +32,7 @@ axis_* functions are for creating variables for bullets rotating along a certain
 To use these functions, simply call axis_load() in the create event and call axis_step() in step event,
 be sure to add axis_clean in the clean up event
 
-## `axis_load()`
+### `axis_load()`
 ---
  Returns: `undefined`
 
@@ -46,7 +46,7 @@ After calling this function in the create event, you can access these variables 
 | `override_angle` | Real | The angle of the axis rotation |
 The other variables are read only and are for internal use only.
 
-## `axis_step()`
+### `axis_step()`
 ---
  Returns: `undefined`
 

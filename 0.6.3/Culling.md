@@ -2,7 +2,7 @@
 These scripts are used for deactivating instances in the overworld if they are outside the camera view
 so the player can't see them load/unload, but still maintaining performance.
 
-## `CullObject(object)`
+### `CullObject(object)`
 ---
  Returns: `undefined`
 
@@ -10,7 +10,7 @@ Culls every isntance of the given object if it's outside the view
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`object` |Asset.GMObject |The object to cull |
+|`object` |`Asset.GMObject` |The object to cull |
 
 
 
@@ -36,7 +36,7 @@ Culls every isntance of the given object if it's outside the view
 
 
 
-## `ProcessCulls()`
+### `ProcessCulls()`
 ---
  Returns: `undefined`
 

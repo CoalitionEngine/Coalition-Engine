@@ -1,35 +1,29 @@
 # Calculation
 
-## `posmod(a, b)`
+### `posmod(a, b)`
 ---
- Returns: `real`
+ Returns: `real`. The quotient
 
 Returns a Positive Quotient of the 2 values, do not confuse this with a % b
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`a` |real |The number to be divided |
-|`b` |real |The number to divide |
+|`a` |`Real` |The number to be divided |
+|`b` |`Real` |The number to divide |
 
-**Returns:** The quotient
-
-## `point_xy(point_x, point_y)`
+### `point_xy(point_x, point_y)`
 ---
- Returns: `undefined`
+ Returns: `undefined`. Creates two variables
 
 Rotate the coordinates by the angle
 
-**Returns:** Creates two variables
-
-## `point_xy_array(point_x, point_y)`
+### `point_xy_array(point_x, point_y)`
 ---
- Returns: `Array<Real>`
+ Returns: `Array<Real>`. The array of the rotated points
 
-Calculating the legnthdir_xy position of the points
+Rotate the coordinates by the angle and return them as an array
 
-**Returns:** The array of the rotated points
-
-## `Sigma(array, begin, end)`
+### `Sigma(array, begin, end)`
 ---
  Returns: `real`
 
@@ -37,11 +31,11 @@ Returns the summation of an array from a to b
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`array` |array |The name of the array |
-|`begin` |real |The slot to begin |
-|`end` |real |The slot to end |
+|`array` |`Array` |The name of the array |
+|`begin` |`Real` |The slot to begin |
+|`end` |`Real` |The slot to end |
 
-## `is_val(value, ...)`
+### `is_val(value, ...)`
 ---
  Returns: `bool`
 
@@ -49,10 +43,10 @@ Checks if the value is equal to the other given values
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`var` |Any |The variable to checl |
-|`val` |Any |The values to check for |
+|`var` |`Any` |The variable to check |
+|`val` |`Any` |The values to check for |
 
-## `array_multiply(array, scalar)`
+### `array_multiply(array, scalar)`
 ---
  Returns: `Array<Real>`
 
@@ -60,10 +54,10 @@ Multiplies all indexes of the array with given number
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`Array` |Array |The array to multiply |
-|`Multiply` |real |The amount to multiply |
+|`Array` |`Array` |The array to multiply |
+|`Multiply` |`Real` |The amount to multiply |
 
-## `is_bit(value, bit)`
+### `is_bit(value, bit)`
 ---
  Returns: `bool`
 
@@ -71,10 +65,10 @@ Check whether the value contains the bit
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`Value` |real |The value to check from |
-|`Bit` |real |The bit to check |
+|`Value` |`Real` |The value to check from |
+|`Bit` |`Real` |The bit to check |
 
-## `quick_pow(x, n)`
+### `quick_pow(x, n)`
 ---
  Returns: `real`
 
@@ -82,10 +76,10 @@ This is faster than the game maker built-in power()
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`x` |real |The number to change |
-|`n` |real |How many times to multiply x by itself |
+|`x` |`Real` |The number to change |
+|`n` |`Real` |How many times to multiply x by itself |
 
-## `struct_equals(struct_a, struct_b)`
+### `struct_equals(struct_a, struct_b)`
 ---
  Returns: `undefined`
 
@@ -93,8 +87,8 @@ Checks whether two structs are equal (Does not support static variables)
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`a` |struct |The index of the first struct |
-|`b` |struct |The index of the struct struct |
+|`a` |`Struct` |The index of the first struct |
+|`b` |`Struct` |The index of the struct struct |
 
 
 

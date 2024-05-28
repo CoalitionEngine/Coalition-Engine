@@ -1,7 +1,7 @@
 # Debugging
 These are the functions for debugging the engine
 
-## `show_hitbox([col])`
+### `show_hitbox([col])`
 ---
  Returns: `undefined`
 
@@ -9,7 +9,7 @@ Shows the hitbox of the object (by it's sprite collision box)
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`Color` |Constant.Color |The color of the collision box |
+|`Color` |`Constant.Color` |The color of the collision box |
 
 
 
@@ -61,7 +61,7 @@ Shows the hitbox of the object (by it's sprite collision box)
 
 
 
-## `DrawDebugUI`
+### `DrawDebugUI`
 ---
  Returns: `undefined`
 

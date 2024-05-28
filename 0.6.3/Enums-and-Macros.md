@@ -1,6 +1,7 @@
 # Enums and Macros
 ## Engine Macros
 These macros are for assiting you to code using this engine
+
 | Macro Name | Purpose |
 | ----------- | ----------- |
 | \_\_COALITION_ENGINE_VERSION | The current version of the engine |
@@ -13,6 +14,7 @@ These macros are for assiting you to code using this engine
 
 These macros are for retrieving player input
 ## Input Macros
+
 | Macro Name | Purpose | Returns |
 | ----------- | ----------- | ----------- |
 | CHECK_HORIZONTAL | Check whether the player is holding horizontal movement keys | `Real` (-1, 0, 1) |
@@ -25,8 +27,10 @@ These macros are for retrieving player input
 | PRESS_CANCEL | Check whether the player has pressed the cancel button | `Bool` |
 | HOLD_CANCEL | Check whether the player is holding the cancel button | `Bool` |
 | PRESS_MENU | Check whether the player has pressed the menu button | `Bool` |
+
 These macros are for ease of coding
 ## Handy Macros
+
 | Macro Name | Purpose |
 | ----------- | ----------- |
 | ins_dest | Acts as instance_destroy |
@@ -40,12 +44,15 @@ These macros are for ease of coding
 | forceinline | Acts as gml_pragma("forceinline"), boost performance when compiled in YYC, most functions include this |
 | aggressive_forceinline | Apply forceinline in scripts that are larger, further boosting performance, but leads to larger file size |
 | APPLY_AGGRESSIVE_FORCEINLINE | Whether to apply the aggressive_forceinline or not |
+
 ## Engine Enums
 These are the list of enums used in this engine
+
+| Name | General Purpose |
 | -------- | ------ |
 | SOUL_MODE | Soul Modes |
 | DIR | Direction |
-| ITEM | |Item ID|
+| ITEM | |Item ID |
 | ITEM_SCROLL | Item scroll mode in battle |
 | OVERWORLD | Overworld Room |
 | BATTLE_STATE | Battle state |
