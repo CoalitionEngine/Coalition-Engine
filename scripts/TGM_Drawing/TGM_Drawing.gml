@@ -374,14 +374,14 @@ function color_gradient(colors_array, progress) {
 }
 
 /// @desc Generates a RGB color to be used in a shader. Supports decimal and hex colors.
-/// @param {color} color The color. Supports decimal and hex colors.
+/// @param {Constant.Color} color The color. Supports decimal and hex colors.
 /// @returns {array} 
 function make_color_shader(color) {
 	return [color_get_red(color)/255, color_get_green(color)/255, color_get_blue(color)/255];
 }
 
 /// @desc Function Description
-/// @param {color} color The color. Supports decimal and hex colors.
+/// @param {Constant.Color} color The color. Supports decimal and hex colors.
 /// @param {real} alpha Alpha channel, 0 - 255.
 /// @returns {array} 
 function make_color_shader_rgba(color, alpha) {

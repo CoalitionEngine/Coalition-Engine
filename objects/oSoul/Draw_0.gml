@@ -47,7 +47,7 @@ if STATE == BATTLE_STATE.IN_TURN
 			for(var i = LeftLine; i <= RightLine; i += XDifference)
 				draw_line(i, TopLine, i, BottomLine);
 			//Fading effect when line changes
-			Purple.ForceAlpha = lerp(Purple.ForceAlpha, 0, Purple.BoxLerpSpeed);
+			Purple.ForceAlpha = decay(Purple.ForceAlpha, 0, Purple.BoxLerpSpeed);
 			Battle_Masking_Start();
 			draw_sprite_ext(sprPixel, 0, board_x - b_left, board_y - b_up, b_left + b_right, b_up + b_down, 0, c_purple, Purple.ForceAlpha);
 			Battle_Masking_End();

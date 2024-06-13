@@ -1,6 +1,10 @@
-///Adds a bullet collision type and function dynamically, not recommended to put in create event of bullet objects
-///@param {Asset.GMObject} bullet	The object of the attack to add
-///@param {function,string} func	The function for the object to use (Default is place_meeting, for bullets with color, use "color", custom collision functions use function(){})
+///@category Battle
+///@title Bullet Collision
+
+///@func AddBulletCollision(bullet, [function])
+///@desc Adds a bullet collision type and function dynamically, not recommended to put in create event of bullet objects
+///@param {Asset.GMObject} bullet The object of the attack to add
+///@param {function,string} func The function for the object to use (Default is place_meeting, for bullets with color, use "color", custom collision functions use function(){})
 function AddBulletCollision(bullet, func = "")
 {
 	aggressive_forceinline
@@ -12,7 +16,7 @@ function AddBulletCollision(bullet, func = "")
 		var FinPushFunc = func;
 		if is_string(func)
 		{
-			if func == ""
+			if string_width(func) == 0
 				FinPushFunc = static_script.DefaultPlaceMeetingFunction;
 			else if func == "color"
 				FinPushFunc = static_script.DefaultColorPlaceMeetingFunction;
@@ -21,3 +25,4 @@ function AddBulletCollision(bullet, func = "")
 		static_script.size++;
 	}
 }
+///@text For advanced users, this function is directly linked to CollideWithBullet.

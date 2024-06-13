@@ -5,5 +5,5 @@ if NOOB_MODE
 */
 function Cell_GetText(slot) {
 	forceinline
-	return CellData.GetText(slot);
+	return Cell.Text(slot);
 }

@@ -6,5 +6,5 @@ if NOOB_MODE
 */
 function Enemy_SetSpareable(enemy, spareable) {
 	forceinline
-	EnemyData.SetSpareable(enemy, spareable);
+	Enemy.SetSpareable(enemy, spareable);
 }

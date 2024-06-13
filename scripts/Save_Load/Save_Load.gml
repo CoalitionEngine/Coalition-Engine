@@ -1,35 +1,49 @@
-/*
-	You can freely change the encoding/decoding method
-	Be sure to keep it consistent
-*/
+///@category Saving and Loading
+///@title Data mainipulation
+///@text You can freely change the encoding/decoding method
+///Be sure to keep it consistent
 
-
-///Deletes the current data of the game
-function Delete_Datas()
-{
-	file_delete("Data.dat");
-}
-
-///Saves tempoary data
+///@func SetTempData(name, value)
+///@desc Saves tempoary data
 ///@param {string} name The name of the slot to be saved
-///@param value The value of the slot to be saved
+///@param {Any} value The value of the slot to be saved
 function SetTempData(name, value)
 {
-	global.TempData[$ name] = value;
+	forceinline
+	static __stored_hashes = ds_map_create();
+	var hash;
+	if !ds_map_exists(__stored_hashes, name)
+	{
+		hash = variable_get_hash(name);
+		__stored_hashes[? name] = hash;
+	}
+	else hash = __stored_hashes[? name];
+	struct_set_from_hash(global.__CoalitionTempData, hash, value);
 }
 
-///Get tempoary data
+///@func GetTempData(name)
+///@desc Get tempoary data
 ///@param {string} name The name of the slot to be aquired
 function GetTempData(name)
 {
-	return struct_get(global.TempData, name);
+	forceinline
+	static __stored_hashes = ds_map_create();
+	var hash;
+	if !ds_map_exists(__stored_hashes, name)
+	{
+		hash = variable_get_hash(name);
+		__stored_hashes[? name] = hash;
+	}
+	else hash = __stored_hashes[? name];
+	return struct_get_from_hash(global.__CoalitionTempData, hash);
 }
 
-///Saves all data from global.TempData into a TempData.dat file
-///@param {string} filename			The file name of the file to store the data with
-///@param {struct|Id.dsmap} struct	The struct/ds_map to save
-///@param {function} function		The custom function for encoding (Input: string, Output: string)
-function SaveData(fname = "TempData.dat", struct = global.TempData, func = undefined)
+///@func SaveData(filename, struct, [function])
+///@desc Saves all data from global.__CoalitionTempData into a TempData.dat file
+///@param {string} filename The file name of the file to store the data with
+///@param {struct,Id.dsmap} struct The struct/ds_map to save
+///@param {function} function The custom function for encoding (Input: string, Output: string)
+function SaveData(fname, struct, func = undefined)
 {
 	aggressive_forceinline
 	//Check whether it is a map (Legacy)
@@ -57,10 +71,11 @@ function SaveData(fname = "TempData.dat", struct = global.TempData, func = undef
 	delete __temp_struct;
 }
 
-///Loads the saved data from the given file name
-///@param {string} filename		The file name of the file to read the data with
-///@param {function} function	The custom function for decoding (Input: string, Output: string)
-function LoadData(fname = "TempData.dat", func = undefined)
+///@func LoadData(filename, [function])
+///@desc Loads the saved data from the given file name
+///@param {string} filename The file name of the file to read the data with
+///@param {function} function The custom function for decoding (Input: string, Output: string)
+function LoadData(fname, func = undefined)
 {
 	aggressive_forceinline
 	//If file doesn't exist, exit
@@ -77,13 +92,14 @@ function LoadData(fname = "TempData.dat", func = undefined)
 	json_file = base64_decode(json_file);
 	var __temp_struct = json_parse(json_file),
 		name = struct_get_names(__temp_struct)[0],
-		vals = __temp_struct[$ name];
+		vals = struct_get_from_hash(__temp_struct, variable_get_hash(name));
 	name = json_parse(name);
 	//In normal circumstances, the name should be the same as the value
 	//It will only be different when the player modifies it
 	//This displays a custom error function to tell the players they messed up big time
 	if !struct_equals(name, vals)
 	{
+		//Display what went wrong
 		if DEBUG
 		{
 			print(name);

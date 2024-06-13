@@ -1,4 +1,8 @@
-//This is very stupid, but this is one of the only ways to not spam rooms
+///@category Overworld
+///@title Rooms
+///@text This is very stupid, but this is one of the only ways to not spam rooms
+
+///@func LoadCameraLockPositions()
 ///@desc Loads all the positions for the camera to lock for the sub rooms in overworld
 function LoadCameraLockPositions()
 {
@@ -26,7 +30,8 @@ function LoadCameraLockPositions()
 	}
 }
 
-///Sets the names of the rooms (and sub-rooms)
+///@func SetRoomNames()
+///@desc Sets the names of the rooms (and sub-rooms)
 function SetRoomNames()
 {
 	aggressive_forceinline
@@ -42,13 +47,12 @@ function SetRoomNames()
 			break;
 	}
 }
-/**
-	Moves the player from one (sub)room to another
-	@param {Asset.GMRoom} Main_room	The main room (use 'room' for current)
-	@param {real} Sub_room			The sub room (Best to use macros)
-	@param {real} PlayerX			The target player x position
-	@param {real} PlayerY			The target player y position
-*/
+///@func MoveToRoom(MainRoom, SubRoom, PlayerX, PlayerY)
+///@desc Moves the player from one (sub)room to another
+///@param {Asset.GMRoom} Main_room The main room (use 'room' for current room)
+///@param {real} Sub_room The sub room (Best to use macros if you are unsure)
+///@param {real} PlayerX The player x coordinate after transitioning to the next room
+///@param {real} PlayerY The player y coordinate after transitioning to the next room
 function MoveToRoom(Main, Sub, PlayerX, PlayerY)
 {
 	aggressive_forceinline

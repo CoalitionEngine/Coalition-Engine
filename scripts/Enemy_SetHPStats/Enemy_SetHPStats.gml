@@ -8,5 +8,5 @@ if NOOB_MODE
 */
 function Enemy_SetHPStats(enemy, max_hp, current_hp = max_hp, draw_hp_bar = true) {
 	forceinline
-	EnemyData.SetHPStats(enemy, max_hp, current_hp, draw_hp_bar);
+	Enemy.SetHPStats(enemy, max_hp, current_hp, draw_hp_bar);
 }

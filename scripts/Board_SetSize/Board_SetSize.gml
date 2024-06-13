@@ -1,3 +1,4 @@
+if NOOB_MODE
 /**
 	Sets the size of the board with Anim (optional)
 	@param {real} up		The Disatance Upwards (Default 65)

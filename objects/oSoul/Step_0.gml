@@ -22,7 +22,7 @@ if STATE == 2 {
 	h_spd = CHECK_HORIZONTAL;
 	v_spd = CHECK_VERTICAL;
 		
-	var move_spd = global.spd / (input_check("cancel") + 1),
+	var move_spd = global.spd / (HOLD_CANCEL + 1),
 		
 		x_offset = sprite_width / 2,
 		y_offset = sprite_height / 2,
@@ -47,7 +47,7 @@ if STATE == 2 {
 		y += board_y - oBoard.yprevious;
 	}
 	//Disable green shields when not in turn
-	if mode != SOUL_MODE.GREEN || BattleData.State() != BATTLE_STATE.IN_TURN instance_deactivate_object(oGreenShield);
+	if mode != SOUL_MODE.GREEN || Battle.State() != BATTLE_STATE.IN_TURN instance_deactivate_object(oGreenShield);
 	else instance_activate_object(oGreenShield);
 	
 	switch mode
@@ -102,7 +102,6 @@ if STATE == 2 {
 					board_x + BR.x, board_y + BR.y,
 					board_x + BL.x, board_y + BL.y,
 				];
-				//print(board_vertices);
 			//Input and collision check of different directions of soul
 			//Down
 			if _angle == 0 {
@@ -114,7 +113,7 @@ if STATE == 2 {
 				platform_check[2] = y_offset + 1;
 				platform_check[3] = y_offset;
 
-				jump_input = input_check("up");
+				jump_input = oGlobal.__input_functions[0];
 				move_input = h_spd * move_spd;
 			}
 			//Up
@@ -128,13 +127,12 @@ if STATE == 2 {
 				platform_check[3] = -y_offset;
 				
 
-				jump_input = input_check("down");
+				jump_input = oGlobal.__input_functions[1];
 				move_input = h_spd * -move_spd;
 			}
 			//Right
 			else if _angle == 90 {
 				if check_board {
-					//print(r_x + displace_x, r_y + displace_y)
 					_on_ground = !point_in_parallelogram(r_x + displace_x, r_y, board_vertices);
 					_on_ceil = !point_in_parallelogram(r_x - displace_x, r_y, board_vertices);
 				}
@@ -142,7 +140,7 @@ if STATE == 2 {
 				platform_check[0] = x_offset + 1;
 				platform_check[1] = -x_offset;
 
-				jump_input = input_check("left");
+				jump_input = oGlobal.__input_functions[2];
 				move_input = v_spd * -move_spd;
 			}
 			//Left
@@ -155,7 +153,7 @@ if STATE == 2 {
 				platform_check[0] = -10;
 				platform_check[1] = x_offset;
 
-				jump_input = input_check("right");
+				jump_input = oGlobal.__input_functions[3];
 				move_input = v_spd * move_spd;
 			}
 			//If the board doesn't exist, it will never be on the ground or touching the ceiling
@@ -172,10 +170,8 @@ if STATE == 2 {
 			if position_meeting(RelativePositionX, RelativePositionY, oPlatform) && _fall_spd >= 0 {
 				_on_platform = true;
 				while position_meeting(x + platform_check[1], y + platform_check[3], oPlatform) {
-					with RespecitvePlatform {
-						other.x -= lengthdir_y(0.1, _angle);
-						other.y -= lengthdir_x(0.1, _angle);
-					}
+					x -= lengthdir_y(0.1, _angle);
+					y -= lengthdir_x(0.1, _angle);
 				}
 			}
 			with RespecitvePlatform {
@@ -204,7 +200,6 @@ if STATE == 2 {
 
 			on_ground = _on_ground;
 			on_ceil = _on_ceil;
-			//print(on_ground, on_ceil);
 			on_platform = _on_platform;
 			fall_spd = _fall_spd;
 			fall_grav = _fall_grav;
@@ -314,7 +309,7 @@ if STATE == 2 {
 				Purple.CurrentVLine += PRESS_VERTICAL;
 				Purple.CurrentVLine = clamp(Purple.CurrentVLine, 0, Purple.VLineAmount - 1);
 				Purple.YTarget = TopLine + Purple.CurrentVLine * YDifference;
-				y = lerp(y, Purple.YTarget, Purple.LerpSpeed);
+				y = decay(y, Purple.YTarget, Purple.LerpSpeed);
 			}
 			else
 			{
@@ -326,7 +321,7 @@ if STATE == 2 {
 				Purple.CurrentHLine += PRESS_HORIZONTAL;
 				Purple.CurrentHLine = clamp(Purple.CurrentHLine, 0, Purple.HLineAmount - 1);
 				Purple.XTarget = LeftLine + Purple.CurrentHLine * XDifference;
-				x = lerp(x, Purple.XTarget, Purple.LerpSpeed);
+				x = decay(x, Purple.XTarget, Purple.LerpSpeed);
 			}
 			break;
 		}

@@ -1,39 +1,40 @@
-/**
-	Draws a rectagle with given width and color
-	@param {real} x1				The x coordinate of the top left coordinate of the rectangle
-	@param {real} y1				The y coordinate of the top left coordinate of the rectangle
-	@param {real} x2				The x coordinate of the bottom right coordinate of the rectangle
-	@param {real} y2				The y coordinate of the bottom right coordinate of the rectangle
-	@param {real} width				The width of the outline of the rectangle (Default 1)
-	@param {Constant.Color} color	The color of the rectangle (Default white)
-	@param {real} alpha				The alpha of the rectangle frame
-	@param {real} rounding			The rounding of the rectangle corners
-*/
+///@category Special Scripts
+///@title Drawing
+
+///@func draw_rectangle_width(x1, y1, x2, y2, [width], [color], [alpha], [rounding])
+///@desc Draws a rectagle with given width and color
+///@param {real} x1 The x coordinate of the top left coordinate of the rectangle
+///@param {real} y1 The y coordinate of the top left coordinate of the rectangle
+///@param {real} x2 The x coordinate of the bottom right coordinate of the rectangle
+///@param {real} y2 The y coordinate of the bottom right coordinate of the rectangle
+///@param {real} width The width of the outline of the rectangle (Default 1)
+///@param {Constant.Color} color The color of the rectangle (Default c_white)
+///@param {real} alpha The alpha of the rectangle frame
+///@param {real} rounding The rounding of the rectangle corners
 function draw_rectangle_width(x1, y1, x2, y2, width = 1, color = c_white, alpha = 1, rounding = 0) {
 	forceinline
 	return CleanRectangle(x1, y1, x2, y2).Blend(c_black, 1).Border(width, color, alpha).Rounding(rounding).Draw();
 }
-/**
-	Draws a rectangle with a outline color and background color
-	@param {real} x1							The x coordinate of the top left coordinate of the rectangle
-	@param {real} y1							The y coordinate of the top left coordinate of the rectangle
-	@param {real} x2							The x coordinate of the bottom right coordinate of the rectangle
-	@param {real} y2							The y coordinate of the bottom right coordinate of the rectangle
-	@param {real} width							The width of the frame of the rectangle (Default 1)
-	@param {Constant.Color} frame_color			The color of the frame of the rectangle (Default white)
-	@param {Constant.Color} background_color	The color of the background of the rectangle (Default black)
-	@param {real} frame_alpha					The alpha of the frame (Default 1)
-	@param {real} background_alpha				The alpha of the background (Default 1)
-*/
+///@func draw_rectangle_width_background(x1, y1, x2, y2, [width], [frame_color], [fill_color], [frame_alpha], [fill_alpha], [rounding])
+///@desc Draws a rectangle with a outline color and background color
+///@param {real} x1 The x coordinate of the top left coordinate of the rectangle
+///@param {real} y1 The y coordinate of the top left coordinate of the rectangle
+///@param {real} x2 The x coordinate of the bottom right coordinate of the rectangle
+///@param {real} y2 The y coordinate of the bottom right coordinate of the rectangle
+///@param {real} width The width of the frame of the rectangle (Default 1)
+///@param {Constant.Color} frame_color The color of the frame of the rectangle (Default white)
+///@param {Constant.Color} background_color The color of the background of the rectangle (Default black)
+///@param {real} frame_alpha The alpha of the frame (Default 1)
+///@param {real} background_alpha The alpha of the background (Default 1)
+///@param {real} rounding The rounding of the rectangle corners
 function draw_rectangle_width_background(x1, y1, x2, y2, width = 6, frame_color = c_white, fill_color = c_black, frame_alpha = 1, fill_alpha = 1, rounding = 0) {
 	forceinline
 	return CleanRectangle(x1, y1, x2 + width, y2 + width).Blend(fill_color, fill_alpha).Border(width, frame_color, frame_alpha).Rounding(rounding).Draw();
 }
-/**
-	Draws a circle with a hollow center
-	@param {real} x		The x position of the center
-	@param {real} y		The y position of the center
-*/
+///@func draw_circular_bar(x, y, value, max_value, color, radius, transparency, width)
+///@desc Draws a circle with a hollow center
+///@param {real} x The x position of the center
+///@param {real} y The y position of the center
 function draw_circular_bar(x, y, value, max, colour, radius, transparency, width) {
 	if (value > 0) { // no point even running if there is nothing to display (also stops /0
 		var i, len, tx, ty, val,
@@ -67,18 +68,17 @@ function draw_circular_bar(x, y, value, max, colour, radius, transparency, width
 		}
 	}
 }
-/**
-	Draws a gradient effect using shader (you need to manually add bm_add to apply for the gradient effect, QuickGPU can help)
-	@param {real} x			X position of the bottom left corner
-	@param {real} y			Y position of the bottom right corner
-	@param {real} width		The width of the gradient
-	@param {real} height	The default height of the gradient
-	@param {real} angle		The angle of the gradient
-	@param {color} color	The color of the gradient
-	@param {function} move	The funciton to use to move the gradient (Default dsin)
-	@param {real} intensity The intensity of the gradient (How many pixels will it move +/-)
-	@param {real} rate		The rate of the movement (Multiplies to the function declared in 'move')
-*/
+///@func draw_gradient_ext([x], [y], [width], [height], [angle], [color], [movement], [intensity], [rate])
+///@desc Draws a gradient effect using shader (you need to manually add bm_add to apply for the gradient effect)
+///@param {real} x X position of the bottom left corner
+///@param {real} y Y position of the bottom right corner
+///@param {real} width The width of the gradient
+///@param {real} height The default height of the gradient
+///@param {real} angle The angle of the gradient
+///@param {Consntat.Color} color The color of the gradient
+///@param {function} move The funciton to use to move the gradient (Default dsin)
+///@param {real} intensity The intensity of the gradient (How many pixels will it move +/-)
+///@param {real} rate The rate of the movement (Multiplies to the function declared in 'move')
 function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, color = c_white, move = dsin, intensity = 20, rate = 1) {
 	forceinline
 	static displace = 0, time = 0;
@@ -86,6 +86,10 @@ function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, 
 	height += displace;
 	draw_surface_ext(oGlobal.GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
 }
+///@text ?> The same effect can be done using draw_rectangle_color(), however this will lead to batch breaks and impact performance.
+
+///@constructor
+///@func SpriteNoisieSet([sprite])
 ///Sets the noise sprite to use for a noise fade
 function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
 	forceinline
@@ -93,16 +97,15 @@ function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
 	NoiseTexture = sprite_get_texture(sprite, 0);
 	Noiseuvs = texture_get_uvs(NoiseTexture);
 }
-/**
-	Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite if the duration is reached)
-	@param {Asset.sprite} sprite		The sprite to draw
-	@param {real} subimg				The subimg of the sprite
-	@param {real} x						The x position of the sprite to draw
-	@param {real} y						The y position of the sprite to draw
-	@param {real} time					The time of the noise fade (The value of this needs to change constantly)
-	@param {real} duration				The total duration of the fade in
-	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
-*/
+///@func draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, [noise_sprite])
+///@desc Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite if the duration is reached)
+///@param {Asset.GMSprite} sprite The sprite to draw
+///@param {real} subimg The subimg of the sprite
+///@param {real} x The x position of the sprite to draw
+///@param {real} y The y position of the sprite to draw
+///@param {real} time The time of the noise fade (The value of this needs to change constantly)
+///@param {real} duration The total duration of the fade in
+///@param {Asset.GMSprite} noise_sprite The noise sprite to use (It has to be a sprite of a noise)
 function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_sprite = sprNoiseRect) {
 	aggressive_forceinline
 	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
@@ -125,20 +128,19 @@ function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_spri
 	}
 	else draw_sprite(sprite, subimg, x, y);
 }
-/**
-	Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite_ext if the duration is reached)
-	@param {Asset.sprite} sprite		The sprite to draw
-	@param {real} subimg				The subimg of the sprite
-	@param {real} x						The x position of the sprite to draw
-	@param {real} y						The y position of the sprite to draw
-	@param {real} xscale				The xscale of the sprite to draw
-	@param {real} yscale				The yscale of the sprite to draw
-	@param {real} rot					The rotation of the sprite to draw
-	@param {color} col					The color of the sprite to draw
-	@param {real} time					The time of the noise fade (The value of this needs to change constantly)
-	@param {real} duration				The total duration of the fade in
-	@param {Asset.sprite} noise_sprite	The noise sprite to use (It has to be a sprite of a noise)
-*/
+///@func draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rotation, color, time, duration, [noise_sprite])
+///@desc Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite_ext if the duration is reached)
+///@param {Asset.GMSprite} sprite The sprite to draw
+///@param {real} subimg The subimg of the sprite
+///@param {real} x The x position of the sprite to draw
+///@param {real} y The y position of the sprite to draw
+///@param {real} xscale The xscale of the sprite to draw
+///@param {real} yscale The yscale of the sprite to draw
+///@param {real} rot The rotation of the sprite to draw
+///@param {Constant.Color} col The color of the sprite to draw
+///@param {real} time The time of the noise fade (The value of this needs to change constantly)
+///@param {real} duration The total duration of the fade in
+///@param {Asset.GMSprite} noise_sprite The noise sprite to use (It has to be a sprite of a noise)
 function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, time, duration, noise_sprite = sprNoiseRect) {
 	aggressive_forceinline
 	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
@@ -161,71 +163,71 @@ function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, c
 	}
 	else draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, 1);
 }
-/**
-	Draws an rectangle with the colors inverted inside of it
-	@param {real} x1	The top left x position of the rectangle
-	@param {real} y1	The top left y position of the rectangle
-	@param {real} x2	The bottom right x position of the rectangle
-	@param {real} y2	The bottom right y position of the rectangle
-*/
+///@func draw_invert_rect(x1, y1, x2, y2)
+///@desc Draws an rectangle with the colors inverted inside of it
+///@param {real} x1 The top left x position of the rectangle
+///@param {real} y1 The top left y position of the rectangle
+///@param {real} x2 The bottom right x position of the rectangle
+///@param {real} y2 The bottom right y position of the rectangle
 function draw_invert_rect(x1, y1, x2, y2) {
 	forceinline
+	gpu_push_state();
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, c_white, 1);
-	gpu_set_blendmode(bm_normal);
+	gpu_pop_state();
 }
-/**
-	Draws an triangle with the colors inverted inside of it
-	@param {real} x1	The x coordinate of the triangle's first corner
-	@param {real} y1	The y coordinate of the triangle's first corner
-	@param {real} x2	The x coordinate of the triangle's second corner
-	@param {real} y2	The y coordinate of the triangle's second corner
-	@param {real} x3	The x coordinate of the triangle's third corner
-	@param {real} y3	The y coordinate of the triangle's third corner
-*/
+///@func draw_invert_triangle(x1, y1, x2, y2, x3, y3)
+///@desc Draws an triangle with the colors inverted inside of it
+///@param {real} x1 The x coordinate of the triangle's first corner
+///@param {real} y1 The y coordinate of the triangle's first corner
+///@param {real} x2 The x coordinate of the triangle's second corner
+///@param {real} y2 The y coordinate of the triangle's second corner
+///@param {real} x3 The x coordinate of the triangle's third corner
+///@param {real} y3 The y coordinate of the triangle's third corner
 function draw_invert_triangle(x1, y1, x2, y2, x3, y3) {
 	forceinline
+	gpu_push_state();
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_triangle(x1, y1, x2, y2, x3, y3, false);
-	gpu_set_blendmode(bm_normal);
+	gpu_pop_state();
 }
-/**
-	Draws an circle with the colors inverted inside of it
-	@param {real} x		 The top left x position of the circle
-	@param {real} y		 The top left y position of the circle
-	@param {real} radius The radius of the circle
-*/
+///@fun draw_invert_circle(x, y, radius)
+///@desc Draws an circle with the colors inverted inside of it
+///@param {real} x The x coordinate of the circle center
+///@param {real} y The y coordinate of the circle center
+///@param {real} radius The radius of the circle
 function draw_invert_cricle(x, y, radius) {
 	forceinline
+	gpu_push_state();
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	draw_circle(x, y, radius, false);
-	gpu_set_blendmode(bm_normal);
+	gpu_pop_state();
 }
-/**
-	Draws an polygon with the colors inverted inside of it, make sure the points are in a clockwise/anticlockwise order or else there will be visual bugs (no auto sort for now)
-	@param {Array<Array<Real>>} Vertexes	The vertexes of the polygon in the form of [[x1, y1], [x2, y2]...]
-*/
-function draw_invert_polygon(vertexes) {
+///@func draw_invert_polygon(vertices)
+///@desc Draws an polygon with the colors inverted inside of it, make sure the points are in a clockwise/anticlockwise order or else there will be visual bugs (no auto sort for now)
+///@param {Array<Array<Real>>} Vertices The vertices of the polygon in the form of `[[x1, y1], [x2, y2]...]`
+function draw_invert_polygon(vertices) {
 	aggressive_forceinline
+	gpu_push_state();
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	var i = 1;
-	repeat array_length(vertexes) - 2
+	repeat array_length(vertices) - 2
 	{
-		draw_triangle(vertexes[0][0], vertexes[0][1], vertexes[i][0], vertexes[i][1],
-			vertexes[i + 1][0], vertexes[i + 1][1], false);
+		draw_triangle(vertices[0][0], vertices[0][1], vertices[i][0], vertices[i][1],
+			vertices[i + 1][0], vertices[i + 1][1], false);
 		++i;
 	}
-	gpu_set_blendmode(bm_normal);
+	gpu_pop_state();
 }
-/**
-	(semi-internal) Splices the screen, similar to Edgetale run 3 final attack, returns the first value of the list
-	for animating the offset (you have to animate this and the one after it)
-	@param {real} line_start_x	The starting x position of the line
-	@param {real} line_start_y	The starting y position of the line
-	@param {real} line_end_x	The ending x position of the line
-	@param {real} line_end_y	The ending y position of the line
-	@param {real} offset		The displacement of the splice
-*/
+///@func __cut_screen(start_x, start_y, end_x, end_y, offset)
+///@desc (semi-internal) Splices the screen, similar to Edgetale run 3 final attack, returns the first value of the list
+///for animating the offset (you have to animate this and the one after it)
+///@param {real} line_start_x The starting x position of the line
+///@param {real} line_start_yThe starting y position of the line
+///@param {real} line_end_x The ending x position of the line
+///@param {real} line_end_y The ending y position of the line
+///@param {real} offset The displacement of the splice
+///@return {real} The ID of the list for animating
 function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset) {
 	forceinline
 	var true_line_start = [line_start_x / 640, line_start_y / 480],
@@ -237,17 +239,16 @@ function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset
 	return ds_list_size(global.sur_list) - 2;
 }
 
-/**
-	Draws a sprite that fills the entire area like tiles
-	@param {Asset.GMSprite} sprite	The sprite to draw
-	@param {real} subimg			The index of the sprite
-	@param {real} x					The x position of the sprite
-	@param {real} y					The y position of the sprite
-	@param {real} x1				The x coordinate of the top left corner of the rectangle
-	@param {real} y1				The y coordinate of the top left corner of the rectangle
-	@param {real} x2				The x coordinate of the bottom right corner of the rectangle
-	@param {real} y2				The y coordinate of the bottom right corner of the rectangle
-*/
+///@func draw_sprite_tiled_area(sprite, subimg, x, y, x1, y1, x2, y2)
+///@desc Draws a sprite that fills the entire area like tiles
+///@param {Asset.GMSprite} sprite The sprite to draw
+///@param {real} subimg The index of the sprite
+///@param {real} x The x position of the sprite
+///@param {real} y The y position of the sprite
+///@param {real} x1 The x coordinate of the top left corner of the rectangle
+///@param {real} y1 The y coordinate of the top left corner of the rectangle
+///@param {real} x2 The x coordinate of the bottom right corner of the rectangle
+///@param {real} y2 The y coordinate of the bottom right corner of the rectangle
 function draw_sprite_tiled_area(sprite, subimg, xx, yy, x1, y1, x2, y2) {
 	aggressive_forceinline
 	var left, top, width, height, X, Y,
@@ -270,21 +271,20 @@ function draw_sprite_tiled_area(sprite, subimg, xx, yy, x1, y1, x2, y2) {
 	}
 }
 
-/**
-	Draws a sprite that fills the entire area like tiles
-	@param {Asset.GMSprite} sprite	The sprite to draw
-	@param {real} subimg			The index of the sprite
-	@param {real} x					The x position of the sprite
-	@param {real} y					The y position of the sprite
-	@param {real} x1				The x coordinate of the top left corner of the rectangle
-	@param {real} y1				The y coordinate of the top left corner of the rectangle
-	@param {real} x2				The x coordinate of the bottom right corner of the rectangle
-	@param {real} y2				The y coordinate of the bottom right corner of the rectangle
-	@param {real} xscale			The xscale of the sprite
-	@param {real} yscale			The yscale of the sprite
-	@param {color} color			The color of the sprite
-	@param {real} alpha				The alpha of the sprite
-*/
+///@func draw_sprite_tiled_area_ext(sprite, subimg, x, y, x1, y1, x2, y2, xscale, yscale, color, alpha)
+///@desc Draws a sprite that fills the entire area like tiles
+///@param {Asset.GMSprite} sprite The sprite to draw
+///@param {real} subimg The index of the sprite
+///@param {real} x The x position of the sprite
+///@param {real} y The y position of the sprite
+///@param {real} x1 The x coordinate of the top left corner of the rectangle
+///@param {real} y1 The y coordinate of the top left corner of the rectangle
+///@param {real} x2 The x coordinate of the bottom right corner of the rectangle
+///@param {real} y2 The y coordinate of the bottom right corner of the rectangle
+///@param {real} xscale The xscale of the sprite
+///@param {real} yscale The yscale of the sprite
+///@param {Consant.Color} color The color of the sprite
+///@param {real} alpha The alpha of the sprite
 function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xscale, yscale, color, alpha) {
 	aggressive_forceinline
 	var left, top, width, height, X, Y,
@@ -307,17 +307,17 @@ function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xsca
 	}
 }
 
-///Resets the GPU state to default
+///@func reset_gpu_state()
+///@desc Resets the GPU state to default
 function reset_gpu_state() {
 	forceinline
 	gpu_set_state(global.DefaultGPUState);
 }
 
-/*
-	Sets the drawing alignment (Combination of drawset_h/valign)
-	@param {Constant.Halign} HAlign	The horizontal alignment
-	@param {Constant.Valign} VAlign	The vertical alignment
-*/
+///@func draw_set_align([halign], [valign])
+///@desc Sets the drawing alignment (Combination of draw_set_h/valign)
+///@param {Constant.Halign} HAlign The horizontal alignment
+///@param {Constant.Valign} VAlign The vertical alignment
 function draw_set_align(halign = fa_left, valign = fa_top)
 {
 	forceinline

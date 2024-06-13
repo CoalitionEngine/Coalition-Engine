@@ -120,11 +120,39 @@ function string_case_reverse(str) {
 /// @param {string} str Text string.
 /// @returns {string} 
 function string_reverse(str) {
-	var _str_final = "",
-	isize = string_length(str), i = isize;
-	repeat(isize) {
-		_str_final += string_char_at(str, i);
-		--i;
+	var n = string_byte_length(str);
+	var b1 = buffer_create(1024, buffer_grow, 1);
+	var b2 = buffer_create(1024, buffer_grow, 1);
+	if (buffer_get_size(b1) <= n) {
+	    buffer_resize(b1, n + 1);
+	    buffer_resize(b2, n + 1);
 	}
-	return _str_final;
+	//
+	buffer_seek(b1, buffer_seek_start, 0);
+	buffer_write(b1, buffer_text, str);
+	buffer_seek(b1, buffer_seek_start, 0);
+	var i = n;
+	while (buffer_tell(b1) < n) {
+	    var c = buffer_read(b1, buffer_u8), k;
+	    if (c < $80) {
+	        buffer_poke(b2, --i, buffer_u8, c);
+	    } else if (c < $E0) {
+	        c |= buffer_read(b1, buffer_u8) << 8;
+	        i -= 2; buffer_poke(b2, i, buffer_u16, c);
+	    } else if (c < $F0) {
+			//Either it is b1 or b2, I'm guessing it's b2, Yal made a typo
+	        k = buffer_read(b2, buffer_u16);
+	        i -= 3;
+	        buffer_poke(b2, i + 1, buffer_u16, k);
+	        buffer_poke(b2, i, buffer_u8, c);
+	    } else {
+	        buffer_seek(b1, buffer_seek_relative, -1);
+	        c = buffer_read(b1, buffer_u32);
+	        i -= 4;
+	        buffer_poke(b2, i, buffer_u32, c);
+	    }
+	}
+	buffer_poke(b1, n, buffer_u8, 0);
+	buffer_seek(b2, buffer_seek_start, 0);
+	return buffer_read(b2, buffer_string);
 }

@@ -1,5 +1,5 @@
 var ItemCount = Item_Count(),
-	CellCount = CellData.Count(),
+	CellCount = Cell.Count(),
 	input_horizontal = PRESS_HORIZONTAL,
 	input_cancel = PRESS_CANCEL,
 	input_confirm = PRESS_CONFIRM;
@@ -133,8 +133,8 @@ if menu_ui_x > -140
 			draw_text(216, ui_box_y + 215, $"DF {global.player_base_def} ({global.player_def})");
 			draw_text(384, ui_box_y + 183, "EXP: " + string(Player.Exp()));
 			draw_text(384, ui_box_y + 215, "NEXT: " + string(Player.GetExpNext()));
-			draw_text(216, ui_box_y + 273, "WEAPON: " + string(global.data.AttackItem));
-			draw_text(216, ui_box_y + 305, "ARMOR: " + string(global.data.DefenseItem));
+			draw_text(216, ui_box_y + 273, "WEAPON: " + string(COALITION_DATA.AttackItem));
+			draw_text(216, ui_box_y + 305, "ARMOR: " + string(COALITION_DATA.DefenseItem));
 			draw_text(216, ui_box_y + 347, "GOLD: " + string(gold));
 		}
 		#endregion
@@ -149,8 +149,8 @@ if menu_ui_x > -140
 			// Cell text drawing
 			draw_set_font(fnt_dt_sans);
 			draw_set_color(c_white);
-			for (var i = 1; i <= CellCount; ++i)
-				draw_text(232, ui_box_y - 9 + i * 32, CellData.GetName(i));
+			for (var i = 0; i < CellCount; ++i)
+				draw_text(232, ui_box_y + 23 + i * 32, Cell.GetName(i));
 		}
 		#endregion
 	#endregion
@@ -177,18 +177,17 @@ if menu_ui_x > -140
 		for (var i = ItemCount; i < 8; ++i)
 			draw_line_width_color(95, 85 + i * 35, 245, 85 + i * 35, 2, c_red, c_red);
 		//Item Text / line drawing
-		for (var i = 0; i < 10; ++i)
+		var i = 0;
+		repeat 10
 		{
-			if i < 8
+			if i < Box.Count(Box_ID)
 			{
-				if global.Box[Box_ID, i]
-				{
-					BoxData.InfoLoad(Box_ID);
-					draw_text(380, 70 + i * 35, box_name[i]);
-				}
-				else draw_line_width_color(395, 85 + i * 35, 545, 85 + i * 35, 2, c_red, c_red);
+				Box.InfoLoad();
+				draw_text(380, 70 + i * 35, box_name[i]);
 			}
-			else draw_line_width_color(395, 85 + i * 35, 545, 85 + i * 35, 2, c_red, c_red);
+			else
+				draw_line_width_color(395, 85 + i * 35, 545, 85 + i * 35, 2, c_red, c_red);
+			++i;
 		}
 	}
 	// Drawing the soul over everything
@@ -217,8 +216,7 @@ if dialog_exists
 		draw_sprite_ext(dialog_sprite, dialog_sprite_index, 30 + 60 + sprite_dis_x, dialog_box_y + 80 + sprite_dis_y, 80 /spr_w, 80 / spr_h, 0, c_white, 1);
 	}
 	//Draws dialog texts
-	__text_writer.starting_format(dialog_font, c_white)
-				.draw(30 + 25 + dis, dialog_box_y + 20, dialog_typist);
+	__text_writer.draw(30 + 25 + dis, dialog_box_y + 20, dialog_typist);
 	
 	//Check if the dialog is currently an option and draw if question is asked and buffer time has expired
 	if dialog_option && dialog_typist.get_state() == 1 && !option_buffer

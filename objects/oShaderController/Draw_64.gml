@@ -10,9 +10,10 @@ repeat ShaderAmount
 	var ParamNames = variable_struct_get_names(ShaderParams[i]), j = 0;
 	repeat array_length(ParamNames)
 	{
-		if is_array(ShaderParams[i][$ ParamNames[j]])
-			shader_set_uniform_f_array(shader_get_uniform(ShaderList[i], ParamNames[j]), ShaderParams[i][$ ParamNames[j]]);
-		else shader_set_uniform_f(shader_get_uniform(ShaderList[i], ParamNames[j]), ShaderParams[i][$ ParamNames[j]]);
+		var CurParamName = struct_get_from_hash(ShaderParams[i], variable_get_hash(ParamNames[j]));
+		if is_array(CurParamName)
+			shader_set_uniform_f_array(shader_get_uniform(ShaderList[i], ParamNames[j]), CurParamName);
+		else shader_set_uniform_f(shader_get_uniform(ShaderList[i], ParamNames[j]), CurParamName);
 		++j;
 	}
 	var IsDrawnToSurf = ShaderApplyToSurface[i];

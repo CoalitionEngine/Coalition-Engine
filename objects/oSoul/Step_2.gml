@@ -1,6 +1,6 @@
 //Checks bullet collision
 CollideWithBullet();
-if BattleData.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
+if Battle.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 {
 	if mode == SOUL_MODE.BLUE PreciseDetection = false;
 	//Half of sprite width + half of thickness frame
@@ -37,10 +37,10 @@ if BattleData.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 	#region Blue soul detection
 	if mode == SOUL_MODE.BLUE
 	{
-		var h_spd = input_check_opposing("left", "right"),
-			v_spd = input_check_opposing("up", "down"),
+		var h_spd = CHECK_HORIZONTAL,
+			v_spd = CHECK_VERTICAL,
 		
-			move_spd = global.spd / (input_check("cancel") + 1),
+			move_spd = global.spd / (HOLD_CANCEL + 1),
 		
 			x_offset = sprite_width / 2,
 			y_offset = sprite_height / 2,
@@ -89,7 +89,7 @@ if BattleData.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[2] = y_offset + 1;
 			platform_check[3] = y_offset;
 
-			jump_input = input_check("up");
+			jump_input = oGlobal.__input_functions[0];
 			move_input = h_spd * move_spd;
 		}
 		else if _angle == 180 {
@@ -102,31 +102,31 @@ if BattleData.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[3] = -y_offset;
 				
 
-			jump_input = input_check("down");
+			jump_input = oGlobal.__input_functions[1];
 			move_input = h_spd * -move_spd;
 		}
 		else if _angle == 90 {
 			if check_board {
-				_on_ground = r_x >= board_right_limit - 0.1;
-				_on_ceil = r_x <= board_left_limit + 0.1;
+				_on_ground = !PointInside[0];
+				_on_ceil = !PointInside[PreciseDetection ? 4 : 2];
 			}
 
 			platform_check[0] = x_offset + 1;
 			platform_check[1] = -x_offset;
 
-			jump_input = input_check("left");
+			jump_input = oGlobal.__input_functions[2];
 			move_input = v_spd * -move_spd;
 		}
 		else if _angle == 270 {
 			if check_board {
-				_on_ground = r_x <= board_left_limit + 0.1;
-				_on_ceil = r_x >= board_right_limit - 0.1;
+				_on_ground = !PointInside[PreciseDetection ? 4 : 2];
+				_on_ceil = !PointInside[0];
 			}
 
 			platform_check[0] = -10;
 			platform_check[1] = x_offset;
 
-			jump_input = input_check("right");
+			jump_input = oGlobal.__input_functions[3];
 			move_input = v_spd * move_spd;
 		}
 
@@ -143,10 +143,8 @@ if BattleData.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 		if position_meeting(RelativePositionX, RelativePositionY, oPlatform) && _fall_spd >= 0 {
 			_on_platform = true;
 			while position_meeting(x + platform_check[1], y + platform_check[3], oPlatform) {
-				with RespecitvePlatform {
-					other.x -= lengthdir_y(0.1, _angle);
-					other.y -= lengthdir_x(0.1, _angle);
-				}
+				x -= lengthdir_y(0.1, _angle);
+				y -= lengthdir_x(0.1, _angle);
 			}
 		}
 		with RespecitvePlatform {

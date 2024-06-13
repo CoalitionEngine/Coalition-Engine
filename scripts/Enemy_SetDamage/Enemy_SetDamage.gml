@@ -6,5 +6,5 @@ if NOOB_MODE
 */
 function Enemy_SetDamage(enemy, damage) {
 	forceinline
-	EnemyData.SetDamage(enemy, damage);
+	Enemy.SetDamage(enemy, damage);
 }

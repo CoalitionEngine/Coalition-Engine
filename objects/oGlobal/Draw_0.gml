@@ -1,6 +1,6 @@
+//Cut screen
 if global.timer >= 1
 {
-	//Cut screen
 	var n = ds_list_size(global.sur_list), i = 0, _list;
 	if n > 1 surface_copy(CutScreenSurface, 0, 0, application_surface);
 	repeat n
@@ -24,3 +24,5 @@ if global.timer >= 1
 		++i;
 	}
 }
+//Shop
+if room == room_shop Shop.__Draw();

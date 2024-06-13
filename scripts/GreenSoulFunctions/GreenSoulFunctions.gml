@@ -1,11 +1,18 @@
+///@category Soul
+///@title Green Soul Functions
+///@text These functions are related to green souls
+
+///@constructor
+///@func __Shield()
+///@desc Shield data
 function __Shield() constructor
 {
-	/**
-		Adds a shield
-		@param {Constant.Color} Color	The color of the shield
-		@param {Constant.Color} Hit_Color	The color of the tip of the shield when colliding with an arrow
-		@param {Array<Constant.VirtualKeys>,Array<real>,Array<bool>} Input_keys	the array of keys to check (right, up, left, down)
-	*/
+	///@method Add(color, hit_color, input_keys)
+	///@desc Adds a shield
+	///@param {Constant.Color} Color The color of the shield
+	///@param {Constant.Color} Hit_Color The color of the tip of the shield when colliding with an arrow
+	///@param {Array<Constant.VirtualKeys>,Array<real>,Array<bool>} Input_keys the array of keys to check (right, up, left, down)
+	///@return {Id.Instance<oGreenShield>} The created shield
 	static Add = function(col, hit_col, input)
 	{
 		with oSoul.GreenShield
@@ -27,10 +34,10 @@ function __Shield() constructor
 			return shield;
 		}
 	}
-	/**
-		Removes a shield
-		@parma {real} ID	The id of the shield
-	*/
+	///@method Remove(ID)
+	///@desc Removes a shield
+	///@param {real} ID The id of the shield
+	///@return {Struct.__Shield}
 	static Remove = function(ID)
 	{
 		with oSoul.GreenShield
@@ -62,12 +69,24 @@ function __Shield() constructor
 			ds_grid_copy(Input, temp);
 			ds_grid_destroy(temp);
 		}
+		return self;
 	}
+	///@method __RemainingRotateAngle(ID)
+	///@desc Gets the remaining rotating angle of the shield
+	///@param ID The ID of the shield
+	///@return {real} The remaining angle
 	static __RemainingRotateAngle = function(ID)
 	{
 		forceinline
 		with oSoul.GreenShield return min((TargetAngle[| ID] - Angle[| ID] + 360) % 360, (360 - TargetAngle[| ID] + Angle[| ID]) % 360);
 	}
+	///!> This is an internal function
+	///@method __ApplyRotate(ID, direction)
+	///@desc Applies the rotation for the shield
+	///@param ID The ID of the shield
+	///@param dir The direction to rotate to
+	///@return {real} The remaining angle
+	///@text This is an internal function
 	static __ApplyRotate = function(ID, dir)
 	{
 		forceinline
@@ -79,12 +98,14 @@ function __Shield() constructor
 	}
 }
 
+///@func Bullet_Arrow(time, speed, direction, [mode], [color])
 ///@desc Creates a Green Soul Arrow with given params
-///@param {real} time	The time (in frames) taken for the arrow to reach the soul
-///@param {real} speed	The speed of the arrow
-///@param {real} direction	The direction of the Arrow
-///@param {real} mode	The mode of the arrow (Macros provided by ARROW_MODE)
-///@param {real} color	The color of the arrow (Default 0)
+///@param {real} time The time (in frames) taken for the arrow to reach the soul
+///@param {real} speed The speed of the arrow
+///@param {real} direction The direction of the Arrow
+///@param {real} mode The mode of the arrow (Macros provided by ARROW_MODE)
+///@param {real} color The color of the arrow (Default 0)
+///@return {Id.Instance<oGreenArr>}
 function Bullet_Arrow(Time, Spd, Dir, Mode = 0, color = 0)
 {
 	if Dir < 90 Dir *= 90;
@@ -104,13 +125,14 @@ function Bullet_Arrow(Time, Spd, Dir, Mode = 0, color = 0)
 	}
 }
 
+///@func CreateArrows(delay, beat, speed, tags, [func_name], [functions])
 ///@desc Creates multiple arrows that comes like a rhythm game
-///@param {real} delay	The delay of the whole barrage
-///@param {real} beat	The interaval of the arrows
-///@param {real} speed	The speed of the arrows
-///@param {array} tags	The entire barrage of arrows, "/" for empty and "R" for random direction, "$X" for the arrow to come in the respective direction
-///@param {array} *func_name	The name of the functions
-///@param {array} *functions	The functions that will be called when you put it in the tags, similar to scrrible_typists_add_event
+///@param {real} delay The delay of the whole barrage
+///@param {real} beat The interaval of the arrows
+///@param {real} speed The speed of the arrows
+///@param {array} tags The entire barrage of arrows, "/" for empty and "R" for random direction, "$X" for the arrow to come in the respective direction
+///@param {array} *func_name The name of the functions
+///@param {array} *functions The functions that will be called when you put it in the tags, similar to scrrible_typists_add_event
 function CreateArrows(delay, beat, spd, tags, func_name = -1, functions = -1)
 {
 	var dir = 1, fire = true, i = 0;

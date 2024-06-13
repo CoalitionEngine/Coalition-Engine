@@ -3,9 +3,8 @@ if surface_exists(CutScreenSurface) surface_free(CutScreenSurface);
 if surface_exists(RGBSurf) surface_free(RGBSurf);
 if surface_exists(GradientSurf) surface_free(GradientSurf);
 instance_destroy(oBulletParents);
-global.Settings[? "Volume"] = global.Volume;
-delete global.SaveFile;
-delete global.TempData;
+delete COALITION_SAVE_FILE;
+delete global.__CoalitionTempData;
 ds_map_destroy(global.Settings);
 
 part_system_destroy(global.TrailS);
@@ -21,7 +20,7 @@ delete Song;
 delete Fade;
 delete Naming;
 delete Border;
-delete global.data;
+delete COALITION_DATA;
 
 i = 0;
 repeat ds_list_size(global.ItemLibrary) delete global.ItemLibrary[| i++];

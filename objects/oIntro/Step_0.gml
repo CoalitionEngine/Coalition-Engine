@@ -135,7 +135,7 @@ switch menu_state
 				Fader_Fade(0, 1, 300, 0, c_white);
 				var _handle = call_later(310, time_source_units_frames, function()
 				{
-					global.data.name = name;
+					COALITION_DATA.name = name;
 					Fader_Fade(1, 0, 20);
 					//room_goto_next();
 					room_goto(room_overworld);

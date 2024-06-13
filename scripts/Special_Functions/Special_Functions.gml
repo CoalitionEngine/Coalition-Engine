@@ -1,4 +1,9 @@
-///Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
+///@category Special Scripts
+///@title Misc. Functions
+
+///@func check_outside()
+///@desc Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
+///@return {bool}
 function check_outside(){
 	forceinline
 	var cam = oGlobal.MainCamera,
@@ -10,22 +15,22 @@ function check_outside(){
 	and ((x < -sprite_width) || (x > room_width + sprite_width) ||
 			(y > room_height + sprite_height) || (y < -sprite_height));
 }
-
-///Takes a screenshot and saves it with given filename + current time
+///@func Screenshot(filename)
+///@desc Takes a screenshot and saves it with given filename + current time
 function Screenshot(filename = "") {
 	forceinline
 	var date = $"{current_year}y-{current_month}m-{current_day}d_{current_hour}h_{current_minute}m_{current_second}s";
-	screen_save($"Screenshots/{filename}{date}.png");
+	screen_save($"Screenshots/{filename} {date}.png");
 }
 
-/**
-	@param {string} FileName	The file name of the txt file, must include .txt at the end
-	@param {real} Read_Method The method of reading the text files, default 0
-	@param {string} Tag	The tag of the string to get
-	Loads the text from an external text file, there are 2 reading methods for now:
-		  0 is by using numbers to indicate the turn number (during battle)
-		  1 is by using tags to let the script read which text to load
-*/
+///@func LoadTextFromFile(filename, [reading_method], [tag])
+///@desc Loads the text from an external text file, there are 2 reading methods for now:
+///0 is by using numbers to indicate the turn number (during battle)
+///1 is by using tags to let the script read which text to load
+///@param {string} FileName The file name of the txt file, must include .txt at the end
+///@param {real} Read_Method The method of reading the text files, default 0
+///@param {string} Tag The tag of the string to get
+///@return {string}
 function LoadTextFromFile(filename, read_method = 0, tag = "")
 {
 	aggressive_forceinline
@@ -53,7 +58,7 @@ function LoadTextFromFile(filename, read_method = 0, tag = "")
 						file_text_readln(file);
 						DialogText = file_text_read_string(file);
 						file_text_readln(file);
-						BattleData.EnemyDialog(self, TurnNumber, DialogText);
+						Battle.EnemyDialog(self, TurnNumber, DialogText);
 					break
 				}
 				i++;
@@ -79,30 +84,43 @@ function LoadTextFromFile(filename, read_method = 0, tag = "")
 	file_text_close(file);
 }
 
-/**
-	Checks whether the mouse is inside a rectangle
-	@param {real} x1	The x coordinate of the top left coordinate of the rectangle
-	@param {real} y1	The y coordinate of the top left coordinate of the rectangle
-	@param {real} x2	The x coordinate of the bottom right coordinate of the rectangle
-	@param {real} y2	The y coordinate of the bottom right coordinate of the rectangle
-*/
+///@func mouse_in_rectangle(x1, y1, x2, y2)
+///@desc Checks whether the mouse is inside a rectangle
+///@param {real} x1 The x coordinate of the top left coordinate of the rectangle
+///@param {real} y1 The y coordinate of the top left coordinate of the rectangle
+///@param {real} x2 The x coordinate of the bottom right coordinate of the rectangle
+///@param {real} y2 The y coordinate of the bottom right coordinate of the rectangle
+///@return {bool}
 function mouse_in_rectangle(x1, y1, x2, y2) {
 	forceinline
 	return point_in_rectangle(mouse_x, mouse_y, x1, y1, x2, y2);
 }
-
+///@func mouse_in_circle(x, y, radius)
+///@desc Checks whether the mouse is inside a circle
+///@param {real} x The x coordinate of the circle center
+///@param {real} y The y coordinate of the circle center
+///@param {real} radius The radius of the circle
+///@return {bool}
 function mouse_in_circle(x, y, rad) {
 	forceinline
 	return point_in_circle(mouse_x, mouse_y, x, y, rad);
 }
-
+///@func mouse_in_triangle(x1, 1, x2, y2, x3, y3)
+///@desc checks whether the mouse is in a triangle)
+///@param {real} x1 The x coordinate of the first vertice of the triangle
+///@param {real} y1 The y coordinate of the first vertice of the triangle
+///@param {real} x2 The x coordinate of the second vertice of the triangle
+///@param {real} y2 The y coordinate of the second vertice of the triangle
+///@param {real} x3 The x coordinate of the third vertice of the triangle
+///@param {real} y3 The y coordinate of the third vertice of the triangle
+///@return {bool}
 function mouse_in_triangle(x1, y1, x2, y2, x3, y3) {
 	forceinline
 	return point_in_triangle(mouse_x, mouse_y, x1, y1, x2, y2, x3, y3);
 }
-
-///Checks whether an instance exists, if not, create at (0, 0)
-///@param {ID.Instance,Asset.GMObject} Instance	The instance to check
+///@func instance_check_create(instance)
+///@desc Checks whether an instance exists, if not, create at (0, 0)
+///@param {ID.Instance,Asset.GMObject} Instance The instance to check
 function instance_check_create(inst)
 {
 	forceinline
@@ -110,60 +128,43 @@ function instance_check_create(inst)
 }
 
 #region Point Lists
-/**
-	Checks whether the list of points form a rectangle
-	@param {array} a
-	@param {array} b
-	@param {array} c
-	@param {array} d
-*/
+///@func is_rectangle(a, b, c, d)
+///@desc Checks whether the list of points form a rectangle
+///@param {array} a The array of coordinates of the first corner
+///@param {array} b The array of coordinates of the second corner
+///@param {array} c The array of coordinates of the third corner
+///@param {array} d The array of coordinates of the fourth corner
+///@return {bool}
 function is_rectangle(a, b, c, d)
 {
-	//Slope of lines (Not using arrays because creating an array per-frame is cringe)
-	var Slope1 = (b[1] - a[1]) / (b[0] - a[0]),
-		Slope2 = (c[1] - b[1]) / (c[0] - b[0]),
-		Slope3 = (d[1] - c[1]) / (d[0] - c[0]),
-		Slope4 = (a[1] - d[1]) / (a[0] - d[0]);
-    //Using the fact that when (slope of line A * slope of line B) = -1
-	return (
-		//Case where the coordinates of the points are in order
-		(Slope1 * Slope2 == -1) && (Slope2 * Slope3 == -1) && (Slope3 * Slope4 == -1) && (Slope4 * Slope1 == -1) ||
-		//Case where it is not in order
-		(Slope1 * Slope3 == -1) && (Slope3 * Slope2 == -1) && (Slope2 * Slope4 == -1) && (Slope4 * Slope1 == -1)
-		//idk are there more cases
-	);
+	var pt_a = new Vector2(a[0], a[1]),
+		pt_b = new Vector2(b[0], b[1]),
+		pt_c = new Vector2(c[0], c[1]),
+		pt_d = new Vector2(d[0], d[1]),
+		
+		AB = pt_b.Subtract(pt_a),
+		BC = pt_c.Subtract(pt_b),
+		CD = pt_d.Subtract(pt_c),
+		DA = pt_a.Subtract(pt_d);
+	//Check length of sides
+	if AB.Magnitude() != CD.Magnitude() || BC.Magnitude() != DA.Magnitude()
+		return false;
+	//Check right angles
+	//Only two is required due to the angle sum of polygon
+	if AB.Dot(BC) != 0 || BC.Dot(CD) != 0 return false;
+	//Everything checks out
+	return true;
 }
-function lines_intersect(x1, y1, x2, y2, x3, y3, x4, y4, segment)
-{
-    var ua, ub, ud, ux, uy, vx, vy, wx, wy;
-    ua = 0;
-    ux = x2 - x1;
-    uy = y2 - y1;
-    vx = x4 - x3;
-    vy = y4 - y3;
-    wx = x1 - x3;
-    wy = y1 - y3;
-    ud = vy * ux - vx * uy;
-    if (ud != 0) 
-    {
-        ua = (vx * wy - vy * wx) / ud;
-        if (segment) 
-        {
-            ub = (ux * wy - uy * wx) / ud;
-            if (ua < 0 || ua > 1 || ub < 0 || ub > 1) ua = 0;
-        }
-    }
-    return ua;
-}
-/**
-	Checks the nearest point to an edge
-	@param {real} The x coordinate of the point to check
-	@param {real} The y coordinate of the point to check
-	@param {real} The x coordinate of the start of the edge
-	@param {real} The y coordinate of the start of the edge
-	@param {real} The x coordinate of the end of the edge
-	@param {real} The y coordinate of the end of the edge
-*/
+
+///@func nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)
+///@desc Checks the nearest point to an edge
+///@param {real} point_x The x coordinate of the point to check
+///@param {real} point_y The y coordinate of the point to check
+///@param {real} start_x The x coordinate of the start of the edge
+///@param {real} start_y The y coordinate of the start of the edge
+///@param {real} end_x The x coordinate of the end of the edge
+///@param {real} end_y The y coordinate of the end of the edge
+///@return {Struct.Vector2} The nearest point
 function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 {
 	forceinline
@@ -180,7 +181,7 @@ function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 #region From Alice
 /// @function file_read_all_text(filename)
 /// @description Reads entire content of a given file as a string, or returns undefined if the file doesn't exist.
-/// @param {string} filename		The path of the file to read the content of.
+/// @param {string} filename The path of the file to read the content of.
 function file_read_all_text(_filename) {
 	forceinline
 	if (!file_exists(_filename)) {
@@ -195,8 +196,8 @@ function file_read_all_text(_filename) {
 
 /// @function file_write_all_text(filename,content)
 /// @description Creates or overwrites a given file with the given string content.
-/// @param {string} filename		The path of the file to create/overwrite.
-/// @param {string} content			The content to create/overwrite the file with.
+/// @param {string} filename The path of the file to create/overwrite.
+/// @param {string} content The content to create/overwrite the file with.
 function file_write_all_text(_filename, _content) {
 	forceinline
 	var _buffer = buffer_create(string_length(_content), buffer_grow, 1);
@@ -207,9 +208,9 @@ function file_write_all_text(_filename, _content) {
 
 /// @func string_split_lines(str)
 /// Splits the string by newline characters/sequences (CRLF, CR, LF).
-/// @arg {String} str			   The string to split.
-/// @arg {Bool} remove_empty		Determines whether the final result should filter out empty strings or not.
-/// @arg {Real} max_splits		  The maximum number of splits to make.
+/// @arg {String} str The string to split.
+/// @arg {Bool} remove_empty Determines whether the final result should filter out empty strings or not.
+/// @arg {Real} max_splits The maximum number of splits to make.
 /// @returns {Array<String>}
 function string_split_lines(_str, _remove_empty = false, _max_splits = undefined) {
 	forceinline
@@ -223,7 +224,7 @@ function string_split_lines(_str, _remove_empty = false, _max_splits = undefined
 
 /// @function json_load(filename)
 /// @description Loads a given JSON file into a GML value (struct/array/string/real).
-/// @param {string} filename		The path of the JSON file to load.
+/// @param {string} filename The path of the JSON file to load.
 function json_load(_filename) {
 	forceinline
 	var _json_content = file_read_all_text(_filename);
@@ -240,8 +241,8 @@ function json_load(_filename) {
 
 /// @function json_save(filename,value)
 /// @description Saves a given GML value (struct/array/string/real) into a JSON file.
-/// @param {string} filename		The path of the JSON file to save.
-/// @param {any} value				The value to save as a JSON file.
+/// @param {string} filename The path of the JSON file to save.
+/// @param {any} value The value to save as a JSON file.
 function json_save(_filename, _value) {
 	forceinline
 	var _json_content = json_stringify(_value);

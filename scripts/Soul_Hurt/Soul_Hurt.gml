@@ -1,6 +1,10 @@
-///Deals damage to the soul
-///@param {real} dmg	The Damage to Yellow HP (Default 1)
-///@param {real} kr		The Damage to Purple KR (Default 1)
+///@category Soul
+///@title Damaging
+
+///@func Soul_Hurt([damage], [kr])
+///@desc Deals damage to the soul
+///@param {real} dmg The Damage to Yellow HP (Default 1)
+///@param {real} kr The Damage to Purple KR (Default 1)
 function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 {
 	forceinline
@@ -9,7 +13,7 @@ function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 		audio_play(snd_hurt);
 		global.inv = global.assign_inv + global.player_inv_boost;
 		global.hp -= dmg;
-		if global.hp > 1 global.kr += kr;
+		if global.kr_activation && global.hp > 1 global.kr += kr;
 		if hit_destroy
 		{
 			__CoalitionEngineError(object_get_parent(self) == oBulletParents,

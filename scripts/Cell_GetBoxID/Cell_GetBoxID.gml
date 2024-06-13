@@ -5,5 +5,5 @@ if NOOB_MODE
 */
 function Cell_GetBoxID(slot) {
 	forceinline
-	return CellData.GetBoxID(slot);
+	return Cell.GetBoxID(slot);
 }

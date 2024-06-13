@@ -1,3 +1,7 @@
+///@category Core Functions
+///@title Initalization
+///@func Initalize()
+///@desc This function runs when the game begins and initalizes basically everything required in this engine
 function Initialize()
 {
 	aggressive_forceinline
@@ -6,16 +10,14 @@ function Initialize()
 	//Set to true when releasing your game (Note that bugs will be undisplayed during gameplay)
 	gml_release_mode(RELEASE);
 	randomize();
-	//Pre-bake outline font for damage
-	scribble_font_bake_outline_8dir_2px("fnt_dmg", "fnt_dmg_outlined", c_black, true);
 	
 	//Some users may not want a lerp animation to be played, you may set this to 1
-	global.lerp_speed = 0.16;
+	global.lerp_speed = 1/12;
 	global.battle_lerp_speed = 1/3;
 	
 	//Soul position (Gameover usage)
-	global.soul_x = 320;
-	global.soul_y = 320;
+	global.__gameover_soul_x = 320;
+	global.__gameover_soul_y = 320;
 	
 	//Debugging (Engine usage)
 	global.debug = false;
@@ -28,82 +30,78 @@ function Initialize()
 	//Sets Whether Blasters cause RGB splitting effect
 	global.RGBBlaster = false;
 	
-	//Sets whether the current text is skippable (Engine usage)
+	//Forces all text to be skippable or not
 	global.TextSkipEnabled = true;
 	
 	//Spare
-	global.SpareTextColor = (!irandom(100) ? "[c_fuchsia]" : "[c_yellow]");
+	global.SpareTextColor = (!irandom(100) ? c_fuchsia : c_yellow);
 	
 	
 	//Save file (Free to edit)
-	global.SaveFile = {};
-	global.SaveFile[$ "Name"] =		"Chara";
-	global.SaveFile[$ "Max HP"] =	99;
-	global.SaveFile[$ "HP"] =		99;
-	global.SaveFile[$ "LV"] =		20;
-	global.SaveFile[$ "Gold"] =		0;
-	global.SaveFile[$ "EXP"] =		0;
-	global.SaveFile[$ "Wep"] =		"Stick";
-	global.SaveFile[$ "Arm"] =		"Bandage";
-	global.SaveFile[$ "Kills"] =	0;
-	static Item_Preset = [ITEM.PIE, ITEM.INOODLES, ITEM.STEAK, ITEM.SNOWP, ITEM.SNOWP,
-						ITEM.LHERO, ITEM.LHERO, ITEM.SEATEA],
-		Cell_Preset = [1, 2, 0, 0, 0, 0, 0, 0],
-		Box_Preset =  //Insert the items manually
-		[
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],		// OW Box
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],		// Dimensional Box A
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]		// Dimensional Box B
-		];
-	for (var i = 0; i < 8; i++) {
-		if i < 3
-			for (var ii = 0; ii < 8; ii++)
-				global.SaveFile[$ $"Box {i}_{ii}"];
+	COALITION_SAVE_FILE = {};
+	static Item_Preset = array_create(8, 0), Cell_Preset = [],
+		Box_Preset = {}  //Insert the items manually
+		Box_Preset[$ 0] = array_create(10, 0);	// OW Box
+		Box_Preset[$ 1] = array_create(10, 0);	// Dimensional Box A
+		Box_Preset[$ 2] = array_create(10, 0);	// Dimensional Box B
+	static __hash_name_list = ["Name", "Max HP", "HP", "LV", "Gold", "EXP", "Wep", "Arm", "Kills", "Box", "Item", "Cell"];
+	static __hash_values = [];
+	static __default_save_file_vales = ["Chara", 99, 99, 20, 0, 0, "Stick", "Bandage", 0, Box_Preset, Item_Preset, Cell_Preset];
+	var i = 0;
+	repeat array_length(__hash_name_list)
+	{
+		__hash_values[i] = variable_get_hash(__hash_name_list[i]);
+		struct_set_from_hash(COALITION_SAVE_FILE, __hash_values[i], __default_save_file_vales[i]);
+		++i;
 	}
-	global.SaveFile[$ "Cell"] = Cell_Preset;
-	global.SaveFile[$ "Item"] = Item_Preset;
 	
 	//Save file Save/Loading
 	var dat = LoadData("Data.dat");
-	if !struct_empty(dat) global.SaveFile = struct_copy(dat);
-	SaveData("Data.dat", global.SaveFile);
+	if !struct_empty(dat) COALITION_SAVE_FILE = struct_copy(dat);
+	SaveData("Data.dat", COALITION_SAVE_FILE);
 	
 	
-	global.hp =			global.SaveFile[$ "HP"];
-	global.hp_max =		global.SaveFile[$ "Max HP"];
-	global.data = {};
-	with global.data
+	global.hp =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[2]);
+	global.hp_max =		struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[1]);
+	COALITION_DATA = {};
+	with COALITION_DATA
 	{
-		name =			global.SaveFile[$ "Name"];
-		lv =			global.SaveFile[$ "LV"];
-		Gold =			global.SaveFile[$ "Gold"];
-		Exp =			global.SaveFile[$ "EXP"];
-		AttackItem =	global.SaveFile[$ "Wep"];
-		DefenseItem =	global.SaveFile[$ "Arm"];
-		Kills =			global.SaveFile[$ "Kills"];
+		name =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[0]);
+		lv =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[3]);
+		Gold =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[4]);
+		Exp =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[5]);
+		AttackItem =	struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[6]);
+		DefenseItem =	struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[7]);
+		Kills =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[8]);
 	}
-	
-	for (var i = 0; i < 10; i++) {
-		for (var ii = 0; ii < 3; ii++)
-			global.Box[ii][i] = global.SaveFile[$ $"Box {i}_{ii}"];
-		if i < 8
-		{
-			global.item[i] = global.SaveFile[$ "Item"][i];
-			global.cell[i] = global.SaveFile[$ "Cell"][i];
-		}
-	}
+	global.__box = {};
+	global.item = [];
+	global.cell = [];
+	var i = 0,  BoxStruct =	struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[9]),
+				ItemArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[10]),
+				CellArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[11]);
+	//Load box, Item and Cell
+	if !struct_empty(BoxStruct)
+		global.__box = struct_copy(BoxStruct);
+	if !array_is_empty(ItemArray)
+		array_copy(global.item, 0, ItemArray, 0, array_length(ItemArray));
+	if !array_is_empty(CellArray)
+		array_copy(global.cell, 0, CellArray, 0, array_length(CellArray));
 	//Cells
-	CellLibraryInit();
+	__CellLibraryInit();
 	//Safety check
-	Cell_Add("OWBox", "this text should not appear");
-	Cell_Add("Phone", "test phone text 1");
-	Cell_Add("Dimensional Box A",, true, 1);
-	Cell_Add("Dimensional Box B",, true, 2);
+	Cell_LibrarySet("OWBox", "this text should not appear");
+	Cell_LibrarySet("Phone", "test phone text 1",,, function() {
+		if Cell.GetCallCount(0) == 0 Cell.Text(0, "new text");
+	});
+	Cell_LibrarySet("Dimensional Box A",, true, 1);
+	Cell_LibrarySet("Dimensional Box B",, true, 2);
+	Cell_Add(1); //Phone
+	Cell_Add(2); //DB 1
 	//Items
 	ItemLibraryInit();
 	#region Set basic item info
-	ItemLibrarySetStruct(ITEM.PIE,
-	{
+	ItemLibrarySetStruct(ITEM.PIE, {
 		name : "Pie",
 		heal : global.hp_max,
 		desc : "* Random slice of pie which is so\n  cold you cant eat it.",
@@ -112,8 +110,7 @@ function Initialize()
 		heal_text : ["* You ate the Butterscotch Pie.", "* You eat the Butterscotch Pie."],
 		item_uses_left: 2
 	});
-	ItemLibrarySetStruct(ITEM.INOODLES,
-	{
+	ItemLibrarySetStruct(ITEM.INOODLES, {
 		name : "I. Noodles",
 		heal : 90,
 		desc : "* Hard noodles, your teeth broke",
@@ -121,17 +118,15 @@ function Initialize()
 		battle_desc : "Heals 90 HP",
 		heal_text : "* You ate the Instant Noodles."
 	});
-	ItemLibrarySetStruct(ITEM.STEAK,
-	{
+	ItemLibrarySetStruct(ITEM.STEAK, {
 		name : "Steak",
 		heal : 60,
 		desc : "* Steak that looks like a MTT\n  which somehow fits in your\n  pocket",
 		throw_txt : "Throw expensive mis-steak",
 		battle_desc : "Heals 60 HP",
-		heal_text : "* You ate the Face Steak."
+		heal_text : "* You ate the Face Steak.",
 	});
-	ItemLibrarySetStruct(ITEM.SNOWP,
-	{
+	ItemLibrarySetStruct(ITEM.SNOWP, {
 		name : "SnowPiece",
 		heal : 45,
 		desc : "* Bring this to the end of the world,\n  but the world isnt round",
@@ -139,8 +134,7 @@ function Initialize()
 		battle_desc : "Heals 45 HP",
 		heal_text : "* You ate the Snow Piece."
 	});
-	ItemLibrarySetStruct(ITEM.LHERO,
-	{
+	ItemLibrarySetStruct(ITEM.LHERO, {
 		name : "L. Hero",
 		heal : 40,
 		stats : "Your ATK raised by 4!",
@@ -150,8 +144,7 @@ function Initialize()
 		heal_text : "* You ate the Legendary Hero.",
 		effect : function() { global.player_attack_boost += 4; }
 	});
-	ItemLibrarySetStruct(ITEM.SEATEA,
-	{
+	ItemLibrarySetStruct(ITEM.SEATEA, {
 		name : "Sea Tea",
 		heal : 10,
 		stats : "Your SPD increased!",
@@ -171,40 +164,44 @@ function Initialize()
 		}
 	});
 	#endregion
-	global.item_heal_override_kr = true; //Does kr reduce when max heal or not
+	Item_Set(ITEM.PIE);
+	Item_Set(ITEM.INOODLES);
+	Item_Set(ITEM.STEAK);
+	Item_Set(ITEM.SEATEA);
+	Item_Set(ITEM.LHERO);
+	global.item_heal_override_kr = false; //Does kr reduce when max heal or not
 	
 	//Custom Settings
 	global.Settings = ds_map_create();
-	global.Volume = 100;
-	global.CompatibilityMode = false;
 	global.ShowFPS = false;
 	//Input keys are defined at __input_config_profiles_and_default_bindings
 	
-	global.TempData = {};
+	global.__CoalitionTempData = {};
 	//Loads tempoary data
-	var dat = LoadData();
+	var dat = LoadData("TempData.dat");
 	//If there exists data to be loaded, store it into the TempData
-	if !struct_empty(dat) global.TempData = struct_copy(dat);
+	if !struct_empty(dat) global.__CoalitionTempData = struct_copy(dat);
 	//Saves the data for reshuffling
-	SaveData();
+	SaveData("TempData.dat", global.__CoalitionTempData);
 	
 	//Battle
 	global.battle_encounter = 0;
 	global.enemy_presets = [];
 	//Whether the current fight is a boss fight or not (Engine usage)
 	global.BossFight = false;
-	globalvar BattleData, EnemyData, BoxData, CellData, Board, Camera, Player;
-	BattleData = new __Battle();
-	EnemyData = new Enemy();
-	BoxData = new __Box();
-	CellData = new Cell();
+	//Using globalvar as macros will create a new constructor in each call
+	globalvar Battle, Enemy, Box, Cell, Board, Camera, Player, Shop;
+	Battle = new __Battle();
+	Enemy = new __Enemy();
+	Box = new __Box();
+	Cell = new __Cell();
 	Board = new __Board();
-	Camera = new __Camera(); Camera.Init();
-	Player = new __Player();
+	Camera = new __Camera().Init();
 	ConvertItemNameToStat();
+	Player = new __Player();
 	Player.GetBaseStats();
-	//Example on how to set up an ecounter
-	EnemyData.SetEncoutner(,, oEnemySansExample,);
+	//Example on how to set up an encounter
+	Enemy.SetEncounter(, oEnemySansExample,, oEnemySansExample2);
 	
 	global.kr = 0;
 	global.kr_activation = false;
@@ -230,8 +227,7 @@ function Initialize()
 	part_type_alpha2(global.TrailP, 1, 0);
 	
 	//Culling
-	global.deactivatedInstances = ds_list_create();
-	global.trueInstanceCache = ds_list_create();
+	global.__deactivatedInstances = ds_list_create();
 	
 	//Load languages (Load only once)
 	global.Language = LANGUAGE.ENGLISH;
@@ -240,7 +236,7 @@ function Initialize()
 	{
 		lexicon_index_definitions("Locale/definitions.json"); 
 		//lexicon_language_set(lexicon_get_os_locale()); //Autoset
-		lexicon_index_fallback_language_set("English")
+		lexicon_index_fallback_language_set("English");
 		LangLoaded = true;
 	}
 	SetLanguage(LANGUAGE.ENGLISH);
@@ -249,10 +245,7 @@ function Initialize()
 	Load3DNodesAndEdges();
 	global.DefaultGPUState = gpu_get_state();
 	
-	//BPM of the song (Rhythm usage)
-	global.SongBPM = 0;
-	
 	//FPS for debug display
-	global.MinFPS = 60;
-	global.MaxFPS = 60;
+	global.__MinFPS = 60;
+	global.__MaxFPS = 60;
 }

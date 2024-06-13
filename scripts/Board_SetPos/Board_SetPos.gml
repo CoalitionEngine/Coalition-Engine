@@ -1,3 +1,4 @@
+if NOOB_MODE
 /**
 	Sets the x and y position of the board
 	@param {real} x					The x position

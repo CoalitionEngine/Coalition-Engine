@@ -5,15 +5,14 @@ function RemoveEnemy()
 	if instance_exists(oBattleController)
 		with oBattleController {
 			//Add Reward
-			Result.Gold += other.Gold_Give;
-			Result.Exp += other.Exp_Give;
+			Result.Gold += other.__gold_reward;
+			Result.Exp += other.__exp_reward;
 			var enemy_slot = other.x / 160 - 1;
 			enemy[enemy_slot] = noone;
 			enemy_draw_hp_bar[enemy_slot] = 0;
 			array_delete(enemy_instance, menu_choice[0], 1);
+			enemy_instance[other.__enemy_slot] = noone;
 		}
-		with oEnemyParent
-			if __enemy_slot > other.__enemy_slot __enemy_slot--;
 }
 #endregion
 // Check if other enemies are dying
@@ -41,7 +40,7 @@ if !__died {
 			__dust_being_drawn = false;
 			for (var i = 0; i < dust_height * dust_amount / enemy_total_height; i += 3) {
 				if dust_alpha[i] > 0 {
-					draw_sprite_ext(sprPixel, 0, dust_pos[i, 0], dust_pos[i, 1], 1.5, 1.5, 0, c_white, dust_alpha[i]);
+					draw_sprite_ext(sprPixel, 0, dust_pos[i][0], dust_pos[i][1], 1.5, 1.5, 0, c_white, dust_alpha[i]);
 				}
 			}
 		}
@@ -62,50 +61,40 @@ if !__died {
 }
 
 //The dialog thing
-if (state == 1 || (state == 2 && dialog_at_mid_turn)) && !__died && !is_spared
+if (state == BATTLE_STATE.DIALOG || (state == BATTLE_STATE.IN_TURN && dialog_at_mid_turn)) && !__died && !is_spared
 {
 	if dialog_at_mid_turn time--;
 	if _turn < 0 _turn = 0;
 	var i = 0, n = instance_number(oEnemyParent), k = 0;
 	repeat n
 	{
-		if instance_find(oEnemyParent, i++).dialog_text[_turn] == ""
+		if string_length(instance_find(oEnemyParent, i).dialog_text[_turn]) == 0
 			k++;
+		++i;
 	}
-	if k == n
-	{
-		oBattleController.begin_turn();
-		exit;
-	}
-	DrawSpeechBubble(dialog.x, dialog.y, dialog.width, dialog.height, dialog.color, dialog.dir / 90);
+	if k == n oBattleController.__begin_turn();
+	with dialog
+		DrawSpeechBubble(x, y, width, height, color, dir / 90);
 
 	//Text
-	__dialog_text_typist.sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*");
-	__text_writer.starting_format(default_font, c_black)
-	__text_writer.draw(dialog.x + 11, dialog.y - dialog.height + 11, __dialog_text_typist)
-
-
-	if PRESS_CANCEL && global.TextSkipEnabled
-		__dialog_text_typist.skip_to_pause();
+	__text_writer.draw(dialog.x + 11, dialog.y - dialog.height + 11, __dialog_text_typist);
+	
+	if PRESS_CANCEL && global.TextSkipEnabled __dialog_text_typist.skip_to_pause();
 		
-	if __dialog_text_typist.get_paused() && PRESS_CONFIRM
-		__dialog_text_typist.unpause();
+	if PRESS_CONFIRM && __dialog_text_typist.get_paused() __dialog_text_typist.unpause();
 		
-	if __dialog_text_typist.get_state() == 1 &&
-		__text_writer.get_page() < (__text_writer.get_page_count() - 1)
+	if __dialog_text_typist.get_state() == 1 && __text_writer.get_page() < (__text_writer.get_page_count() - 1)
 		__text_writer.page(__text_writer.get_page() + 1);
-		
-	if __dialog_text_typist.get_state() == 1 && PRESS_CONFIRM {
+	if PRESS_CONFIRM && __dialog_text_typist.get_state() == 1 {
 		__dialog_text_typist.reset();
 		if !dialog_at_mid_turn
 		{
 			var text = (oBattleController.battle_turn < array_length(dialog_text) && state == 1) ?
 				dialog_text[oBattleController.battle_turn] : "";
+			oBattleController.__begin_turn();
 			dialog_init(text);
-			if state == 1
-				oBattleController.begin_turn();
 		}
-		if dialog_at_mid_turn dialog_at_mid_turn = false;
+		else dialog_at_mid_turn = false;
 	}
 }
 
@@ -155,17 +144,19 @@ if !__died && !is_spared {
 					TLY = y - enemy_total_height / 2 - 40,
 					BRY = TLY + 20;
 				draw_sprite_ext(sprPixel, 0, TLX, TLY, bar_width, 20, 0, c_dkgray, 1);
-				draw_sprite_ext(sprPixel, 0, TLX, TLY, max(_enemy_hp / enemy_hp_max * bar_width, -1), 20, 0, c_lime, 1);
+				draw_sprite_ext(sprPixel, 0, TLX, TLY, max(_enemy_hp / enemy_hp_max * bar_width, 0), 20, 0, c_lime, 1);
 			}
 		}
 
 		if enemy_hp > 0 // Check if the enemy is going to die
 		{
 			if attack_time == attack_end_time {
+				oBattleController.enemy_hp[__enemy_slot] = _enemy_hp;
 				//Reset variables
 				attack_time = 0;
 				is_being_attacked = false;
 				is_miss = false;
+				draw_damage = false;
 			}
 		}
 		else
@@ -182,23 +173,23 @@ if !__died && !is_spared {
 				__is_dying = false;
 				__died = true;
 				is_being_attacked = false;
-				enemy_in_battle = false;
-				global.data.Kills++;
+				__enemy_in_battle = false;
+				COALITION_DATA.Kills++;
 				RemoveEnemy();
 				with oBattleController
-					if array_length(enemy_instance) == 0 end_battle();
+					if !instance_exists(oEnemyParent) __end_battle();
 			}
 		}
 	}
 	else if is_being_spared {
 		if enemy_is_spareable {
 			//Default sparing function
-			if spare_function == -1
+			if !is_callable(spare_function)
 			{
 				wiggle = false;
 				//Add Reward
-				oBattleController.Result.Gold += Gold_Give;
-				oBattleController.Result.Exp += Exp_Give;
+				oBattleController.Result.Gold += __gold_reward;
+				oBattleController.Result.Exp += __exp_reward;
 				is_spared = true;
 				audio_play(snd_vaporize);
 				TweenFire(id, "", 0, false, 0, 30, "image_alpha>", 0.5);
@@ -210,9 +201,9 @@ if !__died && !is_spared {
 			enemy_find[i] = instance_find(oEnemyParent, i);
 			if !enemy_find[i].is_spared continue_battle = true;
 		}
-		if !continue_battle oBattleController.end_battle();
+		if !continue_battle oBattleController.__end_battle();
 		//Begins turn if it's set to be
-		else if spare_end_begin_turn && !is_spared oBattleController.dialog_start();
+		else if spare_end_begin_turn && !is_spared oBattleController.__dialog_start();
 
 		is_being_spared = false;
 	}
@@ -220,16 +211,8 @@ if !__died && !is_spared {
 
 if is_spared && image_alpha == 0.5 {
 	//Remove enemy
-	enemy_in_battle = false;
+	__enemy_in_battle = false;
 	if array_length(oBattleController.enemy_instance) == 0 RemoveEnemy();
-}
-
-if state == 2 {
-	draw_set_halign(fa_right);
-	draw_set_color(c_white);
-	if global.debug
-		draw_text(640, 10, $"Time: {time}");
-	draw_set_halign(fa_left);
 }
 
 //Remove if uneeded

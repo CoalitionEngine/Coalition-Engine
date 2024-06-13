@@ -11,12 +11,6 @@ OverworldTransitionSpeed = 20;
 OverworldRoomTransitionMethod = -1;
 OverworldRoomTransitionArguments = [];
 
-enum INTERACT_STATE
-{
-	IDLE,
-	MENU,
-}
-global.interact_state = INTERACT_STATE.IDLE;
 Item_Info_Load(); // Loading item's info
 
 #region Dialog properties 
@@ -80,7 +74,7 @@ Box_ID = 0;
 
 ForceNotDisplayUI = false;
 save_state = 0;
-save_function = function(){};
+save_function = COALITION_EMPTY_FUNCTION;
 Choice = 0;
 WaitTime = 0;
 
@@ -91,12 +85,13 @@ if ALLOW_DEBUG
 	debug_alpha = 0;
 }
 #endregion
-global.lerp_speed = 1;
 
 function ExitSave() {
 	Choice = 0;
-	save_state = SAVE_STATE.NOT_SAVING
+	save_state = SAVE_STATE.NOT_SAVING;
 	menu_disable = false;
 	oOWPlayer.moveable = true;
 	oOWCollision.Collided = false;
+	PRESS_CONFIRM = 0;
+	draw_set_align();
 }

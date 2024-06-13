@@ -8,7 +8,7 @@ if NOOB_MODE
 	@param {function} function		The function to execute if selected (Optional)
 	@param {bool} trigger			Whether the action will trigger the turn
 */
-function Enemy_SetAct(enemy, act, name, text, func = -1, trigger = oBattleController.activate_turn[1]) {
+function Enemy_SetAct(enemy, act, name, text, func = -1, trigger = oBattleController.__button_choice_activate_turn & 2) {
 	forceinline
-	EnemyData.SetAct(enemy, act, name, text, func, trigger);
+	Enemy.SetAct(enemy, act, name, text, func, trigger);
 }

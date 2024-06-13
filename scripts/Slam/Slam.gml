@@ -1,10 +1,12 @@
-/**
-	Slams the soul to the respective direction and other extra functions
-	@param {real} direction			Which direction the soul will fall in
-	@param {real} fall				The speed of the fall (Optional, wil affect how intense the camera shakes)
-	@param {bool} hurt				Whether the slam damages the player (Optional)
-	@param {Asset.GMObject} target	The target enemy to set the slam to (For sprite anim) (Default all)
-*/
+///@category Soul
+///@title Slamming
+
+///@func Slam(direction, [move], [hurt], [target_enemy])
+///@desc Slams the soul to the respective direction and other extra functions
+///@param {real} direction Which direction the soul will fall in
+///@param {real} fall The speed of the fall (Optional, wil affect how intense the camera shakes)
+///@param {bool} hurt Whether the slam damages the player (Optional)
+///@param {Asset.GMObject} target The target enemy to set the slam to (You don't need to supply this argument if you are not using the built-in sprite variables) (Default all)
 function Slam(Direction, move = 20, hurt = false, target_enemy = oEnemyParent)
 {
 	forceinline

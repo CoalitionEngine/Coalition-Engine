@@ -8,17 +8,17 @@ with Main
 	if !surface_exists(Surf) Surf = surface_create(640, 480);
 	if DisplaceYTarget < MaxY
 	{
-		Lerp = lerp(Lerp, 0.12, 0.09);
-		DisplaceYTarget = round(lerp(DisplaceYTarget, MaxY, Lerp));
+		Lerp = decay(Lerp, 0.12, 0.09);
+		DisplaceYTarget = round(decay(DisplaceYTarget, MaxY, Lerp));
 	}
 	else if DisplaceYTarget > 0
 	{
-		Lerp = lerp(Lerp, 0.12, 0.09);
-		DisplaceYTarget = round(lerp(DisplaceYTarget, 0, Lerp));
+		Lerp = decay(Lerp, 0.12, 0.09);
+		DisplaceYTarget = round(decay(DisplaceYTarget, 0, Lerp));
 	}
 	else Lerp = 0.16;
-	DisplaceX = lerp(DisplaceX, DisplaceXTarget, 0.16);
-	DisplaceY = lerp(DisplaceY, DisplaceYTarget, 0.16);
+	DisplaceX = decay(DisplaceX, DisplaceXTarget, 0.16);
+	DisplaceY = decay(DisplaceY, DisplaceYTarget, 0.16);
 	
 	if mouse_in_rectangle(20, 20, 240, 460)
 	{
@@ -34,17 +34,17 @@ if State != DEBUG_STATE.MAIN
 	{
 		if DisplaceYTarget < MaxY
 		{
-			Lerp = lerp(Lerp, 0.12, 0.09);
-			DisplaceYTarget = round(lerp(DisplaceYTarget, MaxY, Lerp));
+			Lerp = decay(Lerp, 0.12, 0.09);
+			DisplaceYTarget = round(decay(DisplaceYTarget, MaxY, Lerp));
 		}
 		else if DisplaceYTarget > 0
 		{
-			Lerp = lerp(Lerp, 0.12, 0.09);
-			DisplaceYTarget = round(lerp(DisplaceYTarget, 0, Lerp));
+			Lerp = decay(Lerp, 0.12, 0.09);
+			DisplaceYTarget = round(decay(DisplaceYTarget, 0, Lerp));
 		}
 		else Lerp = 0.16;
-		DisplaceX = lerp(DisplaceX, DisplaceXTarget, 0.16);
-		DisplaceY = lerp(DisplaceY, DisplaceYTarget, 0.16);
+		DisplaceX = decay(DisplaceX, DisplaceXTarget, 0.16);
+		DisplaceY = decay(DisplaceY, DisplaceYTarget, 0.16);
 	
 		var BaseX = 270 + DisplaceX,
 			RightX = BaseX + 200;

@@ -4,8 +4,8 @@ Camera.Scale(1, 1, 0);
 oGlobal.MainCamera.target = noone;
 depth = 50;
 //Set position
-x = global.soul_x;
-y = global.soul_y;
+x = global.__gameover_soul_x;
+y = global.__gameover_soul_y;
 //Soft reset palyer stats
 global.player_attack_boost = 0;
 global.player_def_boost = 0;
@@ -37,9 +37,9 @@ part_type_gravity(p, 0.12, 270);
 //Delay soul break
 alarm[0] = 40;
 //Set gameover texts
-gameover_text = "[pause]You cannot give\nup just yet...[pause][/page]" + string(global.data.name) + "![delay,500]\nStay determined...";
+gameover_text = "[pause]You cannot give\nup just yet...[pause][/page]" + string(COALITION_DATA.name) + "![delay,500]\nStay determined...";
 gameover_text_voice = snd_txtAsgore;
-gameover_writer = scribble(gameover_text)
+gameover_writer = scribble(gameover_text, "__Coalition_Gameover")
 	.page(0);
 
 gameover_typist = scribble_typist()

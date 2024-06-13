@@ -6,15 +6,18 @@ enemy_act_text = array_create(5, "");
 enemy_act_function = array_create(6, -1);
 enemy_hp_max = 100;
 enemy_hp = 100;
+//This is for animating the Hp bar
 _enemy_hp = 100;
 enemy_draw_hp_bar = true;
 enemy_defense = 1;
-enemy_in_battle = true;
+__enemy_in_battle = true;
 is_boss = false;
-Exp_Give = 0;
-Gold_Give = 0;
+__exp_reward = 0;
+__gold_reward = 0;
 state = 0;
 begin_at_turn = false;
+current_turn = 0;
+__turn_has_ended = false;
 //Optional veriables for sprite drawing
 enemy_sprites = [];
 enemy_sprite_index = [];
@@ -27,7 +30,6 @@ enemy_sprite_pos = [];
 enemy_sprite_wiggle = [];
 wiggle = true;
 wiggle_timer = 0;
-dialog_y_from_top = 50;
 //Slamming (If needed)
 SlammingEnabled = false;
 SlamDirection = DIR.DOWN;
@@ -38,7 +40,7 @@ SlamSpriteIndex = 0;
 SlamSpriteTargetIndex = [];
 SlamSpriteNumber = 1;
 
-dodge_method = function(){};
+dodge_method = method(undefined, COALITION_EMPTY_FUNCTION);
 
 //Dust
 ContainsDust = 1;
@@ -57,7 +59,6 @@ with dialog
 	dir = DIR.LEFT;
 	color = c_white;
 }
-dialog_size = [20, 65, 0, 190]; // UDLR
 dialog_text = [""];
 dialog_at_mid_turn = false;
 default_font = "";
@@ -65,19 +66,16 @@ default_sound = snd_txtDefault;
 
 function dialog_init(text = "")
 {
-	__text_writer = scribble(text)
-		.wrap(dialog.width - 15, dialog.height - 15);
-	if __text_writer.get_page() != 0 __text_writer.page(0);
+	__text_writer = scribble(text, "__Coalition_Enemy").wrap(dialog.width - 15, dialog.height - 15)
+	.starting_format(default_font, c_black)
+	.page(0);
 }
 dialog_init(dialog_text[0]);
-__dialog_text_typist = scribble_typist()
-	.in(0.5, 0)
-	.sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*")
-
+__dialog_text_typist = scribble_typist().in(0.5, 0).sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*");
 
 ///Generates a dialog mid turn
-///@param {string} text		The text to draw
-///@param {Array<Array>} events	The typist events ([event name, function])
+///@param {string} text The text to draw
+///@param {Array<Array<String, Function>>} events The typist events ([event name, function])
 function MidTurnDialog(text, events = [])
 {
 	dialog_at_mid_turn = true;
@@ -88,9 +86,7 @@ function MidTurnDialog(text, events = [])
 		scribble_typists_add_event(events[i][0], events[i][1]);
 		++i;
 	}
-	__text_writer = scribble(text)
-		.wrap(dialog.width - 15, dialog.height - 15);
-	if __text_writer.get_page() != 0 __text_writer.page(0);
+	__text_writer = scribble(text).wrap(dialog.width - 15, dialog.height - 15).starting_format(default_font, c_black).page(0);
 }
 //Under Attack
 is_being_attacked = false;
@@ -102,10 +98,9 @@ draw_damage = false;
 damage_y = y - enemy_total_height / 2 - 60;
 damage = 0;
 damage_color = c_red;
-damage_event = function(){};
+damage_event = method(undefined, COALITION_EMPTY_FUNCTION);
 damage_typist = scribble_typist().in(0, 0);
 bar_width = 120;
-bar_retract_speed = 0.6;
 
 //Death
 __death_time = 0;
@@ -120,7 +115,7 @@ is_spared = false;
 spare_function = -1;
 
 //Turn
-start = 1;
+start = true;
 time = -1;
 target_turn = 0;
 
@@ -142,10 +137,10 @@ function SetAttack(turn, attack) {
 /**
 	Determine which turn is it currently based on a funciton that you can change for each enemy
 */
-DetermineTurn = function() {
+DetermineTurn = method(undefined, function() {
 	//Note that this line must be present at the end of the function or else it will throw an error
-	return BattleData.Turn();
-};
+	return current_turn;
+});
 
 /**
 	Sets a function that executes before the attack starts

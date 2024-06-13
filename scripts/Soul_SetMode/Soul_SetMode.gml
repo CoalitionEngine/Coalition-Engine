@@ -1,6 +1,10 @@
-///@desc Sets the Mode of the Soul (Macros are given, i.e. SOUL_MODE.RED)
-///@param {real} mode	The mode of the soul to set to
-///@param {bool} effect	Whether to create the soul effect or not (Default True)
+///@category Soul
+///@title Changing Modes
+
+///@func Soul_SetMode(soul_mode, [effect])
+///@desc Sets the Mode of the Soul (Macros are given, i.e. `SOUL_MODE.RED`)
+///@param {real} mode The mode of the soul to set to
+///@param {bool} effect Whether to create the soul effect or not (Default True)
 function Soul_SetMode(soul_mode, effect = true)
 {
 	forceinline
@@ -28,9 +32,5 @@ function Soul_SetMode(soul_mode, effect = true)
 		alarm[0] = effect;
 	}
 }
-
-function SoulSetMode(soul_mode, effect = true)
-{
-	forceinline
-	Soul_SetMode(soul_mode, effect);
-}
+///Legacy support
+#macro SoulSetMode Soul_SetMode

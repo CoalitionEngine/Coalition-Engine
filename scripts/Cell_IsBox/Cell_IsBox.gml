@@ -5,5 +5,5 @@ if NOOB_MODE
 */
 function Cell_IsBox(slot) {
 	forceinline
-	return CellData.IsBox(slot);
+	return Cell.IsBox(slot);
 }

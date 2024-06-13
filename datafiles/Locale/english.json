@@ -9,6 +9,12 @@
             "Flee": "* Flee",
             "Win": "You WON![delay,333]\n* You earned {0} XP and {1} gold.",
             "LoveInc": "\n[delay,333]* Your LOVE increased!"
+        },
+        "Shop": {
+            "InsufficientGText": "you broke lmao",
+            "ItemFullText": "You are carrying too many items.",
+            "ItemBuyText": "Buy it for {0} G?",
+            "ItemSellText": "Sell it for {0} G?"
         }
     }
 }

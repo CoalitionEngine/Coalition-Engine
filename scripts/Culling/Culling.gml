@@ -1,10 +1,11 @@
-/*
-	These scripts are used for deactivating instances in the overworld if they are outside the camera view
-	so the player can't see them load/unload, but still maintaining performance
-*/
+///@category Overworld
+///@title Culling
+///@text These scripts are used for deactivating instances in the overworld if they are outside the camera view
+///so the player can't see them load/unload, but still maintaining performance.
 
-///Culls every isntance of the given object if it's outside the view
-///@param {Asset.GMObject} object
+///@func CullObject(object)
+///@desc Culls every isntance of the given object if it's outside the view
+///@param {Asset.GMObject} object The object to cull
 function CullObject(object) {
 	forceinline
 	static _hpad = 5, _vpad = 5,
@@ -24,18 +25,19 @@ function CullObject(object) {
 			);
 		if _cull {
 			instance_deactivate_object(id);
-			ds_list_add(global.deactivatedInstances, [id, _bboxLeft, _bboxTop, _bboxRight, _bboxBottom]);
+			ds_list_add(global.__deactivatedInstances, [id, _bboxLeft, _bboxTop, _bboxRight, _bboxBottom]);
 		}
 	}
 }
 
-///Checks for all currently culled instances to see if they are now in view
+///@func ProcessCulls()
+///@desc Checks for all currently culled instances to see if they are now in view
 function ProcessCulls() {
 	forceinline
 	static _cam = view_camera[0];
 	var i = 0;
-	repeat ds_list_size(global.deactivatedInstances) {
-		var _inst = global.deactivatedInstances[| i],
+	repeat ds_list_size(global.__deactivatedInstances) {
+		var _inst = global.__deactivatedInstances[| i],
 			_camx = camera_get_view_x(_cam), _camy = camera_get_view_y(_cam),
 			_cam_width = camera_get_view_width(_cam), _cam_height = camera_get_view_height(_cam),
 			_not_culled = (
@@ -46,9 +48,9 @@ function ProcessCulls() {
 			);
 		if _not_culled {
 			instance_activate_object(_inst[0]);
-			ds_list_delete(global.deactivatedInstances, i--);
+			ds_list_delete(global.__deactivatedInstances, i--);
 		}
 		++i;
 	}
 }
-//There are more functions of culling but they aren't needed in this engine
+///@text There are more functions of culling but they aren't needed in this engine.

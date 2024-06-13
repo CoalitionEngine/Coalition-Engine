@@ -12,5 +12,5 @@ switch OverWorld_ID
 			if i == 5
 			    draw_sprite(sprPillar, 0, xx + 230 * i + 110, 0);
 		}
-		break
+		break;
 }

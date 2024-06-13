@@ -1,3 +1,4 @@
+if NOOB_MODE
 /**
 	Gets the ID of the board in the global board list
 	@param {Asset.GMObject}	board	THe board to get the ID of

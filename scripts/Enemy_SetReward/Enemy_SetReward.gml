@@ -6,5 +6,5 @@
 */
 function Enemy_SetReward(enemy, Exp, Gold) {
 	forceinline
-	EnemyData.SetReward(enemy, Exp, Gold);
+	Enemy.SetReward(enemy, Exp, Gold);
 }

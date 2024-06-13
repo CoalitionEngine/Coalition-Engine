@@ -1,6 +1,7 @@
 var Main = MainOption, Sub = SubOption;
 //Draw main option texts
 surface_set_target(Main.Surf);
+draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_black, 1);
 draw_set_font(fnt_dt_sans);
 draw_set_halign(fa_left);
 var i = 0;
@@ -37,12 +38,12 @@ surface_reset_target();
 //Main options box
 draw_surface_part(Main.Surf, BaseX - 10, 20, 240, 440, BaseX - 10, 20);
 draw_rectangle_width_background(BaseX - 10, 20, RightX + 10, 460, 6,,,, 0, 7);
-surface_free(Main.Surf);
 
 //Sub-options
 if State != DEBUG_STATE.MAIN
 {
 	surface_set_target(Sub.Surf);
+	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_black, 1);
 	var i = 0;
 	repeat array_length(Sub.Options)
 	{
@@ -65,7 +66,6 @@ if State != DEBUG_STATE.MAIN
 	//Sub-options box
 	draw_surface_part(Sub.Surf, BaseX - 10, 20, 240, 440, BaseX - 10, 20);
 	draw_rectangle_width_background(BaseX - 10, 20, RightX + 10, 460, 6,,,, 0, 7);
-	surface_free(Sub.Surf);
 	
 	//Audio length
 	if State == DEBUG_STATE.SOUNDS && Sub.Audio != -1

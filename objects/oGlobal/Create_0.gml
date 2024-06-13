@@ -71,3 +71,9 @@ CutLineStart = shader_get_uniform(shdCutScreen, "u_lineStart");
 CutLineEnd = shader_get_uniform(shdCutScreen, "u_lineEnd");
 CutSide = shader_get_uniform(shdCutScreen, "u_side");
 #endregion
+
+#region Internal variables
+__input_xy = input_xy("left", "right", "up", "down");
+__input_functions = array_create(14, false);
+__empty_function = function(){};
+#endregion

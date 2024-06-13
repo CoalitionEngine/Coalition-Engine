@@ -39,3 +39,26 @@ with MainCamera
 	camera_set_view_angle(cam, cam_angle);
 	previous_target = cam_target;
 }
+
+//Input checking
+__input_xy = input_xy("left", "right", "up", "down");
+__input_functions =
+[
+	input_check("up"),
+	input_check("down"),
+	input_check("left"),
+	input_check("right"),
+	global.diagonal_speed ? (__input_functions[2] - __input_functions[3]) : __input_xy.x,
+	global.diagonal_speed ? (__input_functions[0] - __input_functions[1]) : __input_xy.y,
+	input_check_opposing_pressed("left", "right"),
+	input_check_opposing_pressed("up", "down"),
+	input_check_pressed("confirm"),
+	input_check("confirm"),
+	input_check_pressed("cancel"),
+	input_check("cancel"),
+	input_check_pressed("menu"),
+	__input_functions[4] != 0 || __input_functions[5] != 0
+];
+
+//Shop
+if room == room_shop Shop.__Process();

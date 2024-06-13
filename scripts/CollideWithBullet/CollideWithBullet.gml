@@ -1,4 +1,9 @@
-///Script for the soul to collide with bullet, runs only in soul object for better optimisation
+///@category Soul
+///@title Bullet Collision
+///@text Note that this is an internal function, you may supply the 'exceptions' argument
+
+///@func CollideWithBullet([exceptions])
+///@desc Script for the soul to collide with bullet, runs only in soul object for better optimisation
 ///@param {Array<Asset.GMObject>} Exceptions Exceptions of collision
 function CollideWithBullet(exceptions = []) {
 	aggressive_forceinline

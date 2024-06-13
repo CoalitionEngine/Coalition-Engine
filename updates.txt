@@ -1,5 +1,49 @@
 Update Logs (This is the beta builds)
 
+v0.7.0 (Eden)
+Removed:
+Unused variables
+oTextController
+
+Fixed:
+PostAttackFunction may call a different turn when DetermineTurn() is used.
+is_rectangle() finally works
+Save point 'input_confirm' not defined
+Save point soft-softlocks you
+Scribble typists doesn't reset it's typing state when room ends
+Sideways blue soul is not properly clamped in polygon board
+Masking of ui is incorrect
+HP bar of enemies on the menu is not updated after being attacked
+HP bar of enemies during attack animation still has HP left when killed
+Typo in the SetEncounter script
+
+Updated:
+Removed uneeded item functions and renamed Item_Add() to Item_Set()
+Minor adjustments to some code for better readability
+Converted some Array<Bool> into bits, to update the variables, change them to "^= quick_pow(2, original array index)"
+Converted ui_* in oBattleController into a struct
+Renamed most variables for a more consistent naming convection
+Renamed 'allow_run' to 'FleeEnabled' in oBattleController
+Added new lerping functions to replace `lerp()` as it is broken
+Optimised input checking method
+Added Shop
+Changed game_restart() into a customized __game_restart function
+Changed function variables into methods
+New macro for an empty function
+Cells can now be used multiple times with different text displays
+Multiple enemies are now functional (i.e. timer and individual turns)
+ -> Therefore there are now two types of turns, Enemy Turn and Battle Turn, do not confuse them
+Updated tempoary data get/set method to be more optimised
+Minor changes to initalisation method for more optimisation
+Minor changes to the global box array, which is now a struct
+Moved starting format for scribble texts to the create event to prevent regeneration per frame
+EnemyData, BoxData, CellData has been renamed to Enemy, Box, Cell respectively
+Other minor adjustments for optimisation
+
+Notes:
+Documentation has been added to this engine
+Thinking on how to coonvert polyboard blue soul collision check to bit instead of array for further optimization
+
 v0.6.2 (Eden)
 Fixed:
 Menu text does not reset when attack timed out

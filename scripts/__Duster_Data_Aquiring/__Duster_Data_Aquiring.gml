@@ -1,3 +1,4 @@
+//These functions are for the oDuster in optional effects
 function sprite_data_begin() {
 	forceinline
 	global.sprBuff = ds_map_create();

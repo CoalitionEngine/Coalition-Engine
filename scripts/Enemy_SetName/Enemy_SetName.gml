@@ -4,5 +4,5 @@ if NOOB_MODE
 ///@param {string}	text			The name to set to
 function Enemy_SetName(enemy, name) {
 	forceinline
-	EnemyData.SetName(enemy, name);
+	Enemy.SetName(enemy, name);
 }

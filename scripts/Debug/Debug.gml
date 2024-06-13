@@ -1,5 +1,10 @@
-///Shows the hitbox of the object (by it's sprite collision box)
-///@param {Constant.Color} Color	The color of the collision box
+///@category Global Functions
+///@title Debugging
+///@text These are the functions for debugging the engine
+
+///@func show_hitbox([col])
+///@desc Shows the hitbox of the object (by it's sprite collision box)
+///@param {Constant.Color} Color The color of the collision box
 function show_hitbox(col = c_white)
 {
 	forceinline
@@ -46,9 +51,12 @@ function show_hitbox(col = c_white)
 		draw_primitive_end();
 	}
 }
+///> [!WARNING]
+///> Calling this function may lead to poor performance
 
 ///Feather ignore all
-///Draws the debug UI with respect to the room you are in (by checking the controller isntance)
+///@func DrawDebugUI
+///@desc Draws the debug UI with respect to the room you are in (by checking the controller isntance)
 function DrawDebugUI()
 {
 	aggressive_forceinline
@@ -60,8 +68,8 @@ function DrawDebugUI()
 	//Set debug alpha
 	debug_alpha = lerp(debug_alpha, ALLOW_DEBUG ? global.debug : 0, 0.12);
 	
-	global.MinFPS = min(global.MinFPS, fps_real);
-	global.MaxFPS = max(global.MaxFPS, fps_real);
+	global.__MinFPS = min(global.__MinFPS, fps_real);
+	global.__MaxFPS = max(global.__MaxFPS, fps_real);
 	//Don't run anything if debug ui is not visible or debug is disabled
 	if debug_alpha <= 0 exit;
 	
@@ -70,17 +78,11 @@ function DrawDebugUI()
 	if instance_exists(oBattleController)
 	{
 		gpu_set_blendmode(bm_add);
-		if !global.CompatibilityMode
-		{
-			var ca = global.timer, dis = lengthdir_x(20, global.timer * 3);
-			static color = [c_red, c_lime, c_blue];
-			for (var i = 0; i < 3; ++i)
-				draw_text_ext_transformed_color(ui_x - 245 + lengthdir_y(dis, ca - i * 120), ui_y + lengthdir_x(dis, ca - i * 120), "DEBUG", -1, -1, 1.25, 1.25, 0, color[0], color[2 - i], color[2 - i], color[2 - i], debug_alpha);
-		}
-		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)");
-		draw_debug_color_text(5, 35, $"FPS: {fps} ({fps_real} / {global.MinFPS} / {global.MaxFPS} / {fps_average})");
-		draw_debug_color_text(5, 60, "TURN: " + string(battle_turn));
-		draw_debug_color_text(5, 85, "INSTANCES: " + string(instance_count));
+		var dis = lengthdir_x(20, global.timer * 3);
+		static color = [c_red, c_lime, c_blue];
+		for (var i = 0; i < 3; ++i)
+			draw_text_ext_transformed_color(ui.x - 245 + lengthdir_x(dis, global.timer - i * 120), ui.y + lengthdir_y(dis, global.timer - i * 120), "DEBUG", -1, -1, 1.25, 1.25, 0, color[0], color[2 - i], color[2 - i], color[2 - i], debug_alpha);
+		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)\nFPS: {fps} ({fps_real} / {global.__MinFPS} / {global.__MaxFPS} / {fps_average})\nTURN: " + string(battle_turn) + "\nINSTANCES: " + string(instance_count));
 		gpu_set_blendmode(bm_normal);
 	}
 	//If is in overworld
@@ -88,9 +90,7 @@ function DrawDebugUI()
 	{
 		gpu_set_blendmode(bm_add);
 		var mx = window_mouse_get_x(), my = window_mouse_get_y();
-		draw_debug_color_text(5, 5, $"Char Position : {oOWPlayer.x}, {oOWPlayer.y}");
-		draw_debug_color_text(5, 25, $"Mouse Position : {mx}, {my}");
-		draw_debug_color_text(5, 45, $"Camera Position : {camera_get_view_x(view_camera[0])}, {camera_get_view_y(view_camera[0])}");
+		draw_debug_color_text(5, 5, $"Char Position : {oOWPlayer.x}, {oOWPlayer.y}\nMouse Position : {mx}, {my}\nCamera Position : {camera_get_view_x(view_camera[0])}, {camera_get_view_y(view_camera[0])}");
 		var inst = instance_position(mouse_x, mouse_y, all), inst_name = "";
 		//Naming
 		if inst != noone
@@ -117,15 +117,14 @@ function DrawDebugUI()
 	}
 	draw_set_color(c_white);
 }
+///@text Note that this function is internal and would not be executed when the game is set on release mode.
 
-/**
-	Engine internal error log function to let you see what went wrong
-	@param {bool} check		The statement to check whether there is an error or not
-	@param {string} text	The return string of the error
-*/
+///Engine internal error log function to let you see what went wrong
+///@param {bool} check The statement to check whether there is an error or not
+///@param {string} text The return string of the error
 function __CoalitionEngineError(check, text)
 {
-	if !__COALITION_ENGINE_ERROR_LOG exit;
+	if !__COALITION_VERBOSE exit;
 	if check show_error("Coalition Engine: " + text, true);
 }
 
@@ -167,9 +166,34 @@ function __CoalitionGMVersion() {
 function __CoalitionCheckCompatibilty()
 {
 	forceinline
+	if !__COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR exit;
 	static version = __CoalitionGMVersion();
 	if version.major >= 2024 || (version.major == 2023 && version.minor > 11)
-		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "was designed for Game Maker versions 2023.8+, you are in ", GM_runtime_version);
-	else if version.major < 2023 && version.minor < 8
-		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "is incompatible for Game Maker versions earlier than 2023.8, you are in ", GM_runtime_version);
+		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "was designed for Game Maker versions 2023.11+, you are in ", GM_runtime_version);
+	else if version.major < 2023 && version.minor < 11
+		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "is incompatible for Game Maker versions earlier than 2023.11, you are in ", GM_runtime_version);
 }
+
+function __game_restart() {
+	//Destroy all non-persistent objects
+	with all if !persistent instance_destroy();
+	//Stops all audio
+	audio_stop_all();
+	//Unloads sprites and audio from memory
+	draw_texture_flush();
+	if audio_group_is_loaded(audgrpbattle) audio_group_unload(audgrpbattle);
+	if audio_group_is_loaded(audgrpoverworld) audio_group_unload(audgrpoverworld);
+	//Reset to first room
+	room_goto(room_first);
+	//Destroy all tweens
+	TweenDestroy({target: all});
+	//For each persistent object (Should be controllers), perform re-init events
+	with all
+	{
+		event_perform(ev_other, ev_game_end);
+		//Yes, the create event runs before the game start event, read the manual
+		event_perform(ev_create, 0);
+		event_perform(ev_other, ev_game_start);
+	}
+}
+#macro game_restart __game_restart

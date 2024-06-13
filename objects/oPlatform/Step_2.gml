@@ -14,5 +14,5 @@ if destroyable
 	if destroy
 		instance_destroy();
 }
-if (BattleData.State() == 0) instance_destroy();
+if (Battle.State() == 0) instance_destroy();
 

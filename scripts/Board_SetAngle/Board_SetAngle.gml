@@ -1,3 +1,4 @@
+if NOOB_MODE
 /**
 	Sets the angle of the board with Anim (optional)
 	@param {real} angle				The target angle (Default 0)

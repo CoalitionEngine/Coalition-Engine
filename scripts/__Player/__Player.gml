@@ -1,10 +1,15 @@
-///Converts the Item name into stats of the Item
+///@category In Game Data
+///@title Player
+///@text These functions are for mainipulating player data.
+
+///@func ConvertItemNameToStat()
+///@desc Converts the Item name into stats of the Item and automatically sets the stats of the player
 function ConvertItemNameToStat()
 {
 	aggressive_forceinline
 	global.MultiBarAttackSprite = -1;
 	global.MultiBarCritSound = snd_multiattack_crit;
-	switch global.data.AttackItem
+	switch COALITION_DATA.AttackItem
 	{
 		case "Stick":
 			global.player_attack = 0;
@@ -57,7 +62,7 @@ function ConvertItemNameToStat()
 			global.bar_count = 1;
 			break;
 	}
-	switch global.data.DefenseItem
+	switch COALITION_DATA.DefenseItem
 	{
 		case "Bandage":			global.player_def = 0;	break;
 		case "Faded Ribbon":	global.player_def = 3;	break;
@@ -71,17 +76,25 @@ function ConvertItemNameToStat()
 		case "The Locket":		global.player_def = 99; break;
 	}
 }
-///Player data
+
+///@constructor
+///@func __Player()
+///@desc Player data
 function __Player() constructor
 {
-	///Gets the base ATK and DEF of the player and then automatically sets it
+	///@method GetBaseStats()
+	///@desc Gets the base ATK and DEF of the player and then automatically sets it
+	///@return {Struct.__Player}
 	static GetBaseStats = function()
 	{
 		forceinline
 		global.player_base_atk = Player.LV() * 2 - 2;
 		global.player_base_def = floor(Player.LV() / 5);
+		return self;
 	}
-	///Gets the exp needed for the current lv
+	///@method GetLvBaseExp()
+	///@desc Gets the exp needed for the current lv
+	///@return {Real} The required EXP
 	static GetLvBaseExp = function()
 	{
 		forceinline
@@ -91,7 +104,9 @@ function __Player() constructor
 		];
 		return base_exp[Player.LV() - 1];
 	}
-	///Gets the exp needed for the lext lv
+	///@method GetExpNext()
+	///@desc Gets the exp needed for the lext lv
+	///@return {Real} The required EXP
 	static GetExpNext = function()
 	{
 		forceinline
@@ -101,54 +116,95 @@ function __Player() constructor
 		];
 		return (Player.LV() == 20) ? 0 : _exp[Player.LV() - 1];
 	}
-	///Sets/Gets the name of the player
+	///@method Name([name])
+	///@desc Sets/Gets the name of the player
 	///@param {string} name The name to set (If needed)
+	///@return {Struct.__Player,String}
 	static Name = function(name = NaN)
 	{
-		//I have strong trust that nobody is going to name the player '~'
-		if !is_nan(name) global.data.name = name;
-		else return global.data.name;
+		if !is_nan(name)
+		{
+			COALITION_DATA.name = name;
+			return self;
+		}
+		else return COALITION_DATA.name;
 	}
-	///Sets/Gets the lv of the player
+	///@method LV([lv])
+	///@desc Sets/Gets the lv of the player
 	///@param {real} lv The lv to set (If needed)
+	///@return {Struct.__Player,Real}
 	static LV = function(lv = NaN)
 	{
-		if !is_nan(lv) global.data.lv = lv;
-		else return global.data.lv;
+		if !is_nan(lv)
+		{
+			COALITION_DATA.lv = lv;
+			return self;
+		}
+		else return COALITION_DATA.lv;
 	}
-	///Sets/Gets the current Gold the player has
+	///@method Gold([gold])
+	///@desc Sets/Gets the current Gold the player has
 	///@param {real} amount The amount of gold to set (If needed)
+	///@return {Struct.__Player,String}
 	static Gold = function(amount = NaN)
 	{
-		if !is_nan(amount) global.data.Gold = amount;
-		else return global.data.Gold;
+		if !is_nan(amount)
+		{
+			COALITION_DATA.Gold = amount;
+			return self;
+		}
+		else return COALITION_DATA.Gold;
 	}
-	///Sets/Gets the current Exp the player has
+	///@method Exp([exp])
+	///@desc Sets/Gets the current Exp the player has
 	///@param {real} amount The amount of exp to set (If needed)
+	///@return {Struct.__Player,Real}
 	static Exp = function(amount = NaN)
 	{
-		if !is_nan(amount) global.data.Exp = amount;
-		else return global.data.Exp;
+		if !is_nan(amount)
+		{
+			COALITION_DATA.Exp = amount;
+			return self;
+		}
+		else return COALITION_DATA.Exp;
 	}
-	///Sets/Gets the speed of the player
+	///@method Spd([spd])
+	///@desc Sets/Gets the speed of the player
 	///@param {real} spd The speed to set (If needed)
+	///@return {Struct.__Player,Real}
 	static Spd = function(spd = NaN)
 	{
-		if !is_nan(spd) global.spd = spd;
+		if !is_nan(spd)
+		{
+			global.spd = spd;
+			return self;
+		}
 		else return global.spd;
 	}
-	///Sets/Gets the hp of the player
+	///@method HP([hp])
+	///@desc Sets/Gets the hp of the player
 	///@param {real} hp The HP to set (If needed)
+	///@return {Struct.__Player,Real}
 	static HP = function(hp = NaN)
 	{
-		if !is_nan(hp) global.hp = hp;
+		if !is_nan(hp)
+		{
+			global.hp = hp;
+			return self;
+		}
 		else return global.hp;
 	}
-	///Sets/Gets the max hp of the player
+	///@method HPMax([max_hp])
+	///@desc Sets/Gets the max hp of the player
 	///@param {real} maxhp The max HP to set (If needed)
+	///@return {Struct.__Player,Real}
 	static HPMax = function(maxhp = NaN)
 	{
-		if !is_nan(maxhp) global.hp_max = maxhp;
+		if !is_nan(maxhp)
+		{
+			global.hp_max = maxhp;
+			return self;
+		}
 		else return global.hp_max;
 	}
 }

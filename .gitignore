@@ -5,7 +5,11 @@ scripts/GMLive*
 extensions/GMLive/
 datafiles/GMLive
 objects/obj_gmlive*
+
+# Internal to do list
 To Do List.txt
+
+# This prevents pushing of internal Tome assets
 github_token.txt
 scripts/__tome*
 scripts/tome*

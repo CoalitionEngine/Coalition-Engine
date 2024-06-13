@@ -1,3 +1,5 @@
+///@category Special Scripts
+///@title Drawing3D
 enum SHAPES {
 	CUBE = 0,
 	REGULAR_TETRAHEDRON = 1,
@@ -5,6 +7,8 @@ enum SHAPES {
 	REGULAR_DODECAHEDRON = 3,
 	REGULAR_ICOSAHEDRON = 4
 }
+///@func Load3DNodesAndEdges()
+///@desc Loads the nodes and edges for drawing 3D objects
 function Load3DNodesAndEdges()
 {
 	aggressive_forceinline
@@ -74,17 +78,16 @@ function Load3DNodesAndEdges()
 	]
 }
 
-/**
-	@desc Draws a outline with given width of a cube
-	@param {real} x					The x position of the cube
-	@param {real} y					The y position of the cube
-	@param {real} size				The size of the cube
-	@param {real} horizontal_angle	The Horizontal Angle of the cube
-	@param {real} vertical_angle	The Vertical Angle of the cube
-	@param {Constant.Color} color	The Color of the cube
-	@param {real} width				The Width of the outline of the cube
-	@param {bool} circle_on_edge	Whether the corners of the cube are round
-*/
+///@func draw_cube_width(x, y, size, hor_angle, ver_angle, color, width, round)
+///@desc Draws a outline with given width of a cube
+///@param {real} x The x position of the cube
+///@param {real} y The y position of the cube
+///@param {real} size The size of the cube
+///@param {real} horizontal_angle The horizontal Angle of the cube
+///@param {real} vertical_angle The vertical Angle of the cube
+///@param {Constant.Color} color The color of the cube
+///@param {real} width The width of the outline of the cube
+///@param {bool} circle_on_edge Whether the corners of the cube are round
 function draw_cube_width(_draw_x, _draw_y, _size, _point_h, _point_v, _colour, _width, _edge_circ = true)
 {
 	aggressive_forceinline

@@ -5,5 +5,5 @@ if NOOB_MODE
 */
 function Cell_GetName(slot) {
 	forceinline
-	return CellData.GetName(slot);
+	return Cell.GetName(slot);
 }

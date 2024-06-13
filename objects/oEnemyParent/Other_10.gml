@@ -13,9 +13,9 @@ if SlammingEnabled
 		var _slam_dir = SlamDirection / 90;
 		if SlamTimer++
 		{
-			FinalSprites[SlamSpriteNumber] = SlamSprites[_slam_dir, SlamSpriteIndex];
+			FinalSprites[SlamSpriteNumber] = SlamSprites[_slam_dir][SlamSpriteIndex];
 			if SlamTimer < 25
-				FinalIndex[SlamSpriteNumber] = SlamSpriteTargetIndex[_slam_dir, SlamTimer / 5];	
+				FinalIndex[SlamSpriteNumber] = SlamSpriteTargetIndex[_slam_dir][SlamTimer / 5];	
 			if SlamTimer == 25 Slamming = false;
 		}
 	}
@@ -29,7 +29,7 @@ if SlammingEnabled
 
 //Draws the enemy sprites (Engine functions)
 for (var i = 0; i < E_Sprites; ++i) {
-	if enemy_sprite_draw_method[i] == ""
+	if string_width(enemy_sprite_draw_method[i]) == 0
 	{
 		draw_sprite_ext(FinalSprites[i], FinalIndex[i],
 			x + enemy_sprite_pos[i][0],

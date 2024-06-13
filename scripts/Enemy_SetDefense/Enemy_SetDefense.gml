@@ -6,5 +6,5 @@ if NOOB_MODE
 */
 function Enemy_SetDefense(enemy, value) {
 	forceinline
-	EnemyData.SetDefense(enemy, value);
+	Enemy.SetDefense(enemy, value);
 }

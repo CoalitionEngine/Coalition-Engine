@@ -1,10 +1,13 @@
-/**
-	Checks whether an object position is colliding with a tile (Rectangle collision)
-	@param {real} x The object x
-	@param {real} y The object y
-	@param {string} layer The tile layer name
-	@return {bool}
-*/
+///@category Overworld
+///@title Collision
+///@text Coalition Engine uses tiles instead of instances to check for collision as this has better performance.
+
+///@func tile_meeting(x, y, layer)
+///@desc Checks whether an object position is colliding with a tile (Rectangle collision)
+///@param {real} x The object x
+///@param {real} y The object y
+///@param {string} layer The tile layer name
+///@return {bool}
 function tile_meeting(x_, y_, _layer) {
 	forceinline
 	var _tm = layer_tilemap_get_id(_layer),
@@ -19,21 +22,23 @@ function tile_meeting(x_, y_, _layer) {
 	return false;
 }
 
-/**
-	Checks whether an object position is colliding with a tile (Precise collision)
-	@param {real} x The object x
-	@param {real} y The object y
-	@param {string} layer The tile layer name
-	@return {bool}
-*/
+///@func tile_meeting_precise(x, y, layer)
+///@desc Checks whether an object position is colliding with a tile (Precise collision)
+///@param {real} x The object x
+///@param {real} y The object y
+///@param {string} layer The tile layer name
+///@return {bool}
 function tile_meeting_precise(_x, _y, _layer) {
 	forceinline
+	static _checker = oGlobal; //Get real object reusing
 	var _tm = layer_tilemap_get_id(_layer),
-		_checker = oGlobal, //Get real object reusing
+		_cx = _checker.x, _cy = _checker.y,
 		_x1 = tilemap_get_cell_x_at_pixel(_tm, bbox_left + _x - x, y),
 		_y1 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_top + _y - y),
 		_x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + _x - x, y),
-		_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + _y - y);
+		_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + _y - y),
+		tile_width = tilemap_get_tile_width(_tm),
+		tile_height = tilemap_get_tile_height(_tm);
 
 	for (var x_ = _x1; x_ <= _x2; x_++) {
 		for (var y_ = _y1; y_ <= _y2; y_++) {
@@ -41,12 +46,19 @@ function tile_meeting_precise(_x, _y, _layer) {
 			if _tile {
 				if _tile == 1 return true;
 				
-				_checker.x = x_ * tilemap_get_tile_width(_tm);
-				_checker.y = y_ * tilemap_get_tile_height(_tm);
+				_checker.x = x_ * tile_width;
+				_checker.y = y_ * tile_height;
 				
-				if place_meeting(x_, y_, _checker) return true;
+				if place_meeting(x_, y_, _checker)
+				{
+					_checker.x = _cx;
+					_checker.y = _cy;
+					return true;
+				}
 			}
 		}
 	}
+	_checker.x = _cx;
+	_checker.y = _cy;
 	return false;
 }

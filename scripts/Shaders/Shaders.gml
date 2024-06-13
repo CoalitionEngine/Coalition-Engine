@@ -1,40 +1,45 @@
-//All shader related functions goes here
-room_instance_add(room_first, 0, 0, oShaderController);
-/**
-	Adds a shader effect, returning the shader ID stored in the controller for
-	declaring params and removing the effect
-	@param {Asset.GMShader}	shader		The shader to add
-	@param {bool} surf					Whether the shader will be applied on a
-										new application_surface or not (Default false)
-*/
+///@category Special Scripts
+///@title Shaders
+///@text All engine exclusive shader related functions goes here
+//room_instance_add(room_first, 0, 0, oShaderController);
+
+///@func AddShaderEffect(shader, [surface])
+///@desc Adds a shader effect, returning the shader ID stored in the controller for
+///declaring params and removing the effect
+///@param {Asset.GMShader} shader The shader to add
+///@param {bool} surf Whether the shader will be applied on a new application_surface or not (Default false)
+///@return {real} The ID of the created shader effect
 function AddShaderEffect(shader, surf = false)
 {
 	forceinline
+	instance_check_create(oShaderController);
 	return oShaderController.Main.Add(shader, surf);
 }
-/**
-	Sets the uniform_f values of a shader created using AddShaderEffect()
-	@param {real} ID			The ID of the shader (From AddShaderEffect())
-	@param {string} name		The name of the uniform to set the value of
-	@param {real,array} value	The value or array to set the uniform to
-*/
+///@func ShaderSetUniform(ID, name, value)
+///@desc Sets the uniform_f values of a shader created using AddShaderEffect()
+///@param {real} ID The ID of the shader (From AddShaderEffect())
+///@param {string} name The name of the uniform to set the value of
+///@param {real,array} value The value or array to set the uniform to
 function ShaderSetUniform(ID, name, value)
 {
 	forceinline
 	oShaderController.Main.SetUniform(ID, name, value);
 }
-/**
-	Removes a shader effect added from AddShaderEffect()
-	@param {real} ID	The ID of the shader (From AddShaderEffect())
-*/
+///@func RemoveShaderEffect(ID)
+///@desc Removes a shader effect added from AddShaderEffect()
+///@param {real} ID The ID of the shader (From AddShaderEffect())
 function RemoveShaderEffect(ID)
 {
 	forceinline
 	oShaderController.Main.Remove(ID);
 }
+///@constructor
+///@func __Shader()
+///@desc The shader constructor functions
 function __Shader() constructor
 {
-	///Initalizes the shader variables
+	///@method Init()
+	///@desc Initalizes the shader variables
 	static Init = function()
 	{
 		aggressive_forceinline
@@ -49,7 +54,8 @@ function __Shader() constructor
 			SurfaceList = [];
 		}
 	}
-	///Cleans the shader struct of shader parameters
+	///@method Clean()
+	///@desc Cleans the shader struct of shader parameters
 	static Clean = function()
 	{
 		aggressive_forceinline
@@ -63,13 +69,11 @@ function __Shader() constructor
 			}
 		}
 	}
-	/**
-		Adds a shader effect, returning the shader ID stored in the controller for
-		declaring params and removing the effect
-		@param {Asset.GMShader}	shader		The shader to add
-		@param {bool} surf					Whether the shader will be applied on a
-											new application_surface or not (Default false)
-	*/
+	///@method Add(shader, [surface])
+	///@decs Adds a shader effect, returning the shader ID stored in the controller for declaring params and removing the effect
+	///@param {Asset.GMShader} shader The shader to add
+	///@param {bool} surf Whether the shader will be applied on a new application_surface or not (Default false)
+	///@return {real} The ID of the created shader effect
 	static Add = function(shader, surf = false)
 	{
 		aggressive_forceinline
@@ -81,21 +85,22 @@ function __Shader() constructor
 			return array_length(ShaderList) - 1;
 		}
 	}
-	/**
-		Sets the uniform_f values of a shader created using .Add()
-		@param {real} ID			The ID of the shader (From .Add())
-		@param {string} name		The name of the uniform to set the value of
-		@param {real,array} value	The value or array to set the uniform to
-	*/
+	///@method SetUniform(ID, name, value)
+	///@desc Sets the uniform_f values of a shader created using .Add()
+	///@param {real} ID The ID of the shader (From .Add())
+	///@param {string} name 	The name of the uniform to set the value of
+	///@param {real,array} value The value or array to set the uniform to
 	static SetUniform = function(ID, name, value)
 	{
 		aggressive_forceinline
-		oShaderController.ShaderParams[ID][$ name] = value;
+		static __hash_list = ds_map_create();
+		if !ds_map_exists(__hash_list, name) __hash_list[? name] = variable_get_hash(name);
+		struct_set_from_hash(oShaderController.ShaderParams[ID], __hash_list[? name], value);
 	}
-	/**
-		Removes a shader effect added from .Add()
-		@param {real} ID	The ID of the shader (From .Add())
-	*/
+	///@method Remove(ID)
+	///@desc Removes a shader effect added from .Add()
+	///@param {real} ID The ID of the shader (From .Add())
+	///@return {undefined}
 	static Remove = function(ID)
 	{
 		aggressive_forceinline
@@ -103,10 +108,11 @@ function __Shader() constructor
 		array_delete(oShaderController.ShaderList, ID, 1);
 	}
 }
-
+///@func Blue_Screen(duration, amount)
 ///@desc Blurs the screen
-///@param {real} duration	The duration to blur
-///@param {real} amount		The amount to blur 
+///@param {real} duration The duration to blur
+///@param {real} amount The amount to blur 
+///@return {Id.Instance<blur_shader>} The created blur_shader object
 function Blur_Screen(duration, amount)
 {
 	forceinline

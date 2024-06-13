@@ -127,6 +127,6 @@ with Purple
 }
 
 //Polygon board collision
-//A precise detection will use an 8-sided collision chec instead of a 4-sided check
-PreciseDetection = false;
-PointInside = array_create(PreciseDetection ? 8 : 4, true);
+//A precise detection will use an 8-sided collision check instead of a 4-sided check
+PreciseDetection = true;
+PointInside = array_create(PreciseDetection ? 8 : 4, false);

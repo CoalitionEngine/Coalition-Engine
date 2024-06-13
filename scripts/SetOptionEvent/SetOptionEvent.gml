@@ -1,7 +1,10 @@
-///Sets events of each function
-///@param {function}	option_1	Functions for the first option
-///@param {function}	option_2	Functions for the second option
-///@param ...
+///@category Overworld
+///@title Dialog Option Event
+
+///@func SetOptionEvent(option_1, option_2)
+///@desc Sets events of each function
+///@param {function} option_1 Functions for the first option
+///@param {function} option_2 Functions for the second option
 function SetOptionEvent(option_1, option_2)
 {
 	forceinline

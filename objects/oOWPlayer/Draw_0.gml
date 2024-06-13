@@ -3,7 +3,7 @@ var input_horizontal =	CHECK_HORIZONTAL,
 	input_vertical =	CHECK_VERTICAL,
 	input_cancel =		HOLD_CANCEL,
 	input_menu =		PRESS_MENU,
-	spd =				(allow_run && input_cancel) ? run_speed : global.spd,
+	spd =				(FleeEnabled && input_cancel) ? run_speed : global.spd,
 	scale_x =			last_dir,
 	assign_sprite =		last_sprite;
 

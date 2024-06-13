@@ -1,6 +1,14 @@
+///@category Global Functions
+///@title Camera
+///@text These are the functions to control the camera properties.
+
+///@constructor
+///@func __Camera()
+///@desc Camera data
 function __Camera() constructor
 {
-	///Initalizes the camera variables
+	///@method Init()
+	///@desc Initalizes the camera variables
 	static Init = function()
 	{
 		aggressive_forceinline
@@ -33,12 +41,12 @@ function __Camera() constructor
 			camAngleXShake = 0;
 			camAngleYShake = 0;
 		}
+		return self;
 	}
-	/**
-		Shakes the Camera
-		@param {real} Amount	The amount in pixels to shake
-		@param {real} Decrease	The amount of intensity to decrease after each frame
-	*/
+	///@method Shake(amount, [decrease])
+	///@desc Shakes the Camera
+	///@param {real} Amount The amount in pixels to shake
+	///@param {real} Decrease The amount of intensity to decrease after each frame
 	static Shake = function(amount, decrease = 1)
 	{
 		forceinline
@@ -53,13 +61,12 @@ function __Camera() constructor
 			}
 		}
 	}
-	/**
-		Sets the scale of the Camera
-		@param {real} x_scale		The X scale of the camera
-		@param {real} y_scale		The Y scale of the camera
-		@param {real} duration		The anim duration of the scaling
-		@param {function,string} ease		The easing of the animation
-	*/
+	///@method Scale(scale_x, scale_y, [duration], [ease])
+	///@desc Sets the scale of the Camera
+	///@param {real} x_scale The X scale of the camera
+	///@param {real} y_scale The Y scale of the camera
+	///@param {real} duration The anim duration of the scaling
+	///@param {function,string} ease The easing of the animation
 	static Scale = function(sx, sy, duration = 0, ease = "")
 	{
 		forceinline
@@ -71,11 +78,10 @@ function __Camera() constructor
 												TPArray(Scale, 1), Scale[1], sy);
 		}
 	}
-	/**
-		Sets the X and Y position of the Camera
-		@param {real}				x The x position
-		@param {real}				y The y position
-	*/
+	///@method SetPos(x, y)
+	///@desc Sets the X and Y position of the Camera
+	///@param {real} x The x position
+	///@param {real} y The y position
 	static SetPos = function(_x, _y)
 	{
 		forceinline
@@ -85,62 +91,68 @@ function __Camera() constructor
 			y = _y;
 		}
 	}
-	/**
-		Moves the camera to the given coordinates
-		@param {real}				x The x position
-		@param {real}				y The y position
-		@param {real} duration		The anim duration of the movement
-		@param {real} delay			The anim delay of the movement
-		@param {function,string} ease		The easing of the animation
-	*/
+	///@method MoveTo(x, y, duration, [delay], [ease])
+	///@desc Moves the camera to the given coordinates
+	///@param {real} x The x position
+	///@param {real} y The y position
+	///@param {real} duration The anim duration of the movement
+	///@param {real} delay The anim delay of the movement
+	///@param {function,string} ease The easing of the animation
 	static MoveTo = function(x, y, duration, delay = 0, ease = "")
 	{
 		forceinline
 		with oGlobal.MainCamera TweenFire(self, ease, 0, 0, delay, duration, "x>", x, "y>", y);
 	}
-	/**
-		Rotates the camera
-		@param {real} start				The start angle of the camera
-		@param {real} target			The target angle of the camera
-		@param {real} duration			The time taken for the camera to rotate
-		@param {function,string} Easing	The ease of the rotation
-		@param {real} delay 			The delay of the animation
-	*/
+	///@method RotateTo([start], target, duration, [ease], [delay])
+	///@desc Rotates the camera
+	///@param {real} start The start angle of the camera
+	///@param {real} target The target angle of the camera
+	///@param {real} duration The time taken for the camera to rotate
+	///@param {function,string} Easing The ease of the rotation
+	///@param {real} delay The delay of the animation
 	static RotateTo = function(start = oGlobal.MainCamera.angle, target, duration, ease = "", delay = 0)
 	{
 		forceinline
 		if duration == 0 oGlobal.MainCamera.angle = target;
 		else TweenFire(oGlobal.MainCamera, ease, 0, 0, delay, duration, "angle", start, target);
 	}
-	///Gets the x position of the current view
+	///@method ViewX()
+	///@desc Gets the x position of the current view
+	///@return {real}
 	static ViewX = function()
 	{
 		forceinline
 		return camera_get_view_x(view_camera[0]);
 	}
-	///Gets the y position of the current view
+	///@method ViewY()
+	///@desc Gets the y position of the current view
+	///@return {real}
 	static ViewY = function()
 	{
 		forceinline
 		return camera_get_view_y(view_camera[0]);
 	}
-	///Gets the width of the current view
+	///@method ViewWidth()
+	///@desc Gets the width of the current view
+	///@return {real}
 	static ViewWidth = function()
 	{
 		forceinline
 		return camera_get_view_width(view_camera[0]);
 	}
-	///Gets the height of the current view
+	///@method ViewHeight()
+	///@desc Gets the height of the current view
+	///@return {real}
 	static ViewHeight = function()
 	{
 		forceinline
 		return camera_get_view_height(view_camera[0]);
 	}
-	/**
-		Sets the width and height of the view
-		@param {real} width		The width of the camera
-		@param {real} height	The height of the camera
-	*/
+	///@method SetAspect(width, height)
+	///@desc Sets the width and height of the camera
+	///@param {real} width The width of the camera
+	///@param {real} height	The height of the camera
+	///@return {undefined}
 	static SetAspect = function(width, height)
 	{
 		forceinline
@@ -150,8 +162,10 @@ function __Camera() constructor
 			view_height = height;
 		}
 	}
-	///Gets the scale of the camera
-	///@param {real} value		0/none -> both (In array) 1/"x" -> x 2/"y" -> y
+	///@method GetScale([val])
+	///@desc Gets the scale of the camera
+	///@param {real,string} value 0/none -> both (In array) 1/"x" -> x 2/"y" -> y
+	///@return {Array<Real>,Real}
 	static GetScale = function(val = 0)
 	{
 		switch val
@@ -161,8 +175,10 @@ function __Camera() constructor
 			case 2: case "y": return oGlobal.MainCamera.Scale[1];
 		}
 	}
-	///Gets the aspect of the view
-	///@param {real} value		0/none/"width"/"w" -> width 1/"height"/"h" -> height 2/"ratio"/"r" -> ratio
+	///@method GetAspect([val])
+	///@desc Gets the aspect of the view
+	///@param {real} value 0/none/"width"/"w" -> width 1/"height"/"h" -> height 2/"ratio"/"r" -> ratio
+	///@return {Array<Real>,Real}
 	static GetAspect = function(val = 0)
 	{
 		switch val
@@ -173,7 +189,10 @@ function __Camera() constructor
 				return oGlobal.MainCamera.view_width / oGlobal.MainCamera.view_height;
 		}
 	}///Gets the position of the camera
-	///@param {real} value		0/"x" -> x 1/"y" -> y
+	///@method GetPos([val])
+	///@desc Gets the position of the camera
+	///@param {real} value 0/"x" -> x 1/"y" -> y
+	///@return {Array<Real>,Real}
 	static GetPos = function(val = 0)
 	{
 		switch val
@@ -182,7 +201,9 @@ function __Camera() constructor
 			case 1: case "y": return oGlobal.MainCamera.y;
 		}
 	}
-	///Gets the angle of the camera
+	///@method GetAngle()
+	///@desc Gets the angle of the camera
+	///@return {Real}
 	static GetAngle = function()
 	{
 		forceinline

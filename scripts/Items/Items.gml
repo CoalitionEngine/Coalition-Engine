@@ -1,4 +1,9 @@
-///Loads the Info of the Items
+///@category In Game Data
+///@title Items
+///@text These are the functions that are related to items in the game.
+
+///@func Item_Info_Load()
+///@desc Loads the Info of the Items
 function Item_Info_Load() {
 	forceinline
 	var i = 0;
@@ -14,7 +19,8 @@ function Item_Info_Load() {
 	}
 }
 
-///Gets the Infos of the Item
+///@func Item_Info(item)
+///@desc Gets the Infos of the Item
 ///@param {real} Item The Item to get the info
 function Item_Info(item) {
 	forceinline
@@ -25,10 +31,11 @@ function Item_Info(item) {
 	throw_txt = lib.throw_txt;
 	battle_desc = lib.battle_desc;
 	stats = lib.stats;
-	name += lib.item_uses_left > 1 ? " x" + string(lib.item_uses_left) : "";
+	if lib.item_uses_left > 1 name += " x" + string(lib.item_uses_left);
 }
 
-///Use the item
+///@func Item_Use(item)
+///@desc Use the item
 ///@param {real} item The item to use
 function Item_Use(item) {
 	forceinline
@@ -44,7 +51,7 @@ function Item_Use(item) {
 	Item_Info(item);
 	audio_play(snd_item_heal);
 	//Set kr value
-	if global.item_heal_override_kr && global.hp + heal >= global.hp_max global.kr = 0;
+	if global.item_heal_override_kr global.kr = 0;
 	//Update hp
 	global.hp = min(global.hp + heal, global.hp_max);
 	//Healing text
@@ -58,14 +65,14 @@ function Item_Use(item) {
 		var stat_text = "";
 		if stats != "" stat_text = "[delay, 333]\n* " + stats;
 		//Remove item if needed
-		if !lib.item_uses_left Item_Shift(menu_choice[2], 0);
+		if !lib.item_uses_left Item_Remove(menu_choice[2]);
 		//Reset menu
-		default_menu_text = menu_text;
+		default_menu_text = __menu_text;
 		menu_choice[2] = 0;
-		menu_text_typist.reset();
-		menu_text = heal_text + hp_text + stat_text;
-		__text_writer = scribble(menu_text).page(0);
-		menu_text = default_menu_text;
+		__menu_text_typist.reset();
+		__menu_text = heal_text + hp_text + stat_text;
+		__text_writer = scribble(__menu_text, "__Coalition_Battle").starting_format(DefaultFontNB, c_white).page(0);
+		__menu_text = default_menu_text;
 		menu_state = -1;
 	}
 	
@@ -73,64 +80,50 @@ function Item_Use(item) {
 	else if instance_exists(oOWController)
 	{
 		//Remove item
-		if !lib.item_uses_left Item_Shift(menu_choice[1], 0);
+		if !lib.item_uses_left Item_Remove(menu_choice[1]);
 		healing_text = heal_text + hp_text;
 		return healing_text;
 	}
 }
 
-///Shifts the Item position and resize the global item array
-function Item_Shift(item, coord) {
+///@func Item_Count()
+///@desc Gets the number of valid items
+///@return {real} The amount of valid items in the current global item array
+function Item_Count() {
 	forceinline
-	var i = item, n = Item_Count();
-	global.item[n] = coord;
-	repeat n - item
-	{
-		global.item[i] = global.item[i + 1];
-		++i;
-	}
-	array_resize(global.item, n - 1);
+	var i = 0, count = 0;
+	repeat array_length(global.item) if global.item[i++] count++;
+	return count;
 }
 
-///Number of valid items
-///@return {real}
-function Item_Space() {
-	forceinline
-	var i = 0, space = 0;
-	repeat Item_Count() if global.item[i++] != 0 space++;
-	return space;
-}
-
-///Adds an item on the selected position
-///@param {real} Item		The item to add (Use the Item ID from Item_Info)
-///@param {real} Position	The item position to add (Default last)
-function Item_Add(item, pos = Item_Count()) {
+///@func Item_Set(item, [position])
+///@desc Sets an item on the selected position
+///@param {real} Item The item to set
+///@param {real} Position The item position to set (Default last)
+function Item_Set(item, pos = Item_Count()) {
 	forceinline
 	global.item[pos] = item;
 }
 
-///Removes an item on the selected position
-///@param {real} Position	The item position to remove
+///@func Item_Remove(item)
+///@desc Removes an item on the selected position
+///@param {real} Position The position to remove the item from
 function Item_Remove(item) {
 	forceinline
-	Item_Shift(item, 0);
+	array_delete(global.item, item, 1);
 }
 
-///Gets the number of items
-///@return {real}
-function Item_Count() {
-	forceinline
-	return array_length(global.item);
-}
-
-///Converts item Slot to item ID
+///@func Item_SlotToId(item)
+///@desc Converts item Slot to item ID
 ///@param {real} slot The slot of the item in the global item array
+///@return {real} The ID of the item
 function Item_SlotToId(item) {
 	forceinline
 	return global.item[item];
 }
 
-///Item library
+///@func ItemLibraryInit()
+///@desc Initalizes the global item library
 function ItemLibraryInit() {
 	forceinline
 	global.ItemLibrary = ds_list_create();
