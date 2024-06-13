@@ -1,7 +1,7 @@
 # Enemy Functions
 Below are the functions that are related to getting or setting variables of enemies
 
-### `Enemy()` (*constructor*)
+### `__Enemy()` (*constructor*)
 
 Enemy data
 
@@ -16,56 +16,6 @@ Loads the datas of an encounter that you have stored in this script
 |-----------|-----------|---------|
 |`encounter_number` |`Real` |Loads the data of the argument |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### `.SetEncounter([enconter], [left], [middle], [right])` 
 Returns: `undefined`
 
@@ -78,12 +28,8 @@ Sets the enemies in the provided encounter
 |`Middle` |`Asset.GMObject` |The enemy on the middle (Default none) |
 |`Right` |`Asset.GMObject` |The enemy on the right (Default none) |
 
-
-
-
-
 ### `.SetName(enemy, text)` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the name of the enemy
 
@@ -92,13 +38,8 @@ Sets the name of the enemy
 |`enemy` |`Asset.GMObject` |The enemy to set the name of |
 |`text` |`String` |The name to set to |
 
-
-
-
-
-
 ### `.SetAct(enemy, act, name, text, function, [trigger_turn])` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the act data of the enemy
 
@@ -111,19 +52,8 @@ Sets the act data of the enemy
 |`function` |`Function` |The function to execute if selected (Optional) |
 |`trigger` |`Bool` |Whether the action will trigger the turn |
 
-
-
-
-
-
-
-
-
-
-
-
 ### `.SetHPStats(enemy, max_hp, current_hp, [draw_hp_bar])` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the HP data of the enemy
 
@@ -134,19 +64,8 @@ Sets the HP data of the enemy
 |`current_hp` |`Real` |The current hp of the enemy (Default max) |
 |`draw_hp_bar` |`Bool` |Whether the hp bar will be drawn in the menu |
 
-
-
-
-
-
-
-
-
-
-
-
 ### `.SetDefense(enemy, value)` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the Defense of the enemy
 
@@ -155,13 +74,8 @@ Sets the Defense of the enemy
 |`enemy` |`Asset.GMObject` |The enemy to set the defense to |
 |`value` |`Real` |The defense value |
 
-
-
-
-
-
 ### `.SetDamage(enemy, damage)` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the Damage of the enemy (Taken by enemy, not inflicted to player)
 
@@ -170,13 +84,8 @@ Sets the Damage of the enemy (Taken by enemy, not inflicted to player)
 |`enemy` |`Asset.GMObject` |The enemy to set the damage to |
 |`damage` |`Real` |The attack value |
 
-
-
-
-
-
 ### `.SetSpareable(enemy, spareable)` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets whether the enemy can be spared
 
@@ -185,13 +94,8 @@ Sets whether the enemy can be spared
 |`enemy` |`Asset.GMObject` |The enemy to set whether it is sparable |
 |`spareable` |`Bool` |Can the enemy be spared |
 
-
-
-
-
-
 ### `.SetReward(enemy, Exp, Gold)` 
-Returns: `undefined`
+Returns: `Struct.__Enemy`
 
 Sets the Reward of the enemy
 
@@ -201,12 +105,12 @@ Sets the Reward of the enemy
 |`Exp` |`Real` |Rewarded EXP points |
 |`Gold` |`Real` |Rewarded Gold |
 
+### `.Turn(enemy, [turn])` 
+Returns: `real,Struct.__Enemy`
 
+Gets/Sets the turn of the enemy
 
-
-
-
-
-
-
-
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`enemy` |`Asset.GMObject` |The enemy to get/set the turn to |
+|`turn` |`Real` |The turn to set to |

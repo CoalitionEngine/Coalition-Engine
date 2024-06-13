@@ -11,8 +11,12 @@ These macros are for assiting you to code using this engine
 | DEBUG | Whether or not the currrent build is a debug build or not (Disabling will lead to performance boost) |
 | RELEASE | Whether or not the currrent build is a release build or not (This is automatically set to !DEBUG) |
 | NOOB_MODE | Whether or not the quick functions will be compiled |
+| COALITION_DELTA_TIME | Whether to enable delta time lerping in this engine |
+| COALITION_DATA | The global struct of data stored in the engine |
+| COALITION_SAVE_FILE | The global save file of the engine |
+| COALITION_EMPTY_FUNCTION | A predefined empty function |
 
-These macros are for retrieving player input
+These macros are for retrieving player input, not that you may need to set them back to 0 after changing states to prevent "double input"
 ## Input Macros
 
 | Macro Name | Purpose | Returns |
@@ -21,12 +25,12 @@ These macros are for retrieving player input
 | CHECK_VERTICAL | Check whether the player is holding vertical movement keys | `Real` (-1, 0, 1) |
 | PRESS_HORIZONTAL | Check whether the player has pressed horizontal movement keys | `Real` (-1, 0, 1) |
 | PRESS_VERTICAL | Check whether the player has pressed vertical movement keys | `Real` (-1, 0, 1) |
-| CHECK_MOVING | Check whether the player is moving (Based on input) | `Bool` |
 | PRESS_CONFIRM | Check whether the player has pressed the confirm button | `Bool` |
 | HOLD_CONFIRM | Check whether the player is holding the confirm button | `Bool` |
 | PRESS_CANCEL | Check whether the player has pressed the cancel button | `Bool` |
 | HOLD_CANCEL | Check whether the player is holding the cancel button | `Bool` |
 | PRESS_MENU | Check whether the player has pressed the menu button | `Bool` |
+| CHECK_MOVING | Check whether the player is moving (Based on input) | `Bool` |
 
 These macros are for ease of coding
 ## Handy Macros

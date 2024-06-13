@@ -1,7 +1,7 @@
 # Cell
 These functions are related to cell usage in the overworld
 
-### `Cell()` (*constructor*)
+### `__Cell()` (*constructor*)
 
 Cell fucntions
 
@@ -21,14 +21,15 @@ Gets the name of the Cell Slot
 |-----------|-----------|---------|
 |`slot` |`Real` |The slot to get the name of |
 
-### `.GetText(slot)` 
-Returns: `string`. The dialog of the cell
+### `.Text(slot, [text])` 
+Returns: `string,Struct.Cell`. The dialog of the cell or the cell struct
 
 Gets the dialog of the cell in the given slot
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
 |`slot` |`Real` |The slot to get the dialog of |
+|`text` |`String` |The text to set to the cell |
 
 ### `.IsBox(slot)` 
 Returns: `bool`. Whether it is a box
@@ -48,17 +49,35 @@ Get the box ID of the cell
 |-----------|-----------|---------|
 |`slot` |`Real` |The slot to get the data of |
 
-### `CellLibraryInit`
+### `.GetCellID(slot)` 
+Returns: `real`. The ID of the cell
+
+Get the ID of the cell
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`slot` |`Real` |The slot to get the data of |
+
+### `.GetCallCount(slot)` 
+Returns: `real`. The amount of times
+
+Gets the amount of times the phone has been called
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`slot` |`Real` |The slot to get the times of |
+
+### `__CellLibraryInit()`
 ---
  Returns: `undefined`
 
 Initalizes the cell library
 
-### `Cell_Add(cell_name, [cell_text], [cell_isbox], [cell_box_id])`
+### `Cell_LibrarySet(cell_name, [cell_text], [cell_isbox], [cell_box_id])`
 ---
  Returns: `real`. The ID of the cell
 
-Add a new cell
+Add a new cell to the global library
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
@@ -66,3 +85,35 @@ Add a new cell
 |`text` |`String` |Text of the cell when dialed |
 |`is_box` |`Bool` |Is the cell a box |
 |`box_id` |`Real` |The ID of the box (if it is), should not be zero or reused ID |
+|`function` |`Function` |The function to execute after the cell is dialed (Usually for updating text) |
+
+### `Cell_Set(slot, cell_id)`
+---
+ Returns: `undefined`
+
+Sets a cell to the player's inventory in the given slot
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`slot` |`Real` |The slot to set the cell to |
+|`id` |`Real` |The id of the cell in the global library |
+
+
+
+
+
+
+### `Cell_Add(cell_id)`
+---
+ Returns: `undefined`
+
+Adds the cell to the player's inventory
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`id` |`Real` |The id of the cell in the global library |
+
+
+
+
+

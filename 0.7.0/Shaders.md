@@ -85,6 +85,8 @@ Sets the uniform_f values of a shader created using .Add()
 
 
 
+
+
 ### `.Remove(ID)` 
 Returns: `Id.Instance<blur_shader>`. The created blur_shader object
 

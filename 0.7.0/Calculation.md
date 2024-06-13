@@ -11,6 +11,42 @@ Returns a Positive Quotient of the 2 values, do not confuse this with a % b
 |`a` |`Real` |The number to be divided |
 |`b` |`Real` |The number to divide |
 
+### `smootherstep(a, b, value)`
+---
+ Returns: `Real`
+
+Interpolates between a and b, base on value. With smoothing using Perlin's method instead of Hermite's.
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`a` |`Real` |The first value |
+|`b` |`Real` |The second value |
+|`value` |`Real` |The amount to interpolate |
+
+### `delta_lerp(a, b, value)`
+---
+ Returns: `Real`
+
+Applies lerping with consideration of delta time
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`a` |`Real` |The first value |
+|`b` |`Real` |The second value |
+|`value` |`Real` |The amount to interpolate |
+
+### `decay(a, b, decay)`
+---
+ Returns: `real`
+
+Expotential decay function
+
+| Parameter | Datatype  | Purpose |
+|-----------|-----------|---------|
+|`a` |`Real` |The first value |
+|`b` |`Real` |The second value |
+|`decay` |`Real` |The decay value |
+
 ### `point_xy(point_x, point_y)`
 ---
  Returns: `undefined`. Creates two variables

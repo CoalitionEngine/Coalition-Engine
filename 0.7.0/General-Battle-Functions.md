@@ -49,6 +49,9 @@ Sets the menu dialog of the battle
 
 
 
+
+
+
 ### `.SetBoardTarget(target)` 
 Returns: `undefined`
 

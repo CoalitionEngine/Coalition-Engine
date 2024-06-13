@@ -10,8 +10,9 @@ be sure to add len_clean in the clean up event
 
 Loads the variables for len
 After calling this function in the create event, you can access these variables by using Len.\*.
-| Variable name | Datatype  | Purpose |;
-|-----------|-----------|---------|;
+
+| Variable name | Datatype  | Purpose |
+|-----------|-----------|---------|
 | `activate` | Bool | Whether the len behaviour is activated |
 | `x/y` | Real | The center of the circle the bullet revolves around |
 | `h/vspeed` | Real | The h/vspeed of the x/y coordinates of the center |
@@ -22,6 +23,24 @@ After calling this function in the create event, you can access these variables 
 | `angle` | Bool | Whether the bullet rotates as the dir changes |
 | `angle_extra` | Real | Sets the angle offset of the bullet while rotating |
 | `target` | Asset.GMObject | Sets the target object that will be set as the center, overriding the defined x/y |
+
+For example
+```gml
+	for (var i = 0; i < 12; i++)
+	{
+		var b = Bullet_Bone(0, 0, 70, 0, 0);
+		with b.Len
+		{
+			x = 320;
+			y = 320;
+			len = 70;
+			dir = i * 30;
+			dir_move = 2;
+			angle = true;
+		}
+	}
+```
+This creates a circle of 12 bones that are all 70 pixels away from (320, 320), with all of them rotating around it by 2 degrees per frame/
 
 ### `len_step()`
 ---
@@ -38,12 +57,14 @@ be sure to add axis_clean in the clean up event
 
 Lodas the variables for axis
 After calling this function in the create event, you can access these variables by using Axis.\*.
-| Variable name | Datatype  | Purpose |;
-|-----------|-----------|---------|;
+
+| Variable name | Datatype  | Purpose |
+|-----------|-----------|---------|
 | `activate` | Bool | Whether the axis properties are activated |
 | `target_board` | Asset.GMObject | The board to target to (Only useful when there are multiple) |
 | `override` | Bool | Whether the angle is a user defined angle, instead of the board angle |
 | `override_angle` | Real | The angle of the axis rotation |
+
 The other variables are read only and are for internal use only.
 
 ### `axis_step()`

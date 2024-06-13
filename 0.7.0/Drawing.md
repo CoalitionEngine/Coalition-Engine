@@ -38,6 +38,7 @@ Draws a rectangle with a outline color and background color
 |`background_color` |`Constant.Color` |The color of the background of the rectangle (Default black) |
 |`frame_alpha` |`Real` |The alpha of the frame (Default 1) |
 |`background_alpha` |`Real` |The alpha of the background (Default 1) |
+|`rounding` |`Real` |The rounding of the rectangle corners |
 
 
 

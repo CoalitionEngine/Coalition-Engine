@@ -1,9 +1,9 @@
-# Important
-
+![](/assets/docsIcon.png)
 <p align="center">
-<h2 align="center">Coalition Engine.</h2>
-A modern Undertale engine developed by Eden, Panthervention, RTF
+	<h2 align="center">Coalition Engine</h2>
 </p>
+
+A modern Undertale engine developed by [Eden](https://gamejolt.com/@Edens_studio), [Panthervention](https://gamejolt.com/@Panthervention), [RTF](https://gamejolt.com/@RTFTR)
 
 Coalition Engine is an Undertale engine that aims to create the most optimized environment to maximize player experience.
 
@@ -12,7 +12,7 @@ This engine features:
 - Potential cross platform support
 - Safe data saving
 - Optimized polygon board
-- Anti-UTMT support
+- Anti-UTMT support (kind of)
 
 **What platforms does this engine support?**
 
@@ -39,3 +39,9 @@ Everything else is what you should edit, but be aware that engine updates may ov
 so you should create backups of your project before updating the engine version.
 
 If you have little to no GML knowledge, you should look up the Game Maker Manual or at least Google before asking questions like "How do I make an object" or "I don't know how to use this Game Maker function".
+
+There is a general naming convection in this engine
+
+Variables that begin with '__', they are for internal use and should not be called directly.
+
+Variables with any other naming convection are for calling by users.

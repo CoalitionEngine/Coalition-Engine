@@ -1,0 +1,66 @@
+# How to make a Shop
+
+Instead of creating an object just for a shop, instead a struct was created to store the data, and it
+is only created when used, destroyed upon leaving. (Poor shop)
+
+## Setting up
+### Sprites
+First, you need to set up the background sprites and shop keeper sprite.
+You do that by calling `Shop.SetBackground()` and `Shop.AddShopkeeper()`.
+To set the music of the shop, simply use `Shop.Music = 'audio asset'`, you can also set it as a string for
+it to play an external audio, like `Shop.Music = "./Musics/ShopTheme.ogg";`, then it will access the
+audio file and play it as the theme.
+
+### Items
+Obviously, the shop sells items, you can add an item the shop sells by calling `Shop.AddItem()`, make
+sure you have previously added this item to the library beforehand.
+
+### Talking
+To add dialogs with the shop keeper, just use `Shop.AddDialog()`, the two arguments are the question
+and answer for the dialog, as simple as that.
+
+## Advanced uses
+There are some variables in the shop struct you can modify.
+`CancelBuyEvent` is a function that will be called when you select 'No' when prompted to buy an item,
+this is usually set to display a new dialog for the shopkeeper like in Undertale.
+`AllowSell` and `AllowTalk` are boolean variables that, as you mnay have guessed, allows the player
+to sell items/talk to the shopkeeper or not.
+
+`SetShopkeeperDrawingState` is a function that works in an obscure way, you may recall that the shopkeepers
+have expressions on their faces and you might want to change them. By default, the shopkeeper is just a
+static sprite with the defined sprite, index, scale and etc.
+To use this function, you will have to type in code like this:
+```gml
+SetShopkeeperDrawingState(0, 0, function() {
+	with Shopkeeper[0]
+		draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+});
+```
+This is the default drawing function of a shopkeeper, to set the drawing event of the shopkeeper of another state, just change
+the second argument into another value.
+It is recommended to change the state of the shop keeper using Scribble events when a dialog starts/ends.
+For example,
+```gml
+//Somewhere in a global script
+function foo()
+{
+	Shop.ShopkeeperState(0, 1);
+}
+scribble_typists_add_event("change_state", foo);
+
+
+//Somewhere when you enter a shop, such as an overworld trigger
+with Shop
+{
+	AddDialog("Why are you here?", "[change_state]To learn how to use this engine.");
+	SetShopkeeperDrawingState(0, 1, function() {
+		with Shopkeeper[0]
+			draw_sprite_ext(sprite_index, 1, x, y, image_xscale, image_yscale, global.timer, image_blend, image_alpha);
+});
+}
+```
+This code will create the following situation:
+When the player talks to the shop keeper, asking "Why are you here?", the shop keeper will change to
+the state '1' and draws the second image_index with the image_angle of the global timer, which makes it
+rotate per frame.
+After the dialog ended, the state of the shop keeper will be automatically reset to 0.

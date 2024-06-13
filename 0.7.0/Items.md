@@ -88,13 +88,7 @@ Use the item
 
 
 
-### `Item_Shift(item, [coord])`
----
- Returns: `undefined`
-
-Shifts the Item position and resize the global item array
-
-### `Item_Space()`
+### `Item_Count()`
 ---
  Returns: `real`. The amount of valid items in the current global item array
 
@@ -108,8 +102,8 @@ Sets an item on the selected position
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
-|`Item` |`Real` |The item to add |
-|`Position` |`Real` |The item position to add (Default last) |
+|`Item` |`Real` |The item to set |
+|`Position` |`Real` |The item position to set (Default last) |
 
 
 
@@ -130,12 +124,6 @@ Removes an item on the selected position
 
 
 
-
-### `Item_Count()`
----
- Returns: `real`. The size of the global item array
-
-Gets the size of the global item array
 
 ### `Item_SlotToId(item)`
 ---

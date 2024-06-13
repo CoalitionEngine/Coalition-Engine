@@ -20,6 +20,13 @@ Saves tempoary data
 
 
 
+
+
+
+
+
+
+
 ### `GetTempData(name)`
 ---
  Returns: `undefined`
@@ -37,11 +44,18 @@ Get tempoary data
 
 
 
+
+
+
+
+
+
+
 ### `SaveData(filename, struct, [function])`
 ---
  Returns: `undefined`
 
-Saves all data from global.TempData into a TempData.dat file
+Saves all data from global.__CoalitionTempData into a TempData.dat file
 
 | Parameter | Datatype  | Purpose |
 |-----------|-----------|---------|
@@ -87,6 +101,7 @@ Loads the saved data from the given file name
 |-----------|-----------|---------|
 |`filename` |`String` |The file name of the file to read the data with |
 |`function` |`Function` |The custom function for decoding (Input: string, Output: string) |
+
 
 
 

@@ -9,7 +9,7 @@ There are several steps to set up an encounter.
 First, you have to create an object and make the parent of the object into 'oEnemyParent'.
 
 Next, you should go to Initalize and add
-`EnemyData.SetEncoutner();`
+`Enemy.SetEncounter();`
 You may ignore the first argument if you are not going to add any more encounters in the game.
 You should include your enemy object as an argument in the script.
 
@@ -20,7 +20,7 @@ When you enter room_battle, an encounter automatically starts the the data of th
 If you followed these steps, you should see absolutely nothing but the battle UI, that means you completed the first step.
 
 ## Setting up enemy data
-To help with accessing enemy variables, `EnemyData` is created to set the variables for the enemy when it is loaded.
+To help with accessing enemy variables, `Enemy` is created to set the variables for the enemy when it is loaded.
 Check Battle -> Enemy Functions for more information of these functions
 
 There are variables that are not covered in the functions, they will be covered here
@@ -39,9 +39,9 @@ There are variables that are not covered in the functions, they will be covered 
 | dir | `Real` | The direction of the speech bubble |
 | color | `Real` | The color of the speech bubble |
 | ------ | ------ | ------ |
-| deafult_font | `string` | The name of the default font you want to set the text of |
-| deafult_sound | `Asset.GMSound` | The default sound you want to set the text to |
-| draw_damage | `Asset.GMSound` | The default sound you want to set the text to |
+| default_font | `string` | The name of the default font you want to set the text of |
+| default_sound | `Asset.GMSound` | The default sound you want to set the text to |
+| draw_damage | `bool` | Whether the damage bar and text will be drawn |
 | damage | `Real,String` | The damage to inflict on the enemy, you may set this to a string, however this will not damage the enemy |
 | damage_y | `Real` | The y coordinate the damage will pop up from |
 | damage_event | `Function` | The event to execute when the enemy is damaged |
@@ -78,7 +78,7 @@ Slamming are disabled by default, set `SlammingEnabled` to true to enable them.
 | SlamSprites | `Array<Asset.GMSprites>` | The sprites of the slamming animation, it is recommended to compile them into 1 sprite per direction |
 | SlamSpriteTargetIndex | `Array<Real>` | The indexes of the sprite during slamming, you should give 5 arguments for this |
 
-And of course, there are enemies all have dialogs, you may use `BattleData.EnemyDialog()` to set the text.
+And of course, there are enemies all have dialogs, you may use `Battle.EnemyDialog()` to set the text.
 Documentation of this function can be found in Battle -> General Battle Functions.
 You may use an external text file to store the dialog for each enemy, to fetch these text files, you should use `LoadTextFromFile()`
 

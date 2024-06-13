@@ -13,6 +13,14 @@
 
 ---
 
+**Tutorials**
+
+-    [How to make a battle](How-to-make-a-battle)
+-    [How to create an overworld](How-to-create-an-overworld)
+-    [How to make a Shop](How-to-make-a-Shop)
+
+---
+
 **Soul**
 
 -    [Bullet Collision](Bullet-Collision)
@@ -101,7 +109,9 @@
 
 ---
 
--    [How to make a battle](How-to-make-a-battle)
+**Shop**
+
+-    [Shop](Shop)
 
 ---
 
