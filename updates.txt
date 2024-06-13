@@ -34,7 +34,7 @@ Cells can now be used multiple times with different text displays
 Multiple enemies are now functional (i.e. timer and individual turns)
  -> Therefore there are now two types of turns, Enemy Turn and Battle Turn, do not confuse them
 Updated tempoary data get/set method to be more optimised
-Minor changes to initalisation method for more optimisation
+Minor changes to initialisation method for more optimisation
 Minor changes to the global box array, which is now a struct
 Moved starting format for scribble texts to the create event to prevent regeneration per frame
 EnemyData, BoxData, CellData has been renamed to Enemy, Box, Cell respectively
@@ -42,7 +42,7 @@ Other minor adjustments for optimisation
 
 Notes:
 Documentation has been added to this engine
-Thinking on how to coonvert polyboard blue soul collision check to bit instead of array for further optimization
+Thinking on how to convert polyboard blue soul collision check to bit instead of array for further optimization
 
 v0.6.2 (Eden)
 Fixed:
