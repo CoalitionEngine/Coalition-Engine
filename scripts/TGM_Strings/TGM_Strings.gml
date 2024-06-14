@@ -140,8 +140,7 @@ function string_reverse(str) {
 	        c |= buffer_read(b1, buffer_u8) << 8;
 	        i -= 2; buffer_poke(b2, i, buffer_u16, c);
 	    } else if (c < $F0) {
-			//Either it is b1 or b2, I'm guessing it's b2, Yal made a typo
-	        k = buffer_read(b2, buffer_u16);
+	        k = buffer_read(b1, buffer_u16);
 	        i -= 3;
 	        buffer_poke(b2, i + 1, buffer_u16, k);
 	        buffer_poke(b2, i, buffer_u8, c);
