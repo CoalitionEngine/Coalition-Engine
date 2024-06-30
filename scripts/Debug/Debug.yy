@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Global",
-    "path": "folders/Coalition Engine/(System)/Scripts/Global.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Global.yy",
   },
 }

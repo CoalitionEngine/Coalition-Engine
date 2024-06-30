@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Clean Shapes",
-    "path": "folders/Coalition Engine/(System)/Addons/Clean Shapes.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Clean Shapes.yy",
   },
 }

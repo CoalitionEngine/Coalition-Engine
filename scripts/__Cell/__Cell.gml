@@ -4,7 +4,7 @@
 
 ///@constructor
 ///@func __Cell()
-///@desc Cell fucntions
+///@desc Cell fucntions, to call these functions, simply use `Cell.XXX()`
 function __Cell() constructor {
 	///@method Count()
 	///@desc Gets the amount of phone numbers you have

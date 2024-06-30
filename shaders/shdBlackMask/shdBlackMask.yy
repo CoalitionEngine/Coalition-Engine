@@ -4,7 +4,7 @@
   "name": "shdBlackMask",
   "parent": {
     "name": "Engine Essential",
-    "path": "folders/Coalition Engine/Shaders/Engine Essential.yy",
+    "path": "folders/Coalition Engine/Internal/Shaders/Engine Essential.yy",
   },
   "type": 1,
 }

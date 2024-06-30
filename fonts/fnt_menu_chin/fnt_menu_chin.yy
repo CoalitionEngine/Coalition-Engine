@@ -158,7 +158,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Fonts",
-    "path": "folders/Coalition Engine/(System)/Fonts.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Fonts.yy",
   },
   "pointRounding": 0,
   "ranges": [

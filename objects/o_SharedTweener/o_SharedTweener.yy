@@ -15,7 +15,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Admin",
-    "path": "folders/Coalition Engine/(System)/Addons/TweenGMX/Admin.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/TweenGMX/Admin.yy",
   },
   "parentObjectId": null,
   "persistent": true,

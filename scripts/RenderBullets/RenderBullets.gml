@@ -68,4 +68,5 @@ function RenderBullets() {
 	else surface_reset_target();
 }
 
-///@text > You may want to edit this script when you add more bullets
+///@text 
+///?> You may want to edit this script when you add more bullets

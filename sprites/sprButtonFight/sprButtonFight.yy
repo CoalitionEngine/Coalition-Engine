@@ -50,7 +50,7 @@
   "origin": 4,
   "parent": {
     "name": "Button",
-    "path": "folders/Coalition Engine/(System)/Sprites/Battle/Button.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Battle/Button.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -76,6 +76,9 @@ for(var i = 0; i < 12; i++)
 	text = LoadTextFromFile("SansTest2.txt", 1, "@" + string(i));
 	Battle.EnemyDialog(self, i, text);
 }
+Battle.EnemyDialog(self, 0, "look at this funny line system i stole");
+dialog.x += 50;
+dialog.y -= 70;
 event_user(1);
 
 //global.lerp_speed = 1;
@@ -86,3 +89,5 @@ event_user(1);
 //ShaderSetUniform(Shader, "intensity", 1);
 //ShaderSetUniform(Shader, "amplitude", 10);
 //ShaderSetUniform(Shader, "mode", 5);
+
+audio_stop_all();

@@ -89,7 +89,7 @@ function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, 
 ///@text ?> The same effect can be done using draw_rectangle_color(), however this will lead to batch breaks and impact performance.
 
 ///@constructor
-///@func SpriteNoisieSet([sprite])
+///@func SpriteNoiseSet([sprite])
 ///Sets the noise sprite to use for a noise fade
 function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
 	forceinline

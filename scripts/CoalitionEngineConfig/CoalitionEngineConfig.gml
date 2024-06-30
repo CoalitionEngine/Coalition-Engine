@@ -58,7 +58,7 @@
 ///| -------- | ------ |
 ///| SOUL_MODE | Soul Modes |
 ///| DIR | Direction |
-///| ITEM | |Item ID |
+///| ITEM | Item ID |
 ///| ITEM_SCROLL | Item scroll mode in battle |
 ///| OVERWORLD | Overworld Room |
 ///| BATTLE_STATE | Battle state |
@@ -67,7 +67,7 @@
 #endregion
 #region Engine
 //Here are the macros for the engine
-#macro __COALITION_ENGINE_VERSION "v0.7.0"
+#macro __COALITION_ENGINE_VERSION "v0.7.1"
 #macro ALLOW_DEBUG  true
 //This automatically set DEBUG into false when you build the game
 //#macro DEBUG !game_is_standalone()

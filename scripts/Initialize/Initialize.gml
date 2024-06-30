@@ -57,7 +57,7 @@ function Initialize()
 	
 	//Save file Save/Loading
 	var dat = LoadData("Data.dat");
-	if !struct_empty(dat) COALITION_SAVE_FILE = struct_copy(dat);
+	if !struct_empty(dat) COALITION_SAVE_FILE = variable_clone(dat);
 	SaveData("Data.dat", COALITION_SAVE_FILE);
 	
 	
@@ -82,7 +82,7 @@ function Initialize()
 				CellArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[11]);
 	//Load box, Item and Cell
 	if !struct_empty(BoxStruct)
-		global.__box = struct_copy(BoxStruct);
+		global.__box = variable_clone(BoxStruct);
 	if !array_is_empty(ItemArray)
 		array_copy(global.item, 0, ItemArray, 0, array_length(ItemArray));
 	if !array_is_empty(CellArray)
@@ -172,7 +172,6 @@ function Initialize()
 	global.item_heal_override_kr = false; //Does kr reduce when max heal or not
 	
 	//Custom Settings
-	global.Settings = ds_map_create();
 	global.ShowFPS = false;
 	//Input keys are defined at __input_config_profiles_and_default_bindings
 	
@@ -180,7 +179,7 @@ function Initialize()
 	//Loads tempoary data
 	var dat = LoadData("TempData.dat");
 	//If there exists data to be loaded, store it into the TempData
-	if !struct_empty(dat) global.__CoalitionTempData = struct_copy(dat);
+	if !struct_empty(dat) global.__CoalitionTempData = variable_clone(dat);
 	//Saves the data for reshuffling
 	SaveData("TempData.dat", global.__CoalitionTempData);
 	
@@ -198,17 +197,15 @@ function Initialize()
 	Board = new __Board();
 	Camera = new __Camera().Init();
 	ConvertItemNameToStat();
-	Player = new __Player();
-	Player.GetBaseStats();
-	//Example on how to set up an encounter
-	Enemy.SetEncounter(, oEnemySansExample,, oEnemySansExample2);
+	Player = new __Player().GetBaseStats();
+	Encounter_Library();
 	
 	global.kr = 0;
 	global.kr_activation = false;
 	global.damage = 1;		//Base attack damage
 	global.krdamage = 1;	//Base KR damage
 	global.bar_count = 1;	//Number of bars in attacking
-	global.spd = 2;			//Playeer movement speed
+	global.spd = 2;			//Player movement speed
 	global.inv = 2;			//Invincibility frames
 	//Player stats
 	global.player_attack_boost = 0;

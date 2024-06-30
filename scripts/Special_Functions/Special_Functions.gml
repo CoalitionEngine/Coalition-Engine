@@ -105,7 +105,7 @@ function mouse_in_circle(x, y, rad) {
 	forceinline
 	return point_in_circle(mouse_x, mouse_y, x, y, rad);
 }
-///@func mouse_in_triangle(x1, 1, x2, y2, x3, y3)
+///@func mouse_in_triangle(x1, y1, x2, y2, x3, y3)
 ///@desc checks whether the mouse is in a triangle)
 ///@param {real} x1 The x coordinate of the first vertice of the triangle
 ///@param {real} y1 The y coordinate of the first vertice of the triangle

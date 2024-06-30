@@ -1,9 +1,9 @@
 //Data
 Camera.Scale(1, 1);
 enemy_name = "";
-enemy_act = array_create(5, "");
-enemy_act_text = array_create(5, "");
-enemy_act_function = array_create(6, -1);
+enemy_act = [];
+enemy_act_text = [];
+enemy_act_function = [];
 enemy_hp_max = 100;
 enemy_hp = 100;
 //This is for animating the Hp bar
@@ -49,11 +49,9 @@ __dust_being_drawn = false;
 dust_speed = 60;
 
 //Dialog
-dialog = {};
+dialog = {x, y};
 with dialog
 {
-	x = other.x;
-	y = other.y;
 	width = 190;
 	height = 85;
 	dir = DIR.LEFT;
@@ -63,15 +61,17 @@ dialog_text = [""];
 dialog_at_mid_turn = false;
 default_font = "";
 default_sound = snd_txtDefault;
+__dialog_text_typist = scribble_typist().in(0.5, 0);
 
 function dialog_init(text = "")
 {
-	__text_writer = scribble(text, "__Coalition_Enemy").wrap(dialog.width - 15, dialog.height - 15)
+	__text_writer = scribble(text, "__Coalition_Enemy")
+	.wrap(dialog.width - 15, dialog.height - 15)
 	.starting_format(default_font, c_black)
 	.page(0);
+	__dialog_text_typist.sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*");
 }
 dialog_init(dialog_text[0]);
-__dialog_text_typist = scribble_typist().in(0.5, 0).sound_per_char(default_sound, 1, 1, " ^!.?,:/\\|*");
 
 ///Generates a dialog mid turn
 ///@param {string} text The text to draw

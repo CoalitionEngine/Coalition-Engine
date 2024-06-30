@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Internal",
-    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Internal.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Internal.yy",
   },
 }

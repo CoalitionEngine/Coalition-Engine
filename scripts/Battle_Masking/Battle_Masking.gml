@@ -1,6 +1,6 @@
 /// @category Battle
 /// @title Battle Masking Functions
-/// @text Below are the functions you'll use to set up your docs and generate them.
+/// @text Below are the functions you'll use to mask sprites inside the board
 
 /// @func Battle_Masking_Start([spr], [board])
 /// @desc Begins the drawing of board masking

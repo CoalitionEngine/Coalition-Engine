@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "01  Checking Verbs",
-    "path": "folders/Coalition Engine/(System)/Addons/Input/01  Checking Verbs.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Input/01  Checking Verbs.yy",
   },
 }

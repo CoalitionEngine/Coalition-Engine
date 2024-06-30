@@ -1,5 +1,5 @@
-/// @category Tutorials
-/// @title How to create an overworld
+/// @category (FAQ)
+/// @title Overworld Documentation
 
 One of the most overlooked aspects in Undertale engines are the overworld, since barely anyone makes them.
 

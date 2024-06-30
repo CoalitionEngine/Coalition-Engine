@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Battle",
-    "path": "folders/Coalition Engine/(System)/Scripts/Battle.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Battle.yy",
   },
 }

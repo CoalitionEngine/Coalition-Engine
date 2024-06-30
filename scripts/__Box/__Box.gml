@@ -1,10 +1,10 @@
 ///@category Overworld
 ///@title Box
-///@text These are the functions that are related to the overworld box.
+///@text These are the functions that are related to the overworld box (or Dimensional Box).
 
 ///@constructor
 ///@func __Box()
-///@desc Box functions
+///@desc Box functions, to call these functions, simply use `Box.XXX()`
 function __Box() constructor
 {
 	///@method ItemCount(Box_ID)
@@ -22,6 +22,7 @@ function __Box() constructor
 	static GetFirstEmptySlot = function(Box_ID) {
 		forceinline
 		var i = 0, num = 0;
+		//This is so jank but it works
 		repeat array_length(global.__box[$ Box_ID])
 			if global.__box[$ Box_ID][i] num = ++i;
 		return num;
@@ -33,8 +34,8 @@ function __Box() constructor
 		forceinline
 		with oOWController
 		{
-			for (var i = 0, n = Box.Count(Box_ID); i < n; ++i) {
-				Box.Info(global.__box[$ Box_ID][i]);
+			for (var i = 0, n = Count(Box_ID); i < n; ++i) {
+				Info(global.__box[$ Box_ID][i]);
 				box_name[i] = name;
 			}
 		}
@@ -70,7 +71,7 @@ function __Box() constructor
 	static Shift = function(Box_ID) {
 		forceinline
 		var i = 0;
-		repeat Box.ItemCount(Box_ID) - 1
+		repeat ItemCount(Box_ID) - 1
 		{
 			if global.__box[$ Box_ID][i] == 0 && global.__box[$ Box_ID][i + 1] != 0
 			{

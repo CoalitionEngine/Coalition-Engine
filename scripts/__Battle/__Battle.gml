@@ -1,6 +1,6 @@
 ///@category Battle
 ///@title General Battle Functions
-///@text Below are the functions that are used in battle
+///@text Below are the functions that are used in battle, to call these functions, simply use `Battle.XXX()`
 
 ///@constructor
 ///@func __Battle()
@@ -26,12 +26,14 @@ function __Battle() constructor
 	///@method SetMenuDialog(text)
 	///@desc Sets the menu dialog of the battle
 	///@param {string} text The Menu text
-	static SetMenuDialog = function(text) {
+	///@param {bool} no_asterisk Whether there is an asterisk in front of the dialog (Default false)
+	static SetMenuDialog = function(text, no_asterisk = false) {
 		forceinline
 		with oBattleController
 		{
 			__menu_text = text;
-			__text_writer = scribble("* " + text, "__Coalition_Battle").starting_format(DefaultFontNB, c_white).page(0);
+			if !no_asterisk text = "* " + text;
+			__text_writer = scribble(text, "__Coalition_Battle").starting_format(DefaultFontNB, c_white).page(0);
 		}
 	}
 	///@method SetBoardTarget(target)

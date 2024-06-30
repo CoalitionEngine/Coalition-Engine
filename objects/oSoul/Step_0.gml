@@ -119,8 +119,8 @@ if STATE == 2 {
 			//Up
 			else if _angle == 180 {
 				if check_board {
-					_on_ground = !point_in_parallelogram(r_x, r_y - displace_y, board_vertices);
-					_on_ceil = !point_in_parallelogram(r_x, r_y + displace_y, board_vertices);
+					_on_ground = !point_in_parallelogram(r_x, r_y + displace_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x, r_y - displace_y, board_vertices);
 				}
 
 				platform_check[2] = -10;
@@ -146,8 +146,8 @@ if STATE == 2 {
 			//Left
 			else if _angle == 270 {
 				if check_board {
-					_on_ground = !point_in_parallelogram(r_x - displace_x, r_y, board_vertices);
-					_on_ceil = !point_in_parallelogram(r_x + displace_x, r_y, board_vertices);
+					_on_ground = !point_in_parallelogram(r_x + displace_x, r_y, board_vertices);
+					_on_ceil = !point_in_parallelogram(r_x - displace_x, r_y, board_vertices);
 				}
 
 				platform_check[0] = -10;

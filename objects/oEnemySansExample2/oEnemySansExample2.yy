@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Coalition Engine",
-    "path": "folders/Coalition Engine.yy",
+    "name": "Battle",
+    "path": "folders/Coalition Engine/External/Objects/Battle.yy",
   },
   "parentObjectId": {
     "name": "oEnemyParent",

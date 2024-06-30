@@ -10,7 +10,7 @@ void main()
 {
     vec4 col = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
  
-   col.rgb = col.rgb * v_normalized;
+   col.rgb *= v_normalized;
  
    gl_FragColor = col;
 }

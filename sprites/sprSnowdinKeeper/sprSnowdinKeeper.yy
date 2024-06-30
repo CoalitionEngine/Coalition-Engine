@@ -26,7 +26,7 @@
   "origin": 7,
   "parent": {
     "name": "Shop",
-    "path": "folders/Coalition Engine/(System)/Sprites/Shop.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Shop.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

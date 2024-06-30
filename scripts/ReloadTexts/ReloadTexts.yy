@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Language",
-    "path": "folders/Coalition Engine/Scripts/Language.yy",
+    "path": "folders/Coalition Engine/External/Scripts/Language.yy",
   },
 }

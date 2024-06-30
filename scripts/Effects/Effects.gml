@@ -14,7 +14,7 @@ function Fader_Fade(start = oGlobal.fader_alpha, target, duration, delay = 0, co
 	oGlobal.fader_color = color;
 	TweenFire(oGlobal, "", 0, false, delay, duration, "fader_alpha", start, target);
 }
-///@func Dader_Fade_InOut([start_alpha], target_alpha, final_alpha, in_duration, hold_duration, out_duration, [delay], [color])
+///@func Fader_Fade_InOut([start_alpha], target_alpha, final_alpha, in_duration, hold_duration, out_duration, [delay], [color])
 ///@desc Fades the screen and fades back out to destined alpha
 ///@param {real} start The beginning alpha of the fader (0 = screen visible, 1 = screen not visible)
 ///@param {real} target The ending alpha of the fader (0 = screen visible, 1 = screen not visible)

@@ -4,7 +4,7 @@
 
 ///@constructor
 ///@func __Enemy()
-///@desc Enemy data
+///@desc Enemy data, to call these functions, simply use `Enemy.XXX()`
 function __Enemy() constructor {
 	///@method LoadEncounter([encounter_number])
 	///@desc Loads the datas of an encounter that you have stored in this script
@@ -37,7 +37,7 @@ function __Enemy() constructor {
 					enemy_draw_hp_bar[i] = enemies[i].enemy_draw_hp_bar;
 					enemy[i].__enemy_slot = i;
 					var ii = 0;
-					repeat array_length(enemies[i].enemy_act) - 1
+					repeat array_length(enemies[i].enemy_act)
 					{
 						enemy_act[i, ii] =			enemies[i].enemy_act[ii];
 						enemy_act_text[i, ii] =		enemies[i].enemy_act_text[ii];

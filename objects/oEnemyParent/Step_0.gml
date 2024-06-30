@@ -1,17 +1,6 @@
 ///@desc Turns, very trash, working on it
 function end_turn() { __turn_has_ended = true; }
 
-if !__died && state == BATTLE_STATE.IN_TURN && !__turn_has_ended && __enemy_in_battle {
-	//Timer
-	if start time++;
-	if array_length(AttackFunctions) > current_turn AttackFunctions[current_turn]();
-	else
-	{
-		current_turn--;
-		end_turn();
-	}
-}
-
 if ContainsDust
 {
 	if !surface_exists(__dust_surface) __dust_surface = surface_create(640, 480);

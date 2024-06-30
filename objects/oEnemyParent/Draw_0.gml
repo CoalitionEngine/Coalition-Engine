@@ -73,8 +73,11 @@ if (state == BATTLE_STATE.DIALOG || (state == BATTLE_STATE.IN_TURN && dialog_at_
 		++i;
 	}
 	if k == n oBattleController.__begin_turn();
-	with dialog
-		DrawSpeechBubble(x, y, width, height, color, dir / 90);
+	else
+	{
+		with dialog
+			DrawSpeechBubble(x, y, width, height, color, dir / 90);
+	}
 
 	//Text
 	__text_writer.draw(dialog.x + 11, dialog.y - dialog.height + 11, __dialog_text_typist);
@@ -103,7 +106,7 @@ if !__died && !is_spared {
 	{
 		if is_dodge // The movement for dodge
 		{
-			if !attack_time and !is_miss {
+			if !attack_time && !is_miss {
 				draw_damage = true;
 				damage_color = c_ltgray;
 				damage = "MISS";
@@ -216,4 +219,4 @@ if is_spared && image_alpha == 0.5 {
 }
 
 //Remove if uneeded
-Board.Mask();
+BoardMaskAll();

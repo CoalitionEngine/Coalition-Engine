@@ -22,9 +22,5 @@ if room == room_shop
 		AddItem(ITEM.STEAK, "Steak in the Shape of Mettaton's Face", 500, "why");
 		AddDialog("Who made this engine?", "lifeless pieces of garbage");
 		Background.x = 320;
-		SetShopkeeperDrawingState(0, 0, function() {
-			with Shopkeeper[0]
-				draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
-		});
 	};
 }

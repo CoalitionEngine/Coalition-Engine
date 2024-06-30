@@ -15,6 +15,7 @@ begin_at_turn = false;
 last_choice = 0;
 lerp_speed = global.battle_lerp_speed;
 __target_option = 0;
+change_soul_angle = true;
 
 global.kr_activation = true;
 global.hp = global.hp_max;
@@ -137,6 +138,8 @@ with Button
 {
 	Sprites			= [sprButtonFight, sprButtonAct, sprButtonItem, sprButtonMercy];
 	Position		= [87, 453, 240, 453, 400, 453, 555, 453];
+	TargetState		= [MENU_STATE.FIGHT, MENU_STATE.ACT, MENU_STATE.ITEM, MENU_STATE.MERCY];
+	ExtraStateProcess = method(self, COALITION_EMPTY_FUNCTION);
 	var DefaultButtonAmount = array_length(Sprites);
 	Alpha			= array_create(DefaultButtonAmount, 0.25);
 	OverrideAlpha	= array_create(DefaultButtonAmount, 1);
@@ -150,7 +153,7 @@ with Button
 	BackgroundCover = false;
 	ColorLerpScale	= array_create(DefaultButtonAmount, 0);
 	ResetTimer		= function() {
-		ColorLerpTimer = array_create(array_length(oBattleController.Button.Sprites), 0);
+		ColorLerpTimer = array_create(array_length(Sprites), 0);
 	}
 	ResetTimer();
 }
@@ -222,16 +225,15 @@ __hp_predict = 0;
 show_predict_hp = true;
 board_cover_ui = false;
 board_cover_button = false;
-board_full_cover = false;
 item_scroll_type = ITEM_SCROLL.DEFAULT;
+item_custom_scroll_method = method(self, COALITION_EMPTY_FUNCTION);
+item_custom_draw_method = method(self, COALITION_EMPTY_FUNCTION);
 item_scroll_alpha = array_create(3, 0.5);
 __item_lerp_x = array_create(8, 0);
 __item_lerp_y = array_create(8, 0);
 __item_count = Item_Count();
 
-for (var i = 0; i < 8; ++i)
-	__item_lerp_color[i] = c_dkgray; 
-
+__item_lerp_color = array_create(8, c_dkgray);
 __item_lerp_x_target = 0;
 __item_lerp_y_target = 0;
 __item_lerp_color_amount = array_create(8, 16 / 255);

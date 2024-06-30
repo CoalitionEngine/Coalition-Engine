@@ -4,7 +4,7 @@
 
 ///@constructor
 ///@func __Board()
-///@desc Board data
+///@desc Board data, to call these functions, simply use `Board.XXX()`
 function __Board() constructor {
 	///@method GetX([target])
 	///@desc Gets the x position of the board
@@ -48,47 +48,54 @@ function __Board() constructor {
 		forceinline
 		return BattleBoardList[target].right;
 	}
+	///@method GetAngle([target])
+	///@desc Gets the angle of the board
+	///@param {real} target The target board to get the data from
+	static GetAngle = function(target = TargetBoard) {
+		forceinline
+		return BattleBoardList[target].image_angle;
+	}
 	///@method GetUpPos([target])
 	///@desc Gets the upwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetUpPos = function(target = TargetBoard) {
 		forceinline
-		return Board.GetY(target) - Board.GetUp(target);
+		return GetY(target) - lengthdir_y(GetUp(target), GetAngle(target) + 90);
 	}
 	///@method GetDownPos(target)
 	///@desc Gets the downwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetDownPos = function(target = TargetBoard) {
 		forceinline
-		return Board.GetY(target) + Board.GetDown(target);
+		return GetY(target) + lengthdir_y(GetDown(target), GetAngle(target) + 90);
 	}
 	///@method GetLeftPos([target])
 	///@desc Gets the leftwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetLeftPos = function(target = TargetBoard) {
 		forceinline
-		return Board.GetX(target) - Board.GetLeft(target);
+		return GetX(target) - lengthdir_x(GetLeft(target), GetAngle(target));
 	}
 	///@method GetRightPos([target])
 	///@desc Gets the rightwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetRightPos = function(target = TargetBoard) {
 		forceinline
-		return Board.GetX(target) + Board.GetRight(target);
+		return GetX(target) + lengthdir_x(GetRight(target), GetAngle(target));
 	}
 	///@method GetHeight([target])
 	///@desc Gets the height of the board
 	///@param {real} target The target board to get the data from
 	static GetHeight = function(target = TargetBoard) {
 		forceinline
-		return Board.GetUp(target) + Board.GetDown(target);
+		return GetUp(target) + GetDown(target);
 	}
 	///@method GetWidth([target])
 	///@desc Gets the width of the board
 	///@param {real} target The target board to get the data from
 	static GetWidth = function(target = TargetBoard) {
 		forceinline
-		return Board.GetLeft(target) + Board.GetRight(target);
+		return GetLeft(target) + GetRight(target);
 	}
 	///@method SetSize([up], [down], [left], [right], [time], [ease], [target])
 	///@desc Sets the size of the board with Anim
@@ -160,11 +167,59 @@ function __Board() constructor {
 	static Mask = function()
 	{
 		forceinline
+		static PixTex = sprite_get_texture(sprPixel, 0);
 		with other
 		{
 			Battle_Masking_Start();
 			draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, oBoard.bg_color, 1);
 			Battle_Masking_End();
 		}
+	}
+}
+///@function BoardMaskAll()
+///@desc Draws a mask for all the boards
+function BoardMaskAll()
+{
+	forceinline
+	static pix_tex = sprite_get_texture(sprPixel, 0);
+	var i = 0;
+	//Masking of normal boards
+	repeat instance_number(oBoard) - instance_number(oVertexBoard)
+	{
+		var curBoard = instance_find(oBoard, i);
+		if !curBoard.VertexMode
+		{
+			draw_set_color(curBoard.bg_color);
+			draw_primitive_begin_texture(pr_trianglestrip, pix_tex);
+			with Board
+			{
+				draw_vertex_texture(GetLeftPos(i), GetUpPos(i), 0, 0);
+				draw_vertex_texture(GetRightPos(i), GetUpPos(i), 1, 0);
+				draw_vertex_texture(GetLeftPos(i), GetDownPos(i), 0, 1);
+				draw_vertex_texture(GetRightPos(i), GetDownPos(i), 1, 1);
+			}
+			draw_primitive_end();
+		}
+		++i;
+	}
+	i = 0;
+	var k = 0;
+	//Masking of vertex boards
+	repeat instance_number(oVertexBoard)
+	{
+		with instance_find(oVertexBoard, k)
+		{
+			draw_set_color(bg_color);
+			draw_primitive_begin(pr_trianglelist);
+			repeat triangulationIndicesCount
+			{
+				for (var j = 0, triangle = triangulationIndices[| i++]; j < 3; j++) {
+					var Result = Vertices[| triangle[j]].Rotated(image_angle);
+					draw_vertex(Result.x, Result.y);
+				}
+			}
+			draw_primitive_end();
+		}
+		++k;
 	}
 }

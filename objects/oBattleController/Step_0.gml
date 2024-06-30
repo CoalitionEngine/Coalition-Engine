@@ -34,13 +34,13 @@ if battle_state == BATTLE_STATE.MENU
 		with oSoul
 		{
 			visible = true;
-			x = decay(x, _button_pos[_button_slot * 2] - 38 * other.Button.Scale[_button_slot], other.lerp_speed);
-			y = decay(y, _button_pos[_button_slot * 2 + 1] + 1, other.lerp_speed);
+			x = decay(x, _button_pos[_button_slot * 2] - 38 * other.Button.Scale[_button_slot], lerp_speed);
+			y = decay(y, _button_pos[_button_slot * 2 + 1] + 1, lerp_speed);
 		}
 		//If input is detected, change state to button state
 		if input_confirm {
 			audio_play(snd_menu_confirm);
-			menu_state = _button_slot + 1;
+			menu_state = Button.TargetState[_button_slot];
 			//If target state is item and there are none left, return
 			if menu_state == MENU_STATE.ITEM && __item_count == 0 {
 				menu_state = MENU_STATE.BUTTON_SELECTION;
@@ -93,8 +93,7 @@ if battle_state == BATTLE_STATE.MENU
 		{
 			//Get valid act options
 			var i = 0, options = enemy_act[target_option];
-			repeat min(6, array_length(options))
-				if options[i++] != "" len++;
+			len = min(6, array_length(options));
 		}
 		//Change selection
 		if len > 1 {
@@ -133,6 +132,7 @@ if battle_state == BATTLE_STATE.MENU
 						item_desc_alpha = 0;
 					}
 					break;
+				default: item_custom_scroll_method() break;
 			}
 		}
 		//Soul lerping
@@ -223,9 +223,11 @@ if battle_state == BATTLE_STATE.MENU
 			FleeState++;
 		}
 	}
+	//If the current state is a user defined state
+	else Button.ExtraStateProcess();
 	//Soul angle lerping
 	var target_soul_angle = 0;
-	if is_val(menu_state, MENU_STATE.FIGHT, MENU_STATE.ACT, MENU_STATE.ITEM, MENU_STATE.MERCY, MENU_STATE.ACT_SELECT)
+	if change_soul_angle && is_val(menu_state, MENU_STATE.FIGHT, MENU_STATE.ACT, MENU_STATE.ITEM, MENU_STATE.MERCY, MENU_STATE.ACT_SELECT)
 		target_soul_angle = 90;
 	oSoul.image_angle = decay(oSoul.image_angle, target_soul_angle, lerp_speed);
 }
@@ -243,11 +245,22 @@ else if battle_state == BATTLE_STATE.IN_TURN
 	oSoul.visible = true;
 	var all_turns_ended = true;
 	with oEnemyParent
+	{
 		if !__turn_has_ended
 		{
+			if !__died && state == BATTLE_STATE.IN_TURN && __enemy_in_battle {
+				if array_length(AttackFunctions) > current_turn AttackFunctions[current_turn]();
+				else
+				{
+					current_turn--;
+					end_turn();
+				}
+				//Timer
+				if start time++;
+			}
 			all_turns_ended = false;
-			break;
 		}
+	}
 	if all_turns_ended __end_turn();
 }
 with Target

@@ -56,10 +56,11 @@ function show_hitbox(col = c_white)
 
 ///Feather ignore all
 ///@func DrawDebugUI
-///@desc Draws the debug UI with respect to the room you are in (by checking the controller isntance)
+///@desc Draws the debug UI with respect to the room you are in (by checking the controller instance)
 function DrawDebugUI()
 {
 	aggressive_forceinline
+	gpu_push_state();
 	static draw_debug_color_text = function(x, y, text)
 	{
 		var color = make_color_hsv(global.timer % 255, 255, 255);
@@ -83,7 +84,6 @@ function DrawDebugUI()
 		for (var i = 0; i < 3; ++i)
 			draw_text_ext_transformed_color(ui.x - 245 + lengthdir_x(dis, global.timer - i * 120), ui.y + lengthdir_y(dis, global.timer - i * 120), "DEBUG", -1, -1, 1.25, 1.25, 0, color[0], color[2 - i], color[2 - i], color[2 - i], debug_alpha);
 		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)\nFPS: {fps} ({fps_real} / {global.__MinFPS} / {global.__MaxFPS} / {fps_average})\nTURN: " + string(battle_turn) + "\nINSTANCES: " + string(instance_count));
-		gpu_set_blendmode(bm_normal);
 	}
 	//If is in overworld
 	elif instance_exists(oOWController)
@@ -113,9 +113,9 @@ function DrawDebugUI()
 		draw_set_halign(fa_right);
 		draw_debug_color_text(635, 5, $"FPS: {fps} ({fps_real})");
 		draw_set_halign(fa_left);
-		gpu_set_blendmode(bm_normal);
 	}
 	draw_set_color(c_white);
+	gpu_pop_state();
 }
 ///@text Note that this function is internal and would not be executed when the game is set on release mode.
 

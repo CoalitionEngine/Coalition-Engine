@@ -12,6 +12,6 @@
   "function": 2,
   "parent": {
     "name": "Curves",
-    "path": "folders/Coalition Engine/(System)/Addons/TweenGMX/User/Curves.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/TweenGMX/User/Curves.yy",
   },
 }

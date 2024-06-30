@@ -1,8 +1,12 @@
-/// @category Tutorials
-/// @title How to make a Shop
+/// @category (FAQ)
+/// @title Shop Documentation
 
 Instead of creating an object just for a shop, instead a struct was created to store the data, and it
 is only created when used, destroyed upon leaving. (Poor shop)
+
+
+(For users who understand global constructors, since there will only exist 1 copy of `Shop`, therefore
+there are no global scoping issues.)
 
 ## Setting up
 ### Sprites

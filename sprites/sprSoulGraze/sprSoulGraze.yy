@@ -26,7 +26,7 @@
   "origin": 4,
   "parent": {
     "name": "Soul",
-    "path": "folders/Coalition Engine/(System)/Sprites/Battle/Soul.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Battle/Soul.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

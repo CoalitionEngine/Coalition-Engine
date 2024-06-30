@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Kawase",
-    "path": "folders/Coalition Engine/(System)/Addons/Kawase.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Kawase.yy",
   },
 }

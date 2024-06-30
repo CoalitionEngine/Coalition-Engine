@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Index",
-    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Index.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Index.yy",
   },
 }

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Transform",
-    "path": "folders/Coalition Engine/(System)/Addons/Clean Shapes/Transform.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Clean Shapes/Transform.yy",
   },
 }

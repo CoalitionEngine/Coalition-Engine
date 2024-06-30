@@ -3,7 +3,7 @@
 ///@text These are the functions that are related to items in the game.
 
 ///@func Item_Info_Load()
-///@desc Loads the Info of the Items
+///@desc Loads the info of all the Items and store them into instance variables (Look into this function for their names)
 function Item_Info_Load() {
 	forceinline
 	var i = 0;
@@ -63,7 +63,7 @@ function Item_Use(item) {
 	if instance_exists(oBattleController)
 	{
 		var stat_text = "";
-		if stats != "" stat_text = "[delay, 333]\n* " + stats;
+		if string_width(stats) != 0 stat_text = "[delay, 333]\n* " + stats;
 		//Remove item if needed
 		if !lib.item_uses_left Item_Remove(menu_choice[2]);
 		//Reset menu
@@ -75,7 +75,6 @@ function Item_Use(item) {
 		__menu_text = default_menu_text;
 		menu_state = -1;
 	}
-	
 	//If is in overworld
 	else if instance_exists(oOWController)
 	{
@@ -108,9 +107,9 @@ function Item_Set(item, pos = Item_Count()) {
 ///@func Item_Remove(item)
 ///@desc Removes an item on the selected position
 ///@param {real} Position The position to remove the item from
-function Item_Remove(item) {
+function Item_Remove(pos) {
 	forceinline
-	array_delete(global.item, item, 1);
+	array_delete(global.item, pos, 1);
 }
 
 ///@func Item_SlotToId(item)

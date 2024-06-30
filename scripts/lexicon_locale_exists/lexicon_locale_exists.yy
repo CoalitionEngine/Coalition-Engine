@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Language",
-    "path": "folders/Coalition Engine/(System)/Addons/Lexicon/Language.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Language.yy",
   },
 }

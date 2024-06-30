@@ -13,7 +13,7 @@
   "duration": 1.057959,
   "parent": {
     "name": "Bullets",
-    "path": "folders/Coalition Engine/Sounds/SFX/Battle/Bullets.yy",
+    "path": "folders/Coalition Engine/Internal/Sounds/SFX/Battle/Bullets.yy",
   },
   "preload": false,
   "sampleRate": 44100,

@@ -13,7 +13,7 @@
   "duration": 0.087075,
   "parent": {
     "name": "Battle",
-    "path": "folders/Coalition Engine/Sounds/SFX/Battle.yy",
+    "path": "folders/Coalition Engine/Internal/Sounds/SFX/Battle.yy",
   },
   "preload": false,
   "sampleRate": 44100,

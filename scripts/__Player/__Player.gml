@@ -77,9 +77,10 @@ function ConvertItemNameToStat()
 	}
 }
 
+
 ///@constructor
 ///@func __Player()
-///@desc Player data
+///@desc Player data, to call these functions, simply use `Player.XXX()`
 function __Player() constructor
 {
 	///@method GetBaseStats()
@@ -88,8 +89,8 @@ function __Player() constructor
 	static GetBaseStats = function()
 	{
 		forceinline
-		global.player_base_atk = Player.LV() * 2 - 2;
-		global.player_base_def = floor(Player.LV() / 5);
+		global.player_base_atk = LV() * 2 - 2;
+		global.player_base_def = floor(LV() / 5);
 		return self;
 	}
 	///@method GetLvBaseExp()
@@ -102,7 +103,7 @@ function __Player() constructor
 			0, 10, 30, 70, 120, 200, 300, 500, 800, 1200, 1700,
 			2500, 3500, 5000, 7000, 10000, 15000, 25000, 50000, 99999
 		];
-		return base_exp[Player.LV() - 1];
+		return base_exp[LV() - 1];
 	}
 	///@method GetExpNext()
 	///@desc Gets the exp needed for the lext lv
@@ -114,7 +115,7 @@ function __Player() constructor
 			10, 20, 40, 50, 80, 100, 200, 300, 400, 500,
 			800, 1000, 1500, 2000, 3000, 5000, 10000, 25000, 49999
 		];
-		return (Player.LV() == 20) ? 0 : _exp[Player.LV() - 1];
+		return (LV() == 20) ? 0 : _exp[LV() - 1];
 	}
 	///@method Name([name])
 	///@desc Sets/Gets the name of the player
@@ -208,3 +209,6 @@ function __Player() constructor
 		else return global.hp_max;
 	}
 }
+///@text
+///?> If the function is to set data rather than getting them, you can use them like a fluent
+/// interface like this `Player.SetName("Name").LV(19).HPMax(92).HP(92);`

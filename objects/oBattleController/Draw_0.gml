@@ -3,6 +3,7 @@ var input_horizontal = PRESS_HORIZONTAL,
 	input_confirm = PRESS_CONFIRM,
 	input_cancel = PRESS_CANCEL;
 draw_set_font(DefaultFontAsset);
+draw_set_color(c_white);
 // Text Functions
 if battle_state == BATTLE_STATE.MENU {
 	if menu_state == MENU_STATE.BUTTON_SELECTION || menu_state == -1 {
@@ -86,6 +87,7 @@ if battle_state == BATTLE_STATE.MENU {
 				}
 				Battle_Masking_End();
 				break;
+			default: item_custom_draw_method() break;
 		}
 	}
 	else if menu_state == MENU_STATE.MERCY {
@@ -111,8 +113,8 @@ if battle_state == BATTLE_STATE.MENU {
 		var i = 0, enemy_check_texts = "";
 		repeat array_length(enemy_act[target_option])
 		{
-			var assign_act_text = enemy_act[target_option, i];
-			if assign_act_text != "" enemy_check_texts += "* " + assign_act_text;
+			var assign_act_text = enemy_act[target_option][i];
+			if string_width(assign_act_text) != 0 enemy_check_texts += "* " + assign_act_text;
 			if (i % 2) enemy_check_texts += "\n";
 			else
 				//Add spacing for the act options
@@ -699,17 +701,16 @@ if board_cover_button {
 	}
 
 	// KR bar
+	var final_kr_col = round(kr) ? kr_bar_col : krr_col;
 	if global.kr_activation {
-		krr_col = round(kr) ? kr_bar_col : krr_col;
-		
 		// Draw icon
 		f_alpha = min(ui.override_alpha[4], _alpha);
 		draw_set_alpha(f_alpha);
 		// Draw the bar
 		if round(kr)
-			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, ui.y, max(-_kr, -_hp) - 1, 20, 0, krr_col, 1);
+			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, ui.y, max(-_kr, -_hp) - 1, 20, 0, final_kr_col, 1);
 
-		draw_text_color(hp_x + 10 + _hp_max, ui.y + 5, kr_text, krr_col, krr_col, krr_col, krr_col, f_alpha);
+		draw_text_color(hp_x + 10 + _hp_max, ui.y + 5, kr_text, final_kr_col, final_kr_col, final_kr_col, final_kr_col, f_alpha);
 	}
 	draw_set_alpha(ui.alpha);
 
@@ -726,7 +727,7 @@ if board_cover_button {
 	f_alpha = min(ui.override_alpha[5], _alpha);
 	draw_set_font(fnt_mnc); // Counter Font
 	var offset = global.kr_activation ? (20 + string_width(kr_text)) : 15;
-	draw_text_color(hp_x + offset + _hp_max, ui.y, $"{hp_counter} / {hp_max_counter}", krr_col, krr_col, krr_col, krr_col, f_alpha);
+	draw_text_color(hp_x + offset + _hp_max, ui.y, $"{hp_counter} / {hp_max_counter}", final_kr_col, final_kr_col, final_kr_col, final_kr_col, f_alpha);
 
 draw_set_color(c_white);
 draw_set_alpha(1);

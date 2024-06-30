@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "(Cell)",
-    "path": "folders/Coalition Engine/Scripts/Quick Functions/(Cell).yy",
+    "path": "folders/Coalition Engine/Internal/Scripts/Quick Functions/(Cell).yy",
   },
 }

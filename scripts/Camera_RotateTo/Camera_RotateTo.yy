@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "(Camera)",
-    "path": "folders/Coalition Engine/Scripts/Quick Functions/(Camera).yy",
+    "path": "folders/Coalition Engine/Internal/Scripts/Quick Functions/(Camera).yy",
   },
 }

@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Bullet",
-    "path": "folders/Coalition Engine/Scripts/Bullet.yy",
+    "name": "Bullets",
+    "path": "folders/Coalition Engine/External/Scripts/Bullets.yy",
   },
 }

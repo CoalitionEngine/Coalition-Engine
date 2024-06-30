@@ -20,4 +20,12 @@ function ReloadTexts() {
 		LangFleeText = lexicon_text("Battle.Flee");
 	}
 }
-///@text > You may edit this function to match texts from your game
+///@text
+///?> You may edit this function to match texts from your game
+
+
+enum LANGUAGE
+{
+	ENGLISH,
+	CHINESE
+}

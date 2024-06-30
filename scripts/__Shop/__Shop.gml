@@ -115,19 +115,20 @@ function __Shop() constructor {
 	///@param {real} image_blend The image_blend of the shopkeeper
 	///@param {real} image_alpha The image_alpha of the shopkeeper
 	///@return {Struct} The shopkeeper struct for setting
-	static AddShopkeeper = function(sprite, index = 0, x = 320, y = 240, image_xscale = 1, image_yscale = 1, image_angle = 0, image_blend = c_white, image_alpha = 1)
+	static AddShopkeeper = function(sprite_index, image_index = 0, x = 320, y = 240, image_xscale = 1, image_yscale = 1, image_angle = 0, image_blend = c_white, image_alpha = 1)
 	{
 		forceinline;
-		var struct =
-		{
-			sprite_index : sprite,
-			image_index : index,
-			x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha,
+		array_push(Shopkeeper, {
+			sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle,
+			image_blend, image_alpha,
 			state : 0,
-			state_drawing_functions : []
-		};
-		array_push(Shopkeeper, struct);
-		delete struct;
+			state_drawing_functions : [
+				///Default drawing function
+				function() {
+					draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+				}
+			]
+		});
 		return array_last(Shopkeeper);
 	}
 	///@method SetShopkeeperDrawingState(state, func)
@@ -210,7 +211,7 @@ function __Shop() constructor {
 			__state = SHOP_STATE.MENU;
 			__choice = [__choice[0], 0, 0, 0, 0];
 			__choice_displacement = 0;
-			if __TempText != ""
+			if string_width(__TempText) != 0
 			{
 				SetText(__TempText);
 				__TempText = "";
@@ -298,7 +299,7 @@ function __Shop() constructor {
 			if input_vertical != 0
 			{
 				audio_play(snd_menu_switch);
-				__choice[4] ^= abs(input_vertical);
+				__choice[4] ^= 1;
 			}
 			//Confirm choice
 			elif press_confirm
@@ -393,7 +394,7 @@ function __Shop() constructor {
 			if input_vertical != 0
 			{
 				audio_play(snd_menu_switch);
-				__choice[4] ^= abs(input_vertical);
+				__choice[4] ^= 1;
 			}
 			//Confirm choice
 			elif press_confirm

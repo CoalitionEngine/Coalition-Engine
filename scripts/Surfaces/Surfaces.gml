@@ -22,7 +22,7 @@ function draw_surface_rotated_ext(_surf, _x, _y, _xscale, _yscale, _rot, _col, _
 		_surfY = _y + _halfH + _rotY;
 	draw_surface_ext(_surf, _surfX, _surfY, _xscale, _yscale, _rot, _col, _alpha);
 }
-///@func draw_surfaceftiled_area(surface, x, y, x1, y1, x2, y2)
+///@func draw_surface_tiled_area(surface, x, y, x1, y1, x2, y2)
 ///@desc Draws a surface that fills the entire area like tiles
 ///@param {Id.Surface} surface The surface to draw
 ///@param {real} x The x position of the surface

@@ -5,7 +5,6 @@ if surface_exists(GradientSurf) surface_free(GradientSurf);
 instance_destroy(oBulletParents);
 delete COALITION_SAVE_FILE;
 delete global.__CoalitionTempData;
-ds_map_destroy(global.Settings);
 
 part_system_destroy(global.TrailS);
 part_type_destroy(global.TrailP);
@@ -13,8 +12,11 @@ part_type_destroy(global.TrailP);
 var i = 0;
 while time_source_exists(i) time_source_destroy(i++);
 
-if sprite_exists(Border.Sprite) sprite_delete(Border.Sprite);
-if sprite_exists(Border.SpritePrevious) sprite_delete(Border.SpritePrevious);
+with Border
+{
+	if sprite_exists(Sprite) sprite_delete(Sprite);
+	if sprite_exists(SpritePrevious) sprite_delete(SpritePrevious);
+}
 
 delete Song;
 delete Fade;

@@ -13,7 +13,7 @@
   "duration": 0.565986,
   "parent": {
     "name": "Overworld",
-    "path": "folders/Coalition Engine/Sounds/SFX/Overworld.yy",
+    "path": "folders/Coalition Engine/Internal/Sounds/SFX/Overworld.yy",
   },
   "preload": false,
   "sampleRate": 44100,

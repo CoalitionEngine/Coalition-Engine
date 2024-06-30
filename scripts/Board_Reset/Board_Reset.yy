@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Board",
-    "path": "folders/Coalition Engine/Scripts/Quick Functions/Board.yy",
+    "path": "folders/Coalition Engine/Internal/Scripts/Quick Functions/Board.yy",
   },
 }

@@ -40,6 +40,7 @@ function __Shader() constructor
 {
 	///@method Init()
 	///@desc Initalizes the shader variables
+	///@return {undefined}
 	static Init = function()
 	{
 		aggressive_forceinline
@@ -56,6 +57,7 @@ function __Shader() constructor
 	}
 	///@method Clean()
 	///@desc Cleans the shader struct of shader parameters
+	///@return {undefined}
 	static Clean = function()
 	{
 		aggressive_forceinline
@@ -90,6 +92,7 @@ function __Shader() constructor
 	///@param {real} ID The ID of the shader (From .Add())
 	///@param {string} name 	The name of the uniform to set the value of
 	///@param {real,array} value The value or array to set the uniform to
+	///@return {undefined}
 	static SetUniform = function(ID, name, value)
 	{
 		aggressive_forceinline
@@ -108,11 +111,11 @@ function __Shader() constructor
 		array_delete(oShaderController.ShaderList, ID, 1);
 	}
 }
-///@func Blue_Screen(duration, amount)
+///@func Blur_Screen(duration, amount)
 ///@desc Blurs the screen
 ///@param {real} duration The duration to blur
 ///@param {real} amount The amount to blur 
-///@return {Id.Instance<blur_shader>} The created blur_shader object
+///@return {Id.Instance<blur_shader>} The created `blur_shader` object
 function Blur_Screen(duration, amount)
 {
 	forceinline

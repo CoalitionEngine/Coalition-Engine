@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "(Player)",
-    "path": "folders/Coalition Engine/Scripts/Quick Functions/(Player).yy",
+    "path": "folders/Coalition Engine/Internal/Scripts/Quick Functions/(Player).yy",
   },
 }

@@ -1,5 +1,31 @@
 Update Logs (This is the beta builds)
 
+v0.7.1 (Eden)
+Removed:
+Duplicate files
+
+Fixed:
+Blue soul not registering on ground/ceiling correctly for left/upwards direction
+if time == 0 doesn't work in attack creation
+Battle button soul lerp was incorrectly set
+Dialog bubble appears for 1 frame when there is no dialog
+Dialog text sound not updating when edited
+Soul_Hurt scope was set incorrectly to self instead of object_index
+Act amount incorrectly set
+Board.Get* functions return incorrect values
+Missing text in battle menu
+Typos in jsDoc
+
+Updated:
+Added option to remove the asterisk in battle menu dialog
+Added option to change the soul angle or not in battle menu
+Added a line system for creating special effects
+Optimised enemy turn functions
+Added Board.GetAngle() and BoardMaskAll()
+Optimised initalization
+Added more button variables for more user freedom
+Further organised folders for preventing code being overwritten from updates
+
 v0.7.0 (Eden)
 Removed:
 Unused variables
