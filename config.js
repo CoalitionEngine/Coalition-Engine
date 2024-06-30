@@ -1,8 +1,8 @@
 const config = {
-    favicon:"assets/docsIcon.png",
-  description:"The modern Undertale engine",
+    themeColor:"#00CBCB",
+  favicon:"assets/docsIcon.png",
+  latestVersion:"0.7.1",
   name:"Coalition Engine",
-  themeColor:"#00CBCB",
-  latestVersion:"0.7.0",
-  otherVersions:["0.6.3"],
+  otherVersions:["0.7.0"],
+  description:"The modern Undertale engine",
 };
