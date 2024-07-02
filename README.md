@@ -28,7 +28,7 @@ Fear not, the anti-export and save corruption is already a built-in feature of t
 
 > Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
 
-You are on the Bleeding Edge branch, This branch will have very unstable, unreliable builds. Yeah, most likely.
+You are on the Beta branch. This branch will get somewhat more stable engine builds than Bleeding-Edge.
 
 If you're lucky, you may get at least an useful build.
 
