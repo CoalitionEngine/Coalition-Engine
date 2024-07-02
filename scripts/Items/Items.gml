@@ -102,6 +102,7 @@ function Item_Count() {
 function Item_Set(item, pos = Item_Count()) {
 	forceinline
 	global.item[pos] = item;
+	if instance_exists(oBattleController) oBattleController.__item_count = Item_Count();
 }
 
 ///@func Item_Remove(item)
@@ -110,6 +111,7 @@ function Item_Set(item, pos = Item_Count()) {
 function Item_Remove(pos) {
 	forceinline
 	array_delete(global.item, pos, 1);
+	if instance_exists(oBattleController) oBattleController.__item_count--;
 }
 
 ///@func Item_SlotToId(item)

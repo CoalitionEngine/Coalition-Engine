@@ -60,14 +60,14 @@ function __Board() constructor {
 	///@param {real} target The target board to get the data from
 	static GetUpPos = function(target = TargetBoard) {
 		forceinline
-		return GetY(target) - lengthdir_y(GetUp(target), GetAngle(target) + 90);
+		return GetY(target) - lengthdir_y(GetUp(target), GetAngle(target) - 90);
 	}
 	///@method GetDownPos(target)
 	///@desc Gets the downwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetDownPos = function(target = TargetBoard) {
 		forceinline
-		return GetY(target) + lengthdir_y(GetDown(target), GetAngle(target) + 90);
+		return GetY(target) + lengthdir_y(GetDown(target), GetAngle(target) - 90);
 	}
 	///@method GetLeftPos([target])
 	///@desc Gets the leftwards position of the board

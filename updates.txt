@@ -1,5 +1,14 @@
 Update Logs (This is the beta builds)
 
+v0.7.2 (Eden)
+Fixed:
+Item count not updating in battle
+Board.GetUp/DownPos() returning the opposite values
+Fixed GPU state stack overflow
+
+Updated:
+Variable in oEnemyParent to toggle auto masking
+
 v0.7.1 (Eden)
 Removed:
 Duplicate files

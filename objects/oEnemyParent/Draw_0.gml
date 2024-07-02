@@ -219,4 +219,4 @@ if is_spared && image_alpha == 0.5 {
 }
 
 //Remove if uneeded
-BoardMaskAll();
+if auto_mask BoardMaskAll();

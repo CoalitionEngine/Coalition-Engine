@@ -60,7 +60,6 @@ function show_hitbox(col = c_white)
 function DrawDebugUI()
 {
 	aggressive_forceinline
-	gpu_push_state();
 	static draw_debug_color_text = function(x, y, text)
 	{
 		var color = make_color_hsv(global.timer % 255, 255, 255);
@@ -73,6 +72,7 @@ function DrawDebugUI()
 	global.__MaxFPS = max(global.__MaxFPS, fps_real);
 	//Don't run anything if debug ui is not visible or debug is disabled
 	if debug_alpha <= 0 exit;
+	gpu_push_state();
 	
 	draw_set_font(fnt_mnc);
 	//If is in battle

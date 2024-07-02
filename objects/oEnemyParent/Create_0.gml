@@ -18,6 +18,7 @@ state = 0;
 begin_at_turn = false;
 current_turn = 0;
 __turn_has_ended = false;
+auto_mask = false;
 //Optional veriables for sprite drawing
 enemy_sprites = [];
 enemy_sprite_index = [];
