@@ -24,6 +24,8 @@ Fear not, the anti-export and save corruption is already a built-in feature of t
 
 > Bleeding Edge : This will be getting the cutting edge updates, which means most likely it will cause unexpected errors or crashes.
 
+> Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
+
 > Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
 
 You are on the Bleeding Edge branch, This branch will have very unstable, unreliable builds. Yeah, most likely.
