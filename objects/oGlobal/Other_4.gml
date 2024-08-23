@@ -21,6 +21,9 @@ if room == room_shop
 		SetText("* Hello, traveller");
 		AddItem(ITEM.STEAK, "Steak in the Shape of Mettaton's Face", 500, "why");
 		AddDialog("Who made this engine?", "lifeless pieces of garbage");
+		AddDialog("Why was this engine made?", "yes");
+		SetExitText("bye");
+		SetShopFallbackRoom(rDebug);
 		Background.x = 320;
 	};
 }

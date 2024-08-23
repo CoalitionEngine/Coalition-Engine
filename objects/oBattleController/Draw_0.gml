@@ -554,8 +554,7 @@ if battle_state == BATTLE_STATE.MENU {
 		}
 		if FleeState == 2 && oGlobal.fader_alpha == 1
 		{
-			//Event after fight ends
-			game_restart();
+			__ExitFight();
 		}
 	}
 }
@@ -571,10 +570,10 @@ else if battle_state == BATTLE_STATE.RESULT {
 			battle_end_text_writer.page(battle_end_text_writer.get_page() + 1);
 		if battle_end_text_typist.get_state() == 1 {
 			if input_confirm
-				room_goto(rDebug);
+				 __ExitFight()
 		}
 	}
-	else if oGlobal.fader_alpha == 1 room_goto(rDebug);
+	else if oGlobal.fader_alpha == 1 __ExitFight();
 }
 
 #region Debug

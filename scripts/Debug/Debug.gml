@@ -8,26 +8,54 @@
 function show_hitbox(col = c_white)
 {
 	forceinline
+	static __HitboxData = {};
 	if global.show_hitbox
 	{
+		var sprite_name = sprite_get_name(sprite_index);
+		var __hash = variable_get_hash(sprite_name);
+		if is_undefined(struct_get_from_hash(__HitboxData, __hash))
+		{
+			struct_set_from_hash(__HitboxData, __hash, {
+				left: sprite_get_bbox_left(sprite_index),
+				right: sprite_get_bbox_right(sprite_index),
+				top: sprite_get_bbox_top(sprite_index),
+				bottom: sprite_get_bbox_bottom(sprite_index),
+				x_off: sprite_get_xoffset(sprite_index),
+				y_off: sprite_get_yoffset(sprite_index)
+			});
+			with __HitboxData[$ sprite_name] {
+				dir = [
+					point_direction(x_off, y_off, left, top),
+					point_direction(x_off, y_off, right, top),
+					point_direction(x_off, y_off, right, bottom),
+					point_direction(x_off, y_off, left, bottom),
+				];
+				dis = [
+					point_distance(x_off, y_off, left, top),
+					point_distance(x_off, y_off, right, top),
+					point_distance(x_off, y_off, right, bottom),
+					point_distance(x_off, y_off, left, bottom),
+				];
+			};
+		}
 		//Get the unmodified mask data
-		var _b1 = sprite_get_bbox_left(sprite_index),
-			_b2 = sprite_get_bbox_top(sprite_index),
-			_b3 = sprite_get_bbox_right(sprite_index),
-			_b4 = sprite_get_bbox_bottom(sprite_index),
+		var _b1 = struct_get_from_hash(__HitboxData, __hash).left,
+			_b2 = struct_get_from_hash(__HitboxData, __hash).top,
+			_b3 = struct_get_from_hash(__HitboxData, __hash).right,
+			_b4 = struct_get_from_hash(__HitboxData, __hash).bottom,
 
-			_xoff = sprite_get_xoffset(sprite_index),
-			_yoff = sprite_get_yoffset(sprite_index),
+			_xoff = struct_get_from_hash(__HitboxData, __hash).x_off,
+			_yoff = struct_get_from_hash(__HitboxData, __hash).y_off,
 
 			//Get the unmodified vector for each corner
-			_dis1 = point_distance(_xoff, _yoff, _b1, _b2),
-			_dir1 = point_direction(_xoff, _yoff, _b1, _b2),
-			_dis2 = point_distance(_xoff, _yoff, _b3, _b2),
-			_dir2 = point_direction(_xoff, _yoff, _b3, _b2),
-			_dis3 = point_distance(_xoff, _yoff, _b3, _b4),
-			_dir3 = point_direction(_xoff, _yoff, _b3, _b4),
-			_dis4 = point_distance(_xoff, _yoff, _b1, _b4),
-			_dir4 = point_direction(_xoff, _yoff, _b1, _b4),
+			_dis1 = struct_get_from_hash(__HitboxData, __hash).dis[0],
+			_dir1 = struct_get_from_hash(__HitboxData, __hash).dir[0],
+			_dis2 = struct_get_from_hash(__HitboxData, __hash).dis[1],
+			_dir2 = struct_get_from_hash(__HitboxData, __hash).dir[1],
+			_dis3 = struct_get_from_hash(__HitboxData, __hash).dis[2],
+			_dir3 = struct_get_from_hash(__HitboxData, __hash).dir[2],
+			_dis4 = struct_get_from_hash(__HitboxData, __hash).dis[3],
+			_dir4 = struct_get_from_hash(__HitboxData, __hash).dir[3],
 
 			//Now modify the vectors using the current position and image angle
 			_x1 = x + lengthdir_x(_dis1, image_angle + _dir1),
@@ -169,14 +197,19 @@ function __CoalitionCheckCompatibilty()
 	if !__COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR exit;
 	static version = __CoalitionGMVersion();
 	if version.major >= 2024 || (version.major == 2023 && version.minor > 11)
-		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "was designed for Game Maker versions 2023.11+, you are in ", GM_runtime_version);
+		print($"Coalition Engine {__COALITION_ENGINE_VERSION} was designed for Game Maker versions 2023.11+, you are in {GM_runtime_version}");
 	else if version.major < 2023 && version.minor < 11
-		print("Coalition Engine " + __COALITION_ENGINE_VERSION + "is incompatible for Game Maker versions earlier than 2023.11, you are in ", GM_runtime_version);
+		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is incompatible for Game Maker versions earlier than 2023.11, you are in {GM_runtime_version}");
 }
 
 function __game_restart() {
 	//Destroy all non-persistent objects
-	with all if !persistent instance_destroy();
+	with all
+		if !persistent
+		{
+			event_perform(ev_other, ev_room_end);
+			instance_destroy();
+		}
 	//Stops all audio
 	audio_stop_all();
 	//Unloads sprites and audio from memory

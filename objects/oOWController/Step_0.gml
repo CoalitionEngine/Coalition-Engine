@@ -76,7 +76,7 @@ if menu // If menu is open
 			oOWPlayer.moveable = true;
 			menu_choice = array_create(8, 0);
 			audio_play(snd_menu_cancel);
-			PRESS_MENU = false;
+			struct_set_from_hash(__input_functions, variable_get_hash("press_menu"), false);
 		}
 	}
 	elif menu_state == MENU_MODE.ITEM
@@ -274,7 +274,7 @@ if dialog_exists
 		oOWPlayer.moveable = true;
 		//Executes the event of the option
 		if dialog_option option_event[option]();
-		PRESS_CONFIRM = 0;
+		struct_set_from_hash(__input_functions, variable_get_hash("press_con"), false);
 	}
 }
 #endregion

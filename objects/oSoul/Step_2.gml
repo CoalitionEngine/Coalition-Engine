@@ -89,7 +89,7 @@ if Battle.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[2] = y_offset + 1;
 			platform_check[3] = y_offset;
 
-			jump_input = oGlobal.__input_functions[0];
+			jump_input = struct_get_from_hash(__input_functions, variable_get_hash("up"));
 			move_input = h_spd * move_spd;
 		}
 		else if _angle == 180 {
@@ -102,7 +102,7 @@ if Battle.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[3] = -y_offset;
 				
 
-			jump_input = oGlobal.__input_functions[1];
+			jump_input = struct_get_from_hash(__input_functions, variable_get_hash("down"));
 			move_input = h_spd * -move_spd;
 		}
 		else if _angle == 90 {
@@ -114,7 +114,7 @@ if Battle.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[0] = x_offset + 1;
 			platform_check[1] = -x_offset;
 
-			jump_input = oGlobal.__input_functions[2];
+			jump_input = struct_get_from_hash(__input_functions, variable_get_hash("left"));
 			move_input = v_spd * -move_spd;
 		}
 		else if _angle == 270 {
@@ -126,7 +126,7 @@ if Battle.State() == BATTLE_STATE.IN_TURN && oBoard.VertexMode
 			platform_check[0] = -10;
 			platform_check[1] = x_offset;
 
-			jump_input = oGlobal.__input_functions[3];
+			jump_input = struct_get_from_hash(__input_functions, variable_get_hash("right"));
 			move_input = v_spd * move_spd;
 		}
 

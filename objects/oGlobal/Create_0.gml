@@ -73,7 +73,23 @@ CutSide = shader_get_uniform(shdCutScreen, "u_side");
 #endregion
 
 #region Internal variables
-__input_xy = input_xy("left", "right", "up", "down");
-__input_functions = array_create(14, false);
-__empty_function = function(){};
+globalvar __input_functions;
+__input_functions =
+{
+	up: false,
+	down: false,
+	left: false,
+	right: false,
+	horizontal: false,
+	vertical: false,
+	press_hor: false,
+	press_ver: false,
+	press_con: false,
+	check_con: false,
+	press_can: false,
+	check_can: false,
+	press_menu: false,
+	moving: false
+};
+global.__empty_function = function(){};
 #endregion

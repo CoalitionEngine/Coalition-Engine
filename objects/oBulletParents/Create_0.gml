@@ -9,3 +9,6 @@ RenderCheck = -1;
 YellowDestroyable = true;
 YellowCollidable = true;
 __bullet_rendered = false;
+__associate_visual_creation_script = instance_create_depth;
+__associate_visual_creation_arguments = ["x", "y", "depth"];
+__associate_visual_creation_argument_types = ["real", "real", "real"];

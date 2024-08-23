@@ -63,17 +63,17 @@ function __scribble_initialize()
         scribble_anim_reset();
         
         __useHandleParse = false;
-        try
-        {
-            handle_parse(string(__scribble_initialize));
-            __useHandleParse = true;
+        //try
+        //{
+        //    handle_parse(string(__scribble_initialize));
+        //    __useHandleParse = true;
             
-            __scribble_trace("Using handle_parse() where possible");
-        }
-        catch(_error)
-        {
-            __scribble_trace("handle_parse() not available");
-        }
+        //    __scribble_trace("Using handle_parse() where possible");
+        //}
+        //catch(_error)
+        //{
+        //    __scribble_trace("handle_parse() not available");
+        //}
     }
     
     return _system;

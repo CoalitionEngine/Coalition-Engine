@@ -92,6 +92,6 @@ function ExitSave() {
 	menu_disable = false;
 	oOWPlayer.moveable = true;
 	oOWCollision.Collided = false;
-	PRESS_CONFIRM = 0;
+	struct_set_from_hash(__input_functions, variable_get_hash("press_con"), false);
 	draw_set_align();
 }

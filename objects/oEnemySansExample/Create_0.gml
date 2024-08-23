@@ -91,3 +91,4 @@ event_user(1);
 //ShaderSetUniform(Shader, "mode", 5);
 
 audio_stop_all();
+__max_inst_cnt = 0;

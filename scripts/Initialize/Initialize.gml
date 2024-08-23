@@ -57,7 +57,7 @@ function Initialize()
 	
 	//Save file Save/Loading
 	var dat = LoadData("Data.dat");
-	if !struct_empty(dat) COALITION_SAVE_FILE = variable_clone(dat);
+	if !struct_is_empty(dat) COALITION_SAVE_FILE = variable_clone(dat);
 	SaveData("Data.dat", COALITION_SAVE_FILE);
 	
 	
@@ -81,7 +81,7 @@ function Initialize()
 				ItemArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[10]),
 				CellArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[11]);
 	//Load box, Item and Cell
-	if !struct_empty(BoxStruct)
+	if !struct_is_empty(BoxStruct)
 		global.__box = variable_clone(BoxStruct);
 	if !array_is_empty(ItemArray)
 		array_copy(global.item, 0, ItemArray, 0, array_length(ItemArray));
@@ -179,7 +179,7 @@ function Initialize()
 	//Loads tempoary data
 	var dat = LoadData("TempData.dat");
 	//If there exists data to be loaded, store it into the TempData
-	if !struct_empty(dat) global.__CoalitionTempData = variable_clone(dat);
+	if !struct_is_empty(dat) global.__CoalitionTempData = variable_clone(dat);
 	//Saves the data for reshuffling
 	SaveData("TempData.dat", global.__CoalitionTempData);
 	

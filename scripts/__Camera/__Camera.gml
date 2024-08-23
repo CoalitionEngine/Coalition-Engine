@@ -76,7 +76,7 @@ function __Camera() constructor
 	///@param {real} duration The anim duration of the scaling
 	///@param {function,string} ease The easing of the animation
 	///@return {Struct.__Camera}
-	static Scale = function(sx, sy, duration = 0, ease = "")
+	static Scale = function(sx, sy = sx, duration = 0, ease = "")
 	{
 		forceinline
 		with oGlobal.MainCamera

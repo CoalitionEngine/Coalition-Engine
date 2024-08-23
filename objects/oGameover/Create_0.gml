@@ -45,3 +45,9 @@ gameover_writer = scribble(gameover_text, "__Coalition_Gameover")
 gameover_typist = scribble_typist()
 	.in(0.25, 0)
 	.sound_per_char(gameover_text_voice, 1, 1," ^!.?,:/\\|*")
+
+function __ExitGameover()
+{
+	//Placeholder function for game over
+	game_restart();
+}

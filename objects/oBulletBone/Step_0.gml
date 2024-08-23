@@ -1,8 +1,11 @@
-var board = target_board;
+if !__COALITION_VISUAL_MODE
+	var board = target_board;
 if timer timer--;
 DurationTimer++;
 
-axis_step();
+
+if Axis.activate
+	axis_step();
 
 //Sets minimal length due to nine-slices drawing
 length = max(14, length);

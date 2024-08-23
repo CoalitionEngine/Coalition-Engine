@@ -1,5 +1,22 @@
 Update Logs (This is the beta builds)
 
+v0.7.3 (Eden)
+Fixed:
+Box crashes
+Incorrect out of bounds check for bullets
+oBulletBone has unessacary variable declarations and event calls
+Incorrect oBulletBone in-screen checking
+Blaster beam overlapping bug
+Talking in shop does not move the soul
+You can now leave the shop
+
+Updated:
+Updated Input to 7.0.0 and TurboGML to 4.0.0
+Optimised bullet rendering
+Exiting an encounter will spawn you at the overworld
+Used global variables for input checking and struct hashing for hitbox display for better performance
+Added support for setting overworld instances as a child of oOWChars will automatically check for collision by the player
+
 v0.7.2 (Eden)
 Fixed:
 Item count not updating in battle

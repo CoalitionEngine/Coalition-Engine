@@ -16,6 +16,7 @@ function __Shop() constructor {
 	__info_box_y = 240;
 	__typist = scribble_typist().in(0.5, 0).sound_per_char(snd_txtDefault, 1, 1," ^!.?,:/\\|*");
 	__text = scribble("", "__Coalition_Shop");
+	__exit_text = "";
 	__in_dialog = false;
 	__choice_displacement = 0;
 	Background = {};
@@ -64,6 +65,7 @@ function __Shop() constructor {
 		__in_dialog = false;
 		__info_surface = surface_create(210, 230);
 		__choice_displacement = 0;
+		__fallback_room = rDebug;
 		draw_set_align();
 		return Shop;
 	}
@@ -182,6 +184,16 @@ function __Shop() constructor {
 		__text.overwrite(text);
 		return Shop;
 	}
+	///@method SetExitText(text)
+	///@desc Sets the text in the dialog box when exiting shop
+	///@param {string} text The text for the dialog box
+	///@return {Struct.__Shop}
+	static SetExitText = function(text)
+	{
+		forceinline
+		__exit_text = text;
+		return Shop;
+	}
 	///@method StartDialog(text)
 	///@desc Function to start a dialog
 	///@param {string} text The dialog to display
@@ -191,6 +203,15 @@ function __Shop() constructor {
 		__in_dialog = true;
 		__text.overwrite(text);
 		__typist.reset();
+		return Shop;
+	}
+	///@method SetShopFallbackRoom(room)
+	///@desc Sets the room to go to when you leave the shop
+	///@param {Asset.GMRoom} target_room The target room to set to
+	///@return {Struct.__Shop}
+	static SetShopFallbackRoom = function(target_room)
+	{
+		__fallback_room = target_room;
 		return Shop;
 	}
 	///@method __Process()
@@ -226,11 +247,19 @@ function __Shop() constructor {
 			//End dialog
 			elif press_confirm && __typist.get_state() == 1
 			{
-				var i = 0;
-				repeat array_length(Shopkeeper) Shopkeeper[i++].state = 0;
-				__text.overwrite(Text);
-				__typist.reset();
-				__in_dialog = false;
+				if __state != SHOP_STATE.LEAVING
+				{
+					var i = 0;
+					repeat array_length(Shopkeeper) Shopkeeper[i++].state = 0;
+					__text.overwrite(Text);
+					__typist.reset();
+					__in_dialog = false;
+				}
+				elif oGlobal.fader_alpha == 0
+				{
+					Fader_Fade_InOut(0, 1, 0, 30, 0, 30);
+					invoke(room_goto, [__fallback_room], 30);
+				}
 			}
 		}
 		elif __state == SHOP_STATE.MENU
@@ -250,6 +279,10 @@ function __Shop() constructor {
 				{
 					audio_play(snd_damage);
 					__state = SHOP_STATE.MENU;
+				}
+				elif __state == SHOP_STATE.LEAVING
+				{
+					StartDialog(__exit_text);
 				}
 			}
 		}
@@ -457,6 +490,7 @@ function __Shop() constructor {
 			}
 			if press_cancel __reset_state();
 		}
+		
 		//Info box y lerping
 		__info_box_y = decay(__info_box_y, box_y_target, 0.2);
 	}
@@ -605,7 +639,7 @@ function __Shop() constructor {
 			//Choosing option
 			if __state == SHOP_STATE.TALK_CHOOSE
 			{
-				var SoulY = __choice[3] == -1 ? 436 : 276 + __choice[1] * 40;
+				var SoulY = __choice[3] == -1 ? 436 : 276 + __choice[3] * 40;
 				draw_sprite_ext(sprSoul, 0, 40, SoulY, 1, 1, 0, c_red, 1);
 			}
 		}
@@ -626,6 +660,8 @@ function __Shop() constructor {
 		delete Background;
 		delete Shopkeeper;
 		surface_free(__info_surface);
+		if !is_undefined(__MusicStream) audio_destroy_stream(__MusicStream);
+		audio_stop_all();
 	}
 }
 

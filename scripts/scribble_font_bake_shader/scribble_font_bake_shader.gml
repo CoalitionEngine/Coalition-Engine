@@ -124,10 +124,9 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
             var _vbuff = vertex_create_buffer();
             vertex_begin(_vbuff, _vertex_format);
             
-            _vbuff_data_map[? string(_texture)] = {
-                __vertex_buffer: _vbuff,
-                __texture: _texture,
-            };
+            _vbuff_data_map[? string(_texture)] = {}
+            _vbuff_data_map[? string(_texture)].__vertex_buffer = _vbuff;
+            _vbuff_data_map[? string(_texture)].__texture = _texture;
         }
         else
         {

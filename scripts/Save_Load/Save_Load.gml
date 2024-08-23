@@ -48,7 +48,7 @@ function SaveData(fname, struct, func = undefined)
 	aggressive_forceinline
 	//Check whether it is a map (Legacy)
 	if !is_struct(struct) && ds_exists(struct, ds_type_map) struct = ds_map_to_struct(struct);
-	if struct_empty(struct)
+	if struct_is_empty(struct)
 	{
 		print("Coalition Engine: Warning! Cannot save empty data");
 		exit;

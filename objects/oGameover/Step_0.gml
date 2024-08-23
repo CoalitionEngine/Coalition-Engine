@@ -23,7 +23,7 @@ if state == 3
 	if time >= 60
 	{
 		audio_destroy_stream(aud);
-		game_restart();
+		__ExitGameover();
 	}
 }
 //Not very useful

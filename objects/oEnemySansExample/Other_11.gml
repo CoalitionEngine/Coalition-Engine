@@ -1,6 +1,6 @@
 ///@desc Set attacks
 live;
-SetAttack(0, function() {
+SetAttack(1, function() {
 	var below = oBoard.depth + 1;
 	if time > 10 AudioStickToTime(bgm, (time - 10) / 60);
 	if time == 10
@@ -67,7 +67,22 @@ SetAttack(0, function() {
 	}
 	//if time == 900 end_turn();
 });
-SetAttack(1, function() {
+SetAttack(2, function() {
 	Board.SetSize(8, 8, 8, 8, 0);
 	if time == 120 end_turn();
+});
+SetAttack(0, function() {
+	//repeat 20
+	//{
+	//	if fps_real > 60
+	//		Bullet_Bone(320, 240, 10, random_range(-5, 5), random_range(-5, 5), 1, 1,, random(360));
+	//	else
+	//	{
+	//		__max_inst_cnt = max(__max_inst_cnt, instance_count);
+	//		window_set_caption(__max_inst_cnt);
+	//		break;
+	//	}
+	//}
+	if !(time%30)
+	CreateBlasterCircle(320, 320, 600, 100,, random(360),1,2,30,30,30);
 });

@@ -67,7 +67,7 @@
 #endregion
 #region Engine
 //Here are the macros for the engine
-#macro __COALITION_ENGINE_VERSION "v0.7.1"
+#macro __COALITION_ENGINE_VERSION "v0.7.3"
 #macro ALLOW_DEBUG  true
 //This automatically set DEBUG into false when you build the game
 //#macro DEBUG !game_is_standalone()
@@ -80,20 +80,20 @@
 #macro COALITION_DELTA_TIME true
 #macro COALITION_DATA global.__CoalitionData
 #macro COALITION_SAVE_FILE global.__CoalitionSaveFile
-#macro COALITION_EMPTY_FUNCTION oGlobal.__empty_function
+#macro COALITION_EMPTY_FUNCTION global.__empty_function
 #endregion
 #region Input
 //Here are the macros for handy input code
-#macro CHECK_HORIZONTAL oGlobal.__input_functions[4]
-#macro CHECK_VERTICAL  oGlobal.__input_functions[5]
-#macro PRESS_HORIZONTAL oGlobal.__input_functions[6]
-#macro PRESS_VERTICAL oGlobal.__input_functions[7]
-#macro PRESS_CONFIRM oGlobal.__input_functions[8]
-#macro HOLD_CONFIRM oGlobal.__input_functions[9]
-#macro PRESS_CANCEL oGlobal.__input_functions[10]
-#macro HOLD_CANCEL oGlobal.__input_functions[11]
-#macro PRESS_MENU oGlobal.__input_functions[12]
-#macro CHECK_MOVING oGlobal.__input_functions[13]
+#macro CHECK_HORIZONTAL struct_get_from_hash(__input_functions, variable_get_hash("horizontal"))
+#macro CHECK_VERTICAL  struct_get_from_hash(__input_functions, variable_get_hash("vertical"))
+#macro PRESS_HORIZONTAL struct_get_from_hash(__input_functions, variable_get_hash("press_hor"))
+#macro PRESS_VERTICAL struct_get_from_hash(__input_functions, variable_get_hash("press_ver"))
+#macro PRESS_CONFIRM struct_get_from_hash(__input_functions, variable_get_hash("press_con"))
+#macro HOLD_CONFIRM struct_get_from_hash(__input_functions, variable_get_hash("check_con"))
+#macro PRESS_CANCEL struct_get_from_hash(__input_functions, variable_get_hash("press_can"))
+#macro HOLD_CANCEL struct_get_from_hash(__input_functions, variable_get_hash("check_can"))
+#macro PRESS_MENU struct_get_from_hash(__input_functions, variable_get_hash("press_menu"))
+#macro CHECK_MOVING struct_get_from_hash(__input_functions, variable_get_hash("moving"))
 #endregion
 #region Handy Macros
 //Here are the macros for simplifing code, for instance the ins_dest can act as a instance_destroy
@@ -106,7 +106,7 @@
 #macro this self
 #macro is ==
 //Handy GMLive macro for users who have GMlive
-#macro COALITION_ENABLE_GMLIVE DEBUG
+#macro COALITION_ENABLE_GMLIVE false
 #macro live if COALITION_ENABLE_GMLIVE \
 	if asset_get_index("obj_gmlive") != -1 {\
 	instance_check_create(obj_gmlive);\
@@ -115,7 +115,7 @@
 #macro forceinline gml_pragma("forceinline")
 //Applies a more aggressive forceinline to scripts
 //This will lead to better performance but larger file size
-#macro APPLY_AGGRESSIVE_FORCEINLINE true
+#macro APPLY_AGGRESSIVE_FORCEINLINE false
 #macro aggressive_forceinline if APPLY_AGGRESSIVE_FORCEINLINE {forceinline}
 #endregion
 
@@ -215,3 +215,6 @@ enum FADE
 	CIRCLE = 1,
 	LINES = 2
 }
+
+
+#macro __COALITION_VISUAL_MODE true

@@ -446,4 +446,22 @@ function __end_turn()
 		if array_length(PostAttackFunctions) > NewTurn PostAttackFunctions[NewTurn]();
 	}
 }
+function __ExitFight()
+{
+	static __ReturnToOverworld = function() {
+		oOWController.OverworldSubRoom = global.__CurrentOverworldSubRoom;
+		oOWPlayer.x = global.__CurrentOverworldPosition.x;
+		oOWPlayer.y = global.__CurrentOverworldPosition.y;
+		oOWPlayer.dir = global.__CurrentOverworldDirection;
+	}
+	//Event after fight ends
+	//If player came from an overworld, go back
+	if variable_global_exists("__CurrentOverworldRoom")
+	{
+		room_goto(global.__CurrentOverworldRoom);
+		invoke(__ReturnToOverworld, [], 1);
+	}
+	//if else then uh...restart game i guess
+	else game_restart();
+}
 #endregion

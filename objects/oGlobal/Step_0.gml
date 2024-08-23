@@ -41,24 +41,24 @@ with MainCamera
 }
 
 //Input checking
-__input_xy = input_xy("left", "right", "up", "down");
-__input_functions =
-[
-	input_check("up"),
-	input_check("down"),
-	input_check("left"),
-	input_check("right"),
-	global.diagonal_speed ? (__input_functions[2] - __input_functions[3]) : __input_xy.x,
-	global.diagonal_speed ? (__input_functions[0] - __input_functions[1]) : __input_xy.y,
-	input_check_opposing_pressed("left", "right"),
-	input_check_opposing_pressed("up", "down"),
-	input_check_pressed("confirm"),
-	input_check("confirm"),
-	input_check_pressed("cancel"),
-	input_check("cancel"),
-	input_check_pressed("menu"),
-	__input_functions[4] != 0 || __input_functions[5] != 0
-];
+var __input_xy = input_xy("left", "right", "up", "down");
+with __input_functions
+{
+	up = input_check("up");
+	down := input_check("down");
+	left = input_check("left");
+	right = input_check("right");
+	horizontal = global.diagonal_speed ? (right - left) : __input_xy.x;
+	vertical = global.diagonal_speed ? (up - down) : __input_xy.y;
+	press_hor = input_check_opposing_pressed("left", "right");
+	press_ver = input_check_opposing_pressed("up", "down");
+	press_con = input_check_pressed("confirm");
+	check_con = input_check("confirm");
+	press_can = input_check_pressed("cancel");
+	check_can = input_check("cancel");
+	press_menu = input_check_pressed("menu");
+	moving = horizontal != 0 || vertical != 0;
+};
 
 //Shop
 if room == room_shop Shop.__Process();

@@ -15,5 +15,5 @@ collidable = true;
 */
 function CollideWithAnything(x, y)
 {
-	return place_meeting(x, y, oSavePoint) || tile_meeting(x, y, "TileCollision");
+	return place_meeting(x, y, oSavePoint) || place_meeting(x, y, oOWChars) || tile_meeting(x, y, "TileCollision");
 }

@@ -32,5 +32,11 @@ function Encounter_Begin(exclaim = true, move = true)
 	encounter_soul_y = 	(y - Camera.ViewY() - sprite_height / 2) * Camera.GetScale(2);
 	encounter_state = 3 - move - exclaim;
 	if encounter_state == 1 audio_play(snd_warning);
+	
+	//Store current room data to return to
+	global.__CurrentOverworldRoom = room;
+	global.__CurrentOverworldSubRoom = oOWController.OverworldSubRoom;
+	global.__CurrentOverworldPosition = {x, y};
+	global.__CurrentOverworldDirection = dir;
 }
 #endregion
