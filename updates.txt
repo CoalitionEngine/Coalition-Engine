@@ -5,6 +5,7 @@ smol update lol, the doc will be updated soon, tight on time rn
 
 Fixed:
 Overworld collision after interacting with objects may stuck in infinite loop
+Shop text may overflow
 
 Updated:
 Optimised Cell and Player
