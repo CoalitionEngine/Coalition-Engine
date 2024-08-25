@@ -6,7 +6,6 @@ if encounter_state
 	encounter_time++;
 	if encounter_state == 1	//Player is alerted
 	{
-		draw_sprite(sprEncounterExclaimation, 0, x, y - sprite_height);
 		if encounter_time == 30
 		{
 			encounter_state++;
@@ -50,6 +49,9 @@ var input_horizontal = CHECK_HORIZONTAL,
 	scale_x = last_dir,
 	assign_sprite = last_sprite;
 
+if ForceCollideless && (CHECK_HORIZONTAL || CHECK_VERTICAL)
+	ForceCollideless = false;
+
 // Menu opening
 if input_menu && !oOWController.menu && !oOWController.menu_disable && !oOWController.dialog_exists && !oOWController.ForceNotDisplayUI
 {
@@ -61,7 +63,7 @@ if input_menu && !oOWController.menu && !oOWController.menu_disable && !oOWContr
 
 //Debug
 if DEBUG
-	if room == room_overworld && keyboard_check_pressed(vk_space) || (x >= 830 && encounter_state == 0)
+	if room == room_overworld && (keyboard_check_pressed(vk_space) || (x >= 830 && encounter_state == 0))
 		Encounter_Begin();
 
 if moveable && !oOWController.menu // When the player can move around

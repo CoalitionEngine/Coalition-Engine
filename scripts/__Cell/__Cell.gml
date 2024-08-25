@@ -19,7 +19,8 @@ function __Cell() constructor {
 	///@return {string} The name of the cell
 	static GetName = function(slot) {
 		forceinline
-		return global.cell[slot].name;
+		static hash = variable_get_hash("name");
+		return struct_get_from_hash(global.cell[slot], hash);
 	}
 	///@method Text(slot, [text])
 	///@desc Gets the dialog of the cell in the given slot
@@ -28,10 +29,11 @@ function __Cell() constructor {
 	///@return {string,Struct.Cell} The dialog of the cell or the cell struct
 	static Text = function(slot, text = undefined) {
 		forceinline
-		if is_undefined(text) return global.cell[slot].text;
+		static hash = variable_get_hash("text");
+		if is_undefined(text) return struct_get_from_hash(global.cell[slot], hash);
 		else
 		{
-			global.cell[slot].text = text;
+			struct_set_from_hash(global.cell[slot], hash, text);
 			return Cell;
 		}
 	}
@@ -41,7 +43,8 @@ function __Cell() constructor {
 	///@return {bool} Whether it is a box
 	static IsBox = function(slot) {
 		forceinline
-		return global.cell[slot].is_box;
+		static hash = variable_get_hash("is_box");
+		return struct_get_from_hash(global.cell[slot], hash);
 	}
 	///@method GetBoxID(slot)
 	///@desc Get the box ID of the cell
@@ -49,7 +52,8 @@ function __Cell() constructor {
 	///@return {real} The ID of the box
 	static GetBoxID = function(slot) {
 		forceinline
-		return global.cell[slot].box_id;
+		static hash = variable_get_hash("box_id");
+		return struct_get_from_hash(global.cell[slot], hash);
 	}
 	///@method GetCellID(slot)
 	///@desc Get the ID of the cell
@@ -57,7 +61,8 @@ function __Cell() constructor {
 	///@return {real} The ID of the cell
 	static GetCellID = function(slot) {
 		forceinline
-		return global.cell[slot].id;
+		static hash = variable_get_hash("id");
+		return struct_get_from_hash(global.cell[slot], hash);
 	}
 	///@method GetCallCount(slot)
 	///@desc Gets the amount of times the phone has been called
@@ -65,7 +70,8 @@ function __Cell() constructor {
 	///@return {real} The amount of times
 	static GetCallCount = function(slot) {
 		forceinline
-		return global.cell[slot].call_count;
+		static hash = variable_get_hash("call_count");
+		return struct_get_from_hash(global.cell[slot], hash);
 	}
 }
 

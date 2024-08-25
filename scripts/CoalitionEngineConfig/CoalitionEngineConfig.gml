@@ -67,7 +67,7 @@
 #endregion
 #region Engine
 //Here are the macros for the engine
-#macro __COALITION_ENGINE_VERSION "v0.7.3"
+#macro __COALITION_ENGINE_VERSION "v0.7.4"
 #macro ALLOW_DEBUG  true
 //This automatically set DEBUG into false when you build the game
 //#macro DEBUG !game_is_standalone()

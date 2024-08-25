@@ -65,7 +65,6 @@ function __Shop() constructor {
 		__in_dialog = false;
 		__info_surface = surface_create(210, 230);
 		__choice_displacement = 0;
-		__fallback_room = rDebug;
 		draw_set_align();
 		return Shop;
 	}
@@ -74,7 +73,7 @@ function __Shop() constructor {
 	///@param {real} item The item to add
 	///@param {string} name The name of the item displayed in the shop (Default original)
 	///@param {real} price The price of the item
-	///@param {string} desc The description of the item displayed in the shop
+	///@param {string} desc The description of the item displayed in the shop (Requires manual line breaking)
 	///@return {Struct.__Shop}
 	static AddItem = function(item, name = global.ItemLibrary[| item].name, price, desc)
 	{
@@ -205,15 +204,6 @@ function __Shop() constructor {
 		__typist.reset();
 		return Shop;
 	}
-	///@method SetShopFallbackRoom(room)
-	///@desc Sets the room to go to when you leave the shop
-	///@param {Asset.GMRoom} target_room The target room to set to
-	///@return {Struct.__Shop}
-	static SetShopFallbackRoom = function(target_room)
-	{
-		__fallback_room = target_room;
-		return Shop;
-	}
 	///@method __Process()
 	///@desc Internal shop processing logic
 	///@return {undefined}
@@ -257,8 +247,20 @@ function __Shop() constructor {
 				}
 				elif oGlobal.fader_alpha == 0
 				{
-					Fader_Fade_InOut(0, 1, 0, 30, 0, 30);
-					invoke(room_goto, [__fallback_room], 30);
+					Fader_Fade(0, 1, 30);
+					invoke(function() {
+						//If player came from an overworld, go back
+						if variable_global_exists("__CurrentOverworldRoom")
+							room_goto(global.__CurrentOverworldRoom);
+					}, [], 30);
+					//Defer by 1 extra frame for overworld init
+					invoke(function() {
+						oOWController.OverworldSubRoom = global.__CurrentOverworldSubRoom;
+						oOWPlayer.x = global.__CurrentOverworldPosition.x;
+						oOWPlayer.y = global.__CurrentOverworldPosition.y;
+						oOWPlayer.dir = global.__CurrentOverworldDirection;
+						oOWPlayer.ForceCollideless = true;
+					}, [], 31);
 				}
 			}
 		}
@@ -542,7 +544,7 @@ function __Shop() constructor {
 					++i;
 				}
 				//Dialog
-				__text.wrap(360).draw(20, 260, __typist);
+				__text.scale_to_box(360, 200, true).draw(20, 260, __typist);
 				draw_sprite_ext(sprSoul, 0, 460, 276 + __choice[0] * 40, 1, 1, 0, c_red, 1);
 			}
 			else
@@ -589,7 +591,7 @@ function __Shop() constructor {
 				{
 					surface_set_target(__info_surface);
 					draw_sprite_ext(sprPixel, 0, 0, 0, 210, 230, 0, c_black, 1);
-					draw_text(10, 10, BuyableItems[__choice[1]].desc);
+					scribble(BuyableItems[__choice[1]].desc).starting_format("fnt_dt_sans", c_white).scale_to_box(200, 235, true).draw(10, 10);
 					surface_reset_target();
 					draw_surface_part(__info_surface, 0, 0, 210, InfoBoxScale, 425, InfoBoxY);
 				}

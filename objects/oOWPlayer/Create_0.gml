@@ -17,8 +17,8 @@ FleeEnabled = true;
 //Sets the running speed of the player
 run_speed = 2;
 //Demonstration on how to create a dialog and option
-SetOptionEvent(COALITION_EMPTY_FUNCTION, function(){game_end()});
-OverworldDialog("Welcome to the Underground![format_option][option,0]continue		[option,1]end");
+//SetOptionEvent(COALITION_EMPTY_FUNCTION, function(){game_end()});
+//OverworldDialog("Welcome to the Underground![format_option][option,0]continue		[option,1]end");
 
 #region Encounter
 encounter_state = 0;

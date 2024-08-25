@@ -24,14 +24,18 @@ function Item_Info_Load() {
 ///@param {real} Item The Item to get the info
 function Item_Info(item) {
 	forceinline
+	static name_hash = variable_get_hash("name"), heal_hash = variable_get_hash("heal"),
+			desc_hash = variable_get_hash("desc"), throw_hash = variable_get_hash("throw_txt"),
+			battle_desc_hash = variable_get_hash("battle_desc"), stats_hash = variable_get_hash("stats"),
+			uses_left_hash = variable_get_hash("item_uses_left");
 	var lib = global.ItemLibrary[| item];
-	name = lib.name;
-	heal = lib.heal;
-	desc = lib.desc;
-	throw_txt = lib.throw_txt;
-	battle_desc = lib.battle_desc;
-	stats = lib.stats;
-	if lib.item_uses_left > 1 name += " x" + string(lib.item_uses_left);
+	name = struct_get_from_hash(lib, name_hash);
+	heal = struct_get_from_hash(lib, heal_hash);
+	desc = struct_get_from_hash(lib, desc_hash);
+	throw_txt = struct_get_from_hash(lib, throw_hash);
+	battle_desc = struct_get_from_hash(lib, battle_desc_hash);
+	stats = struct_get_from_hash(lib, stats_hash);
+	if struct_get_from_hash(lib, uses_left_hash) > 1 name += " x" + string(struct_get_from_hash(lib, uses_left_hash));
 }
 
 ///@func Item_Use(item)

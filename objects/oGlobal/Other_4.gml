@@ -19,11 +19,10 @@ if room == room_shop
 		AddShopkeeper(sprSnowdinKeeper);
 		SetBackground(sprSnowdinShopBG);
 		SetText("* Hello, traveller");
-		AddItem(ITEM.STEAK, "Steak in the Shape of Mettaton's Face", 500, "why");
+		AddItem(ITEM.STEAK, "Steak in the Shape of Mettaton's Face", 500, "long long long long\nlong long long long\nlong long long long\nlong");
 		AddDialog("Who made this engine?", "lifeless pieces of garbage");
 		AddDialog("Why was this engine made?", "yes");
 		SetExitText("bye");
-		SetShopFallbackRoom(rDebug);
 		Background.x = 320;
 	};
 }

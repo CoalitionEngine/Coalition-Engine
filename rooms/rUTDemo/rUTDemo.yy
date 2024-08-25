@@ -24,7 +24,7 @@
   ],
   "parent": {
     "name": "Rooms",
-    "path": "folders/Coalition Engine/Internal/(System)/Rooms.yy",
+    "path": "folders/Coalition Engine/External/Rooms.yy",
   },
   "parentRoom": null,
   "physicsSettings": {
