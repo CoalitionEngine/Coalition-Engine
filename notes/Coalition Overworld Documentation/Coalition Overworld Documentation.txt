@@ -29,8 +29,7 @@ For example you would put this in the creation code of the object
 
 Note that the dialog trigger is for the player to see the dialog after pressing the confirm button.
 For dialog that are automatically triggered, put an overworld collision object `oOWCollision` and
-set the collision event as as a dialog trigger, an example is provided in the "no way back" dialog
-in room_overworld, you can search for it using Ctrl + Shift + F to find the location and copy the code.
+set the collision event as as a dialog trigger, examples are provided in `room_overworld` and `rUTDemo`.
 
 ## Setting up Cells
 You may know that cell phones exist in Undertale, and we have them too.

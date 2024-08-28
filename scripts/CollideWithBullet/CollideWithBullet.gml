@@ -29,6 +29,14 @@ function CollideWithBullet(exceptions = []) {
 			{
 				with bullet
 				{
+					if image_alpha < 0.5 return false;
+					var k = 0;
+					repeat static_get(CollideWithBullet).size - 1
+					{
+						if object_index == static_get(CollideWithBullet).CheckCollisions[k]
+							return false;
+						++k;
+					}
 					if is_val(type, 1, 2)
 					{
 						collision = Soul_IsMoving();
@@ -49,7 +57,7 @@ function CollideWithBullet(exceptions = []) {
 		DefaultPlaceMeetingFunction,
 		//oGB
 		function(bullet) {
-			bullet = instance_position(x, y, bullet);
+			bullet = instance_position(x, y, oGB);
 			var collision = bullet != noone;
 			if collision
 			{
@@ -75,7 +83,21 @@ function CollideWithBullet(exceptions = []) {
 	repeat size
 	{
 		if instance_exists(CheckCollisions[i]) && !array_contains(exceptions, CheckCollisions[i])
-			if CheckFunctions[i](CheckCollisions[i]) break;
+		{
+			if object_get_parent(CheckCollisions[i]) == CheckCollisions[i]
+			{
+				///Check for child objects
+				var k = 0;
+				repeat size - 1
+				{
+					if self == CheckCollisions[k]
+						break;
+					++k;
+				}
+				if CheckFunctions[i](CheckCollisions[i]) exit;
+			}
+			else if CheckFunctions[i](CheckCollisions[i]) exit;
+		}
 		++i;
 	}
 }

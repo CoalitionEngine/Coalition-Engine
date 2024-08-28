@@ -23,7 +23,7 @@ if state = 0
 		if abs(_y - target_y) < 1.5  _y = target_y;
 		if abs(_angle - target_angle) < 1.5  _angle = target_angle;
 	}
-	if timer_move++ == time_move || !time_move
+	if !time_move || ++timer_move == time_move 
 	{
 		//Wait for shoot
 		state = 1;
@@ -66,7 +66,7 @@ if state == 4
 			if blurring	Blur_Screen(time_blast, _yscale);
 		}
 		//RGB shaking
-		if global.RGBBlaster oGlobal.RGBShake = 5 * _yscale;
+		if global.blaster_enable_rgb oGlobal.RGBShake = 5 * _yscale;
 		if release_sound
 		{
 			audio_play(snd_gb_release, true, 0, 1, 1.2);

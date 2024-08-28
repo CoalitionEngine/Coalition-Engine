@@ -49,7 +49,7 @@ var input_horizontal = CHECK_HORIZONTAL,
 	scale_x = last_dir,
 	assign_sprite = last_sprite;
 
-if ForceCollideless && (CHECK_HORIZONTAL || CHECK_VERTICAL)
+if ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision)
 	ForceCollideless = false;
 
 // Menu opening
@@ -68,19 +68,21 @@ if DEBUG
 
 if moveable && !oOWController.menu // When the player can move around
 {
-	var displace = 0, dir_spr_size  = array_length(dir_sprite);
+	var displace = 0, x_stop = false, y_stop = false, dir_spr_size  = array_length(dir_sprite),
+		curX = x, curY = y;
 	repeat spd
 	{
 		if input_horizontal != 0
 		{
 			//Sets sprite to horizontal sprite
-			assign_sprite = dir_sprite[2];
+			assign_sprite = dir_sprite[image_flip == -1 ? max(0, sign(input_horizontal)) + 2 : 2];
 			//Sets the sprite as leftwards or rightwards
-			scale_x = dir_spr_size == 3 ? -sign(input_horizontal) : 1;
+			scale_x = image_flip == -1 ? 1 : (dir_spr_size == 3 ? -sign(input_horizontal) : 1);
 			//Check whether the movement is moving into a tile
 			displace = sign(input_horizontal);
 			if !CollideWithAnything(x + displace, y)
 				x += displace;
+			else x_stop = true;
 		}
 		if input_vertical != 0
 		{
@@ -91,6 +93,7 @@ if moveable && !oOWController.menu // When the player can move around
 			displace = sign(input_vertical);
 			if !CollideWithAnything(x, y + displace)
 				y += displace;
+			else y_stop = true;
 		}
 		
 	}
@@ -107,7 +110,7 @@ else
 image_xscale = scale_x;
 if assign_sprite != -1 sprite_index = assign_sprite;
 //Player walking
-if (input_horizontal != 0 || input_vertical != 0) && moveable image_speed = spd / 12;
+if (input_horizontal != 0 || input_vertical != 0) && moveable && !(x_stop && y_stop) image_speed = spd / 12;
 else 
 {
 	image_speed = 0;

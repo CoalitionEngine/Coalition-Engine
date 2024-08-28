@@ -1,7 +1,7 @@
 ///Set whether the text is skippable in dialogs
 function __CoalitionSetTextSkippable(_element, _parameter_array, _character_index)
 {
-	global.TextSkipEnabled = _parameter_array[0];
+	global.enable_text_skipping = _parameter_array[0];
 }
 ///Sets current ememy sprite index (engine internal, fix soon)
 function __CoalitionSetEnemySprite(_element, _parameter_array, _character_index)

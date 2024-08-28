@@ -50,6 +50,7 @@ function len_load()
 ///		var b = Bullet_Bone(0, 0, 70, 0, 0);
 ///		with b.Len
 ///		{
+///			activate = true;
 ///			x = 320;
 ///			y = 320;
 ///			len = 70;

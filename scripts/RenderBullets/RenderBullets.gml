@@ -5,6 +5,7 @@
 ///@desc Render all bullets that are the depth of the board on screen (bullets that only show inside the board)
 function RenderBullets() {
 	forceinline
+	//The default drawing function of a bone
 	static  __bone_draw_event = function() {
 		var _color = base_color,
 		_angle = image_angle + Axis.angle + Len.angle_extra;

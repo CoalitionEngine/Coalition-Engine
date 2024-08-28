@@ -6,7 +6,7 @@ ProcessCulls();
 #region Overworld Camera Lock
 var target_x = oOWPlayer.x - Camera.GetAspect("w") / Camera.GetScale("x") / 2,
 	target_y = oOWPlayer.y - Camera.GetAspect("h") / Camera.GetScale("y") / 2,
-	half_rwidth = room_width / 2, curLock = CameraLockPositions[| OverworldSubRoom],
+	half_rwidth = room_width / 2, curLock = CameraLockPositions[$ OverworldSubRoom],
 	half_sprwidth = sprite_get_width(OverworldSprite) / 2;
 //Entire room clamping
 target_x = clamp(target_x, half_rwidth - half_sprwidth, half_rwidth + half_sprwidth - 320);
@@ -258,7 +258,7 @@ if dialog_exists
 		}
 	}
 	//Dialog skipping
-	if input_cancel && global.TextSkipEnabled
+	if input_cancel && global.enable_text_skipping
 	{
 		_writer.page(_writer.get_page_count() - 1);
 		_typist.skip_to_pause();

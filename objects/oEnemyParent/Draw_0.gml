@@ -82,7 +82,7 @@ if (state == BATTLE_STATE.DIALOG || (state == BATTLE_STATE.IN_TURN && dialog_at_
 	//Text
 	__text_writer.draw(dialog.x + 11, dialog.y - dialog.height + 11, __dialog_text_typist);
 	
-	if PRESS_CANCEL && global.TextSkipEnabled __dialog_text_typist.skip_to_pause();
+	if PRESS_CANCEL && global.enable_text_skipping __dialog_text_typist.skip_to_pause();
 		
 	if PRESS_CONFIRM && __dialog_text_typist.get_paused() __dialog_text_typist.unpause();
 		

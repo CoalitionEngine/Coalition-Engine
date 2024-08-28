@@ -10,7 +10,7 @@ if battle_state == BATTLE_STATE.MENU {
 		//Initalize menu text typer
 		__text_writer.draw(52, 272, __menu_text_typist);
 		//Set the skip function of the menu text typer
-		if input_cancel && global.TextSkipEnabled
+		if input_cancel && global.enable_text_skipping
 		{
 			__text_writer.page(__text_writer.get_page_count() - 1);
 			__menu_text_typist.skip();
@@ -34,7 +34,7 @@ if battle_state == BATTLE_STATE.MENU {
 			{
 				var _enemy_name = enemy_name[i] + enemy_name_extra[i];
 				//If the enemy can be spared, set the name to the global spare color
-				var spare_col = enemy[i].enemy_is_spareable ? global.SpareTextColor : c_white;
+				var spare_col = enemy[i].enemy_is_spareable ? global.spare_text_color : c_white;
 				draw_text_color(96, 272 + 32 * i - decrease_y, "* " + _enemy_name, spare_col, spare_col, spare_col, spare_col, 1);
 				//Draw HP bar
 				var xwrite = 450;
@@ -98,7 +98,7 @@ if battle_state == BATTLE_STATE.MENU {
 		{
 			if enemy[i] != noone && enemy[i].enemy_is_spareable
 			{
-				spare_col = global.SpareTextColor;
+				spare_col = global.spare_text_color;
 				break;
 			}
 			++i;

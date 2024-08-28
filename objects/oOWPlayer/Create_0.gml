@@ -16,6 +16,14 @@ dir = DIR.DOWN;
 FleeEnabled = true;
 //Sets the running speed of the player
 run_speed = 2;
+ForceCollideless = global.SetForceCollideless;
+global.SetForceCollideless = false;
+__xstart = xstart;
+__ystart = ystart;
+invoke(function() {
+	__xstart = x;
+	__ystart = y;
+}, [], 1);
 //Demonstration on how to create a dialog and option
 //SetOptionEvent(COALITION_EMPTY_FUNCTION, function(){game_end()});
 //OverworldDialog("Welcome to the Underground![format_option][option,0]continue		[option,1]end");

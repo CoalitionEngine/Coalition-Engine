@@ -111,7 +111,7 @@ function DrawDebugUI()
 		static color = [c_red, c_lime, c_blue];
 		for (var i = 0; i < 3; ++i)
 			draw_text_ext_transformed_color(ui.x - 245 + lengthdir_x(dis, global.timer - i * 120), ui.y + lengthdir_y(dis, global.timer - i * 120), "DEBUG", -1, -1, 1.25, 1.25, 0, color[0], color[2 - i], color[2 - i], color[2 - i], debug_alpha);
-		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)\nFPS: {fps} ({fps_real} / {global.__MinFPS} / {global.__MaxFPS} / {fps_average})\nTURN: " + string(battle_turn) + "\nINSTANCES: " + string(instance_count));
+		draw_debug_color_text(5, 10, $"SPEED: {room_speed / 60}x ({room_speed} FPS)\nFPS: {fps} ({fps_real} / {global.__MinFPS} / {global.__MaxFPS} / {fps_average})\nTURN: {battle_turn}\nINSTANCES: {instance_count}");
 	}
 	//If is in overworld
 	elif instance_exists(oOWController)
@@ -134,6 +134,7 @@ function DrawDebugUI()
 					}
 				break
 				case "oSavePoint": inst_name = "Save Point"; break;
+				case "oOWChars": inst_name = inst.Name; break;
 				default: inst_name = object_get_name(inst.object_index); break;
 			}
 			draw_debug_color_text(5, 65, "Pointing At : " + inst_name);
@@ -197,7 +198,7 @@ function __CoalitionCheckCompatibilty()
 	if !__COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR exit;
 	static version = __CoalitionGMVersion();
 	if version.major >= 2024 || (version.major == 2023 && version.minor > 11)
-		print($"Coalition Engine {__COALITION_ENGINE_VERSION} was designed for Game Maker versions 2023.11+, you are in {GM_runtime_version}");
+		print($"Coalition Engine {__COALITION_ENGINE_VERSION} was designed for Game Maker versions 2023.11+, you are in {GM_runtime_version}, there may exist unwanted behaviour.");
 	else if version.major < 2023 && version.minor < 11
 		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is incompatible for Game Maker versions earlier than 2023.11, you are in {GM_runtime_version}");
 }

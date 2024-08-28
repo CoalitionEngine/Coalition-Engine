@@ -51,6 +51,7 @@ if global.timer >= 1
 				case 3: color = c_red;			break;
 			}
 			draw_sprite_ext(gb_sprite, gb_index, gbx, gby, gb_xscale, gb_yscale, image_angle, color, gb_alpha);
+			show_hitbox(c_red);
 		}
 		gpu_set_depth(dep);
 		gpu_set_ztestenable(false);

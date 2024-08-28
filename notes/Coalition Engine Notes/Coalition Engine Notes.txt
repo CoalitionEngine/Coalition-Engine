@@ -43,7 +43,9 @@ only acts as easy access to the static functions for lesser experienced users.
 ## Engine updating
 
 Even if some precautions have been made to prevent your code to be overwritten from engine updates,
-you should create backups of your project before updating the engine version.
+you should create backups of your project before updating the engine version. Additionally, it is
+**strongly recommended** that you create a seperate group within your GM project specifically for you to
+update the engine more easily.
 
 There are two ways to update the engine, by pseudo-clean install using the .yymps file or clean installing
 by pulling from the Github page. Obviously pulling the from the Github page would be cleaner than importing

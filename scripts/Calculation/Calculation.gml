@@ -154,11 +154,17 @@ function struct_equals(struct_a, struct_b)
 		i = 0, val_a, val_b, hash;
 	//Must not be equal when they have different amount of names
 	if a_count != struct_names_count(struct_b) return false;
+	//array_equals aren't used as the names gained from struct_get_names may yield different order of names
+	//while maintaining the same values
+	
 	//Compare values
 	repeat a_count
 	{
 		hash = variable_get_hash(struct_a_names[i]);
 		val_a = struct_get_from_hash(struct_a, hash);
+		//Returns false if the variable does not exist in the second struct
+		if !struct_exists(struct_b, struct_a_names[i]) return false;
+		//If it does then gets the value for comparison
 		val_b = struct_get_from_hash(struct_b, hash);
 		if is_array(val_a)
 		{

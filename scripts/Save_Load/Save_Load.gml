@@ -69,6 +69,7 @@ function SaveData(fname, struct, func = undefined)
 	buffer_write(target_buffer, buffer_text, json_file);
 	buffer_save(target_buffer, fname);
 	delete __temp_struct;
+	buffer_delete(target_buffer);
 }
 
 ///@func LoadData(filename, [function])
@@ -123,5 +124,6 @@ You dirty cheater ;)");
 		});
 		show_error("", true);
 	}
+	buffer_delete(target_buffer);
 	return vals;
 }

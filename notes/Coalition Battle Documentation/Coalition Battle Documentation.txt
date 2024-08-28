@@ -9,15 +9,16 @@ There are several steps to set up an encounter.
 
 First, you have to create an object and make the parent of the object into 'oEnemyParent'.
 
-Next, you should go to Initalize and add
-`Enemy.SetEncounter();`
-You may ignore the first argument if you are not going to add any more encounters in the game.
+Next, you should go to `Encounter_Library` and use `Enemy.SetEncounter();`to set up encounter data.
+There already exists an example for reference.
+The first argument is the ID of the encounter, which has the default value of the existing enoucnters.
 You should include your enemy object as an argument in the script.
 
-After storing the enemy into the global battle encounter array, the default value for `global.battle_encounter` should be 0.
+After storing the enemy into the global battle encounter array, the default value for `global.battle_encounter` should be 0,
+therefore if you would like to start an encounter that has the ID of X, set `global.battle_encounter` to X.
 If you want to start the battle immediately after the game starts, change the room target in `room_goto()` in the game start event of `oGlobal` as room_battle.
 
-When you enter room_battle, an encounter automatically starts the the data of the enemies will be fetched and loaded.
+When you enter `room_battle`, an encounter automatically starts the the data of the enemies will be fetched and loaded.
 If you followed these steps, you should see absolutely nothing but the battle UI, that means you completed the first step.
 
 ## Setting up enemy data
@@ -56,7 +57,8 @@ There are variables that are not covered in the functions, they will be covered 
 
 After setting up all these data, the next step would obviously be adding sprites for your enemy.
 
-There are two ways to do that, you use the built-in (almost useless) system, or be a normal person and override User Event 0 to draw your own sprites.
+There are two ways to do that, you use the built-in (almost useless) system,
+or be a normal person and override User Event 0 to draw your own sprites.
 If you lack knowledge to create one by your own, then you should use the built-in system.
 The following variables are all arrays and should follow the same order, i.e. Top to Bottom
 
@@ -111,7 +113,7 @@ There are some additional functions and variables that are created for some spec
 If you modify this, it will no longer follow the usual pattern of +1 every turn, but your defined method instead.
 
 `MidTurnDialog()` is a function that will begin a dialog in the middle of a turn, stopping the timer from increasing during the dialog, and resuming after it ended.
-The first argument will be the text that will be displayed, and the second being optional event arguments for scribble_typists_add_event()
+The first argument will be the text that will be displayed, and the second being optional event arguments for `scribble_typists_add_event()`.
 
 
 If you want to see a code example for most of these in action, you should view `oEnemySansExample`.

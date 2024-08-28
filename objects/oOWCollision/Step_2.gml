@@ -14,7 +14,7 @@ switch sprite_index
 		{
 			Collided = 2;
 		}
-		if !collide && Collided == 2 Collided = false;
+		elif !collide && Collided == 2 Collided = false;
 		break;
 	default:
 		if collide && CheckConfirm() && !Collided

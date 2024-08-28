@@ -112,7 +112,7 @@ if menu_ui_x > -140
 
 			// Item function
 			for(var i = 0, gap = [0, 96, 114]; i < 3; i++)
-				draw_text(234 + Sigma(gap, 0, i), ui_box_y + 303, menu_item_text[i]);
+				draw_text(234 + Summation(gap, 0, i), ui_box_y + 303, menu_item_text[i]);
 		}
 		#endregion
 		#region STAT state
@@ -197,7 +197,7 @@ if menu_ui_x > -140
 #endregion
 
 // Check if a Overworld Dialog is occuring
-if dialog_exists
+if dialog_exists && !(oOWPlayer.encounter_draw & 1)
 {
 	//Dialog Box drawing
 	var dialog_box_y = dialog_is_down ? 320 : 10;

@@ -1,5 +1,29 @@
 Update Logs (This is the beta builds)
 
+v0.7.5 (Eden)
+
+Fixed:
+Overworld dialog box persists when entering encounter
+Shop text scaled incorrectly
+Bug in bullet collision due to unchecked parent
+Changing rooms when any instances were previously culled will result in all instances to be culled
+Buffer was not deleted in data saving/loading
+Player still has moving animation when running against a wall
+Overworld collision bugs
+Typos in documentation
+
+Updated:
+Fallback room from shop
+You can now use oOWCamLock for camera locking for sub-rooms
+Added a 'Name' for the oOWChars for debugging use
+Normalized variable naming convections
+- RGBBlaster -> blaster_enable_rgb
+- SpareTextColor -> spare_text_color
+- TextSkipEnabled -> enable_text_skipping
+- Sigma -> Summation
+
+More examples are in the overworld, including each of the collision objects and a random encounter
+
 v0.7.4 (Eden)
 smol update lol, the doc will be updated soon, tight on time rn
 

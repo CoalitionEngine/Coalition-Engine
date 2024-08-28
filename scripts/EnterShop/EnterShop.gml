@@ -1,3 +1,6 @@
+///@category Shop
+///@title Shop
+
 ///@func EnterShop([immediate])
 ///@desc Enters the shop from the current room
 ///@param {bool} immediate Whether you immediately go to the shop without transition (Default false)
@@ -15,7 +18,7 @@ function EnterShop(immediate = false) {
 		global.__CurrentOverworldSubRoom = oOWController.OverworldSubRoom;
 		with oOWPlayer
 		{
-			global.__CurrentOverworldPosition = {x, y};
+			global.__CurrentOverworldPosition = {x: xprevious, y: yprevious};
 			global.__CurrentOverworldDirection = dir;
 		}
 	}

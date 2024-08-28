@@ -6,10 +6,7 @@ function CheckConfirm() {
 	return oOWController.menu_state == MENU_MODE.IDLE && !oOWPlayer.ForceCollideless && PRESS_CONFIRM;
 }
 function CheckCollide() {
-	for (var i = 0; i < 4; ++i) {
-		if place_meeting(x + lengthdir_x(1, i * 90), y + lengthdir_y(1, i * 90), oOWPlayer)
-			return true;
-	}
+	return place_meeting(x, y, oOWPlayer);
 }
 ///Sets whether the object is an interactable object
 ///@param {bool} is_interactable Whether the object is an interactable object
@@ -19,3 +16,12 @@ function SetInteractable(is_interactable, event) {
 	Interactable = is_interactable;
 	Event = event;
 }
+
+//Preventing infinite loop of collision
+invoke(function() {
+	with oOWPlayer
+	{
+		if place_meeting(__xstart, __ystart, other)
+			other.Collided = true;
+	}
+}, [], 1);

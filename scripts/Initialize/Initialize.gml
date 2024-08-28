@@ -28,13 +28,13 @@ function Initialize()
 	global.slam_damage = false;
 	
 	//Sets Whether Blasters cause RGB splitting effect
-	global.RGBBlaster = false;
+	global.blaster_enable_rgb = false;
 	
 	//Forces all text to be skippable or not
-	global.TextSkipEnabled = true;
+	global.enable_text_skipping = true;
 	
 	//Spare
-	global.SpareTextColor = (!irandom(100) ? c_fuchsia : c_yellow);
+	global.spare_text_color = (!irandom(100) ? c_fuchsia : c_yellow);
 	
 	
 	//Save file (Free to edit)

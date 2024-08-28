@@ -1,10 +1,9 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oOWDialogCollide",
+  "name": "oOWCameraLock",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
   ],
   "managed": true,
@@ -13,10 +12,7 @@
     "name": "Overworld",
     "path": "folders/Coalition Engine/Internal/(System)/Objects/Overworld.yy",
   },
-  "parentObjectId": {
-    "name": "oOWCollision",
-    "path": "objects/oOWCollision/oOWCollision.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -33,8 +29,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "sprPixel",
-    "path": "sprites/sprPixel/sprPixel.yy",
+    "name": "sprCamLock",
+    "path": "sprites/sprCamLock/sprCamLock.yy",
   },
   "spriteMaskId": null,
   "visible": true,
