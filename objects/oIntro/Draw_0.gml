@@ -1,14 +1,14 @@
 draw_set_font(fnt_dt_sans);
 if menu_state == INTRO_MENU_STATE.LOGO
 {
-	draw_text_scribble(320, 200, "[fnt_logo][c_white][fa_center]" + LogoText);
+	__scribble_caches.logo.draw(320, 200);
 	if hint
-		draw_text_scribble(320, 300, "[fnt_cot][c_ltgray][fa_center][[PRESS Z OR ENTER]");
+		__scribble_caches.hint.draw(320, 300);
 }
 else if menu_state == INTRO_MENU_STATE.FIRST_TIME
 {
-	draw_text_scribble(320, 40, "[fa_center][c_ltgray]" + instruction_label);
-	draw_text_scribble(170, 100, "[fa_left][c_ltgray]" + instruction_text);
+	__scribble_caches.instruction_label.draw(320, 40);
+	__scribble_caches.instruction_text.draw(170, 100);
 	for (var i = 0; i < 2; i++)
 	{
 		var color = (menu_choice[0] == i) ? c_yellow : c_white;
@@ -22,7 +22,8 @@ else if is_val(menu_state, INTRO_MENU_STATE.NAMING, INTRO_MENU_STATE.NAME_CHECKI
 	#region Naming letters and options
 	draw_set_alpha(naming_alpha[0]);
 	draw_set_color(c_white);
-	draw_text_scribble(320, 60, "[c_white][fa_center]Name the fallen human.");
+	if menu_state == INTRO_MENU_STATE.NAMING
+		__scribble_caches.fallen_human.draw(320, 60);
 		
 	var charIndex = [0, 0];
 		
@@ -64,7 +65,7 @@ else if is_val(menu_state, INTRO_MENU_STATE.NAMING, INTRO_MENU_STATE.NAME_CHECKI
 	#endregion
 
 	#region Name
-	var state = (menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM),
+	var state = menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM,
 		shake_x = state * random_range(-1, 1),
 		shake_y = state * random_range(-1, 1);
 	

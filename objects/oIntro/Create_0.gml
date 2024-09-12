@@ -175,3 +175,15 @@ function CheckName(checkname){
 LogoText = "UNDERTALE";
 fading = false;
 #endregion
+#region Scribble caches
+__scribble_caches = {};
+with __scribble_caches
+{
+	logo = scribble("[fnt_logo][fa_center]" + other.LogoText);
+	hint = scribble("[fnt_cot][c_ltgray][fa_center][[PRESS Z OR ENTER]");
+	instruction_label = scribble("[fa_center][c_ltgray][fnt_dt_sans]" + other.instruction_label);
+	instruction_text = scribble("[c_ltgray][fnt_dt_sans]" + other.instruction_text);
+	fallen_human = scribble("[fa_center][fnt_dt_sans]Name the fallen human.");
+	credit_text = scribble($"[c_gray][fa_center][fa_bottom][fnt_cot]UNDERTALE (C) TOBY FOX 2015-{current_year}\nCoalition Engine {__COALITION_ENGINE_VERSION} by Cheetos Bakery");
+}
+#endregion

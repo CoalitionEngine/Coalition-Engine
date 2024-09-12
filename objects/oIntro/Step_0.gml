@@ -120,7 +120,7 @@ switch menu_state
 	case INTRO_MENU_STATE.NAME_CHECKING: // Name checking thingy
 		if input_horizontal != 0
 		{
-			name_confirm ^= abs(input_horizontal);
+			name_confirm ^= true;
 			audio_play(snd_menu_switch);
 		}
 		if input_confirm != 0
@@ -137,6 +137,7 @@ switch menu_state
 				{
 					COALITION_DATA.name = name;
 					Fader_Fade(1, 0, 20);
+					//This is what happens after leaving the naming screen, you should modify this
 					//room_goto_next();
 					room_goto(room_overworld);
 
@@ -145,6 +146,10 @@ switch menu_state
 		}
 		break;
 	case INTRO_MENU_STATE.SETTINGS:
-		if input_cancel menu_state = INTRO_MENU_STATE.LOGO;
+		if input_cancel
+		{
+			menu_state = INTRO_MENU_STATE.LOGO;
+			menu_choice[0] = 0;
+		}
 		break;
 }

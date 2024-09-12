@@ -9,4 +9,5 @@ window_center();
 
 game_set_speed(60, gamespeed_fps);
 
-room_goto(rDebug);
+//room_goto(rDebug);
+room_goto(room_intro);
