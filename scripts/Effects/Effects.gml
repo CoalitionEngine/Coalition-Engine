@@ -68,7 +68,7 @@ function TrailStep(duration = 30) {
 ///@param {real} rotation The angle of the sprite
 ///@param {Constant.Color} color The blend of the sprite
 ///@param {real} alpha The alpha of the sprite
-///@return {Id.Instace<oEffect>} The created instance
+///@return {Id.Instance<oEffect>} The created instance
 function TrailEffect(Duration, Sprite = sprite_index, Subimg = image_index, X = x, Y = y, Xscale = image_xscale,
 					Yscale = image_yscale, Rot = image_angle, Col = image_blend, Alpha = image_alpha)
 {

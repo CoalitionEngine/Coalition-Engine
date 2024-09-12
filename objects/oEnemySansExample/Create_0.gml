@@ -15,33 +15,12 @@ enemy_is_spareable = true;
 default_font = "fnt_sans";
 default_sound = snd_txtSans;
 is_dodge = false;
-enemy_sprites = [
-	spr_sans_legs,
-	spr_sans_body,
-	spr_sans_head,
-];
-enemy_sprite_index = [0, 0, 0, 0];
-enemy_sprite_scale = [
-	[1, 1],
-	[1, 1],
-	[1, 1],
-];
-enemy_sprite_draw_method = [
-	"pos",
-	"ext",
-	"ext",
-];
-enemy_sprite_pos = [
-	[-47, -50, 47, -50, 47, 0, -47, 0],
-	[0, -40],
-	[0, -75],
-];
-// Sining method, multiplier, multiplier, rate, rate
-enemy_sprite_wiggle = [
-	["sin", .1, .2, 2.1, 1.3],
-	["sin", .1, .2, 2.1, 1.4],
-	["sin", .1, .2, 1.7, 1.2],
-];
+InitSprite(0, spr_sans_legs, 0, "pos", [-47, -50, 47, -50, 47, 0, -47, 0]);
+SetWiggle(0, "sin", 0.1, 0.2, 2.1, 1.3);
+InitSprite(1, spr_sans_body, 0, "ext", [0, -40]);
+SetWiggle(1, "sin", 0.1, 0.2, 2.1, 1.4);
+InitSprite(2, spr_sans_head, 0, "ext", [0, -75]);
+SetWiggle(2, "sin", 0.1, 0.2, 1.7, 1.2);
 
 SlammingEnabled = true;
 SlamSprites = [

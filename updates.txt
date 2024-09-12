@@ -1,7 +1,30 @@
 Update Logs (This is the beta builds)
 
-v0.7.5 (Eden)
+v0.7.6 (Eden)
+This update requires a clean install
 
+Fixed:
+Sigma was not renammed to Summation when all the references are renamed
+Rendering and colliding bullets are not functioning properly in newer GM versions
+Save point now saves things
+Bullets with Axis or Len angle will have incorrect collision when angle is modified
+Incorrect board masking calculation order
+oBulletParents may not be masked if depth is set to anything other than the depth of the board
+Typos in comments
+Fixed bone collision
+
+Updated:
+Overhauled array_equals for it to support structs
+Optimised oBoard logic, bullet collision, rendering, other misc. functions
+Gameover clears time sources
+oBulletBone supports outlined bones
+Updated Scribble to 9.3.1
+Seperated user defined macros and engine macros to two different scripts
+Cutscene system for the overworld, simply use Cutscene*
+Overworld BGM implementation, read the documentation for more information
+Added `InitSprite()` and `SetWiggle()` in enemy object for easier sprite setting
+
+v0.7.5 (Eden)
 Fixed:
 Overworld dialog box persists when entering encounter
 Shop text scaled incorrectly

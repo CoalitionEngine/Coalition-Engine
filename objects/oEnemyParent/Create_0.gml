@@ -27,6 +27,34 @@ enemy_sprite_draw_method = [];
 enemy_total_height = 0;
 enemy_max_width = 0;
 enemy_sprite_pos = [];
+///Initalizes the sprite of the enemy
+///@param {real} ID The ID of the sprite (Zero based)
+///@param {Asset.GMSprite} sprite The sprite to set
+///@param {real} index The index of the sprite
+///@param {string} mode The mode of the drawing of the sprite, either "ext" or "pos"
+///@param {Array} pos The position of the drawing, for "ext", it will be [displace x, displace y], for "pos", it will be [x1, y1, x2, y2, x3, y3, x4, y4] (refer to draw_sprite_pos)
+///@param {Array} scale The scale of the sprites ("ext" exclusive, default [1, 1])
+function InitSprite(num, sprite, index, mode, pos, scale = [1, 1])
+{
+	forceinline
+	enemy_sprites[num] = sprite;
+	enemy_sprite_index[num] = index;
+	enemy_sprite_draw_method[num] = mode;
+	enemy_sprite_pos[num] = pos;
+	enemy_sprite_scale[num] = scale;
+}
+///Sets the wiggling method of the sprite
+///@param {real} ID The ID of the sprite
+///@param {string} method The method of drawing, either "sin" or "cos"
+///@param {real} x_mult The multiplication for the x wiggling
+///@param {real} y_mult The multiplication for the y wiggling
+///@param {real} x_rate The amplitude of the x wiggling
+///@param {real} y_rate The amplitude of the y wiggling
+function SetWiggle(num, meth, x_mult, y_mult, x_rate, y_rate)
+{
+	forceinline
+	enemy_sprite_wiggle[num] = [meth, x_mult, y_mult, x_rate, y_rate];
+}
 // Sining method, multiplier, multiplier, rate, rate
 enemy_sprite_wiggle = [];
 wiggle = true;
@@ -66,6 +94,7 @@ __dialog_text_typist = scribble_typist().in(0.5, 0);
 
 function dialog_init(text = "")
 {
+	forceinline
 	__text_writer = scribble(text, "__Coalition_Enemy")
 	.wrap(dialog.width - 15, dialog.height - 15)
 	.starting_format(default_font, c_black)
@@ -76,9 +105,10 @@ dialog_init(dialog_text[0]);
 
 ///Generates a dialog mid turn
 ///@param {string} text The text to draw
-///@param {Array<Array<String, Function>>} events The typist events ([event name, function])
+///@param {Array<Array<string,function>>} events The typist events ([event name, function])
 function MidTurnDialog(text, events = [])
 {
+	forceinline
 	dialog_at_mid_turn = true;
 	time++;
 	var i = 0;
@@ -132,6 +162,7 @@ PostAttackFunctions = [];
 	@param {function}	attack	The attacks to store as a function
 */
 function SetAttack(turn, attack) {
+	forceinline
 	AttackFunctions[turn] = attack;
 }
 
@@ -149,6 +180,7 @@ DetermineTurn = method(undefined, function() {
 	@param {function}	function	The function to execute
 */
 function PreAttackFunction(turn, func) {
+	forceinline
 	PreAttackFunctions[turn] = func;
 }
 /**
@@ -157,5 +189,6 @@ function PreAttackFunction(turn, func) {
 	@param {function}	function	The function to execute
 */
 function PostAttackFunction(turn, func) {
+	forceinline
 	PostAttackFunctions[turn] = func;
 }

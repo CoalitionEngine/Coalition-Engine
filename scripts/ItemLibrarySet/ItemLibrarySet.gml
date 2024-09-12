@@ -11,11 +11,11 @@ function ItemLibrarySetStruct(item, param)
 	forceinline
 	with param
 	{
-		if !variable_struct_exists(self, "effect") effect = COALITION_EMPTY_FUNCTION;
-		if !variable_struct_exists(self, "battle_desc") battle_desc = "";
-		if !variable_struct_exists(self, "stats") stats = "";
-		if !variable_struct_exists(self, "item_uses_left") item_uses_left = 1;
-		if !variable_struct_exists(self, "price") price = 0;
+		if !struct_exists(self, "effect") effect = COALITION_EMPTY_FUNCTION;
+		if !struct_exists(self, "battle_desc") battle_desc = "";
+		if !struct_exists(self, "stats") stats = "";
+		if !struct_exists(self, "item_uses_left") item_uses_left = 1;
+		if !struct_exists(self, "price") price = 0;
 	}
 	global.ItemLibrary[| item] = param;
 }

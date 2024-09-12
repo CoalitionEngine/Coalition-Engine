@@ -62,6 +62,9 @@ folder before pulling.
 overworld collision tiles/objects in rooms may be lost.
 You are required to manually set them again after updating it this way.
 
+!> Sometimes it is required to clean install the engine for updating, you should read the update logs carefully
+to be notified whether you must clean install or not.
+
 If you have little to no GML knowledge, you should look up the Game Maker Manual or at least Google before asking questions like "How do I make an object" or "I don't know how to use this Game Maker function".
 
 ## Naming convection

@@ -202,7 +202,7 @@ function __CoalitionCheckCompatibilty()
 	else if version.major < 2023 && version.minor < 11
 		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is incompatible for Game Maker versions earlier than 2023.11, you are in {GM_runtime_version}");
 }
-
+///An overhaul of the bult-in game_restart function as it is not really that good
 function __game_restart() {
 	//Destroy all non-persistent objects
 	with all
@@ -231,3 +231,26 @@ function __game_restart() {
 	}
 }
 #macro game_restart __game_restart
+
+///An overhaul of the built-in array_equal function as it does not compare nested data types
+function __array_equals(var1, var2)
+{
+	if array_length(var1) == array_length(var2)
+	{
+		var i = 0;
+		repeat array_length(var1)
+		{
+			if typeof(var1[i]) == typeof(var2[i])
+			{
+				if is_struct(var1[i]) && is_struct(var2[i]) && !struct_equals(var1[i], var2[i])
+					return false;
+				else if is_array(var1[i]) && is_array(var2[i]) && !array_equals(var1[i], var2[i])
+					return false;
+			}
+			++i;
+		}
+	}
+	else return false;
+	return true;
+}
+#macro array_equals __array_equals

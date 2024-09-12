@@ -42,7 +42,7 @@ function draw_circular_bar(x, y, value, max, colour, radius, transparency, width
 			sizeofsection = 360 / numberofsections;
 		val = (value / max) * numberofsections;
 		if (val > 1) { // HTML5 version doesnt like triangle with only 2 sides 
-			piesurface = surface_create(radius * 2, radius * 2);
+			var piesurface = surface_create(radius * 2, radius * 2);
 			draw_set_colour(colour);
 			draw_set_alpha(transparency);
 			surface_set_target(piesurface);

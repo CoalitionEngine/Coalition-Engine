@@ -12,7 +12,7 @@ SetInteractable(true, function() {
 
 function CheckCollide() {
 	for (var i = 0; i < 4; i++)
-		if place_meeting(x + lengthdir_x(1, i * 90), y + lengthdir_y(1, i * 90), oOWPlayer)
+		if place_meeting(x + cos(i * 90), y - sin(i * 90), oOWPlayer)
 			return true;
 	return false;
 }

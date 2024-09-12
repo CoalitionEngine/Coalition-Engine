@@ -91,5 +91,5 @@ if state == 4
 	else beam_scale = (gb_yscale + sin(timer_blast / pi) * gb_yscale / 4) / 2;
 	image_angle = _angle;
 	image_xscale += speed;
-	image_yscale = beam_scale;
+	image_yscale = beam_scale * 2;
 }

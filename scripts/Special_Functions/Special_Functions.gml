@@ -4,7 +4,7 @@
 ///@func check_outside()
 ///@desc Checks whether the instance is outside the camera DETERMINED BY IT'S HITBOX
 ///@return {bool}
-function check_outside(){
+function check_outside() {
 	forceinline
 	var cam = oGlobal.MainCamera,
 		view_x = cam.x, view_y = cam.y,
@@ -12,7 +12,7 @@ function check_outside(){
 	
 	return !rectangle_in_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom,
 									view_x, view_y, view_x + view_w, view_y + view_h) 
-	and ((x < -sprite_width) || (x > room_width + sprite_width) ||
+	&& ((x < -sprite_width) || (x > room_width + sprite_width) ||
 			(y > room_height + sprite_height) || (y < -sprite_height));
 }
 ///@func Screenshot(filename)
@@ -40,27 +40,13 @@ function LoadTextFromFile(filename, read_method = 0, tag = "")
 	switch read_method
 	{
 		case 0:
-			switch current
+			repeat array_length(AttackFunctions)
 			{
-				case "oEnemyParent":
-					n = array_length(AttackFunctions);
-					break;
-				case "oBattleController":
-					n = array_length(global.item);
-					break;
-			}
-			repeat n
-			{
-				switch current
-				{
-					case "oEnemyParent":
-						TurnNumber = file_text_read_real(file);
-						file_text_readln(file);
-						DialogText = file_text_read_string(file);
-						file_text_readln(file);
-						Battle.EnemyDialog(self, TurnNumber, DialogText);
-					break
-				}
+				TurnNumber = file_text_read_real(file);
+				file_text_readln(file);
+				DialogText = file_text_read_string(file);
+				file_text_readln(file);
+				Battle.EnemyDialog(self, TurnNumber, DialogText);
 				i++;
 			}
 			break;
@@ -121,10 +107,11 @@ function mouse_in_triangle(x1, y1, x2, y2, x3, y3) {
 ///@func instance_check_create(instance)
 ///@desc Checks whether an instance exists, if not, create at (0, 0)
 ///@param {ID.Instance,Asset.GMObject} Instance The instance to check
-function instance_check_create(inst)
+///@param {real} depth The depth of the instance to create (Default 0)
+function instance_check_create(inst, depth = 0)
 {
 	forceinline
-	if !instance_exists(inst) instance_create_depth(0, 0, 0, inst);
+	if !instance_exists(inst) instance_create_depth(0, 0, depth, inst);
 }
 
 #region Point Lists

@@ -285,12 +285,12 @@ if save_state == SAVE_STATE.CHOOSING
 	if PRESS_HORIZONTAL != 0
 	{
 		audio_play(snd_menu_switch);
-		Choice = !Choice;
+		Choice ^= true;
 	}
 	//Confirm choices
-	if PRESS_CONFIRM && WaitTime > 5
+	if PRESS_CONFIRM && __wait_time > 5
 	{
-		WaitTime = 0;
+		__wait_time = 0;
 		if !Choice //Saving
 		{
 			save_function();
@@ -301,5 +301,23 @@ if save_state == SAVE_STATE.CHOOSING
 	}
 }
 //Exit save state
-elif save_state == SAVE_STATE.FINISHED && input_confirm && WaitTime ExitSave();
+elif save_state == SAVE_STATE.FINISHED && input_confirm && __wait_time ExitSave();
+#endregion
+#region Cutscene
+if __cutscene_activated
+{
+	var n = array_length(__cutscene_events), i = 0;
+	var __hash_time = variable_get_hash("time"),
+		__hash_dur = variable_get_hash("duration"),
+		__hash_func = variable_get_hash("func");
+	repeat n
+	{
+		var curCutTime = struct_get_from_hash(__cutscene_events[i], __hash_time),
+			curCutDur = struct_get_from_hash(__cutscene_events[i], __hash_dur);
+		if __cutscene_time >= curCutTime && __cutscene_time <= curCutTime + curCutDur
+			struct_get_from_hash(__cutscene_events[i], __hash_func)();
+		++i;
+	}
+	__cutscene_time++;
+}
 #endregion

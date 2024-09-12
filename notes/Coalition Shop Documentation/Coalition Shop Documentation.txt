@@ -1,7 +1,7 @@
 /// @category (FAQ)
 /// @title Shop Documentation
 
-Instead of creating an object just for a shop, instead a struct was created to store the data, and it
+Instead of creating an object just for a shop, a struct was created to store the data, and it
 is only created when used, destroyed upon leaving. (Poor shop)
 
 

@@ -71,8 +71,8 @@ function MoveToRoom(Main, Sub, PlayerX, PlayerY)
 	with oOWController
 	{
 		var transSpd = OverworldTransitionSpeed;
-		OverworldRoomTransitionArguments = room != Main ? [Main] : [Sub, PlayerX, PlayerY];
-		OverworldRoomTransitionMethod = room != Main ?
+		__OverworldRoomTransitionArguments = room != Main ? [Main] : [Sub, PlayerX, PlayerY];
+		__OverworldRoomTransitionMethod = room != Main ?
 			function(Main)
 			{
 				//If the room is different, move to that room

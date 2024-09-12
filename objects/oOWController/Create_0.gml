@@ -2,14 +2,16 @@
 texturegroup_load("texoverworld");
 Fader_Fade(1, 0, 15);
 
-//Lock the camera inside the 'room', which is a sprite so there is no lock
-OverWorld_ID = OVERWORLD.RUINS_ROOM_1; // The Overworld ID (For room changing and stuff)
+//The Overworld ID (For room changing and stuff)
+OverWorld_ID = OVERWORLD.RUINS_ROOM_1;
+//The sprite of the entire room background
 OverworldSprite = sprUTDemo;
+//Which subroom the player is currently in
 OverworldSubRoom = 0;
-OverworldTransitioning = false;
+//The transition speed of the overworld
 OverworldTransitionSpeed = 20;
-OverworldRoomTransitionMethod = -1;
-OverworldRoomTransitionArguments = [];
+__OverworldRoomTransitionMethod = -1;
+__OverworldRoomTransitionArguments = [];
 
 Item_Info_Load(); // Loading item's info
 
@@ -37,7 +39,7 @@ enum MENU_MODE
 	BOX_MODE,
 }
 
-menu_disable = 0;
+menu_disable = false;
 
 menu = false;
 menu_state = MENU_MODE.IDLE;
@@ -72,11 +74,38 @@ box_choice = [0, 0];
 Box_ID = 0;
 #endregion
 
-ForceNotDisplayUI = false;
 save_state = 0;
-save_function = COALITION_EMPTY_FUNCTION;
+//Function executed when saved using a save point
+save_function = function() {
+	var name_list = static_get(Initialize).__hash_name_list,
+		default_variables = [
+		COALITION_DATA.name, global.hp_max, global.hp, COALITION_DATA.lv,
+		COALITION_DATA.Gold, COALITION_DATA.Exp, COALITION_DATA.AttackItem,
+		COALITION_DATA.DefenseItem, COALITION_DATA.Kills, global.__box,
+		global.item, global.cell
+	];
+	var i = 0;
+	repeat array_length(name_list)
+	{
+		struct_set_from_hash(COALITION_SAVE_FILE, variable_get_hash(name_list[i]), default_variables[i]);
+		++i;
+	}
+	SaveData("Data.dat", COALITION_SAVE_FILE);
+};
 Choice = 0;
-WaitTime = 0;
+__wait_time = 0;
+
+#region Cutscene
+__cutscene_activated = false;
+__cutscene_time = 0;
+__cutscene_events = [];
+#endregion
+
+#region BGM
+Audio = -1;
+BGM = -1;
+BGMStream = false;
+#endregion
 
 #region Debug properties
 if ALLOW_DEBUG

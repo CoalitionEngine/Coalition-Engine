@@ -19,3 +19,6 @@ retract_on_end = false;
 angle_to_direction = false;
 //Checks whether the current state is at the end of the turn
 at_turn_end = false;
+//The outline of the bone
+outline_enabled = false;
+outline_color = c_white;

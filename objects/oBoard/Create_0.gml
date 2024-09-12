@@ -12,8 +12,6 @@ right = 283;
 
 frame_x = array_create(4, 0);
 frame_y = array_create(4, 0);
-frame_w = array_create(4, 0);
-frame_h = array_create(4, 0);
 
 bg_x = 0;
 bg_y = 0;

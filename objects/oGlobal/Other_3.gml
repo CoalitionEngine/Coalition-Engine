@@ -9,8 +9,7 @@ delete global.__CoalitionTempData;
 part_system_destroy(global.TrailS);
 part_type_destroy(global.TrailP);
 
-var i = 0;
-while time_source_exists(i) time_source_destroy(i++);
+clear_timesources
 
 with Border
 {

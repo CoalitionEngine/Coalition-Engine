@@ -2,7 +2,6 @@
 live;
 SetAttack(1, function() {
 	var below = oBoard.depth + 1;
-	if time > 10 AudioStickToTime(bgm, (time - 10) / 60);
 	if time == 10
 	{
 		Soul_SetMode(SOUL_MODE.BLUE)
@@ -16,8 +15,6 @@ SetAttack(1, function() {
 		//with oBoard.ConvertToVertex()
 		//	InsertPolygonPoint(4, 320, 200)
 		TweenFire(self, "iBack", 0, 0, 0, 60, "x>", 900);
-		BGM = audio_create_stream("Music/Break Over.ogg");
-		bgm = audio_play(BGM);
 	}
 	else if time == 80
 	{

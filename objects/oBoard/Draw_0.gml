@@ -1,16 +1,12 @@
 //Draw the board normally if the board is normal
 if !VertexMode
 {
-	var _color = image_blend,
-		_angle = image_angle,
-		_alpha = image_alpha,
+	var _angle = image_angle,
 		_frame_x = frame_x,
-		_frame_y = frame_y,
-		_frame_w = frame_w,
-		_frame_h = frame_h;
+		_frame_y = frame_y;
 	//Draws the board frame
 	for (var i = 0; i < 4; ++i)
-		draw_sprite_ext(sprPixel, 0, _frame_x[i], _frame_y[i], _frame_w[i], _frame_h[i], _angle, _color, _alpha);
+		draw_sprite_ext(sprPixel, 0, _frame_x[i], _frame_y[i], i < 2 ? left + right + thickness_frame * 2 : thickness_frame, i >= 2 ? up + down + thickness_frame * 2 : thickness_frame, _angle, image_blend, image_alpha);
 
 	//Drawing of the Cover Board
 	if instance_exists(oBoardCover)
@@ -25,12 +21,4 @@ if !VertexMode
 			++i;
 		}
 	}
-	image_blend = _color;
-	image_angle = _angle;
-	image_alpha = _alpha;
-
-	frame_x = _frame_x;
-	frame_y = _frame_y;
-	frame_w = _frame_w;
-	frame_h = _frame_h;
 }

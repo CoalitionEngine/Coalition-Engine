@@ -1,3 +1,4 @@
+clear_timesources
 //Soft reset camera
 Camera.RotateTo(0, 0, 0);
 Camera.Scale(1, 1, 0);

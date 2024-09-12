@@ -106,9 +106,9 @@ function axis_load()
 		angle = 0;
 		override = false;
 		override_angle = 0;
+		if variable_global_exists("TargetBoard")
+			target_board = BattleBoardList[TargetBoard];
 	}
-	if variable_global_exists("TargetBoard")
-		target_board = BattleBoardList[TargetBoard];
 }
 ///@text After calling this function in the create event, you can access these variables by using Axis.\*.
 ///

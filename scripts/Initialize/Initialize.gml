@@ -36,7 +36,7 @@ function Initialize()
 	//Spare
 	global.spare_text_color = (!irandom(100) ? c_fuchsia : c_yellow);
 	
-	
+	#region Data save/loading
 	//Save file (Free to edit)
 	COALITION_SAVE_FILE = {};
 	static Item_Preset = array_create(8, 0), Cell_Preset = [],
@@ -74,20 +74,13 @@ function Initialize()
 		DefenseItem =	struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[7]);
 		Kills =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[8]);
 	}
-	global.__box = {};
-	global.item = [];
-	global.cell = [];
-	var i = 0,  BoxStruct =	struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[9]),
-				ItemArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[10]),
-				CellArray = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[11]);
-	//Load box, Item and Cell
-	if !struct_is_empty(BoxStruct)
-		global.__box = variable_clone(BoxStruct);
-	if !array_is_empty(ItemArray)
-		array_copy(global.item, 0, ItemArray, 0, array_length(ItemArray));
-	if !array_is_empty(CellArray)
-		array_copy(global.cell, 0, CellArray, 0, array_length(CellArray));
-	//Cells
+	#endregion
+	//Loads Box, Item, and Cell data
+	global.__box = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[9]);
+	global.item = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[10]);
+	global.cell = struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[11]);
+	var i = 0;
+	#region Cells
 	__CellLibraryInit();
 	//Safety check
 	Cell_LibrarySet("OWBox", "this text should not appear");
@@ -96,9 +89,10 @@ function Initialize()
 	});
 	Cell_LibrarySet("Dimensional Box A",, true, 1);
 	Cell_LibrarySet("Dimensional Box B",, true, 2);
-	Cell_Add(1); //Phone
-	Cell_Add(2); //DB 1
-	//Items
+	Cell_Set(0, 1); //Phone
+	Cell_Set(1, 2); //DB 1
+	#endregion
+	#region Items
 	ItemLibraryInit();
 	#region Set basic item info
 	ItemLibrarySetStruct(ITEM.PIE, {
@@ -164,12 +158,13 @@ function Initialize()
 		}
 	});
 	#endregion
-	Item_Set(ITEM.PIE);
-	Item_Set(ITEM.INOODLES);
-	Item_Set(ITEM.STEAK);
-	Item_Set(ITEM.SEATEA);
-	Item_Set(ITEM.LHERO);
+	Item_Set(ITEM.PIE, 0);
+	Item_Set(ITEM.INOODLES, 1);
+	Item_Set(ITEM.STEAK, 2);
+	Item_Set(ITEM.SEATEA, 3);
+	Item_Set(ITEM.LHERO, 4);
 	global.item_heal_override_kr = false; //Does kr reduce when max heal or not
+	#endregion
 	
 	//Custom Settings
 	global.ShowFPS = false;

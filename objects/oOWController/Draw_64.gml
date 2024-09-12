@@ -7,7 +7,7 @@ draw_set_font(fnt_dt_sans);
 // Save UI
 if save_state >= SAVE_STATE.CHOOSING
 {
-	WaitTime++;
+	__wait_time++;
 	oOWPlayer.moveable = false;
 	//Box UI drawing, using int over vars are better
 	draw_rectangle_width_background(108, 118, 108 + 424, 118 + 174);

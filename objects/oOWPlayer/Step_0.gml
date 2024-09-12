@@ -47,13 +47,14 @@ var input_horizontal = CHECK_HORIZONTAL,
 	input_menu =	   PRESS_MENU,
 	spd = (FleeEnabled && input_cancel) ? run_speed : global.spd,
 	scale_x = last_dir,
-	assign_sprite = last_sprite;
+	assign_sprite = last_sprite,
+	x_stop = false, y_stop = false;
 
 if ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision)
 	ForceCollideless = false;
 
 // Menu opening
-if input_menu && !oOWController.menu && !oOWController.menu_disable && !oOWController.dialog_exists && !oOWController.ForceNotDisplayUI
+if input_menu && !oOWController.menu && !oOWController.menu_disable && !oOWController.dialog_exists
 {
 	// Open Menu, UI works in oOWController
 	oOWController.menu = true;
@@ -68,8 +69,7 @@ if DEBUG
 
 if moveable && !oOWController.menu // When the player can move around
 {
-	var displace = 0, x_stop = false, y_stop = false, dir_spr_size  = array_length(dir_sprite),
-		curX = x, curY = y;
+	var displace = 0, dir_spr_size = array_length(dir_sprite);
 	repeat spd
 	{
 		if input_horizontal != 0
@@ -103,7 +103,9 @@ if moveable && !oOWController.menu // When the player can move around
 }
 else
 {
-	assign_sprite = last_sprite;
+	assign_sprite = oOWController.__cutscene_activated ?
+		dir_sprite[is_even(dir) ? (image_flip == -1 ? max(0, dir == 0) + 2 : 2) : max(0, dir == 270)]
+		: last_sprite;
 	scale_x = last_dir;
 }
 
@@ -114,7 +116,7 @@ if (input_horizontal != 0 || input_vertical != 0) && moveable && !(x_stop && y_s
 else 
 {
 	image_speed = 0;
-	image_index = 0.5;
+	if !oOWController.__cutscene_activated image_index = 0.5;
 }
 
 //Menu Idle spriting thing

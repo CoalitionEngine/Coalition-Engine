@@ -12,6 +12,7 @@
 function OverworldDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, top_bottom = false, sprite = noone, index = 0)
 {
 	aggressive_forceinline
+	global.enable_text_skipping = true;
 	var dis = 0;
 	with oOWController
 	{
