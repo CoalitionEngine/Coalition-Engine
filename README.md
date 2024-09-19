@@ -9,16 +9,16 @@
 
 This is what you can make your Undertale Fangame ideas come true.
 
-> We value Game's Perfect Environment.
+> We value the perfect environment for your games.
 
-To make this engine run perfectly in Low-End PCs, We're trying our best to optimize our codes as much as possible.
+To make this engine run perfectly in Low-End devices, We're trying our best to optimize our engine as much as possible.
 
-> We protect You, Developer's codes.
+> We hide your code from decompilers.
 
-Messy codes? Precious codes? All of them are easily stolen by UndertaleModTool, but no worry!
-We are finding a way to block your codes. So no one will be able to steal your codes. (Unless they can read disassembly codes, then there is this next feature that might help)
+Messy code? Precious code? All of them can easily be seen by UndertaleModTool, but dont worry!
+We are finding a way to hide your code. So no one will be able to see your code.
 Don't want people to steal your assets? Don't want people to mod your games for fun/to cheat?
-Fear not, the anti-export and save corruption is already a built-in feature of this engine, if people want to steal your protected assets or mod some protected codes, they will experience an error instead!
+Fear not, the anti-export and save encryption is already a built-in feature of this engine, if people wants to see your protected assets or change some protected code, they will experience an error instead!
 
 ## Branch Purposes:
 
@@ -26,7 +26,7 @@ Fear not, the anti-export and save corruption is already a built-in feature of t
 
 > Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
 
-> Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
+> Stable : When the feature is **completely** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
 
 You are on the Bleeding Edge branch, This branch will have very unstable, unreliable builds. Yeah, most likely.
 
@@ -36,7 +36,7 @@ But the builds here will have the most updated features.
 
  ## Version List
 
-The miniman Game Maker Version required is 2023.11.
+The minimum Game Maker Version required is 2023.11.
 
 These are the versions of the external libraries that are packaged with the newest version of the engine.
 
