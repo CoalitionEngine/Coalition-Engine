@@ -11,11 +11,11 @@ This is what you can make your Undertale Fangame ideas come true.
 
 > We value the perfect environment for your games.
 
-To make this engine run perfectly in Low-End devices, We're trying our best to optimize our engine as much as possible.
+To make this engine run perfectly on Low-End computers, We're trying our best to optimize our engine as much as possible.
 
 > We hide your code from decompilers.
 
-Messy code? Precious code? All of them can easily be seen by UndertaleModTool, but dont worry!
+Messy code? Precious code? All of them can easily be seen by UndertaleModTool, but don't worry!
 We are finding a way to hide your code. So no one will be able to see your code.
 Don't want people to steal your assets? Don't want people to mod your games for fun/to cheat?
 Fear not, the anti-export and save encryption is already a built-in feature of this engine, if people wants to see your protected assets or change some protected code, they will experience an error instead!
