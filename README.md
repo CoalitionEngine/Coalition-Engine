@@ -15,7 +15,7 @@ To make this engine run perfectly in Low-End devices, We're trying our best to o
 
 > We hide your code from decompilers.
 
-Messy code? Precious code? All of them are can easily be seen by UndertaleModTool, but no worry!
+Messy code? Precious code? All of them can easily be seen by UndertaleModTool, but dont worry!
 We are finding a way to hide your code. So no one will be able to see your code.
 Don't want people to steal your assets? Don't want people to mod your games for fun/to cheat?
 Fear not, the anti-export and save encryption is already a built-in feature of this engine, if people wants to see your protected assets or change some protected code, they will experience an error instead!
@@ -26,7 +26,7 @@ Fear not, the anti-export and save encryption is already a built-in feature of t
 
 > Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
 
-> Stable : When the feature is **compeletly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
+> Stable : When the feature is **completely** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
 
 You are on the Bleeding Edge branch, This branch will have very unstable, unreliable builds. Yeah, most likely.
 
