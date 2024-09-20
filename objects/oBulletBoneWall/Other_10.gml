@@ -1,15 +1,8 @@
 var sprite = object,
-	index = 2,
-	spacing = sprite_get_height(object),
-	head = cone;
-
-if head == 2
-{
-	index = 4;
-	spacing -= 2;
-}
-//Color
-var color, color_outline;
+	index = cone ? 4 : 2,
+	spacing = sprite_get_height(object) - (cone ? 2 : 0),
+	//Color
+	color, color_outline;
 switch type
 {
 	case 0: color = c_white;	break;
@@ -59,10 +52,7 @@ if _dir == DIR.UP || _dir == DIR.DOWN
 	}
 	// Hitbox
 	if global.show_hitbox
-	{
-		draw_set_color(c_red)
-		draw_rectangle(board_l, pos[0] + 2, board_r, pos[1] - 2, false)
-	}
+		draw_rectangle_color(board_l, pos[0] + 2, board_r, pos[1] - 2, c_red, c_red, c_red, c_red, false);
 }
 		
 else if _dir == DIR.LEFT || _dir == DIR.RIGHT
@@ -89,8 +79,5 @@ else if _dir == DIR.LEFT || _dir == DIR.RIGHT
 	}
 	// Hitbox
 	if global.show_hitbox
-	{
-		draw_set_color(c_red);
-		draw_rectangle(pos[0] - 10, board_u - 10, pos[1] + 10, board_d + 10, false);
-	}
+		draw_rectangle_color(pos[0] - 10, board_u - 10, pos[1] + 10, board_d + 10, c_red, c_red, c_red, c_red, false);
 }

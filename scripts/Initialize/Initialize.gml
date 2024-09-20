@@ -33,9 +33,6 @@ function Initialize()
 	//Forces all text to be skippable or not
 	global.enable_text_skipping = true;
 	
-	//Spare
-	global.spare_text_color = (!irandom(100) ? c_fuchsia : c_yellow);
-	
 	#region Data save/loading
 	//Save file (Free to edit)
 	COALITION_SAVE_FILE = {};
@@ -158,6 +155,8 @@ function Initialize()
 		}
 	});
 	#endregion
+	//Debugging use, forces item to be this way, you may remove them
+	repeat Item_Count() Item_Remove(0);
 	Item_Set(ITEM.PIE, 0);
 	Item_Set(ITEM.INOODLES, 1);
 	Item_Set(ITEM.STEAK, 2);
@@ -191,7 +190,6 @@ function Initialize()
 	Cell = new __Cell();
 	Board = new __Board();
 	Camera = new __Camera().Init();
-	ConvertItemNameToStat();
 	Player = new __Player().GetBaseStats();
 	Encounter_Library();
 	
@@ -208,9 +206,7 @@ function Initialize()
 	global.player_inv_boost = 0;
 	//Whether moving digonally will move faster than moving horizontally or vertically
 	global.diagonal_speed = false;
-	//Grazing (Unfinished)
-	global.EnableGrazing = false;
-	global.TP = 0;
+	ConvertItemNameToStat();
 	
 	//Particles
 	global.TrailS = part_system_create();

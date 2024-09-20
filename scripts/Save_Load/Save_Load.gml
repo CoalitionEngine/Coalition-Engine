@@ -10,15 +10,7 @@
 function SetTempData(name, value)
 {
 	forceinline
-	static __stored_hashes = ds_map_create();
-	var hash;
-	if !ds_map_exists(__stored_hashes, name)
-	{
-		hash = variable_get_hash(name);
-		__stored_hashes[? name] = hash;
-	}
-	else hash = __stored_hashes[? name];
-	struct_set_from_hash(global.__CoalitionTempData, hash, value);
+	struct_set_from_hash(global.__CoalitionTempData, variable_get_hash(name), value);
 }
 
 ///@func GetTempData(name)
@@ -27,15 +19,7 @@ function SetTempData(name, value)
 function GetTempData(name)
 {
 	forceinline
-	static __stored_hashes = ds_map_create();
-	var hash;
-	if !ds_map_exists(__stored_hashes, name)
-	{
-		hash = variable_get_hash(name);
-		__stored_hashes[? name] = hash;
-	}
-	else hash = __stored_hashes[? name];
-	return struct_get_from_hash(global.__CoalitionTempData, hash);
+	return struct_get_from_hash(global.__CoalitionTempData, variable_get_hash(name));
 }
 
 ///@func SaveData(filename, struct, [function])

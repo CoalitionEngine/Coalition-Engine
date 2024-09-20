@@ -11,12 +11,13 @@ type = 0;
 ///add the nodes to the list
 function add_vert(X, Y, Z, list = vert_list)
 {
-	var _prop = new Vector3(X, Y, Z);
-	array_push(list, _prop);
+	forceinline;
+	array_push(list, new Vector3(X, Y, Z));
 }
 
 function update_vert()
 {
+	forceinline;
 	vert_list_draw = [];
 	var X, Y, Z, XX, YY, ZZ, i = 0;
 	repeat(array_length(vert_list))

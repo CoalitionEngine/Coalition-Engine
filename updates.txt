@@ -1,5 +1,59 @@
 Update Logs (This is the beta builds)
 
+v0.8.0 (Eden)
+Manually reviewed every single piece of code for project maintainence
+You MUST clean install
+Note that this update is the largest update since inital release, therefore this change log may not be fully accurate
+
+Removed:
+- Hitbox display of oGB (The hitbox is the sprite)
+- Grazing
+
+Fixed:
+- Shop text may not display
+- Optimized some shaders
+- Removed some unused variables
+- Further normalized variable names
+- `clear_timesource` actually clears timesources now
+- Reassigned sprites to their texture groups
+- Orange soul angle was affected by `draw_angle`
+- DIR.DOWN_RIGHT was misset as 325 instead of 315
+- If the bullet has `hit_destroy` set to true, it will crash when colliding with the player
+- Green soul shields no longer freeze in place
+- Fixed `DetermineTurn` may yield different dialog-turn pair
+- Vertical item scrolling crashes
+- Multibar attacks may break
+- Inconsistent gameover logic
+- Option swapping still available when name is not in oIntro
+- Enforced coding style
+- Enforced localization
+- Removed unused variables
+- Misc. comment typos
+- oOWDrawer was not checked to be existing
+- `AddBulletCollision` adds the bullet instead of the function to the function check list
+- `oOWPlayer` sprinting variable was misnamed as `FleeEnabled`, now renamed to `enable_sprint`
+- Item data are not saved when game is restarted (Such as item uses left)
+- Converting a normal board to vertex board causes it to shrink a bit
+
+Updated:
+- Converted template strings ($"") to `string_concat` as it is more efficient in both VM and YYC
+- Optimised input checking using stored hashes instead
+- Optimised `show_hitbox`
+- Optimised cutscene system
+- Debloated Debug UI
+- `Screenshot` now with option to contain time in the file name
+- Modified `ButtonSprites`, `DrawSpeechBubble` for more user defined preferences
+- `oBoardCover` is now up to date
+- Renamed `GreenCircle` to `green_soul_draw_circle` in `oSoul`
+- Renamed `FleeEnabled` and `FleeText` to `enable_flee` and `flee_text_list` respectively in `oBattleController`
+- Moved `oIntro` to External as each user may want a different logo
+- Updated enemy dusting method
+- Updated oOWDrawer drawing logic to be more user friendly (And moved it to External)
+- Updated TurboGML to v4.0.1 (i contributed lol)
+- Updated Lexicon to 3.0.5
+- Updated Input to 7.0.1
+- Updated READ ME.md
+
 v0.7.6.1 (Eden)
 Fixed: oIntro is now up to date
 

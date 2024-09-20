@@ -30,6 +30,5 @@ if state == 3
 if keyboard_check_pressed(ord("R"))
 {
 	audio_stop_all();
-	room_goto_previous();
-	audio_destroy_stream(aud);
+	__ExitGameover();
 }

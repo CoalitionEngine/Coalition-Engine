@@ -12,6 +12,7 @@ function lexicon_text(_textEntry) {
 	static _replaceChrStart = _global.replaceChr[0];
 	static _replaceChrEnd = _global.replaceChr[1];
 	static _replchr = _global.replaceChrLegacy;
+	static _recursionStack = (__LEXICON_ENTRY_RECURSION_DETECTION) ? ds_list_create() : undefined;
 	var _str = _textEntry;
 	
 	if (argument_count > array_length(_staticArray)) array_resize(_staticArray, argument_count);
@@ -41,6 +42,27 @@ function lexicon_text(_textEntry) {
 		}
 	}
 	
+	
+	// Entry exists, continue
+	// Loop before adding
+	if (__LEXICON_ENTRY_RECURSION_DETECTION) {
+		var _i = 0;
+		repeat(ds_list_size(_recursionStack)) {
+			if (_recursionStack[| _i] == _textEntry) {
+				var _errorStr = "Found recursion within text entries!\nEnsure that localisation files do not contain duplicated reference of " + string(_textEntry) + "\nEntries traversed:";
+				_i = 0;
+				repeat(ds_list_size(_recursionStack)) {
+					_errorStr += "\n" + _recursionStack[| _i];
+					++_i;
+				}
+				_errorStr += " <--- recursion found!";
+				__lexicon_throw(_errorStr);	
+			}
+			++_i;
+		}
+	}
+	
+	ds_list_add(_recursionStack, _textEntry);
 
 	#region Cache
 	// Check against Cache
@@ -52,7 +74,7 @@ function lexicon_text(_textEntry) {
 		if (is_struct(argument[_i])) {
 			_cacheStr += string(ptr(argument[_i]));	
 		} else {
-			_cacheStr += string(argument[_i]);	
+			_cacheStr += is_string(argument[_i]) ? argument[_i] : string(argument[_i]);	
 		}
 		// Store arguments
 		_staticArray[_i] = argument[_i];
@@ -70,6 +92,10 @@ function lexicon_text(_textEntry) {
 	var _newStr;
 	_staticArray[0] = _cacheStruct;
 	_newStr = script_execute_ext(__lexicon_parse_string, _staticArray, 0, argument_count);
+	
+	if (__LEXICON_ENTRY_RECURSION_DETECTION) {
+		ds_list_delete(_recursionStack, ds_list_find_index(_recursionStack, _textEntry));
+	}
 	
 	return _newStr;
 }

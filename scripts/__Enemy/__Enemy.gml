@@ -39,23 +39,18 @@ function __Enemy() constructor {
 					var ii = 0;
 					repeat array_length(enemies[i].enemy_act)
 					{
-						enemy_act[i, ii] =			enemies[i].enemy_act[ii];
-						enemy_act_text[i, ii] =		enemies[i].enemy_act_text[ii];
-						enemy_act_function[i, ii] = enemies[i].enemy_act_function[ii];
+						enemy_act[i][ii] =			enemies[i].enemy_act[ii];
+						enemy_act_text[i][ii] =		enemies[i].enemy_act_text[ii];
+						enemy_act_function[i][ii] = enemies[i].enemy_act_function[ii];
 						++ii;
 					}
 					global.BossFight = enemies[i].is_boss;
 					if enemies[i].begin_at_turn {
 						menu_state = -1;
 						battle_turn++;
-						begin_at_turn = true;
 						__dialog_start();
 						oSoul.visible = true;
 					}
-				}
-				else
-				{
-					enemy_act[i] = [""];
 				}
 			}
 		}
@@ -100,7 +95,7 @@ function __Enemy() constructor {
 			enemy_act_text[act] = text;
 			enemy_act_function[act] = func;
 			if trigger
-				oBattleController.action_trigger_turn ^= quick_pow(2, act);
+				oBattleController.__action_trigger_turn ^= quick_pow(2, act);
 		}
 		return Enemy;
 	}

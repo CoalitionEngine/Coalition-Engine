@@ -23,18 +23,10 @@ InitSprite(2, spr_sans_head, 0, "ext", [0, -75]);
 SetWiggle(2, "sin", 0.1, 0.2, 1.7, 1.2);
 
 SlammingEnabled = true;
-SlamSprites = [
-	[spr_sans_slam_hor],
-	[spr_sans_slam_ver],
-	[spr_sans_slam_hor],
-	[spr_sans_slam_ver],
-];
-SlamSpriteTargetIndex = [
-	[1, 0, 0, 1, 2],
-	[1, 0, 0, 1, 2],
-	[0, 1, 2, 2, 2],
-	[0, 1, 2, 2, 2],
-];
+SetSlamSprites(0, spr_sans_slam_hor, [1, 0, 0, 1, 2]);
+SetSlamSprites(90, spr_sans_slam_ver, [1, 0, 0, 1, 2]);
+SetSlamSprites(180, spr_sans_slam_hor, [0, 1, 2, 2, 2]);
+SetSlamSprites(270, spr_sans_slam_ver, [0, 1, 2, 2, 2]);
 
 //begin_at_turn = true;
 
@@ -55,7 +47,6 @@ for(var i = 0; i < 12; i++)
 	text = LoadTextFromFile("SansTest2.txt", 1, "@" + string(i));
 	Battle.EnemyDialog(self, i, text);
 }
-Battle.EnemyDialog(self, 0, "look at this funny line system i stole");
 dialog.x += 50;
 dialog.y -= 70;
 event_user(1);
@@ -70,4 +61,3 @@ event_user(1);
 //ShaderSetUniform(Shader, "mode", 5);
 
 audio_stop_all();
-__max_inst_cnt = 0;

@@ -1,9 +1,9 @@
 var input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
 	input_confirm = PRESS_CONFIRM,
-	input_cancel = PRESS_CANCEL;
+	input_cancel = PRESS_CANCEL,
 	
-var state = (menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM);
+	state = (menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM);
 naming_alpha[0] += (real(!state) - naming_alpha[0]) * 0.15;
 naming_alpha[1] += (real(state) - naming_alpha[1]) * 0.15;
 name_y += ((state ? 230 : 110) - name_y) * 0.12;
@@ -12,6 +12,7 @@ name_scale += ((state ? 2.5 : 1) - name_scale) * 0.12;
 switch menu_state
 {
 	case INTRO_MENU_STATE.LOGO:
+		//To be done: Data saving to detect first boot
 		if input_confirm menu_state = INTRO_MENU_STATE.FIRST_TIME;
 		break;
 	case INTRO_MENU_STATE.FIRST_TIME:
@@ -30,7 +31,7 @@ switch menu_state
 		}
 		break;
 
-	case INTRO_MENU_STATE.NAMING: // Holy shit this needs optimization! Mechanic from TML engine
+	case INTRO_MENU_STATE.NAMING:
 		if input_horizontal != 0 || input_vertical != 0 audio_play(snd_menu_switch);
 		#region Switching between letters and options
 			naming_choice++;
@@ -118,13 +119,15 @@ switch menu_state
 		naming_choice--;
 		break;
 	case INTRO_MENU_STATE.NAME_CHECKING: // Name checking thingy
-		if input_horizontal != 0
+		//Only allow choice swapping if name is usable
+		if input_horizontal != 0 && name_usable
 		{
 			name_confirm ^= true;
 			audio_play(snd_menu_switch);
 		}
 		if input_confirm != 0
 		{
+			//Confirm naming if usable
 			if !name_confirm menu_state = INTRO_MENU_STATE.NAMING;
 			else 
 			{
@@ -145,6 +148,7 @@ switch menu_state
 			}
 		}
 		break;
+	//Settings
 	case INTRO_MENU_STATE.SETTINGS:
 		if input_cancel
 		{

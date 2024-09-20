@@ -1,5 +1,5 @@
 //Destroy green shield variables
-with GreenShield
+with __GreenShieldData
 {
 	ds_list_destroy(Angle);
 	ds_list_destroy(TargetAngle);
@@ -11,22 +11,11 @@ with GreenShield
 	for (var i = 0; i < Amount; ++i) instance_destroy(List[| i]);
 	ds_list_destroy(List);
 	ds_grid_destroy(Input);
-	part_type_destroy(ParticleType);
-	part_system_destroy(ParticleSystem);
 }
-delete GreenShield;
-delete Purple;
-part_type_destroy(EffectT);
-part_system_destroy(EffectS);
+delete __GreenShieldData;
+delete PurpleSoulData;
+part_type_destroy(__SoulEffectType);
+part_system_destroy(__SoulEffectSystem);
 
 //Removes itself form the global soul array
-var i = 0, n = array_length(BattleSoulList);
-repeat n
-{
-	if BattleSoulList[i] == id
-	{
-		array_delete(BattleSoulList, i, 1);
-		exit;
-	}
-	++i;
-}
+array_delete(BattleSoulList, array_get_index(BattleSoulList, id), 1);

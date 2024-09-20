@@ -23,8 +23,10 @@ if global.timer >= 1
 		if is_odd(i) surface_copy(CutScreenSurface, 0, 0, application_surface);
 		++i;
 	}
+	//Drawing blasters
 	if room == room_battle && instance_exists(oGB)
 	{
+		//Apply GPU depth for blaster sprite drawing
 		var dep = gpu_get_depth();
 		gpu_set_ztestenable(true);
 		gpu_set_depth(-10);
@@ -39,7 +41,7 @@ if global.timer >= 1
 			}
 			//Firing state
 			if state == 4
-				draw_sprite_ext(beam_sprite, 0, x, y, image_xscale, beam_scale, image_angle, color, beam_alpha);
+				draw_sprite_ext(beam_sprite, 0, x, y, image_xscale, __beam_scale, image_angle, color, __beam_alpha);
 		}
 		with oGB
 		{
@@ -51,7 +53,6 @@ if global.timer >= 1
 				case 3: color = c_red;			break;
 			}
 			draw_sprite_ext(gb_sprite, gb_index, gbx, gby, gb_xscale, gb_yscale, image_angle, color, gb_alpha);
-			show_hitbox(c_red);
 		}
 		gpu_set_depth(dep);
 		gpu_set_ztestenable(false);

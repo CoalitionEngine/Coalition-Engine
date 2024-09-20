@@ -403,6 +403,7 @@ function draw_text_shadow(_x, _y, _str, _shadowColor=c_black, _shadowAlpha=1, _s
 	draw_text(_x, _y, _str);
 }
 
+
 function draw_text_ext_shadow(_x, _y, _str, _sep, _width, _shadowColor=c_black, _shadowAlpha=1, _shadowDistX=1, _shadowDistY=1) {
 	var _oldColor = draw_get_color();
 	var _oldAlpha = draw_get_alpha();
@@ -413,6 +414,7 @@ function draw_text_ext_shadow(_x, _y, _str, _sep, _width, _shadowColor=c_black, 
 	draw_set_alpha(_oldAlpha);
 	draw_text_ext(_x, _y, _str, _sep, _width);
 }
+
 
 function draw_text_outline(_x, _y, _str, _outlineColor=c_black, _outlineAlpha=1, _outlineSize=1, _fidelity=4) {
 	var _oldColor = draw_get_color();

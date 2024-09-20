@@ -1,2 +1,2 @@
-OverWorld_ID = 0;
-BackgroundSprite = sprHall;
+//The background sprite of the room
+BackgroundSprite = -1;

@@ -20,7 +20,5 @@ if global.show_hitbox
 		LengthX = lengthdir_x(length / 2, _angle),
 		LengthY = lengthdir_y(length / 2, _angle);
 	//Draws hitbox manually due to nine slice sprites don't exactly work with show_hitbox()
-	draw_set_color(c_red);
-	draw_line_width(x + LengthX, y + LengthY, x - LengthX, y - LengthY, 5);
-	draw_set_color(c_white);
+	draw_line_width_color(x + LengthX, y + LengthY, x - LengthX, y - LengthY, 5, c_red, c_red);
 }

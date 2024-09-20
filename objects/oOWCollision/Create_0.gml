@@ -1,11 +1,19 @@
 depth = oOWPlayer.depth + 10;
+//The collision event
 Event = -1;
+//Whether the player has collided with this collision
 Collided = false;
+//Whether this is an interactable object (Press Confirm)
 Interactable = false;
+Name = "Unnamed collision";
+///Checks for the confirm input
 function CheckConfirm() {
-	return oOWController.menu_state == MENU_MODE.IDLE && !oOWPlayer.ForceCollideless && PRESS_CONFIRM;
+	forceinline;
+	return oOWController.menu_state == MENU_MODE.IDLE && !oOWPlayer.__ForceCollideless && PRESS_CONFIRM;
 }
+///Checks whether the player is colliding
 function CheckCollide() {
+	forceinline;
 	return place_meeting(x, y, oOWPlayer);
 }
 ///Sets whether the object is an interactable object

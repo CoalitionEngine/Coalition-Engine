@@ -1,15 +1,15 @@
 depth = -10000;
-
+//The timer for quitting the game
 quit_timer = 0;
-
+//Fader data
 fader_color = c_black;
 fader_alpha = 0;
-
-RGBShake = 0;
+//RGB shaking data
+__RGBShake = 0;
 RGBDecrease = 1;
-RGBSurf = surface_create(640, 480);
+__RGBSurf = surface_create(640, 480);
 RGBShakeMethod = 0;
-
+//Song display (Optional)
 Song =  {};
 with Song
 {
@@ -19,7 +19,7 @@ with Song
 	Time = 0;
 	Lerp = 0.21;
 };
-
+//Custom fading method (Optional)
 Fade = {};
 with Fade
 {
@@ -33,16 +33,7 @@ with Fade
 	Timer = 0;
 };
 FadeTime = 0;
-
-Naming = {};
-with Naming
-{
-	Enabled = true;
-	Allowed = true;
-	Named = false;
-	State = 1
-}
-
+//Border data
 Border = {};
 with Border
 {

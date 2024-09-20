@@ -56,7 +56,7 @@ function CollideWithBullet(exceptions = []) {
 			{
 				with bullet
 				{
-					if state == 4 && beam_alpha >= 0.5
+					if state == 4 && __beam_alpha >= 0.5
 					{
 						if type != 0 && type != 3
 						{

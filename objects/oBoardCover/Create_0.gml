@@ -1,6 +1,5 @@
 image_alpha = 1;
-depth = oBoard.depth;
-depth = -2;
+depth = oBoard.depth - 1;
 surface = surface_create(640, 480);
 
 up = 40;
@@ -8,15 +7,13 @@ down = 40;
 left = 40;
 right = 40;
 
-frame_x = [0, 0, 0, 0];
-frame_y = [0, 0, 0, 0];
-frame_w = [0, 0, 0, 0];
-frame_h = [0, 0, 0, 0];
+__frame_x = array_create(4, 0);
+__frame_y = array_create(4, 0);
 
-bg_x = 0;
-bg_y = 0;
-bg_w = 0;
-bg_h = 0;
+__bg_x = 0;
+__bg_y = 0;
+__bg_w = 0;
+__bg_h = 0;
 
 thickness_frame = 5;
 

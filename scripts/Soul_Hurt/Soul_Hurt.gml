@@ -16,7 +16,7 @@ function Soul_Hurt(dmg = global.damage, kr = global.krdamage)
 		if global.kr_activation && global.hp > 1 global.kr += kr;
 		if hit_destroy
 		{
-			__CoalitionEngineError(object_get_parent(object_index) == oBulletParents,
+			__CoalitionEngineError(object_get_parent(object_index) != oBulletParents,
 			"Soul_Hurt() is only ment to be called in objects that are children to oBulletParents");
 			instance_destroy();
 		}

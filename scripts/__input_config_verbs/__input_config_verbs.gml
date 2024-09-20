@@ -23,6 +23,6 @@ function __input_config_verbs()
             confirm:  [input_binding_key(vk_enter), input_binding_key(ord("Z"))],
             menu:  input_binding_key(ord("C")),
 			pause: input_binding_key(vk_escape)
-        }
-	};
+		}
+    };
 }

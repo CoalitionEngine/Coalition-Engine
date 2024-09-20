@@ -8,7 +8,7 @@ if STATE == BATTLE_STATE.IN_TURN
 	if mode = SOUL_MODE.GREEN
 	{
 		//The green circle of green soul
-		if GreenCircle
+		if green_soul_draw_circle
 		{
 			draw_set_circle_precision(16);
 			draw_circle_colour(x - 0.5, y - 0.5, 30, c_green, c_green, 1);
@@ -33,27 +33,30 @@ if STATE == BATTLE_STATE.IN_TURN
 			BottomLine =	board_y + b_down - 15,
 			LeftLine =		board_x - b_left + 15,
 			RightLine =		board_x + b_right - 15,
-			XDifference = (RightLine - LeftLine) / (Purple.HLineAmount - 1),
-			YDifference = (BottomLine - TopLine) / (Purple.VLineAmount - 1);
+			XDifference = (RightLine - LeftLine) / (PurpleSoulData.HLineAmount - 1),
+			YDifference = (BottomLine - TopLine) / (PurpleSoulData.VLineAmount - 1);
 		//Horizontal lines
-		draw_set_alpha(Purple.Mode == 0 ? 1 : 0.3);
-		draw_set_color(c_purple);
-		for (var i = TopLine; i <= BottomLine; i += YDifference)
-			draw_line(LeftLine, i, RightLine, i);
-		if Purple.AllowVertical
+		with PurpleSoulData
 		{
-			//Vertical lines
-			draw_set_alpha(Purple.Mode == 1 ? 1 : 0.3);
-			for(var i = LeftLine; i <= RightLine; i += XDifference)
-				draw_line(i, TopLine, i, BottomLine);
-			//Fading effect when line changes
-			Purple.ForceAlpha = decay(Purple.ForceAlpha, 0, Purple.BoxLerpSpeed);
-			Battle_Masking_Start();
-			draw_sprite_ext(sprPixel, 0, board_x - b_left, board_y - b_up, b_left + b_right, b_up + b_down, 0, c_purple, Purple.ForceAlpha);
-			Battle_Masking_End();
+			draw_set_alpha(Mode == 0 ? 1 : 0.3);
+			draw_set_color(c_purple);
+			for (var i = TopLine; i <= BottomLine; i += YDifference)
+				draw_line(LeftLine, i, RightLine, i);
+			if AllowVertical
+			{
+				//Vertical lines
+				draw_set_alpha(Mode == 1 ? 1 : 0.3);
+				for(var i = LeftLine; i <= RightLine; i += XDifference)
+					draw_line(i, TopLine, i, BottomLine);
+				//Fading effect when line changes
+				ForceAlpha = decay(ForceAlpha, 0, AlphaLerpSpeed);
+				Battle_Masking_Start();
+				draw_sprite_ext(sprPixel, 0, board_x - b_left, board_y - b_up, b_left + b_right, b_up + b_down, 0, c_purple, ForceAlpha);
+				Battle_Masking_End();
+			}
+			draw_set_color(c_white);
+			draw_set_alpha(1);
 		}
-		draw_set_color(c_white);
-		draw_set_alpha(1);
 	}
 }
 show_hitbox();

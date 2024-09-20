@@ -43,6 +43,7 @@ SetShopkeeperDrawingState(0, 0, function() {
 ```
 This is the default drawing function of a shopkeeper, to set the drawing event of the shopkeeper of another state, just change
 the second argument into another value.
+Please be noted that you cannot use `draw_self` as this is a struct, not an object.
 It is recommended to change the state of the shop keeper using Scribble events when a dialog starts/ends.
 For example,
 ```gml

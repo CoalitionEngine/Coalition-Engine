@@ -44,8 +44,8 @@ function __Box() constructor
 		forceinline
 		with oOWController
 		{
-			name = global.ItemLibrary[| item].name;
-			var uses_left = global.ItemLibrary[| item].item_uses_left;
+			name = item.name;
+			var uses_left = item.item_uses_left;
 			if uses_left > 1 name += " x" + string(uses_left);
 		}
 	}

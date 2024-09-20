@@ -45,19 +45,19 @@ var input_horizontal = CHECK_HORIZONTAL,
 	input_vertical =   CHECK_VERTICAL,
 	input_cancel =     HOLD_CANCEL,
 	input_menu =	   PRESS_MENU,
-	spd = (FleeEnabled && input_cancel) ? run_speed : global.spd,
-	scale_x = last_dir,
-	assign_sprite = last_sprite,
+	spd = (enable_sprint && input_cancel) ? run_speed : global.spd,
+	scale_x = __last_dir,
+	assign_sprite = __last_sprite,
 	x_stop = false, y_stop = false;
 
-if ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision)
-	ForceCollideless = false;
+if __ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision)
+	__ForceCollideless = false;
 
 // Menu opening
-if input_menu && !oOWController.menu && !oOWController.menu_disable && !oOWController.dialog_exists
+if input_menu && !oOWController.menu_opened && !oOWController.menu_disable && !oOWController.dialog_exists
 {
 	// Open Menu, UI works in oOWController
-	oOWController.menu = true;
+	oOWController.menu_opened = true;
 	audio_play(snd_menu_switch);
 	moveable = false;
 }
@@ -67,7 +67,7 @@ if DEBUG
 	if room == room_overworld && (keyboard_check_pressed(vk_space) || (x >= 830 && encounter_state == 0))
 		Encounter_Begin();
 
-if moveable && !oOWController.menu // When the player can move around
+if moveable && !oOWController.menu_opened // When the player can move around
 {
 	var displace = 0, dir_spr_size = array_length(dir_sprite);
 	repeat spd
@@ -98,15 +98,15 @@ if moveable && !oOWController.menu // When the player can move around
 		
 	}
 	//Sets the current sprite and direction as usage for player idling
-	last_sprite = assign_sprite;
-	last_dir = scale_x;
+	__last_sprite = assign_sprite;
+	__last_dir = scale_x;
 }
 else
 {
 	assign_sprite = oOWController.__cutscene_activated ?
 		dir_sprite[is_even(dir) ? (image_flip == -1 ? max(0, dir == 0) + 2 : 2) : max(0, dir == 270)]
-		: last_sprite;
-	scale_x = last_dir;
+		: __last_sprite;
+	scale_x = __last_dir;
 }
 
 image_xscale = scale_x;
@@ -120,7 +120,7 @@ else
 }
 
 //Menu Idle spriting thing
-if oOWController.menu
+if oOWController.menu_opened
 {
 	switch oOWController.menu_state
 	{
@@ -137,4 +137,4 @@ if oOWController.menu
 			break;
 	}
 }
-else sprite_index = (assign_sprite == -1 ? dir_sprite[2] : assign_sprite)
+else sprite_index = (assign_sprite == -1 ? dir_sprite[2] : assign_sprite);

@@ -1,6 +1,6 @@
 /// @description Uninitialization
 if surface_exists(CutScreenSurface) surface_free(CutScreenSurface);
-if surface_exists(RGBSurf) surface_free(RGBSurf);
+if surface_exists(__RGBSurf) surface_free(__RGBSurf);
 if surface_exists(GradientSurf) surface_free(GradientSurf);
 instance_destroy(oBulletParents);
 delete COALITION_SAVE_FILE;
@@ -19,7 +19,6 @@ with Border
 
 delete Song;
 delete Fade;
-delete Naming;
 delete Border;
 delete COALITION_DATA;
 

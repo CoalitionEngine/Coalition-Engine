@@ -25,9 +25,9 @@ function CutsceneEvent(time, func, duration = 0)
 {
 	forceinline
 	//Adds function to storage
-	array_push(oOWController.__cutscene_events, {time, func, duration});
+	ds_list_add(oOWController.__cutscene_events, {time, func, duration});
 	//Sort list of functions by execution time
-	array_sort(oOWController.__cutscene_events, function(element1, element2) {
+	ds_list_sort_ext(oOWController.__cutscene_events, function(element1, element2) {
 		return element1.time - element2.time;
 	});
 }
@@ -44,13 +44,13 @@ function CutsceneMoveChar(char, dir, spd, interval = 12)
 	if object_get_parent(char) != oOWChars
 		show_error($"{asset_get_name(char)} is not a child of oOWChars", false);
 	//Apply previous sprite
-	char.last_sprite = char.sprite_index;
+	char.__last_sprite = char.sprite_index;
 	//Apply new direction (4 directional)
 	char.dir = floor(dir / 90) * 90;
 	//Apply displacement
 	var x_move = dcos(dir), y_move = -dsin(dir);
 	//Set last direction of char to current direction
-	char.last_dir = char.image_flip == -1 ? 1 : (array_length(char.dir_sprite) == 3 && x_move > 0 ? -1 : 1);
+	char.__last_dir = char.image_flip == -1 ? 1 : (array_length(char.dir_sprite) == 3 && x_move > 0 ? -1 : 1);
 	with char
 		repeat spd
 		{

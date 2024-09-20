@@ -15,12 +15,14 @@ function check_outside() {
 	&& ((x < -sprite_width) || (x > room_width + sprite_width) ||
 			(y > room_height + sprite_height) || (y < -sprite_height));
 }
-///@func Screenshot(filename)
+///@func Screenshot([filename], [contain_time])
 ///@desc Takes a screenshot and saves it with given filename + current time
-function Screenshot(filename = "") {
+///@param {string} filename The filename of the screenshot (Default "")
+///@param {bool} contain_time Whether the filename contains the current time (Default true)
+function Screenshot(filename = "", contain_time = true) {
 	forceinline
-	var date = $"{current_year}y-{current_month}m-{current_day}d_{current_hour}h_{current_minute}m_{current_second}s";
-	screen_save($"Screenshots/{filename} {date}.png");
+	var date = contain_time ? string_concat(current_year, "y-", current_month, "m-", current_day, "d_", current_hour, "h_", current_minute, "m_", current_second, "s") : "";
+	screen_save(string_concat("Screenshots/", filename, " ", date, ".png"));
 }
 
 ///@func LoadTextFromFile(filename, [reading_method], [tag])
@@ -124,6 +126,7 @@ function instance_check_create(inst, depth = 0)
 ///@return {bool}
 function is_rectangle(a, b, c, d)
 {
+	forceinline
 	var pt_a = new Vector2(a[0], a[1]),
 		pt_b = new Vector2(b[0], b[1]),
 		pt_c = new Vector2(c[0], c[1]),
@@ -138,9 +141,7 @@ function is_rectangle(a, b, c, d)
 		return false;
 	//Check right angles
 	//Only two is required due to the angle sum of polygon
-	if AB.Dot(BC) != 0 || BC.Dot(CD) != 0 return false;
-	//Everything checks out
-	return true;
+	return AB.Dot(BC) == 0 && BC.Dot(CD) == 0;
 }
 
 ///@func nearestPointOnEdge(point_x, point_y, start_x, start_y, end_x, end_y)

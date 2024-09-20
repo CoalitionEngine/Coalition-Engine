@@ -4,18 +4,18 @@ var ItemCount = Item_Count(),
 	input_cancel = PRESS_CANCEL,
 	input_confirm = PRESS_CONFIRM;
 draw_set_font(fnt_dt_sans);
-// Save UI
-if save_state >= SAVE_STATE.CHOOSING
+#region Save UI
+if __save_state >= SAVE_STATE.CHOOSING
 {
 	__wait_time++;
 	oOWPlayer.moveable = false;
 	//Box UI drawing, using int over vars are better
 	draw_rectangle_width_background(108, 118, 108 + 424, 118 + 174);
 	//If saving is finshed, the text will be yellow
-	draw_set_color(save_state == SAVE_STATE.FINISHED ? c_yellow : c_white);
+	draw_set_color(__save_state == SAVE_STATE.FINISHED ? c_yellow : c_white);
 	draw_set_halign(fa_left);
 	draw_text(140, 140, Player.Name());
-	draw_text(295, 140, "LV " + string(Player.LV()));
+	draw_text(295, 140, string_concat("LV ", Player.LV()));
 	var time = global.timer,
 		second = time div 60,
 		minute = string(second div 60);
@@ -24,25 +24,25 @@ if save_state >= SAVE_STATE.CHOOSING
 	second = string_length(second) == 1 ? "0" + second : second;
 	draw_text(423, 140, minute + ":" + second);
 	draw_text(140, 180, RoomNames[| OverworldSubRoom]);
-	if save_state == SAVE_STATE.CHOOSING
+	if __save_state == SAVE_STATE.CHOOSING
 	{
 		//Soul alpha sin-ing
 		var SoulAlpha = abs(dsin(global.timer)) + 0.3;
-		draw_sprite_ext(sprSoul, 0, 151 + Choice * 180, 255, 1, 1, 90, c_red, SoulAlpha);
+		draw_sprite_ext(sprSoul, 0, 151 + __save_choice * 180, 255, 1, 1, 90, c_red, SoulAlpha);
 		draw_text(170, 240, "Save");
 		draw_text(350, 240, "Return");
 	}
-	elif save_state == SAVE_STATE.FINISHED
+	elif __save_state == SAVE_STATE.FINISHED
 	{
 		draw_set_halign(fa_center);
 		draw_text(240, 240, "File Saved.");
 	}
 }
-
+#endregion
 #region Menu Overworld
 // Check if the menu should display more on top or more on bottom, depending on player's position
 var menu_at_top = oOWPlayer.y < Camera.ViewY() + Camera.ViewHeight() / 2 + 10;
-//Don't draw if the box is out of bound
+//Don't draw if the box is out of bounds
 if menu_ui_x > -140
 {
 	#region The "Name - LV - HP - G" box
@@ -55,8 +55,7 @@ if menu_ui_x > -140
 	// String var declaration
 	var lv =		string(Player.LV()),
 		hp =		string(Player.HP()),
-		max_hp =	string(Player.HPMax()),
-		gold =		string(Player.Gold());
+		max_hp =	string(Player.HPMax());
 
 	// String drawing
 	draw_set_color(c_white);
@@ -71,11 +70,9 @@ if menu_ui_x > -140
 	// Toby Fox method because the number in Gold is not aligned correctly with spaces
 	var ui_num_x = ui_box_x + string_width("LV  ");
 	draw_text(ui_box_x, ui_box_y + 72, "G");
-	draw_text(ui_num_x, ui_box_y + 72, gold);
+	draw_text(ui_num_x, ui_box_y + 72, Player.Gold());
 	#endregion
-
 	#region The "ITEM - STAT - CELL" box with their respective elements
-
 	// Position and side elements for the box
 	ui_box_x = menu_ui_x + 6;
 	
@@ -91,6 +88,7 @@ if menu_ui_x > -140
 		draw_set_color(menu_color[i][bool(exist_check[i])]);
 		draw_text(ui_box_x + 46, 174 + 15 + i * 36, menu_label[i]);
 	}
+	draw_set_color(c_white);
 
 	#region Drawing the box for each state
 		#region ITEM state
@@ -101,8 +99,6 @@ if menu_ui_x > -140
 			draw_rectangle_width_background(194, ui_box_y, 194 + 334 - 1, ui_box_y + 350 - 1,,,,, 0.8);
 	
 			// Item text drawing
-			draw_set_font(fnt_dt_sans);
-			draw_set_color(c_white);
 			var i = 0;
 			repeat ItemCount
 			{
@@ -111,8 +107,8 @@ if menu_ui_x > -140
 			}
 
 			// Item function
-			for(var i = 0, gap = [0, 96, 114]; i < 3; i++)
-				draw_text(234 + Summation(gap, 0, i), ui_box_y + 303, menu_item_text[i]);
+			for(var i = 0; i < 3; i++)
+				draw_text(i == 0 ? 234 : (i == 1 ? 330 : 444), ui_box_y + 303, menu_item_text[i]);
 		}
 		#endregion
 		#region STAT state
@@ -126,16 +122,16 @@ if menu_ui_x > -140
 			// Stat text drawing
 			draw_set_font(fnt_dt_sans);
 			draw_set_color(c_white);
-			draw_text(216, ui_box_y + 27, $"\"{Player.Name()}\"");
-			draw_text(216, ui_box_y + 87, "LV " + string(lv));
-			draw_text(216, ui_box_y + 119, $"HP {hp} / {max_hp}");
-			draw_text(216, ui_box_y + 183, $"AT {global.player_base_atk} ({global.player_attack})");
-			draw_text(216, ui_box_y + 215, $"DF {global.player_base_def} ({global.player_def})");
-			draw_text(384, ui_box_y + 183, "EXP: " + string(Player.Exp()));
-			draw_text(384, ui_box_y + 215, "NEXT: " + string(Player.GetExpNext()));
-			draw_text(216, ui_box_y + 273, "WEAPON: " + string(COALITION_DATA.AttackItem));
-			draw_text(216, ui_box_y + 305, "ARMOR: " + string(COALITION_DATA.DefenseItem));
-			draw_text(216, ui_box_y + 347, "GOLD: " + string(gold));
+			draw_text(216, ui_box_y + 27, string_concat("\"", Player.Name(), "\""));
+			draw_text(216, ui_box_y + 87, string_concat("LV ", lv));
+			draw_text(216, ui_box_y + 119, string_concat("HP ", hp, " / ", max_hp));
+			draw_text(216, ui_box_y + 183, string_concat("AT ", global.player_base_atk, " (", global.player_attack, ")"));
+			draw_text(216, ui_box_y + 215, string_concat("DF ", global.player_base_def, " (", global.player_def, ")"));
+			draw_text(384, ui_box_y + 183, string_concat("EXP: " ,Player.Exp()));
+			draw_text(384, ui_box_y + 215, string_concat("NEXT: ", Player.GetExpNext()));
+			draw_text(216, ui_box_y + 273, string_concat("WEAPON: ", COALITION_DATA.AttackItem));
+			draw_text(216, ui_box_y + 305, string_concat("ARMOR: ", COALITION_DATA.DefenseItem));
+			draw_text(216, ui_box_y + 347, string_concat("GOLD: ", Player.Gold()));
 		}
 		#endregion
 		#region CELL state
@@ -147,15 +143,14 @@ if menu_ui_x > -140
 			draw_rectangle_width_background(194, ui_box_y, 194 + 334 - 1, ui_box_y + 258 - 1,,,,, 0.8);
 		
 			// Cell text drawing
-			draw_set_font(fnt_dt_sans);
-			draw_set_color(c_white);
 			for (var i = 0; i < CellCount; ++i)
 				draw_text(232, ui_box_y + 23 + i * 32, Cell.GetName(i));
 		}
 		#endregion
 	#endregion
+	#region Box drawing
 	// Check if player has opened a Box
-	if box_mode
+	if __is_using_box
 	{
 		oOWPlayer.moveable = false;
 		//Box UI drawing
@@ -190,13 +185,14 @@ if menu_ui_x > -140
 			++i;
 		}
 	}
+	#endregion
 	// Drawing the soul over everything
 	draw_sprite_ext(sprSoulMenu, 0, menu_soul_pos[0], menu_soul_pos[1], 1, 1, 0, c_red, menu_soul_alpha);
 	#endregion
 }
 #endregion
-
-// Check if a Overworld Dialog is occuring
+#region Dialog
+// Check if a Overworld Dialog is occuring and the screen is not flashed due to encounter animation
 if dialog_exists && !(oOWPlayer.encounter_draw & 1)
 {
 	//Dialog Box drawing
@@ -216,13 +212,13 @@ if dialog_exists && !(oOWPlayer.encounter_draw & 1)
 		draw_sprite_ext(dialog_sprite, dialog_sprite_index, 30 + 60 + sprite_dis_x, dialog_box_y + 80 + sprite_dis_y, 80 /spr_w, 80 / spr_h, 0, c_white, 1);
 	}
 	//Draws dialog texts
-	__text_writer.draw(30 + 25 + dis, dialog_box_y + 20, dialog_typist);
+	__text_writer.draw(30 + 25 + dis, dialog_box_y + 20, __dialog_typist);
 	
 	//Check if the dialog is currently an option and draw if question is asked and buffer time has expired
-	if dialog_option && dialog_typist.get_state() == 1 && !option_buffer
-		draw_sprite_ext(sprSoul, 0, 36 + dis + option_pos[# option, 0], dialog_box_y + 20 + option_pos[# option, 1], 1, 1, 90, c_red, 1);
+	if dialog_option && __dialog_typist.get_state() == 1 && !option_buffer
+		draw_sprite_ext(sprSoul, 0, 36 + dis + __option_pos[# option, 0], dialog_box_y + 20 + __option_pos[# option, 1], 1, 1, 90, c_red, 1);
 }
-
+#endregion
 #region Debugger
 DrawDebugUI();
 #endregion

@@ -6,7 +6,7 @@
 ///@desc Shop functions
 function __Shop() constructor {
 	//Internal variable init
-	static __options = ["Buy", "Sell", "Talk", "Exit"];
+	static __options = [];
 	static __info_surface = undefined;
 	__info_surface ??= surface_create(210, 230);
 	
@@ -67,6 +67,8 @@ function __Shop() constructor {
 		__info_surface = surface_create(210, 230);
 		__choice_displacement = 0;
 		draw_set_align();
+		draw_set_color(c_white);
+		draw_set_font(fnt_dt_sans);
 		Camera.Init();
 		return Shop;
 	}
@@ -79,15 +81,18 @@ function __Shop() constructor {
 	///@return {Struct.__Shop}
 	static AddItem = function(item, name = global.ItemLibrary[| item].name, price, desc)
 	{
+		forceinline;
 		array_push(BuyableItems, { name, price, desc, id: item });
 		return Shop;
 	}
 	///@method AddDialog(question, answer)
+	///@desc Adds a question and it's answer to the dialog list of the shopkeeper
 	///@param {string} question The question of the dialog
 	///@param {string} answer The answer of the dialog
 	///@return {Struct.__Shop}
 	static AddDialog = function(question, answer)
 	{
+		forceinline;
 		array_push(TalkOptions, question);
 		array_push(TalkDialog, answer);
 		return Shop;
@@ -97,6 +102,7 @@ function __Shop() constructor {
 	///@return {Struct.__Shop}
 	static PlayMusic = function()
 	{
+		forceinline;
 		audio_stop_all();
 		if is_string(Music)
 		{
@@ -126,7 +132,7 @@ function __Shop() constructor {
 			image_blend, image_alpha,
 			state : 0,
 			state_drawing_functions : [
-				///Default drawing function
+				///Default drawing function, you cannot use draw_self() as this is NOT an object
 				function() {
 					draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 				}
@@ -142,6 +148,7 @@ function __Shop() constructor {
 	///@return {Struct.__Shop}
 	static SetShopkeeperDrawingState = function(slot, state, func)
 	{
+		forceinline;
 		Shopkeeper[slot].state_drawing_functions[state] = func;
 		return Shop;
 	}
@@ -152,6 +159,7 @@ function __Shop() constructor {
 	///@return {real,Struct.__Shop} Either the state of the Shop struct itself
 	static ShopkeeperState = function(slot = 0, state = undefined)
 	{
+		forceinline;
 		if is_undefined(state) return Shopkeeper[slot].state;
 		else
 		{
@@ -201,6 +209,7 @@ function __Shop() constructor {
 	///@return {Struct.__Shop}
 	static StartDialog = function(text)
 	{
+		forceinline;
 		__in_dialog = true;
 		__text.overwrite(text);
 		__typist.reset();
@@ -212,6 +221,7 @@ function __Shop() constructor {
 	///@returns {Struct.__Shop}
 	static SetFallbackRoom = function(room)
 	{
+		forceinline;
 		FallbackRoom = room;
 		return Shop;
 	}
@@ -220,6 +230,7 @@ function __Shop() constructor {
 	///@return {undefined}
 	static __Process = function()
 	{
+		aggressive_forceinline;
 		var input_horizontal = PRESS_HORIZONTAL,
 			input_vertical = PRESS_VERTICAL,
 			press_confirm = PRESS_CONFIRM,
@@ -229,6 +240,7 @@ function __Shop() constructor {
 		///Resets menu state to default
 		static __reset_state = function()
 		{
+			forceinline;
 			audio_play(snd_menu_confirm);
 			__state = SHOP_STATE.MENU;
 			__choice = [__choice[0], 0, 0, 0, 0];
@@ -260,11 +272,8 @@ function __Shop() constructor {
 				{
 					Fader_Fade(0, 1, 30);
 					invoke(function() {
-						//If player came from an overworld, go back
-						if variable_global_exists("__CurrentOverworldRoom")
-							room_goto(global.__CurrentOverworldRoom);
-						//Fallback room
-						else room_goto(FallbackRoom);
+						//If player came from an overworld, go back, or else, go to fallback room
+						room_goto(variable_global_exists("__CurrentOverworldRoom") ? global.__CurrentOverworldRoom : FallbackRoom);
 					}, [], 30);
 					if variable_global_exists("__CurrentOverworldRoom")
 						//Defer by 1 extra frame for overworld init
@@ -273,7 +282,7 @@ function __Shop() constructor {
 							oOWPlayer.x = global.__CurrentOverworldPosition.x;
 							oOWPlayer.y = global.__CurrentOverworldPosition.y;
 							oOWPlayer.dir = global.__CurrentOverworldDirection;
-							oOWPlayer.ForceCollideless = true;
+							oOWPlayer.__ForceCollideless = true;
 						}, [], 31);
 					else invoke(Fader_Fade, [1, 0, 0], 31);
 				}
@@ -433,7 +442,7 @@ function __Shop() constructor {
 				//Set tempoary text
 				__typist.reset().skip();
 				if string_width(__TempText) == 0 __TempText = Text;
-					SetText(lexicon_text("Shop.ItemSellText", global.ItemLibrary[| global.item[__choice[1]]].price));
+					SetText(lexicon_text("Shop.ItemSellText", global.item[__choice[1]].price));
 			}
 			elif press_cancel __reset_state();
 		}
@@ -460,7 +469,7 @@ function __Shop() constructor {
 				else
 				{
 					var item = __choice_displacement + __choice[2];
-					COALITION_DATA.Gold += global.ItemLibrary[| global.item[item]].price;
+					COALITION_DATA.Gold += global.item[item].price;
 					Item_Remove(item);
 					//Prevent crash
 					if item == Item_Count() &&__choice_displacement > 0 __choice_displacement--;
@@ -516,6 +525,7 @@ function __Shop() constructor {
 	///@return {undefined}
 	static __Draw = function()
 	{
+		aggressive_forceinline;
 		static Base = Shop;
 		var ShopkeeperCount = array_length(Shopkeeper);
 		#region Background and Shopkeeper
@@ -578,7 +588,7 @@ function __Shop() constructor {
 					++i;
 				}
 				//Misc text
-				draw_text(60, 420, "Exit");
+				draw_text(60, 420, __LangExit);
 				__text.wrap(160).draw(460, 260, __typist);
 				//Choosing item
 				if __state == SHOP_STATE.BUY
@@ -588,8 +598,8 @@ function __Shop() constructor {
 				}
 				else //Choosing choice
 				{
-					draw_text(480, 340, "Yes\nNo");
-					var __str_height = string_height("Yes");
+					draw_text(480, 340, __LangYes + "\n" + __LangNo);
+					var __str_height = string_height(__LangYes);
 					draw_sprite_ext(sprSoul, 0, 450, 338 + (__choice[4] == 0 ? __str_height / 2 : __str_height * 1.5), 1, 1, 0, c_red, 1);
 				}
 			}
@@ -618,7 +628,7 @@ function __Shop() constructor {
 			//Inventory items
 			repeat min(4, item_count)
 			{
-				var item = global.ItemLibrary[| global.item[k]];
+				var item = global.item[k];
 				var price = string(item.price) + "G";
 				draw_set_halign(fa_right);
 				draw_text_transformed(115, 260 + i * 40, price, min(1, 60 / string_width(price)), 1, 0);
@@ -628,7 +638,7 @@ function __Shop() constructor {
 				++i;
 				++k;
 			}
-			draw_text(60, 420, "Exit");
+			draw_text(60, 420, __LangExit);
 			//Choosing item
 			if __state == SHOP_STATE.SELL
 			{
@@ -638,8 +648,8 @@ function __Shop() constructor {
 			else //Choosing choice
 			{
 				__text.wrap(160).draw(460, 260, __typist);
-				draw_text(480, 340, "Yes\nNo");
-				var __str_height = string_height("Yes");
+				draw_text(480, 340, __LangYes + "\n" + __LangNo);
+				var __str_height = string_height(__LangYes);
 				draw_sprite_ext(sprSoul, 0, 450, 338 + (__choice[4] == 0 ? __str_height / 2 : __str_height * 1.5), 1, 1, 0, c_red, 1);
 			}
 		}
@@ -652,7 +662,7 @@ function __Shop() constructor {
 				draw_text_transformed(60, 260 + i * 40, TalkOptions[i], min(1, 350 / string_width(TalkOptions[i])), 1, 0);
 				++i;
 			}
-			draw_text(60, 420, "Exit");
+			draw_text(60, 420, __LangExit);
 			//Choosing option
 			if __state == SHOP_STATE.TALK_CHOOSE
 			{

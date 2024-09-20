@@ -1,9 +1,9 @@
-// Camera movement
+// Camera logic
 with MainCamera
 {
 	var cam = view_camera[0],
 	
-		cam_scale_x = Scale[0], cam_scale_y = Scale[1],
+		cam_scale_x = scale.x, cam_scale_y = scale.y,
 		
 		cam_width  = view_width / cam_scale_x,
 		cam_height = view_height / cam_scale_y,
@@ -17,6 +17,7 @@ with MainCamera
 	var camToX = x, camToY = y;
 	if cam_target != previous_target
 		camera_set_view_target(cam, cam_target);
+	//If the camera has a target, apply camera position to target
 	if (cam_target != noone && instance_exists(cam_target)) {
 		camToX = cam_target.x - cam_width / 2;
 		camToY = cam_target.y - cam_height / 2;

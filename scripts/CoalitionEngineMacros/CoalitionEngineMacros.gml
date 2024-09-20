@@ -1,22 +1,40 @@
 #region Engine
 //Here are the macros for the engine
-#macro __COALITION_ENGINE_VERSION "v0.7.6"
+#macro __COALITION_ENGINE_VERSION "v0.8.0"
 #macro COALITION_DATA global.__CoalitionData
 #macro COALITION_SAVE_FILE global.__CoalitionSaveFile
 #macro COALITION_EMPTY_FUNCTION global.__empty_function
 #endregion
 #region Input
+//Hashes for the input functions
+with global
+{
+	__up_hash = variable_get_hash("up");
+	__down_hash = variable_get_hash("down");
+	__left_hash = variable_get_hash("left");
+	__right_hash = variable_get_hash("right");
+	__horizontal_hash = variable_get_hash("horizontal");
+	__vertical_hash = variable_get_hash("vertical");
+	__press_hor_hash = variable_get_hash("press_hor");
+	__press_ver_hash = variable_get_hash("press_ver");
+	__press_con_hash = variable_get_hash("press_con");
+	__check_con_hash = variable_get_hash("check_con");
+	__press_can_hash = variable_get_hash("press_can");
+	__check_can_hash = variable_get_hash("check_can");
+	__press_menu_hash = variable_get_hash("press_menu");
+	__moving_hash = variable_get_hash("moving");
+}
 //Here are the macros for handy input code
-#macro CHECK_HORIZONTAL struct_get_from_hash(__input_functions, variable_get_hash("horizontal"))
-#macro CHECK_VERTICAL  struct_get_from_hash(__input_functions, variable_get_hash("vertical"))
-#macro PRESS_HORIZONTAL struct_get_from_hash(__input_functions, variable_get_hash("press_hor"))
-#macro PRESS_VERTICAL struct_get_from_hash(__input_functions, variable_get_hash("press_ver"))
-#macro PRESS_CONFIRM struct_get_from_hash(__input_functions, variable_get_hash("press_con"))
-#macro HOLD_CONFIRM struct_get_from_hash(__input_functions, variable_get_hash("check_con"))
-#macro PRESS_CANCEL struct_get_from_hash(__input_functions, variable_get_hash("press_can"))
-#macro HOLD_CANCEL struct_get_from_hash(__input_functions, variable_get_hash("check_can"))
-#macro PRESS_MENU struct_get_from_hash(__input_functions, variable_get_hash("press_menu"))
-#macro CHECK_MOVING struct_get_from_hash(__input_functions, variable_get_hash("moving"))
+#macro CHECK_HORIZONTAL struct_get_from_hash(__input_functions, global.__horizontal_hash)
+#macro CHECK_VERTICAL  struct_get_from_hash(__input_functions, global.__vertical_hash)
+#macro PRESS_HORIZONTAL struct_get_from_hash(__input_functions, global.__press_hor_hash)
+#macro PRESS_VERTICAL struct_get_from_hash(__input_functions, global.__press_ver_hash)
+#macro PRESS_CONFIRM struct_get_from_hash(__input_functions, global.__press_con_hash)
+#macro HOLD_CONFIRM struct_get_from_hash(__input_functions, global.__check_con_hash)
+#macro PRESS_CANCEL struct_get_from_hash(__input_functions, global.__press_can_hash)
+#macro HOLD_CANCEL struct_get_from_hash(__input_functions, global.__check_can_hash)
+#macro PRESS_MENU struct_get_from_hash(__input_functions, global.__press_menu_hash)
+#macro CHECK_MOVING struct_get_from_hash(__input_functions, global.__moving_hash)
 #endregion
 #region Handy Macros
 //Here are the macros for simplifing code, for instance the ins_dest can act as a instance_destroy
@@ -28,7 +46,13 @@
 #macro c_dkgreen make_color_rgb(0, 255, 0)
 #macro this self
 #macro is ==
-#macro clear_timesources var i = 0; while time_source_exists(i) time_source_destroy(i++)
+#macro clear_game_timesources var i = 0, __children = time_source_get_children(time_source_game);\
+repeat array_length(__children) time_source_destroy(__children[i++])
+#macro clear_global_timesources var i = 0, __children = time_source_get_children(time_source_global);\
+repeat array_length(__children) time_source_destroy(__children[i++]);\
+time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function(){__scribble_tick()}, [], -1))
+//Since scribble relies on the global timesource, it is required to manually restart the time source
+#macro clear_timesources clear_game_timesources; clear_global_timesources
 #endregion
 
 enum FONTS {
@@ -68,7 +92,7 @@ enum DIR
 	UP_RIGHT = 45,
 	UP_LEFT = 135,
 	DOWN_LEFT = 225,
-	DOWN_RIGHT = 325,
+	DOWN_RIGHT = 315,
 }
 
 //Optional, just for better coding experience for idiots like me (Eden)

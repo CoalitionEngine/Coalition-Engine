@@ -1,8 +1,4 @@
-if !__COALITION_VISUAL_MODE
-	var board = target_board;
-if timer timer--;
-DurationTimer++;
-
+if !__COALITION_VISUAL_MODE var board = target_board;
 
 if Axis.activate
 	axis_step();
@@ -23,14 +19,14 @@ if !Len.activate
 	switch mode
 	{
 		case 0: break;
-		case 1: y = board.y - board.up + half_len;		break;
-		case 2: y = board.y + board.down - half_len;	break;
-		case 3: x = board.x - board.left + half_len;	break;
-		case 4: x = board.x + board.right - half_len;	break;
+		case 1: case "up": y = board.y - board.up + half_len;		break;
+		case 2: case "down":  y = board.y + board.down - half_len;	break;
+		case 3: case "left":  x = board.x - board.left + half_len;	break;
+		case 4: case "right":  x = board.x + board.right - half_len;break;
 	}
 }
 else len_step();
 //Auto destroy when turn ends or duration is met
-if (at_turn_end && length < 11) || (duration != -1 && DurationTimer >= duration)
+if (at_turn_end && length < 11) || (duration != -1 && __DurationTimer++ >= duration)
 	instance_destroy();
 

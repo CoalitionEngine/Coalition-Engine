@@ -1,23 +1,23 @@
 event_inherited();
 instance_check_create(oOWController);
-Camera.Scale(2, 2);
+Camera.Scale(2);
 //Whether the player can move
 moveable = true;
 //You only need Up - Down - Left, because the Right is just an invert of Left, unless
 //you have specific sprites for right side, then you should leave the 4th slot empty
 dir_sprite = [sprFriskUp,  sprFriskDown, sprFriskLeft];
-last_sprite = -1
-last_dir = 1;
+__last_sprite = -1;
+__last_dir = 1;
 sprite_index = dir_sprite[2];
 image_speed = 0;
 //Facing direction of the player
 dir = DIR.DOWN;
 //Whether the player can run when holding X/Shift
-FleeEnabled = true;
+enable_sprint = true;
 //Sets the running speed of the player
 run_speed = 2;
-ForceCollideless = global.SetForceCollideless;
-global.SetForceCollideless = false;
+__ForceCollideless = global.__SetForceCollideless;
+global.__SetForceCollideless = false;
 __xstart = xstart;
 __ystart = ystart;
 invoke(function() {

@@ -54,6 +54,7 @@ function __Shader() constructor
 			ShaderApplyToSurface = [];
 			SurfaceList = [];
 		}
+		return self;
 	}
 	///@method Clean()
 	///@desc Cleans the shader struct of shader parameters

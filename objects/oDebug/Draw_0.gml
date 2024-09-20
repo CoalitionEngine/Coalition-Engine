@@ -98,7 +98,7 @@ if State != DEBUG_STATE.MAIN
 			draw_sprite_ext(Sub.DrawSprite, 0, 430, 240, FinScale, FinScale, 0, c_white, 1);
 			draw_set_font(fnt_mnc);
 			draw_set_halign(fa_center);
-			var text = "Scaled to: " + string(FinScale) + "x"
+			var text = string_concat("Scaled to: ", FinScale, "x");
 			if nine.enabled
 				text += "\nNine slice is enabled,\nimage may be drawn incorrectly";
 			draw_text(430, 410, text);

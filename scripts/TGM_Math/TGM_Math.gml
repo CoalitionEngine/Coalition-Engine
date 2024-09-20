@@ -206,15 +206,6 @@ function inverse_sqrt(_value) {
 	return 1 / sqrt(abs(_value));
 }
 
-/// @desc Returns the value wrapped. If it's above or below the threshold it will wrap around.
-/// @param {Real} value The value to check.
-/// @param {Real} min The min value.
-/// @param {Real} max The max value.
-function wrap(_value, _min, _max) {
-	var _mod = (_value - _min) mod (_max - _min);
-	return (_mod < 0) ? _mod + _max : _mod + _min;
-}
-
 /// @desc This function works like clamp(), but if the value is greater than max, it becomes min, and vice versa.
 /// 
 /// You may also be interested: wrap().
@@ -224,6 +215,15 @@ function wrap(_value, _min, _max) {
 function clamp_wrap(_value, _min, _max) {
 	if (_value > _max) _value = _min; else if (_value < _min) _value = _max;
 	return _value;
+}
+
+/// @desc Returns the value wrapped. If it's above or below the threshold it will wrap around.
+/// @param {Real} value The value to check.
+/// @param {Real} min The min value.
+/// @param {Real} max The max value.
+function wrap(_value, _min, _max) {
+	var _mod = (_value - _min) mod (_max - _min);
+	return (_mod < 0) ? _mod + _max : _mod + _min;
 }
 
 /// Works like "mod" or "%" but works as expected for negative numbers. a % b.
@@ -261,7 +261,7 @@ function is_odd(_value) {
 /// @returns {bool} 
 function is_prime(_value) {
 	if (_value < 2) return false;
-	for(var i = 2; i < _value; i++) {
+	for(var i = 2; i * i <= _value; i++) {
 		if (_value % i == 0) {
 			return false;
 		}

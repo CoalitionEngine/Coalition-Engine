@@ -9,57 +9,51 @@
 
 This is what you can make your Undertale Fangame ideas come true.
 
-> We value Game's Perfect Environment.
+## Version List
 
-To make this engine run perfectly in Low-End PCs, We're trying our best to optimize our codes as much as possible.
+The minimum GameMaker client version required is 2023.11.
 
-> We protect You, Developer's codes.
-
-Messy codes? Precious codes? All of them are easily stolen by UndertaleModTool, but no worry!
-We are finding a way to block your codes. So no one will be able to steal your codes. (Unless they can read disassembly codes, then there is this next feature that might help)
-Don't want people to steal your assets? Don't want people to mod your games for fun/to cheat?
-Fear not, the anti-export and save corruption is already a built-in feature of this engine, if people want to steal your protected assets or mod some protected codes, they will experience an error instead!
-
-## Branch Purposes:
-
-> Bleeding Edge : This will be getting the cutting edge updates, which means most likely it will cause unexpected errors or crashes.
-
-> Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
-
-> Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
-
-You are on the Bleeding Edge branch, This branch will have very unstable, unreliable builds. Yeah, most likely.
-
-If you're lucky, you may get at least an useful build.
-
-But the builds here will have the most updated features.
-
- ## Version List
-
-The miniman Game Maker Version required is 2023.11.
-
-These are the versions of the external libraries that are packaged with the newest version of the engine.
+This is the version of external libraries that are packaged with this engine.
 
 > [!IMPORTANT]
 > You should not remove libraries without '()' from the engine as they are essential for the engine to run.
 
 | Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX | (Kawase) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :--: |
-| 9.0.0 | 7.0.0 | 1.1.1 | 3.0.2 | 4.0.0 | 1.0.3 | 2.0.1 |
+| 9.3.1 | 7.0.1 | 1.1.1 | 3.0.5 | 4.0.1 | 1.0.3 | 2.0.1 |
+
+## Branch Purposes:
+
+> O : The branch you are on
+> X : Vice versa
+
+> O : Bleeding Edge : This branch is frequently updated, which means you'll occassionally cause unexpected exceptions or errors while using it.
+
+> X : Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
+
+> X : Stable : This branch provides the most **stable** project, But the frequency of updating is the slowest among these three.
+
+## What does this Undertale Engine feature?
+
+### Superior Performance
+
+The system in this Undertale Engine provides players high FPS(Frame-Per-Second) even on Low-End computers. According to Supereden, one of the developers of this engine, The game could maintain 60 FPS while having more than 1000 bone objects. Considering his old computer was more than 5 years old(Intel i5 4th gen).
+
+### Decompiling Protection
+
+Our engine developers are trying hard to find a way to prevent decompiling tools (such as Underanalyzer, UndertaleModTool) from decompiling games based on this engine, So you can safely compile your project without having to compile your project with YYC method(Visual Studio is required if you are asking).
+The methods used in the project are the very basics of anti-decompilation, the more advanced methods are currently not disclosed to the public.
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114492-749f7f25-9780-4a28-80b2-1bb4bad86e22.png)
 
 ## Project Founder:
 Panthervention, Supereden
 
-## Developers:
-TK, Panthervention, Supereden, RTF(at least i contributed to making something small), Maxin(Jay)
-
 ## Project Maintainer
-Panthervention, Supereden, RTF
+TK, Panthervention, Supereden, RTF
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114582-7fd89d9b-9735-4c2a-9440-4f7df160ff26.png)
 
-[We have our Discord Server. You can ask what you don't know, or your code optimization. But we don't answer the dumb questions.](https://discord.gg/X8N5jkbeZs)
+[We have our Discord Server. You can ask what you don't know, or your code optimization. But please do not ask something everyone is uncomfortable of.](https://discord.gg/X8N5jkbeZs)
 
-[Wanna see this engine's wiki? Well, Here may be what you're looking for.](https://coalitionengine.github.io/Coalition-Engine/)
+[This is the wiki website of the Coalition Engine. You can see full libraries of this engine.](https://coalitionengine.github.io/Coalition-Engine/)

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Scripts",
-    "path": "folders/Coalition Engine/Internal/Scripts.yy",
+    "path": "folders/Coalition Engine/External/Scripts.yy",
   },
 }

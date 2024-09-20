@@ -62,7 +62,7 @@ SetAttack(1, function() {
 				AddDragLine(i * 2 + 1, 0.5);
 		}
 	}
-	//if time == 900 end_turn();
+	if time == 900 end_turn();
 });
 SetAttack(2, function() {
 	Board.SetSize(8, 8, 8, 8, 0);
@@ -80,6 +80,32 @@ SetAttack(0, function() {
 	//		break;
 	//	}
 	//}
-	if !(time%30)
-	CreateBlasterCircle(320, 320, 600, 100,, random(360),1,2,30,30,30);
+	if !(time % 30) && false
+		CreateBlasterCircle(320, 320, 600, 100,, random(360),1,2,30,30,30);
+		//CreateBlaster(0, 320, 320, 320, 0, 0, 1, 2, 30, 30, 30);
+	if time == 0
+	{
+		//Board_SetGreenBox();
+		with oBoard
+		{
+			ConvertToVertex();
+		}
+		//with instance_create_depth(320, 240, 0, o25DCamera)
+		//{
+		//	camDist = -240;
+		//	TweenFire(self, "io", "#p", 0, 0, 30, "camAngleX>", 95, "camAngleY>", 5);
+		//}
+		//Bullet_BoneBottom(320, 30, 0);
+		//Bullet_BoneBottom(330, 30, 0);
+		//with instance_create_depth(420, 320, 0, oBoardCover)
+		//{
+			//left = 50;
+			//right = 10;
+			//up = 100;
+			//down = 20;
+		//}
+		//Bullet_Bone(400, 280, 200, 0, 0, 1,,,, 1);
+	}
+	//if keyboard_check_pressed(vk_space) oBoardCover.image_angle += 45
+	//if time == 30 end_turn();
 });

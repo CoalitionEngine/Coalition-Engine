@@ -31,9 +31,9 @@ function __CoalitionToSaveState()
 {
 	with oOWController
 	{
-		save_state = SAVE_STATE.CHOOSING;
+		__save_state = SAVE_STATE.CHOOSING;
 		dialog_exists = false;
-		dialog_typist.reset();
+		__dialog_typist.reset();
 	}
 }
 ///Ends the current dialog
@@ -44,7 +44,7 @@ function __CoalitionEndDialog(_element, _parameter_array, _character_index)
 ///Sets the scribble text delay as frames instead of milliseconds
 function __CoalitionSetFrameDelay(delay)
 {
-	return "[delay," + string(floor(delay / 60 * 1000)) + "]";
+	return string_concat("[delay,", floor(delay / 60 * 1000), "]");
 }
 ///Clears the text box (literally just [/page])
 function __CoalitionClearTextbox()
@@ -65,11 +65,11 @@ function __CoalitionSetOption(_element, _parameter_array, _character_index) {
 		glyph_data = __text_writer.get_glyph_data(_character_index),
 			left = glyph_data.left,
 			middle = (glyph_data.top + glyph_data.bottom) * 0.5;
-		option_pos[# index, 0] = left;
-		option_pos[# index, 1] = middle;
+		__option_pos[# index, 0] = left;
+		__option_pos[# index, 1] = middle;
 		option_amount = max(option_amount, index + 1);
-		if ds_grid_width(option_pos) <= option_amount
-			ds_grid_resize(option_pos, option_amount, 2);
+		if ds_grid_width(__option_pos) <= option_amount
+			ds_grid_resize(__option_pos, option_amount, 2);
 		option_buffer = 20;
 		option = 0;
 	}
@@ -83,9 +83,9 @@ function __CoalitionFormatOptionText(_element, _parameter_array, _character_inde
 		diff = dialog_y - curBottom - string_height_scribble("\n");
 	with oOWController
 	{
-		option_text_height = string(diff / height);
-		dialog_text = string_replace(dialog_text, "[format_option]", "\n[scale," + option_text_height + "][zwsp]\n[fdelay,30][scale,1]	");
-		__text_writer.overwrite(dialog_text);
+		__option_text_height = string(diff / height);
+		__dialog_text = string_replace(__dialog_text, "[format_option]", "\n[scale," + __option_text_height + "][zwsp]\n[fdelay,30][scale,1]	");
+		__text_writer.overwrite(__dialog_text);
 	}
 }
 //Adds scribble typists events
