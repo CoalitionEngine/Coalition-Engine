@@ -1,7 +1,7 @@
 /// @category (FAQ)
 /// @title Global variables
 
-There are a lot of global variables in this engine for you to furhter modify the behaviour of the game, here
+There are a lot of global variables in this engine for you to further modify the behaviour of the game, here
 are the list of global variables and their purpose.
 
 ### Battle Related Variables
