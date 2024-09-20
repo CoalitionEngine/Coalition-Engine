@@ -7,47 +7,52 @@
 
 ![About](https://user-images.githubusercontent.com/83257329/226114468-3823b116-01ae-4941-be38-c6683bd428ea.png)
 
-Have you ever wanted to make your own Undertale fangames, Like, putting your own characters to the battles in undertale?
+This is what you can make your Undertale Fangame ideas come true.
 
-Well! This Engine can be a good source for you. Unlike other Undertale engines, We provide many advantages, So here are these two good examples:
+## Version List
 
-> We value Game's Perfect Environment.
+The minimum GameMaker client version required is 2023.11.
 
-To make this engine run perfectly in Low-End PCs, We're trying our best to optimize our codes as much as possible.
+This is the version of external libraries that are packaged with this engine.
 
-> We protect You, Developer's codes.
+> [!IMPORTANT]
+> You should not remove libraries without '()' from the engine as they are essential for the engine to run.
 
-Messy codes? Precious codes? All of them are easily stolen by UndertaleModTool, but no worry!
-We are finding ways as many as possible so that we can block your codes safe. So no one will be able to steal your codes. (Unless they can read disassembly codes, then there is this next feature that might help)
-Don't want people to steal your assets? Don't want people to mod your games for fun/to cheat?
-Fear not, the anti-export and save corruption is already a built-in feature of this engine, if people want to steal your protected assets or mod some protected codes, they will experience an error instead!
+| Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX | (Kawase) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :--: |
+| 9.0.0 | 7.0.0 | 1.1.1 | 3.0.2 | 4.0.0 | 1.0.3 | 2.0.1 |
 
 ## Branch Purposes:
 
-> Bleeding Edge : This will be getting the cutting edge updates, which means most likely it will cause unexpected errors or crashes.
+> O : The branch you are on
+> X : Vice versa
 
-> Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
+> X : Bleeding Edge : This branch is frequently updated, which means you'll occassionally cause unexpected exceptions or errors while using it.
 
-> Stable : When the feature is **completly** done and stable, It will move to the Stable branch. This branch is basically deprecated, you should not use this branch.
+> X : Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
 
-**You are on the Stable branch. Although The features that we consider them to be completly done on programming, There could be still some unexpected problems. If you found it, Let us know in our Discord server. The invitation link is at the bottom.**
+> O : Stable : This branch provides the most **stable** project, But the frequency of updating is the slowest among these three.
 
-# Read Before Downloading:
-Note that branches may contain code that conflict each other, so if you want to change branches, i.e. changing from Stable to Bleeding Edge, you must either remove the current folder on your PC completely or download the BE branch in a seperate folder to prevent such code conflicts.
+## What does this Undertale Engine feature?
+
+> Superior Performance
+
+The system in this Undertale Engine provides players high FPS(Frame-Per-Second) even on Low-End computers. According to Supereden, one of the developers of this engine, The game could maintain 60 FPS while having more than 1000 bone objects. Considering his old computer was more than 5 years old(Intel i5 4th gen).
+
+> Decompiling Protection
+
+Our engine developers are trying hard to find a way to prevent decompiling tools (such as Underanalyzer, UndertaleModTool) from decompiling games based on this engine, So you can safely compile your project without having to compile your project with YYC method(Visual Studio is required if you are asking). Also we are providing anti-exporting system which prevents decompiling tools from saving the modification of your game data(data.win for example.) so they will not be able to cheat easily. If someone tries to steal your assets, They will greet the error window instead. You just simply code your project without having to worry about it.
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114492-749f7f25-9780-4a28-80b2-1bb4bad86e22.png)
 
 ## Project Founder:
 Panthervention, Supereden
 
-## Developers:
-TK, Panthervention, Supereden, RTF(at least i contributed to making something small), Maxin(Jay)
-
 ## Project Maintainer
-Panthervention, Supereden, RTF
+TK, Panthervention, Supereden, RTF
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114582-7fd89d9b-9735-4c2a-9440-4f7df160ff26.png)
 
-[We have our Discord Server. You can ask what you don't know, or your code optimization. But we don't answer the dumb questions.](https://discord.gg/X8N5jkbeZs)
+[We have our Discord Server. You can ask what you don't know, or your code optimization. But please do not ask something everyone is uncomfortable of.](https://discord.gg/X8N5jkbeZs)
 
-[Wanna see this engine document? Well, Here may be what you're looking for.](https://docs.google.com/document/d/1PxeJxLadrUCBvG7DbQhDqAS7m8n5o21E8o8JhcnuDWI/edit#)
+[This is the wiki website of the Coalition Engine. You can see full libraries of this engine.](https://coalitionengine.github.io/Coalition-Engine/)
