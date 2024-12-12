@@ -1,7 +1,7 @@
 /// @category (FAQ)
 /// @title Shop Documentation
 
-Instead of creating an object just for a shop, instead a struct was created to store the data, and it
+Instead of creating an object just for a shop, a struct was created to store the data, and it
 is only created when used, destroyed upon leaving. (Poor shop)
 
 
@@ -43,6 +43,7 @@ SetShopkeeperDrawingState(0, 0, function() {
 ```
 This is the default drawing function of a shopkeeper, to set the drawing event of the shopkeeper of another state, just change
 the second argument into another value.
+Please be noted that you cannot use `draw_self` as this is a struct, not an object.
 It is recommended to change the state of the shop keeper using Scribble events when a dialog starts/ends.
 For example,
 ```gml
@@ -69,3 +70,5 @@ When the player talks to the shop keeper, asking "Why are you here?", the shop k
 the state '1' and draws the second image_index with the image_angle of the global timer, which makes it
 rotate per frame.
 After the dialog ended, the state of the shop keeper will be automatically reset to 0.
+
+At last, to enter the shop, instead of using `room_goto(rShop)`, you should use `EnterShop()` that are provided within the engine.

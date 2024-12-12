@@ -12,26 +12,21 @@
 function OverworldDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, top_bottom = false, sprite = noone, index = 0)
 {
 	aggressive_forceinline
+	global.enable_text_skipping = true;
 	var dis = 0;
 	with oOWController
 	{
 		//Sets the character talking sprite if is given
 		dialog_sprite = sprite;
-		if sprite != noone
-		{
-			dis = 40;
-			dialog_sprite_index = index;
-		}
+		dialog_sprite_index = index;
 		dialog_option = false;
-		dialog_font = font;
-		dialog_typist = scribble_typist()
+		__dialog_typist = scribble_typist()
 			.in(0.5, 0)
 			.sound_per_char(char_sound, 1, 1, " ^!.?,:/\\|*");
 		
-		var dialog_width = 580, dialog_height = 150;
-		__text_writer = scribble(text, "__Coalition_Overworld").starting_format(dialog_font, c_white).page(0);
+		__text_writer = scribble(text, "__Coalition_Overworld").starting_format(font, c_white).page(0);
 		
-		dialog_text = text;
+		__dialog_text = text;
 		dialog_is_down = top_bottom;
 		dialog_exists = true;
 	}

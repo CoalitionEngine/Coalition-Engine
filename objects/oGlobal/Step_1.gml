@@ -9,10 +9,7 @@ else quit_timer = quit_timer > 0 ? quit_timer - 2 : 0;
 global.timer++;
 //Restart game
 if keyboard_check_pressed(vk_f2)
-{
-	audio_stop_all();
 	game_restart();
-}
 //Fullscreen
 if keyboard_check_pressed(vk_f4)
 {
@@ -32,5 +29,5 @@ if ALLOW_DEBUG
 	if keyboard_check_pressed(vk_f5) room_restart();
 }
 //RGB Decrease
-if RGBShake > 0 RGBShake -= RGBDecrease;
-else if !surface_exists(RGBSurf) RGBSurf = surface_create(640, 480);
+if __RGBShake > 0 __RGBShake -= RGBDecrease;
+else if !surface_exists(__RGBSurf) __RGBSurf = surface_create(640, 480);

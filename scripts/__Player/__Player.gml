@@ -123,12 +123,13 @@ function __Player() constructor
 	///@return {Struct.__Player,String}
 	static Name = function(name = NaN)
 	{
+		static hash = variable_get_hash("name");
 		if !is_nan(name)
 		{
-			COALITION_DATA.name = name;
+			struct_set_from_hash(COALITION_DATA, hash, name);
 			return self;
 		}
-		else return COALITION_DATA.name;
+		else return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method LV([lv])
 	///@desc Sets/Gets the lv of the player
@@ -136,12 +137,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static LV = function(lv = NaN)
 	{
+		static hash = variable_get_hash("lv");
 		if !is_nan(lv)
 		{
-			COALITION_DATA.lv = lv;
+			struct_set_from_hash(COALITION_DATA, hash, lv);
 			return self;
 		}
-		else return COALITION_DATA.lv;
+		else return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Gold([gold])
 	///@desc Sets/Gets the current Gold the player has
@@ -149,12 +151,13 @@ function __Player() constructor
 	///@return {Struct.__Player,String}
 	static Gold = function(amount = NaN)
 	{
+		static hash = variable_get_hash("Gold");
 		if !is_nan(amount)
 		{
-			COALITION_DATA.Gold = amount;
+			struct_set_from_hash(COALITION_DATA, hash, amount);
 			return self;
 		}
-		else return COALITION_DATA.Gold;
+		else return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Exp([exp])
 	///@desc Sets/Gets the current Exp the player has
@@ -162,12 +165,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static Exp = function(amount = NaN)
 	{
+		static hash = variable_get_hash("Exp");
 		if !is_nan(amount)
 		{
-			COALITION_DATA.Exp = amount;
+			struct_set_from_hash(COALITION_DATA, hash, amount);
 			return self;
 		}
-		else return COALITION_DATA.Exp;
+		else return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Spd([spd])
 	///@desc Sets/Gets the speed of the player

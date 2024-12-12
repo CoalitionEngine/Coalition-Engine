@@ -22,9 +22,3 @@ else if dir == DIR.LEFT || dir == DIR.RIGHT
 
 target_x = x;
 target_y = y;
-
-if sound_warn
-{
-	audio_play(snd_warning, true);
-	sound_warn = false;
-}

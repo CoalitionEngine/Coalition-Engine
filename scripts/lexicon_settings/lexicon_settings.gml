@@ -52,3 +52,15 @@
     Whether Lexicon should allow dynamic functions to update existing texte entries
 */
 #macro __LEXICON_UPDATE_DYNAMIC_VALUES true
+
+/*
+	Whether to resolve newlines (\n) upon loading in language\s
+*/
+#macro __LEXICON_RESOLVE_NEWLINES false
+
+/*
+	Whether Lexicon should verify that no recursion is occuring.
+	Turning this off will bypass any recursion checks, but unknown errors may occur.
+	By default this is on.
+*/
+#macro __LEXICON_ENTRY_RECURSION_DETECTION true

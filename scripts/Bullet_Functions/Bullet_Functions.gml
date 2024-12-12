@@ -50,6 +50,7 @@ function len_load()
 ///		var b = Bullet_Bone(0, 0, 70, 0, 0);
 ///		with b.Len
 ///		{
+///			activate = true;
 ///			x = 320;
 ///			y = 320;
 ///			len = 70;
@@ -69,21 +70,18 @@ function len_step()
 	forceinline
 	with Len
 	{
-		if activate
+		if target != noone && instance_exists(target)
 		{
-			if target != noone && instance_exists(target)
-			{
-				x = target.x;
-				y = target.y;
-			}
-			x += hspeed;
-			y += vspeed;
-		    dir += dir_move;
-		    len += speed;
-		    other.x = x + lengthdir_x(len, dir);
-		    other.y = y + lengthdir_y(len, dir);
-		    if angle other.image_angle += dir_move;
+			x = target.x;
+			y = target.y;
 		}
+		x += hspeed;
+		y += vspeed;
+		dir += dir_move;
+		len += speed;
+		other.x = x + lengthdir_x(len, dir);
+		other.y = y + lengthdir_y(len, dir);
+		if angle other.image_angle += dir_move;
 	}
 }
 
@@ -108,8 +106,9 @@ function axis_load()
 		angle = 0;
 		override = false;
 		override_angle = 0;
+		if variable_global_exists("TargetBoard")
+			target_board = BattleBoardList[TargetBoard];
 	}
-	target_board = BattleBoardList[TargetBoard];
 }
 ///@text After calling this function in the create event, you can access these variables by using Axis.\*.
 ///
@@ -129,18 +128,15 @@ function axis_step()
 	forceinline
 	with Axis
 	{
-		if activate
-		{
-			var board = target_board,
-				_ang = override ? override_angle : board.image_angle;
-			X += other.hspeed;
-			Y += other.vspeed;
-			var dis = point_distance(board.x, board.y, X, Y),
-				dir = point_direction(board.x, board.y, X, Y);
-			other.x = lengthdir_x(dis, dir + _ang) + board.x;
-			other.y = lengthdir_y(dis, dir + _ang) + board.y;
-			angle = _ang;
-		}
+		var board = target_board,
+			_ang = override ? override_angle : board.image_angle;
+		X += other.hspeed;
+		Y += other.vspeed;
+		var dis = point_distance(board.x, board.y, X, Y),
+			dir = point_direction(board.x, board.y, X, Y);
+		other.x = lengthdir_x(dis, dir + _ang) + board.x;
+		other.y = lengthdir_y(dis, dir + _ang) + board.y;
+		angle = _ang;
 	}
 }
 

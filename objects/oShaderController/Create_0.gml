@@ -1,2 +1,1 @@
-Main = new __Shader();
-Main.Init();
+Main = new __Shader().Init();

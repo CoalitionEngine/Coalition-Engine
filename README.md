@@ -20,11 +20,12 @@ This is the version of external libraries that are packaged with this engine.
 
 | Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX | (Kawase) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :--: |
-| 9.0.0 | 7.0.0 | 1.1.1 | 3.0.2 | 4.0.0 | 1.0.3 | 2.0.1 |
+| 9.3.1 | 7.0.1 | 1.1.1 | 3.0.5 | 4.0.1 | 1.0.3 | 2.0.1 |
 
 ## Branch Purposes:
 
 > O : The branch you are on
+> 
 > X : Vice versa
 
 > X : Bleeding Edge : This branch is frequently updated, which means you'll occassionally cause unexpected exceptions or errors while using it.
@@ -35,13 +36,14 @@ This is the version of external libraries that are packaged with this engine.
 
 ## What does this Undertale Engine feature?
 
-> Superior Performance
+### Superior Performance
 
 The system in this Undertale Engine provides players high FPS(Frame-Per-Second) even on Low-End computers. According to Supereden, one of the developers of this engine, The game could maintain 60 FPS while having more than 1000 bone objects. Considering his old computer was more than 5 years old(Intel i5 4th gen).
 
-> Decompiling Protection
+### Decompiling Protection
 
-Our engine developers are trying hard to find a way to prevent decompiling tools (such as Underanalyzer, UndertaleModTool) from decompiling games based on this engine, So you can safely compile your project without having to compile your project with YYC method(Visual Studio is required if you are asking). Also we are providing anti-exporting system which prevents decompiling tools from saving the modification of your game data(data.win for example.) so they will not be able to cheat easily. If someone tries to steal your assets, They will greet the error window instead. You just simply code your project without having to worry about it.
+Our engine developers are trying hard to find a way to prevent decompiling tools (such as Underanalyzer, UndertaleModTool) from decompiling games based on this engine, So you can safely compile your project without having to compile your project with YYC method(Visual Studio is required if you are asking).
+The methods used in the project are the very basics of anti-decompilation, the more advanced methods are currently not disclosed to the public.
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114492-749f7f25-9780-4a28-80b2-1bb4bad86e22.png)
 

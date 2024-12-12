@@ -1,15 +1,15 @@
 depth = -10000;
-
+//The timer for quitting the game
 quit_timer = 0;
-
+//Fader data
 fader_color = c_black;
 fader_alpha = 0;
-
-RGBShake = 0;
+//RGB shaking data
+__RGBShake = 0;
 RGBDecrease = 1;
-RGBSurf = surface_create(640, 480);
+__RGBSurf = surface_create(640, 480);
 RGBShakeMethod = 0;
-
+//Song display (Optional)
 Song =  {};
 with Song
 {
@@ -19,7 +19,7 @@ with Song
 	Time = 0;
 	Lerp = 0.21;
 };
-
+//Custom fading method (Optional)
 Fade = {};
 with Fade
 {
@@ -33,16 +33,7 @@ with Fade
 	Timer = 0;
 };
 FadeTime = 0;
-
-Naming = {};
-with Naming
-{
-	Enabled = true;
-	Allowed = true;
-	Named = false;
-	State = 1
-}
-
+//Border data
 Border = {};
 with Border
 {
@@ -73,7 +64,23 @@ CutSide = shader_get_uniform(shdCutScreen, "u_side");
 #endregion
 
 #region Internal variables
-__input_xy = input_xy("left", "right", "up", "down");
-__input_functions = array_create(14, false);
-__empty_function = function(){};
+globalvar __input_functions;
+__input_functions =
+{
+	up: false,
+	down: false,
+	left: false,
+	right: false,
+	horizontal: false,
+	vertical: false,
+	press_hor: false,
+	press_ver: false,
+	press_con: false,
+	check_con: false,
+	press_can: false,
+	check_can: false,
+	press_menu: false,
+	moving: false
+};
+global.__empty_function = function(){};
 #endregion

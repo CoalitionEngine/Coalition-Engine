@@ -1,4 +1,138 @@
-Update Logs (This is the beta builds)
+v0.8.0 (Eden)
+Manually reviewed every single piece of code for project maintainence
+You MUST clean install
+Note that this update is the largest update since inital release, therefore this change log may not be fully accurate
+
+Removed:
+- Hitbox display of oGB (The hitbox is the sprite)
+- Grazing
+
+Fixed:
+- Shop text may not display
+- Optimized some shaders
+- Removed some unused variables
+- Further normalized variable names
+- `clear_timesource` actually clears timesources now
+- Reassigned sprites to their texture groups
+- Orange soul angle was affected by `draw_angle`
+- DIR.DOWN_RIGHT was misset as 325 instead of 315
+- If the bullet has `hit_destroy` set to true, it will crash when colliding with the player
+- Green soul shields no longer freeze in place
+- Fixed `DetermineTurn` may yield different dialog-turn pair
+- Vertical item scrolling crashes
+- Multibar attacks may break
+- Inconsistent gameover logic
+- Option swapping still available when name is not in oIntro
+- Enforced coding style
+- Enforced localization
+- Removed unused variables
+- Misc. comment typos
+- oOWDrawer was not checked to be existing
+- `AddBulletCollision` adds the bullet instead of the function to the function check list
+- `oOWPlayer` sprinting variable was misnamed as `FleeEnabled`, now renamed to `enable_sprint`
+- Item data are not saved when game is restarted (Such as item uses left)
+- Converting a normal board to vertex board causes it to shrink a bit
+
+Updated:
+- Converted template strings ($"") to `string_concat` as it is more efficient in both VM and YYC
+- Optimised input checking using stored hashes instead
+- Optimised `show_hitbox`
+- Optimised cutscene system
+- Debloated Debug UI
+- `Screenshot` now with option to contain time in the file name
+- Modified `ButtonSprites`, `DrawSpeechBubble` for more user defined preferences
+- `oBoardCover` is now up to date
+- Renamed `GreenCircle` to `green_soul_draw_circle` in `oSoul`
+- Renamed `FleeEnabled` and `FleeText` to `enable_flee` and `flee_text_list` respectively in `oBattleController`
+- Moved `oIntro` to External as each user may want a different logo
+- Updated enemy dusting method
+- Updated oOWDrawer drawing logic to be more user friendly (And moved it to External)
+- Updated TurboGML to v4.0.1 (i contributed lol)
+- Updated Lexicon to 3.0.5
+- Updated Input to 7.0.1
+- Updated READ ME.md
+
+v0.7.6.1 (Eden)
+Fixed: oIntro is now up to date
+
+v0.7.6 (Eden)
+This update requires a clean install
+
+Fixed:
+Sigma was not renammed to Summation when all the references are renamed
+Rendering and colliding bullets are not functioning properly in newer GM versions
+Save point now saves things
+Bullets with Axis or Len angle will have incorrect collision when angle is modified
+Incorrect board masking calculation order
+oBulletParents may not be masked if depth is set to anything other than the depth of the board
+Typos in comments
+Fixed bone collision
+
+Updated:
+Overhauled array_equals for it to support structs
+Optimised oBoard logic, bullet collision, rendering, other misc. functions
+Gameover clears time sources
+oBulletBone supports outlined bones
+Updated Scribble to 9.3.1
+Seperated user defined macros and engine macros to two different scripts
+Cutscene system for the overworld, simply use Cutscene*
+Overworld BGM implementation, read the documentation for more information
+Added `InitSprite()` and `SetWiggle()` in enemy object for easier sprite setting
+
+v0.7.5 (Eden)
+Fixed:
+Overworld dialog box persists when entering encounter
+Shop text scaled incorrectly
+Bug in bullet collision due to unchecked parent
+Changing rooms when any instances were previously culled will result in all instances to be culled
+Buffer was not deleted in data saving/loading
+Player still has moving animation when running against a wall
+Overworld collision bugs
+Typos in documentation
+
+Updated:
+Fallback room from shop
+You can now use oOWCamLock for camera locking for sub-rooms
+Added a 'Name' for the oOWChars for debugging use
+Normalized variable naming convections
+- RGBBlaster -> blaster_enable_rgb
+- SpareTextColor -> spare_text_color
+- TextSkipEnabled -> enable_text_skipping
+- Sigma -> Summation
+
+More examples are in the overworld, including each of the collision objects and a random encounter
+
+v0.7.4 (Eden)
+smol update lol, the doc will be updated soon, tight on time rn
+
+Fixed:
+Overworld collision after interacting with objects may stuck in infinite loop
+Shop text may overflow
+
+Updated:
+Optimised Cell and Player
+Added `EnterShop` for, well, entering the shop
+
+Removed:
+Useless tile
+
+v0.7.3 (Eden)
+Fixed:
+Box crashes
+Incorrect out of bounds check for bullets
+oBulletBone has unessacary variable declarations and event calls
+Incorrect oBulletBone in-screen checking
+Blaster beam overlapping bug
+Talking in shop does not move the soul
+You can now leave the shop
+Shop desc text now fits to box, requires manual line breaking
+
+Updated:
+Updated Input to 7.0.0 and TurboGML to 4.0.0
+Optimised bullet rendering
+Exiting an encounter will spawn you at the overworld
+Used global variables for input checking and struct hashing for hitbox display for better performance
+Added support for setting overworld instances as a child of oOWChars will automatically check for collision by the player
 
 v0.7.2 (Eden)
 Fixed:

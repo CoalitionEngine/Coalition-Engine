@@ -1,19 +1,21 @@
 draw_set_font(fnt_dt_sans);
+//Logo drawing
 if menu_state == INTRO_MENU_STATE.LOGO
 {
-	draw_text_scribble(320, 200, "[fnt_logo][c_white][fa_center]" + LogoText);
+	__scribble_caches[$ "logo"].draw(320, 200);
 	if hint
-		draw_text_scribble(320, 300, "[fnt_cot][c_ltgray][fa_center][[PRESS Z OR ENTER]");
+		__scribble_caches[$ "hint"].draw(320, 300);
 }
+//Drawing instruction texts
 else if menu_state == INTRO_MENU_STATE.FIRST_TIME
 {
-	draw_text_scribble(320, 40, "[fa_center][c_ltgray]" + instruction_label);
-	draw_text_scribble(170, 100, "[fa_left][c_ltgray]" + instruction_text);
+	__scribble_caches[$ "instruction_label"].draw(320, 40);
+	__scribble_caches[$ "instruction_text"].draw(170, 100);
 	for (var i = 0; i < 2; i++)
 	{
 		var color = (menu_choice[0] == i) ? c_yellow : c_white;
 		draw_set_color(color);
-		draw_text(170, 345 + (i * 40), i == 0 ? "Begin Game" : "Settings");
+		draw_text(170, 345 + (i * 40), i == 0 ? __LangBeginGame : __LangSettings);
 	}
 	draw_set_color(c_white);
 }
@@ -22,7 +24,8 @@ else if is_val(menu_state, INTRO_MENU_STATE.NAMING, INTRO_MENU_STATE.NAME_CHECKI
 	#region Naming letters and options
 	draw_set_alpha(naming_alpha[0]);
 	draw_set_color(c_white);
-	draw_text_scribble(320, 60, "[c_white][fa_center]Name the fallen human.");
+	if menu_state == INTRO_MENU_STATE.NAMING
+		__scribble_caches[$ "fallen_human"].draw(320, 60);
 		
 	var charIndex = [0, 0];
 		
@@ -57,14 +60,14 @@ else if is_val(menu_state, INTRO_MENU_STATE.NAMING, INTRO_MENU_STATE.NAME_CHECKI
 	for (var i = 0; i < 3; i++)
 	{
 		var	color = ((naming_choice - 53) == i && (naming_choice - 53) <= 3) ? "[c_yellow]" : "[c_white]";
-		draw_text_scribble(146 + 174 * i, 400, "[fa_center]" + color + (i == 0 ? "Quit" : (i == 1 ? "Backspace" : "Done")));
+		draw_text_scribble(146 + 174 * i, 400, "[fa_center]" + color + (i == 0 ? __LangQuit : (i == 1 ? __LangBackspace : __LangDone)));
 	}
 	
 	draw_set_alpha(1);
 	#endregion
 
 	#region Name
-	var state = (menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM),
+	var state = menu_state == INTRO_MENU_STATE.NAME_CHECKING || menu_state == INTRO_MENU_STATE.NAME_CONFIRM,
 		shake_x = state * random_range(-1, 1),
 		shake_y = state * random_range(-1, 1);
 	
@@ -80,12 +83,12 @@ else if is_val(menu_state, INTRO_MENU_STATE.NAMING, INTRO_MENU_STATE.NAME_CHECKI
 		// Name description load script here
 		draw_text(180, 60, name_desc);
 		
-		for (var i = 0, confirmOption = name_usable ? ["No", "Yes"] : ["Go back", ""]; i < 2; i++)
+		for (var i = 0; i < 2; i++)
 		{
 			var color = (name_confirm == i) ? "[c_yellow]" : "[c_gray]";
 			if name_usable && name_confirm != i
 				color = "[c_white]";
-			draw_text_scribble(150 + (340 * i) , 400, "[fa_center]" + color + confirmOption[i]);
+			draw_text_scribble(150 + (340 * i) , 400, "[fa_center]" + color + (i == 0 ? (name_usable ? __LangNo : __LangGoBack) : (name_usable ? __LangYes : "")));
 		}
 		draw_set_alpha(1);
 	}

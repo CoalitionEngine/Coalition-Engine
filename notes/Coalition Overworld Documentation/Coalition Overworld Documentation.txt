@@ -29,8 +29,50 @@ For example you would put this in the creation code of the object
 
 Note that the dialog trigger is for the player to see the dialog after pressing the confirm button.
 For dialog that are automatically triggered, put an overworld collision object `oOWCollision` and
-set the collision event as as a dialog trigger, an example is provided in the "no way back" dialog
-in room_overworld, you can search for it using Ctrl + Shift + F to find the location and copy the code.
+set the collision event as as a dialog trigger, examples are provided in `room_overworld` and `rUTDemo`.
+
+## Cutscenes
+Cutscenes are very vital in games that contains a fully developed overworld, and we do have support for that,
+just use `Cutscene*` functions that are built in to the engine. To achieve a cutscene upon colliding an object
+(and by extension reaching a certain position, colliding with an invisible object), simply put
+```gml
+SetInteractable(false, function() {
+	CutsceneStart();
+});
+```
+If you want it to be a one time cutscene, simply put `instance_destroy()` inside of the interaction function.
+Now of course, you will need to have events that happen during the cutscene, that is where `CutsceneEvent` comes in.
+```gml
+SetInteractable(false, function() {
+	CutsceneStart();
+	CutsceneEvent(60, function() {
+		OverworldDialog("[skippable,false]hi[fdelay,30][end]");
+	});
+});
+```
+This way, you can trigger an overworld dialog sequence exactly 1 second after the cutscene begins.
+Note that you must set `skippable` to false and manually add `delay` and `end` so that the player
+could not manually skip the text. Although you can use nested functions to achieve more advanced effects,
+it is less likely it would be used in common scenarios.
+
+What is more common, is that you may move an overworld character, that is also supported.
+```gml
+SetInteractable(false, function() {
+	CutsceneStart();
+	CutsceneEvent(60, function() {
+		CutsceneMoveChar(oOWPlayer, 180, 2);
+	}, 10);
+});
+```
+`CutsceneMoveChar` moves the given player towards the direction at the provided speed,
+in this case it moves `oOWPlayer` to the left at 2 pixels per second, since the third argument
+of `CutsceneEvent` is 10, that means that the movement will run for 10 frames, making the
+player move 20 pixels to the left in total. The sprite animation is included by the function
+so there is no need to worry about it.
+
+Lastly, the cutscene will come to an end, to end a cutscene, simply put
+`CutsceneEvent(120, CutsceneEnd);`
+and this will end the cutscene 2 seconds after starting it.
 
 ## Setting up Cells
 You may know that cell phones exist in Undertale, and we have them too.

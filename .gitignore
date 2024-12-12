@@ -15,3 +15,7 @@ scripts/__tome*
 scripts/tome*
 datafiles/Tome*
 objects/__tome*
+
+# Private Coalition Visual Assets
+objects/oCoalVisMain
+rooms/rCoalVis

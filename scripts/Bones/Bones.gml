@@ -25,7 +25,6 @@ function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = false, mode = 0, 
 		DEPTH = oBoard.depth;
 		if out DEPTH--;
 	}
-	
 	with instance_create_depth(x, y, DEPTH, oBulletBone, { hspeed : hspd, vspeed : vspd })
 	{
 		target_board = BattleBoardList[TargetBoard];

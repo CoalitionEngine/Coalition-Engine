@@ -24,14 +24,26 @@ function Item_Info_Load() {
 ///@param {real} Item The Item to get the info
 function Item_Info(item) {
 	forceinline
-	var lib = global.ItemLibrary[| item];
-	name = lib.name;
-	heal = lib.heal;
-	desc = lib.desc;
-	throw_txt = lib.throw_txt;
-	battle_desc = lib.battle_desc;
-	stats = lib.stats;
-	if lib.item_uses_left > 1 name += " x" + string(lib.item_uses_left);
+	static name_hash = variable_get_hash("name"), heal_hash = variable_get_hash("heal"),
+			desc_hash = variable_get_hash("desc"), throw_hash = variable_get_hash("throw_txt"),
+			battle_desc_hash = variable_get_hash("battle_desc"), stats_hash = variable_get_hash("stats"),
+			uses_left_hash = variable_get_hash("item_uses_left");
+	name = struct_get_from_hash(item, name_hash);
+	heal = struct_get_from_hash(item, heal_hash);
+	desc = struct_get_from_hash(item, desc_hash);
+	throw_txt = struct_get_from_hash(item, throw_hash);
+	battle_desc = struct_get_from_hash(item, battle_desc_hash);
+	stats = struct_get_from_hash(item, stats_hash);
+	if struct_get_from_hash(item, uses_left_hash) > 1 name += " x" + string(struct_get_from_hash(item, uses_left_hash));
+}
+
+///@func Item_Create(item)
+///@desc Creates an item and returns the struct of the item
+///@param {real} item The item to create
+function Item_Create(item)
+{
+	forceinline
+	return variable_clone(global.ItemLibrary[| item]);
 }
 
 ///@func Item_Use(item)
@@ -39,14 +51,13 @@ function Item_Info(item) {
 ///@param {real} item The item to use
 function Item_Use(item) {
 	forceinline
-	var lib = global.ItemLibrary[| item], heal_text = lib.heal_text;
-	heal_text = is_array(heal_text) ? heal_text[lib.item_uses_left - 1] : heal_text;
+	var heal_text = item.heal_text;
+	heal_text = is_array(heal_text) ? heal_text[item.item_uses_left - 1] : heal_text;
 	//Execute item effect
-	lib.effect();
+	if struct_exists(item, "effect")
+		item.effect();
 	//Reduce item use count
-	lib.item_uses_left--;
-	//Apply changes to base struct
-	global.ItemLibrary[| item] = lib;
+	item.item_uses_left--;
 	//Update item info
 	Item_Info(item);
 	audio_play(snd_item_heal);
@@ -57,7 +68,7 @@ function Item_Use(item) {
 	//Healing text
 	var hp_text = global.hp >= global.hp_max ?
 	"[delay, 333]\n* Your HP has been maxed out." :
-	"[delay, 333]\n* You recovered " + string(heal) + " HP!";
+	string_concat("[delay, 333]\n* You recovered ", heal, " HP!");
 	
 	//If is in battle
 	if instance_exists(oBattleController)
@@ -65,7 +76,7 @@ function Item_Use(item) {
 		var stat_text = "";
 		if string_width(stats) != 0 stat_text = "[delay, 333]\n* " + stats;
 		//Remove item if needed
-		if !lib.item_uses_left Item_Remove(menu_choice[2]);
+		if !item.item_uses_left Item_Remove(menu_choice[2]);
 		//Reset menu
 		default_menu_text = __menu_text;
 		menu_choice[2] = 0;
@@ -79,7 +90,7 @@ function Item_Use(item) {
 	else if instance_exists(oOWController)
 	{
 		//Remove item
-		if !lib.item_uses_left Item_Remove(menu_choice[1]);
+		if !item.item_uses_left Item_Remove(menu_choice[1]);
 		healing_text = heal_text + hp_text;
 		return healing_text;
 	}
@@ -91,7 +102,7 @@ function Item_Use(item) {
 function Item_Count() {
 	forceinline
 	var i = 0, count = 0;
-	repeat array_length(global.item) if global.item[i++] count++;
+	repeat array_length(global.item) if global.item[i++] != 0 count++;
 	return count;
 }
 
@@ -101,7 +112,7 @@ function Item_Count() {
 ///@param {real} Position The item position to set (Default last)
 function Item_Set(item, pos = Item_Count()) {
 	forceinline
-	global.item[pos] = item;
+	global.item[pos] = Item_Create(item);
 	if instance_exists(oBattleController) oBattleController.__item_count = Item_Count();
 }
 

@@ -21,7 +21,7 @@ function AddBulletCollision(bullet, func = "")
 			else if func == "color"
 				FinPushFunc = static_script.DefaultColorPlaceMeetingFunction;
 		}
-		array_insert(CollList, static_script.size - 1, bullet);
+		array_insert(CollList, static_script.size - 1, FinPushFunc);
 		static_script.size++;
 	}
 }

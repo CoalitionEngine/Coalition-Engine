@@ -30,7 +30,7 @@ else
 }
 
 if global.hp <= 0 && global.deadable
-	if !global.debug gameover();
+	if !global.debug __gameover();
 	else
 	{
 		global.hp = global.hp_max;

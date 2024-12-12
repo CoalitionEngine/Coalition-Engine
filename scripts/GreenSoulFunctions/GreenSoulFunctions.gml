@@ -15,7 +15,7 @@ function __Shield() constructor
 	///@return {Id.Instance<oGreenShield>} The created shield
 	static Add = function(col, hit_col, input)
 	{
-		with oSoul.GreenShield
+		with oSoul.__GreenShieldData
 		{
 			ds_list_add(Color, col);
 			ds_list_add(HitColor, hit_col);
@@ -27,7 +27,10 @@ function __Shield() constructor
 			ds_grid_resize(Input, Amount + 1, 4);
 			var i = 0;
 			repeat 4
-				Input[# Amount, i] = input[i++];
+			{
+				Input[# Amount, i] = input[i];
+				++i;
+			}
 			var shield = instance_create_depth(oSoul.x, oSoul.y, oSoul.depth, oGreenShield);
 			shield.ID = Amount++;
 			ds_list_add(List, shield);
@@ -40,7 +43,7 @@ function __Shield() constructor
 	///@return {Struct.__Shield}
 	static Remove = function(ID)
 	{
-		with oSoul.GreenShield
+		with oSoul.__GreenShieldData
 		{
 			ds_list_delete(Color, ID);
 			ds_list_delete(HitColor, ID);
@@ -78,7 +81,8 @@ function __Shield() constructor
 	static __RemainingRotateAngle = function(ID)
 	{
 		forceinline
-		with oSoul.GreenShield return min((TargetAngle[| ID] - Angle[| ID] + 360) % 360, (360 - TargetAngle[| ID] + Angle[| ID]) % 360);
+		with oSoul.__GreenShieldData
+			return min((TargetAngle[| ID] - Angle[| ID] + 360) % 360, (360 - TargetAngle[| ID] + Angle[| ID]) % 360);
 	}
 	///!> This is an internal function
 	///@method __ApplyRotate(ID, direction)
@@ -90,7 +94,7 @@ function __Shield() constructor
 	static __ApplyRotate = function(ID, dir)
 	{
 		forceinline
-		with oSoul.GreenShield
+		with oSoul.__GreenShieldData
 		{
 			TargetAngle[| ID] = (dir * 90) % 360;
 			RotateDirection[| ID] = ((TargetAngle[| ID] - Angle[| ID] + 360) % 360) < ((360 - TargetAngle[| ID] + Angle[| ID]) % 360);
@@ -119,8 +123,8 @@ function Bullet_Arrow(Time, Spd, Dir, Mode = 0, color = 0)
 		index += color * 4;
 		Color = color;
 		var dir_e = (mode == 2 || mode == 3) ? 45 : 0;
-		x = lengthdir_x(len, dir + dir_e + dir_a) + oSoul.x;
-		y = lengthdir_y(len, dir + dir_e + dir_a) + oSoul.y;
+		x = lengthdir_x(len, dir + dir_e) + oSoul.x;
+		y = lengthdir_y(len, dir + dir_e) + oSoul.y;
 		return self;
 	}
 }

@@ -27,6 +27,6 @@ function Slam(Direction, move = 20, hurt = false, target_enemy = oEnemyParent)
 		dir = Direction;
 		image_angle = posmod(Direction + 90, 360);
 		fall_spd = move;
-		slam = true;
+		__being_slammed = true;
 	}
 }

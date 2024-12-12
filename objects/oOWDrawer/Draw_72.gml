@@ -1,6 +1,6 @@
 ///@desc (Above) Background Layer
-switch OverWorld_ID
+switch room
 {
-	case OVERWORLD.CORRIDOR:
+	case room_overworld:
 		break;
 }

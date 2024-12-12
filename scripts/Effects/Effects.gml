@@ -68,7 +68,7 @@ function TrailStep(duration = 30) {
 ///@param {real} rotation The angle of the sprite
 ///@param {Constant.Color} color The blend of the sprite
 ///@param {real} alpha The alpha of the sprite
-///@return {Id.Instace<oEffect>} The created instance
+///@return {Id.Instance<oEffect>} The created instance
 function TrailEffect(Duration, Sprite = sprite_index, Subimg = image_index, X = x, Y = y, Xscale = image_xscale,
 					Yscale = image_yscale, Rot = image_angle, Col = image_blend, Alpha = image_alpha)
 {
@@ -96,8 +96,8 @@ function TrailEffect(Duration, Sprite = sprite_index, Subimg = image_index, X = 
 ///@param {real} duration The delay before animating it back to 0
 ///@param {real} end_duration The duration of the split animation from full to 0
 ///@param {real} distance The distance of the split
-///@param {function,string} Easing The easing method of the splice (TweenGMX Format)
-function SpliceScreen(x, y, dir, idur, dur, edur, dis, ease = "oQuad") {
+///@param {function} Easing The easing method of the splice (TweenGMX Format)
+function SpliceScreen(x, y, dir, idur, dur, edur, dis, ease = EaseOutQuad) {
 	aggressive_forceinline
 	var _xs = x + lengthdir_x(1000, dir),
 		_ys = y - lengthdir_y(1000, dir),
@@ -110,6 +110,6 @@ function SpliceScreen(x, y, dir, idur, dur, edur, dis, ease = "oQuad") {
 		endduration = edur;
 		id.dir = dir;
 		displace = dis;
-		func = ease;
+		EasingFunction = ease;
 	}
 }

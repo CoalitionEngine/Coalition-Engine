@@ -3,7 +3,7 @@ enum EFFECT_MODE
 	SPRITE_TRAIL = 0,
 }
 mode = 0;
-//0
+//Sprite Trailing
 sprite = -1;
 subimg = 0;
 xscale = 1;

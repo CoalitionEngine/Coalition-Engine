@@ -4,18 +4,19 @@ var lerp_speed = global.battle_lerp_speed,
 __CoalitionEngineError(_button_len != array_length(Button.Position) / 2 , "Amount of buttons sprites contradict with number of positions. There are ", _button_len, "sprites but only ", floor(array_length(Button.Position) / 2),  "valid positions");
 __CoalitionEngineError(!is_struct(__menu_text_typist), "'__menu_text_typist' is not a scribble typist. Check if you accidentally set it to something else")
 #endregion
+//Ensure audio group is loaded
 if !audio_group_is_loaded(audgrpbattle) audio_group_load(audgrpbattle);
+//Update button states
 Button.Update();
 var DefaultFont = "[" + DefaultFontNB + "]",
 	input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
-	input_confirm = input_check_pressed("confirm"),
+	input_confirm = PRESS_CONFIRM,
 	input_cancel = PRESS_CANCEL;
 
-//Check for empty slots of enemy
-if instance_exists(instance_find(oEnemyParent, menu_choice[0]))
-	target_option = instance_find(oEnemyParent, menu_choice[0]).__enemy_slot;
-else target_option = undefined;
+//Check for the targetted enemy
+var __find_target_enemy = instance_find(oEnemyParent, menu_choice[0]);
+target_option = instance_exists(__find_target_enemy) ? __find_target_enemy.__enemy_slot : undefined;
 
 if battle_state == BATTLE_STATE.MENU
 {
@@ -23,7 +24,7 @@ if battle_state == BATTLE_STATE.MENU
 	{
 		var _button_pos = Button.Position,
 			_button_slot = menu_button_choice;
-
+		//Changing button choices
 		if input_horizontal != 0 {
 			_button_slot = posmod(_button_slot + input_horizontal, _button_len);
 			menu_button_choice = _button_slot;
@@ -41,12 +42,12 @@ if battle_state == BATTLE_STATE.MENU
 		if input_confirm {
 			audio_play(snd_menu_confirm);
 			menu_state = Button.TargetState[_button_slot];
-			//If target state is item and there are none left, return
+			//If target state is item and there are no items left, return to button selection state
 			if menu_state == MENU_STATE.ITEM && __item_count == 0 {
 				menu_state = MENU_STATE.BUTTON_SELECTION;
 						
 				if item_scroll_type == ITEM_SCROLL.VERTICAL menu_choice[MENU_STATE.ITEM] = 0;
-						
+				//Stop sound from playing
 				audio_stop_sound(snd_menu_confirm);
 			}
 		}
@@ -55,7 +56,7 @@ if battle_state == BATTLE_STATE.MENU
 	{
 		var IsMercy = menu_state == MENU_STATE.MERCY,
 			coord = menu_choice[IsMercy ? 3 : 0],
-			len = IsMercy ? 1 + FleeEnabled : instance_number(oEnemyParent);
+			len = IsMercy ? 1 + enalbe_flee : instance_number(oEnemyParent);
 		//Change selection
 		if len > 1 && input_vertical != 0 {
 			coord = posmod(coord + input_vertical, len);
@@ -65,6 +66,7 @@ if battle_state == BATTLE_STATE.MENU
 		//Return state
 		if input_cancel {
 			menu_choice[0] = 0;
+			menu_choice[3] = 0;
 			menu_state = MENU_STATE.BUTTON_SELECTION;
 		}
 		//Confirm state
@@ -72,39 +74,34 @@ if battle_state == BATTLE_STATE.MENU
 			audio_play(snd_menu_confirm);
 			if menu_state == MENU_STATE.FIGHT {
 				menu_state = MENU_STATE.FIGHT_AIM; // Fight Aiming
-						
 				ResetFightAim();
-
-				//Code that makes soul invincible
+				//Sets all bullets to be not collidable to the soul
 				if instance_exists(oBulletParents) oBulletParents.can_hurt = 0;
 			}
 			else if menu_state == MENU_STATE.ACT menu_state = MENU_STATE.ACT_SELECT; // Act Selection
 			else if menu_state == MENU_STATE.MERCY
-				menu_state = MENU_STATE.MERCY_END + coord; // Spare or Flee
+				menu_state = menu_choice[3] == 0 ? MENU_STATE.MERCY_END : MENU_STATE.FLEE; // Spare or Flee
 		}
 		//Soul lerping
-		oSoul.x = decay(oSoul.x, 72, lerp_speed);
-		oSoul.y = decay(oSoul.y, 288 + floor(coord) * 32, lerp_speed);
+		with oSoul
+		{
+			x = decay(x, 72, lerp_speed);
+			y = decay(y, 288 + floor(coord) * 32, lerp_speed);
+		}
 	}
 	else if is_val(menu_state, MENU_STATE.ITEM, MENU_STATE.ACT_SELECT)
 	{
-		var choice = menu_choice[6 / menu_state], len = Item_Count();
+		var choice = menu_choice[menu_state == MENU_STATE.ITEM ? 2 : 1], len = Item_Count();
 		if menu_state == MENU_STATE.ACT_SELECT
 		{
 			//Get valid act options
-			var i = 0, options = enemy_act[target_option];
-			len = min(6, array_length(options));
+			len = min(6, array_length(enemy_act[target_option]));
 		}
 		//Change selection
 		if len > 1 {
 			if menu_state == MENU_STATE.ACT_SELECT {
-				if input_horizontal != 0 {
-					choice = posmod(choice + input_horizontal, len);
-					menu_choice[1] = choice;
-					audio_play(snd_menu_switch);
-				}
-				if input_vertical != 0 {
-					choice = posmod(choice + (input_vertical * 2), len);
+				if input_horizontal != 0 || input_vertical != 0 {
+					choice = posmod(choice + input_horizontal + (input_vertical * 2), len);
 					menu_choice[1] = choice;
 					audio_play(snd_menu_switch);
 				}
@@ -112,14 +109,9 @@ if battle_state == BATTLE_STATE.MENU
 			else switch item_scroll_type {
 				case ITEM_SCROLL.DEFAULT:
 					if input_horizontal != 0 {
-						choice = posmod(choice + input_horizontal, len);
+						choice = posmod(choice + input_horizontal + (input_vertical * 2), len);
 						menu_choice[2] = choice;
 						audio_play(snd_menu_switch);
-					}
-					if input_vertical != 0 {
-							choice = posmod(choice + (input_vertical * 2), len);
-							menu_choice[2] = choice;
-							audio_play(snd_menu_switch);
 					}
 				break;
 				case ITEM_SCROLL.VERTICAL:
@@ -146,11 +138,12 @@ if battle_state == BATTLE_STATE.MENU
 				case ITEM_SCROLL.VERTICAL:
 					oSoul.x = decay(oSoul.x, 72, lerp_speed);
 					oSoul.y = decay(oSoul.y, 320, lerp_speed);
+					//Item text lerping
 					__item_lerp_y[0] = decay(__item_lerp_y[0], 304 - (32 * choice), lerp_speed);
-					item_desc_alpha = decay(tem_desc_alpha, 1, lerp_speed);
-					for (var i = 0, n = __item_count; i < n; ++i)
+					item_desc_alpha = decay(item_desc_alpha, 1, lerp_speed);
+					for (var i = 0; i < __item_count; ++i)
 					{
-						__item_lerp_x_target = 96 + 10 * (abs(choice - i));
+						__item_lerp_x_target = 96 + 10 * abs(choice - i);
 						__item_lerp_x[i] = decay(__item_lerp_x[i], __item_lerp_x_target, lerp_speed);
 						if i == choice
 							__item_lerp_color_amount_target[i] = 1;
@@ -174,21 +167,23 @@ if battle_state == BATTLE_STATE.MENU
 			if menu_state == MENU_STATE.ITEM // Item-consuming code
 			{
 				Item_Use(global.item[ceil(choice)]);
-				last_choice = 2;
+				__last_choice = 2;
 				__item_count = Item_Count();
 				// If no item left then item button commit gray
-				if __item_count <= 0 Button.ColorTarget[2] = [c_dkgray, c_dkgray];
+				if __item_count <= 0 Button.ColorTarget[2] = array_create(2, c_dkgray);
 			}
 			else // Action-executing code
 			{
 				__menu_text_typist.reset();
+				//Check if the act text is a function that returns a string, if so fetch the string
+				//if not then simply concat the string
 				var tex = enemy_act_text[target_option][choice];
 				tex = is_method(tex) ? tex() : tex;
 				__text_writer = scribble("* " + tex, "__Coalition_Battle").starting_format(DefaultFontNB, c_white).page(0);
 				menu_state = -1;
 				if is_callable(enemy_act_function[target_option][choice])
 					enemy_act_function[target_option][choice]();
-				last_choice = 1;
+				__last_choice = 1;
 			}
 		}
 		//Return to menu
@@ -211,7 +206,7 @@ if battle_state == BATTLE_STATE.MENU
 	}
 	else if menu_state == MENU_STATE.FLEE
 	{
-		if FleeState == 0 {
+		if __FleeState == 0 {
 			with oSoul {
 				sprite_index = sprSoulFlee;
 				image_speed = 0.5;
@@ -220,7 +215,7 @@ if battle_state == BATTLE_STATE.MENU
 				allow_outside = true;
 				audio_play(snd_flee);
 			}
-			FleeState++;
+			__FleeState++;
 		}
 	}
 	//If the current state is a user defined state
@@ -240,6 +235,7 @@ else if battle_state == BATTLE_STATE.DIALOG
 		if !get_paused() pause();
 	}
 }
+//Execute enemy turns
 else if battle_state == BATTLE_STATE.IN_TURN
 {
 	oSoul.visible = true;
@@ -248,8 +244,10 @@ else if battle_state == BATTLE_STATE.IN_TURN
 	{
 		if !__turn_has_ended
 		{
-			if !__died && state == BATTLE_STATE.IN_TURN && __enemy_in_battle {
-				if array_length(AttackFunctions) > current_turn AttackFunctions[current_turn]();
+			if !__died && __state == BATTLE_STATE.IN_TURN && __enemy_in_battle
+			{
+				if array_length(AttackFunctions) > current_turn
+					AttackFunctions[current_turn]();
 				else
 				{
 					current_turn--;
@@ -263,6 +261,7 @@ else if battle_state == BATTLE_STATE.IN_TURN
 	}
 	if all_turns_ended __end_turn();
 }
+//Target data logic
 with Target
 {
 	if buffer > -1 buffer--;

@@ -1,7 +1,6 @@
-//Soft reset camera
-Camera.RotateTo(0, 0, 0);
-Camera.Scale(1, 1, 0);
-oGlobal.MainCamera.target = noone;
+clear_timesources;
+//Reset camera
+Camera.Init();
 depth = 50;
 //Set position
 x = global.__gameover_soul_x;
@@ -11,7 +10,7 @@ global.player_attack_boost = 0;
 global.player_def_boost = 0;
 image_speed = 0;
 image_blend = c_red;
-//Destroy some isntances for preventing crash
+//Ensure all instances are destroyed
 instance_destroy(oBulletParents);
 instance_destroy(oPlatform);
 Fader_Fade(,0, 0);
@@ -23,6 +22,7 @@ window_set_caption("Game Over");
 time = 0;
 state = 0;
 alpha = 0;
+//Whether pressing C will allow the player to exit the gameover screen early
 allowC = true;
 aud = audio_create_stream("Music/Gameover.ogg");
 //Set particles
@@ -37,11 +37,14 @@ part_type_gravity(p, 0.12, 270);
 //Delay soul break
 alarm[0] = 40;
 //Set gameover texts
-gameover_text = "[pause]You cannot give\nup just yet...[pause][/page]" + string(COALITION_DATA.name) + "![delay,500]\nStay determined...";
+gameover_text = string_concat("[pause]You cannot give\nup just yet...[pause][/page]", COALITION_DATA.name, "![delay,500]\nStay determined...");
 gameover_text_voice = snd_txtAsgore;
-gameover_writer = scribble(gameover_text, "__Coalition_Gameover")
-	.page(0);
+gameover_writer = scribble(gameover_text, "__Coalition_Gameover").page(0);
 
-gameover_typist = scribble_typist()
-	.in(0.25, 0)
-	.sound_per_char(gameover_text_voice, 1, 1," ^!.?,:/\\|*")
+gameover_typist = scribble_typist().in(0.25, 0).sound_per_char(gameover_text_voice, 1, 1," ^!.?,:/\\|*")
+
+function __ExitGameover()
+{
+	//Placeholder function for game over
+	game_restart();
+}

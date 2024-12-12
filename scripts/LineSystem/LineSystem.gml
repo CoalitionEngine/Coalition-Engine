@@ -11,7 +11,7 @@
 ///@param {real} thickness The thickness of the line (Default 5)
 ///@param {real} image_alpha The alpha of the line (Default 1)
 ///@param {real} depth The depth of the line (Default 0)
-///@param {Asset.GMSprite} texture The texture used in the line (Default sprPixel)
+///@param {Asset.GMSprite} texture The texture used in the line (Default `sprPixel`)
 ///@param {real} image_index The image_index of the sprite used in the line (Default 0)
 ///@return {Struct.NormalLine}
 function CreateNormalLine(x, y, image_angle = 0, image_blend = c_white, thickness = 5, image_alpha = 1, depth = 0, texture = sprPixel, image_index = 0)
@@ -31,7 +31,7 @@ function CreateNormalLine(x, y, image_angle = 0, image_blend = c_white, thicknes
 ///@param {real} thickness The thickness of the line (Default 5)
 ///@param {real} image_alpha The alpha of the line (Default 1)
 ///@param {real} depth The depth of the line (Default 0)
-///@param {Asset.GMSprite} texture The texture used in the line (Default sprPixel)
+///@param {Asset.GMSprite} texture The texture used in the line (Default `sprPixel`)
 ///@param {real} image_index The image_index of the sprite used in the line (Default 0)
 ///@return {Struct.VectorLine}
 function CreateVectorLine(x1, y1, x2, y2, image_blend = c_white, thickness = 5, image_alpha = 1, depth = 0, texture = sprPixel, image_index = 0)

@@ -10,15 +10,7 @@
 function SetTempData(name, value)
 {
 	forceinline
-	static __stored_hashes = ds_map_create();
-	var hash;
-	if !ds_map_exists(__stored_hashes, name)
-	{
-		hash = variable_get_hash(name);
-		__stored_hashes[? name] = hash;
-	}
-	else hash = __stored_hashes[? name];
-	struct_set_from_hash(global.__CoalitionTempData, hash, value);
+	struct_set_from_hash(global.__CoalitionTempData, variable_get_hash(name), value);
 }
 
 ///@func GetTempData(name)
@@ -27,15 +19,7 @@ function SetTempData(name, value)
 function GetTempData(name)
 {
 	forceinline
-	static __stored_hashes = ds_map_create();
-	var hash;
-	if !ds_map_exists(__stored_hashes, name)
-	{
-		hash = variable_get_hash(name);
-		__stored_hashes[? name] = hash;
-	}
-	else hash = __stored_hashes[? name];
-	return struct_get_from_hash(global.__CoalitionTempData, hash);
+	return struct_get_from_hash(global.__CoalitionTempData, variable_get_hash(name));
 }
 
 ///@func SaveData(filename, struct, [function])
@@ -48,7 +32,7 @@ function SaveData(fname, struct, func = undefined)
 	aggressive_forceinline
 	//Check whether it is a map (Legacy)
 	if !is_struct(struct) && ds_exists(struct, ds_type_map) struct = ds_map_to_struct(struct);
-	if struct_empty(struct)
+	if struct_is_empty(struct)
 	{
 		print("Coalition Engine: Warning! Cannot save empty data");
 		exit;
@@ -69,6 +53,7 @@ function SaveData(fname, struct, func = undefined)
 	buffer_write(target_buffer, buffer_text, json_file);
 	buffer_save(target_buffer, fname);
 	delete __temp_struct;
+	buffer_delete(target_buffer);
 }
 
 ///@func LoadData(filename, [function])
@@ -123,5 +108,6 @@ You dirty cheater ;)");
 		});
 		show_error("", true);
 	}
+	buffer_delete(target_buffer);
 	return vals;
 }

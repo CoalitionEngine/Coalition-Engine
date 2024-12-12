@@ -1,3 +1,4 @@
+//Basic sprite animating
 if sprite_exists(dir_sprite[dir / 90])
 {
 	if dir == image_flip

@@ -23,7 +23,7 @@ function __Camera() constructor
 		{
 			x = 0;
 			y = 0;
-			Scale = array_create(2, 1);
+			scale = new Vector2(1);
 			view_width = 640;
 			view_height = 480;
 			shake_i = 0;
@@ -76,15 +76,14 @@ function __Camera() constructor
 	///@param {real} duration The anim duration of the scaling
 	///@param {function,string} ease The easing of the animation
 	///@return {Struct.__Camera}
-	static Scale = function(sx, sy, duration = 0, ease = "")
+	static Scale = function(sx, sy = sx, duration = 0, ease = "")
 	{
 		forceinline
 		with oGlobal.MainCamera
 		{
-			if duration == 0 Scale = [sx, sy];
+			if duration == 0 scale = new Vector2(sx, sy);
 			else
-			TweenFire("~", ease, "$", duration, TPArray(Scale, 0), Scale[0], sx,
-												TPArray(Scale, 1), Scale[1], sy);
+			TweenFire(scale, ease, "$", duration, "x>", sx, "y>", sy);
 		}
 		return self;
 	}
@@ -186,9 +185,9 @@ function __Camera() constructor
 	{
 		switch val
 		{
-			case 0: return oGlobal.MainCamera.Scale;
-			case 1: case "x": return oGlobal.MainCamera.Scale[0];
-			case 2: case "y": return oGlobal.MainCamera.Scale[1];
+			case 0: return oGlobal.MainCamera.scale;
+			case 1: case "x": return oGlobal.MainCamera.scale.x;
+			case 2: case "y": return oGlobal.MainCamera.scale.y;
 		}
 	}
 	///@method GetAspect([val])

@@ -11,6 +11,7 @@ function __Battle() constructor
 	///@desc Gets/Sets the turn of the battle
 	///@param {real} turn The turn to set it to
 	static Turn = function(turn = NaN) {
+		forceinline
 		if !is_nan(turn)
 			oBattleController.battle_turn = turn + 1;
 		else return oBattleController.battle_turn - 1;
@@ -19,6 +20,7 @@ function __Battle() constructor
 	///@desc Gets/Sets the State of the battle
 	///@param {real} state The state to set it to
 	static State = function(state = NaN) {
+		forceinline
 		if !is_nan(state)
 			oBattleController.battle_state = state;
 		else return oBattleController.battle_state;
@@ -68,52 +70,51 @@ function __Battle() constructor
 	}
 }
 
-///@func ButtonSprites([file_name], [format])
+///@func ButtonSprites([file_name], [format], [width], [height])
 ///@desc Sets the sprite of the buttons with external images
 ///@param {string} FileName Folder name of the sprites (Default Normal)
 ///@param {string} Format Format of the sprites (Default .png)
-function ButtonSprites(fname = "Normal", format = ".png")
+///@param {real} width The width of the button (Default 55)
+///@param {real} height The height of the button (Default 21)
+function ButtonSprites(fname = "Normal", format = ".png", width = 55, height = 21)
 {
 	forceinline
 	static ButtonNames = ["Fight", "Act", "Item", "Mercy"];
-	for (var i = 0, buttons; i < 4; ++i) {
-		buttons[i] = sprite_add("./Sprites/Buttons/" + fname + "/" + ButtonNames[i] + format, 2, 0, 0, 55, 21);
+	for (var i = 0, buttons = array_create(4); i < 4; ++i) {
+		buttons[i] = sprite_add("./Sprites/Buttons/" + fname + "/" + ButtonNames[i] + format, 2, 0, 0, width, height);
 	}
-	with oBattleController.Button
-		Sprites = buttons;
+	oBattleController.Button.Sprites = buttons;
 }
 ///@text > You can use imported images for changing button sprites as well
 
-///@func DrawSpeechBubble(x, y, width, height, color, direction)
+///@func DrawSpeechBubble(x, y, width, height, color, direction, [color_line], [spike_sprite], [corner_sprite])
 ///@desc Draws the speech bubble
 ///@param {real} x The x coordinate of the spike of the bubble
 ///@param {real} y The y coordinate of the spike of the bubble
 ///@param {real} width The width of the speech bubble
 ///@param {real} height The height of the speech bubble
-///@param {real} color The color of the bubble
+///@param {real} color The color of filling of the bubble
 ///@param {real} direction The direction of the bubble
-function DrawSpeechBubble(x, y, width, height, color, dir)
+///@param {Constant.Color} color_line The color of the outline of the speech bubble (Default c_black)
+///@param {Asset.GMSprite} spike_sprite The sprite of the spike of the speech bubble
+///@param {Asset.GMSprite} corner_sprite The sprite of the corner of the speech bubble
+function DrawSpeechBubble(x, y, width, height, color, dir, line_color = c_black, spike_sprite = sprSpeechBubbleSpike, corner_sprite = sprSpeechBubbleCorner)
 {
 	aggressive_forceinline
-	static SpikeSprite = sprSpeechBubbleSpike,
-		SpikeWidth = sprite_get_width(SpikeSprite),
-		SpikeHeight = sprite_get_height(SpikeSprite),
-		CornerSprite = sprSpeechBubbleCorner,
-		CornerWidth = sprite_get_width(CornerSprite),
-		CornerHeight = sprite_get_height(CornerSprite),
-		SpikeScaleAngle = [
-			[-1, 1, 0],
-			[-1, 1, 90],
-			[1, 1, 0],
-			[1, 1, 90],
-		];
+	static SpikeScaleAngle = [[-1, 1, 0], [-1, 1, 90], [1, 1, 0], [1, 1, 90]];
 	//UDLR
-	var CornerPosition = [y - height, y, x, x + width];
-	for (var i = 0; i < 4; ++i) {
+	var SpikeSprite = sprSpeechBubbleSpike,
+		SpikeWidth = sprite_get_width(spike_sprite),
+		SpikeHeight = sprite_get_height(spike_sprite),
+		CornerSprite = sprSpeechBubbleCorner,
+		CornerWidth = sprite_get_width(corner_sprite),
+		CornerHeight = sprite_get_height(corner_sprite),
+		CornerPosition = [y - height, y, x, x + width];
+	for (var i = 0; i < 4; ++i)
 		draw_sprite_ext(CornerSprite, 0, CornerPosition[2 + (i % 2)], CornerPosition[i >= 2],
-							(i % 2 ? -1 : 1), (i < 2 ? 1 : -1), 0, color, 1);
-	}
-	draw_set_color(c_black);
+							(i % 2 ? -1 : 1), (i < 2 ? 1 : -1), 0, c_white, 1);
+	var prev_col = draw_get_color();
+	draw_set_color(line_color);
 	draw_line_width(CornerPosition[2] + CornerWidth - 1, CornerPosition[0],
 					CornerPosition[3] - CornerWidth, CornerPosition[0], 1);
 	draw_line_width(CornerPosition[2] + CornerWidth - 1, CornerPosition[1] - 1,
@@ -131,12 +132,12 @@ function DrawSpeechBubble(x, y, width, height, color, dir)
 		FinalDirection = dir;
 	draw_sprite_ext(SpikeSprite, 0, SpikePosition[FinalDirection * 2], SpikePosition[FinalDirection * 2 + 1],
 					SpikeScaleAngle[FinalDirection][0], SpikeScaleAngle[FinalDirection][1],
-					SpikeScaleAngle[FinalDirection][2], color, 1);
-	//Fill ins
+					SpikeScaleAngle[FinalDirection][2], c_white, 1);
+	//Fill inside
 	draw_set_color(color);
 	draw_rectangle(CornerPosition[2] + CornerWidth, CornerPosition[0] + 1,
 					CornerPosition[3] - CornerWidth, CornerPosition[1] - 2, false);
 	draw_rectangle(CornerPosition[2] + 1, CornerPosition[0] + CornerHeight,
 					CornerPosition[3] - 2, CornerPosition[1] - CornerHeight, false);
-	draw_set_color(c_white);
+	draw_set_color(prev_col);
 }

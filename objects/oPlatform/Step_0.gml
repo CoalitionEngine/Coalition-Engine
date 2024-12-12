@@ -6,10 +6,10 @@ var angle = round(image_angle % 360 / 90);
 //Set direction of auto destroy
 switch angle
 {
-	case 0: destroydir = DIR.DOWN;	break
-	case 1: destroydir = DIR.RIGHT; break
-	case 2: destroydir = DIR.UP;	break
-	case 3: destroydir = DIR.LEFT;	break
+	case 0: destroydir = DIR.DOWN;	break;
+	case 1: destroydir = DIR.RIGHT; break;
+	case 2: destroydir = DIR.UP;	break;
+	case 3: destroydir = DIR.LEFT;	break;
 }
 //Fade out + increase size effect
 if effect

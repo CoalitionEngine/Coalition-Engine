@@ -17,7 +17,7 @@ ClipSurfTex = -1;
 PolylineStruct = undefined;
 
 ///Converts the vertex board back to a normal board
-function ConvertToBox(X = x, Y = y, Left = left, Right = right, Up = up, Down = down, angle = image_angle) {
+function ConvertToBox(X = x, Y = y, Left, Right, Up, Down, angle = image_angle) {
 	if !oBoard.VertexMode exit;
 	if array_length(Vertex) == 4 && is_rectangle(Vertex[0], Vertex[1], Vertex[2], Vertex[3])
 	{
@@ -30,6 +30,7 @@ function ConvertToBox(X = x, Y = y, Left = left, Right = right, Up = up, Down = 
 		image_angle = angle;
 	}
 	oBoard.VertexMode = false;
+	instance_destroy();
 }
 /**
 	Inserts a point into the polygon board
@@ -68,6 +69,7 @@ triangulationIndicesCount = 0;
 ///Update the polygon's triangulation. Necessary after modifying the polygon's Vertices.
 //Deviated from polygon_to_triangles by xot
 function UpdateEars() {
+	aggressive_forceinline;
 	//Clear existing list of vertices (This is a List<Vector2>, do not confuse with Vertex (Array<Real>))
 	ds_list_clear(Vertices);
 	var i = 0;

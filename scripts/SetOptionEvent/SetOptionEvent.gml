@@ -15,3 +15,4 @@ function SetOptionEvent(option_1, option_2)
 		++i;
 	}
 }
+///@text ?> There is implicit support for more than 2 options

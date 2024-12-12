@@ -1,6 +1,8 @@
+///Whether the paltform will automatically destroy itself when offscreen
+//The direction of destruction to occur
 destroyable = true;
 destroydir = -1;
-
+//Whether the fading expansion effect is occuring
 effect = false;
 effect_xscale = 1;
 effect_yscale = 1;

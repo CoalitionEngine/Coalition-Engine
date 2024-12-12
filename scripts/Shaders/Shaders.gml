@@ -54,6 +54,7 @@ function __Shader() constructor
 			ShaderApplyToSurface = [];
 			SurfaceList = [];
 		}
+		return self;
 	}
 	///@method Clean()
 	///@desc Cleans the shader struct of shader parameters
@@ -96,9 +97,7 @@ function __Shader() constructor
 	static SetUniform = function(ID, name, value)
 	{
 		aggressive_forceinline
-		static __hash_list = ds_map_create();
-		if !ds_map_exists(__hash_list, name) __hash_list[? name] = variable_get_hash(name);
-		struct_set_from_hash(oShaderController.ShaderParams[ID], __hash_list[? name], value);
+		struct_set_from_hash(oShaderController.ShaderParams[ID], variable_get_hash(name), value);
 	}
 	///@method Remove(ID)
 	///@desc Removes a shader effect added from .Add()

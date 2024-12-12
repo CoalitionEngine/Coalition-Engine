@@ -1,22 +1,4 @@
-var sprite = object_get_sprite(object),
-	index = 2,
-	spacing = sprite_get_height(sprite),
-	head = cone;
-if head == 2
-{
-	index = 4;
-	spacing -= 2;
-}
-//Color
-var color, color_outline;
-switch type
-{
-	case 0: color = c_white;	break;
-	case 1: color = c_aqua;		break;
-	case 2: color = c_orange;	break;
-}
-color_outline = color;
-//Warn line
+//Warning line
 for (var i = 0; i < 4; ++i) {
 	draw_line_color(
 		WarningBoxPos[# i, 0], WarningBoxPos[# i, 1],

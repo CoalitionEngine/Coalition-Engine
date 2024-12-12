@@ -74,13 +74,13 @@ function point_xy_array(p_x, p_y)
 	lengthdir_x(p_y - y, angle) - lengthdir_y(p_x - x, -angle) + y];
 }
 
-///@func Sigma(array, begin, end)
+///@func Summation(array, begin, end)
 ///@desc Returns the summation of an array from a to b
 ///@param {array} array The name of the array
 ///@param {real} begin The slot to begin
 ///@param {real} end The slot to end
 ///@return {real}
-function Sigma(arr, n, k)
+function Summation(arr, n, k)
 {
 	forceinline
 	for(var i = n, value = 0; i <= k; ++i)
@@ -153,25 +153,51 @@ function struct_equals(struct_a, struct_b)
 		a_count = struct_names_count(struct_a),
 		i = 0, val_a, val_b, hash;
 	//Must not be equal when they have different amount of names
-	if a_count != struct_names_count(struct_b) return false;
+	if a_count != struct_names_count(struct_b)
+	{
+		print("Incorrect count");
+		return false;
+	}
+	//array_equals aren't used as the names gained from struct_get_names may yield different order of names
+	//while maintaining the same values
+	
 	//Compare values
 	repeat a_count
 	{
 		hash = variable_get_hash(struct_a_names[i]);
 		val_a = struct_get_from_hash(struct_a, hash);
+		//Returns false if the variable does not exist in the second struct
+		if !struct_exists(struct_b, struct_a_names[i])
+		{
+			print($"Second struct does not have {struct_a_names[i]} as a variable");
+			return false;
+		}
+		//If it does then gets the value for comparison
 		val_b = struct_get_from_hash(struct_b, hash);
 		if is_array(val_a)
 		{
-			if !array_equals(val_a, val_b) return false;
+			if !array_equals(val_a, val_b)
+			{
+				print($"{struct_a_names[i]} does not match");
+				return false;
+			}
 		}
 		else if is_struct(val_a)
 		{
-			if !struct_equals(val_a, val_b) return false;
+			if !struct_equals(val_a, val_b)
+			{
+				print($"{struct_a_names[i]} does not match");
+				return false;
+			}
 		}
 		else if val_a != val_b
 		{
 			//Check for obscure variable types
-			if !(is_nan(val_a) && is_nan(val_b)) return false;
+			if !(is_nan(val_a) && is_nan(val_b))
+			{
+				print($"{struct_a_names[i]} does not match");
+				return false;
+			}
 		}
 		++i;
 	}

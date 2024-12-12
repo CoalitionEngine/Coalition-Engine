@@ -2,27 +2,29 @@
 if quit_timer
 	draw_sprite_ext(sprQuitMesssge, quit_timer / 14, 4, 4, 2, 2, 0, c_white, quit_timer / 15);
 //RGB effect
-if RGBShake
+if __RGBShake
 {
 	switch RGBShakeMethod
 	{
 		//Extra surface drawing (has shadow)
 		case 0:
-			surface_copy(RGBSurf, 0, 0, application_surface);
+			surface_copy(__RGBSurf, 0, 0, application_surface);
 			draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_black, 1);
+			gpu_push_state();
 			gpu_set_blendmode(bm_add);
-			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_red, 1);
-			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_blue, 1);
-			draw_surface_ext(RGBSurf, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_dkgreen, 1);
-			gpu_set_blendmode(bm_normal);
+			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_red, 1);
+			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_blue, 1);
+			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_dkgreen, 1);
+			gpu_pop_state();
 			break;
 		//Application surface drawing (No shadow, brighter)
 		case 1:
+			gpu_push_state();
 			gpu_set_blendmode(bm_add);
-			draw_surface_ext(application_surface, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_red, 1);
-			draw_surface_ext(application_surface, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_blue, 1);
-			draw_surface_ext(application_surface, random_range(-RGBShake, RGBShake), random_range(-RGBShake, RGBShake), 1, 1, 0, c_dkgreen, 1);
-			gpu_set_blendmode(bm_normal);
+			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_red, 1);
+			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_blue, 1);
+			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_dkgreen, 1);
+			gpu_pop_state();
 			break;
 	}
 }
