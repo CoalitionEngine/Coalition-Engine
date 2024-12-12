@@ -31,7 +31,7 @@
   "origin": 4,
   "parent": {
     "name": "Bullet",
-    "path": "folders/Coalition Engine/Sprites/Battle/Bullet.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Battle/Bullet.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

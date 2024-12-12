@@ -1,8 +1,9 @@
 ///@desc Enemy Drawing
 //Wiggling
 var E_Sprites = array_length(enemy_sprites),
-	temp = enemy_sprite_wiggle,
+	wiggle_method = enemy_sprite_wiggle,
 	FinalPosition = [0, 0], FinalSprites = [], FinalIndex = [];
+//This must be done to prevent slamming sprites to override the default sprites
 array_copy(FinalSprites, 0, enemy_sprites, 0, E_Sprites);
 array_copy(FinalIndex, 0, enemy_sprite_index, 0, E_Sprites);
 
@@ -13,9 +14,9 @@ if SlammingEnabled
 		var _slam_dir = SlamDirection / 90;
 		if SlamTimer++
 		{
-			FinalSprites[SlamSpriteNumber] = SlamSprites[_slam_dir, SlamSpriteIndex];
+			FinalSprites[SlamSpriteNumber] = SlamSprites[_slam_dir][SlamSpriteIndex];
 			if SlamTimer < 25
-				FinalIndex[SlamSpriteNumber] = SlamSpriteTargetIndex[_slam_dir, SlamTimer / 5];	
+				FinalIndex[SlamSpriteNumber] = SlamSpriteTargetIndex[_slam_dir][SlamTimer / 5];	
 			if SlamTimer == 25 Slamming = false;
 		}
 	}
@@ -29,7 +30,7 @@ if SlammingEnabled
 
 //Draws the enemy sprites (Engine functions)
 for (var i = 0; i < E_Sprites; ++i) {
-	if enemy_sprite_draw_method[i] == ""
+	if string_width(enemy_sprite_draw_method[i]) == 0
 	{
 		draw_sprite_ext(FinalSprites[i], FinalIndex[i],
 			x + enemy_sprite_pos[i][0],
@@ -38,16 +39,16 @@ for (var i = 0; i < E_Sprites; ++i) {
 			0, c_white, image_alpha);
 		break;
 	}
-	__CoalitionEngineError(array_length(temp[i]) < 5, "Amount of arguments supplied in the array 'enemy_sprite_wiggle' on the ", i, "th dimension is incorrect, expected 5 got ", array_length(enemy_sprite_pos[i]));
-	if temp[i][0] == "sin"
+	__CoalitionEngineError(array_length(wiggle_method[i]) < 5, "Amount of arguments supplied in the array 'enemy_sprite_wiggle' on the ", i, "th dimension is incorrect, expected 5 got ", array_length(enemy_sprite_pos[i]));
+	if wiggle_method[i][0] == "sin"
 		FinalPosition = [
-				sin(wiggle_timer * temp[i][1]) * temp[i][3],
-				sin(wiggle_timer * temp[i][2]) * temp[i][4]
+				sin(__wiggle_timer * wiggle_method[i][1]) * wiggle_method[i][3],
+				sin(__wiggle_timer * wiggle_method[i][2]) * wiggle_method[i][4]
 			];
-	else if temp[i][0] == "cos"
+	else if wiggle_method[i][0] == "cos"
 		FinalPosition = [
-				cos(wiggle_timer * temp[i][1]) * temp[i][3],
-				cos(wiggle_timer * temp[i][2]) * temp[i][4]
+				cos(__wiggle_timer * wiggle_method[i][1]) * wiggle_method[i][3],
+				cos(__wiggle_timer * wiggle_method[i][2]) * wiggle_method[i][4]
 			];
 	if enemy_sprite_draw_method[i] == "ext"
 		draw_sprite_ext(FinalSprites[i], FinalIndex[i],

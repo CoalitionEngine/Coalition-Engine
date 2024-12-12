@@ -1,56 +1,51 @@
 var input_horizontal = PRESS_HORIZONTAL,
 	input_vertical = PRESS_VERTICAL,
 	input_confirm = PRESS_CONFIRM,
-	input_cancel = PRESS_CANCEL,
-	DefaultFont = "[" + DefaultFontNB + "]";
+	input_cancel = PRESS_CANCEL;
+draw_set_font(DefaultFontAsset);
+draw_set_color(c_white);
 // Text Functions
 if battle_state == BATTLE_STATE.MENU {
-	var target_option = enemy_instance[menu_choice[0]].__enemy_slot;
-
 	if menu_state == MENU_STATE.BUTTON_SELECTION || menu_state == -1 {
 		//Initalize menu text typer
-		__text_writer.starting_format(DefaultFontNB, c_white)
-		__text_writer.draw(52, 272, menu_text_typist)
+		__text_writer.draw(52, 272, __menu_text_typist);
 		//Set the skip function of the menu text typer
-		if input_cancel && global.TextSkipEnabled
+		if input_cancel && global.enable_text_skipping
 		{
 			__text_writer.page(__text_writer.get_page_count() - 1);
-			menu_text_typist.skip();
+			__menu_text_typist.skip();
 		}
 		//Proceed page
-		if menu_text_typist.get_state() == 1 && __text_writer.get_page() < (__text_writer.get_page_count() - 1)
+		if __menu_text_typist.get_state() == 1 && __text_writer.get_page() < (__text_writer.get_page_count() - 1)
 			__text_writer.page(__text_writer.get_page() + 1)
-		if menu_state == -1 && menu_text_typist.get_state() == 1 {
-			if input_confirm
-			{
-				BattleData.SetMenuDialog(default_menu_text);
-				begin_turn();
-			}
+		//Begin turn if the dialog ended
+		if menu_state == -1 && __menu_text_typist.get_state() == 1 && input_confirm
+		{
+			input_confirm = 0;
+			Battle.SetMenuDialog(default_menu_text);
+			__begin_turn();
 		}
 	}
-
 	else if is_val(menu_state, MENU_STATE.FIGHT, MENU_STATE.ACT) // Fight - Act
 	{
 		var decrease_y = 0, i = 0;
 		repeat array_length(enemy_name) // Draw enemy hp bar in Fight state
 		{
-			var _enemy_name = string(enemy_name[i]) + enemy_name_extra[i];
 			if instance_exists(enemy[i]) // Check if the enemy slot is valid before name drawing
 			{
+				var _enemy_name = enemy_name[i] + enemy_name_extra[i];
 				//If the enemy can be spared, set the name to the global spare color
-				var spare_col = "[c_white]";
-				if enemy[i].enemy_is_spareable spare_col = global.SpareTextColor;
-				draw_text_scribble(96, 272 + (32 * i) - decrease_y, $"{spare_col}{DefaultFont}* {_enemy_name}");
+				var spare_col = enemy[i].enemy_is_spareable ? global.spare_text_color : c_white;
+				draw_text_color(96, 272 + 32 * i - decrease_y, "* " + _enemy_name, spare_col, spare_col, spare_col, spare_col, 1);
 				//Draw HP bar
 				var xwrite = 450;
-				if menu_state == MENU_STATE.FIGHT && enemy_draw_hp_bar[i] == 1 {
+				if menu_state == MENU_STATE.FIGHT && enemy_draw_hp_bar[i] == true {
 					decrease_y -= 32;
-					var lineheight = 32, y_start = 247,
-						remaining_hp_width = xwrite + ((enemy_hp[i] / enemy_hp_max[i]) * 100);
+					var remaining_hp_width = xwrite + ((enemy_hp[i] / enemy_hp_max[i]) * 100);
 					//Background
-					draw_sprite_ext(sprPixel, 0, remaining_hp_width, y_start + (i * lineheight) - decrease_y, xwrite + 100 - remaining_hp_width, 17, 0, c_red, 1);
+					draw_sprite_ext(sprPixel, 0, remaining_hp_width, 247 + (i * 32) - decrease_y, xwrite + 100 - remaining_hp_width, 17, 0, c_red, 1);
 					//Remaining HP
-					draw_sprite_ext(sprPixel, 0, xwrite, y_start + (i * lineheight) - decrease_y, remaining_hp_width - xwrite, 17, 0, c_lime, 1);
+					draw_sprite_ext(sprPixel, 0, xwrite, 247 + (i * 32) - decrease_y, remaining_hp_width - xwrite, 17, 0, c_lime, 1);
 					decrease_y += 32;
 				}
 			} else decrease_y += 32;
@@ -61,7 +56,7 @@ if battle_state == BATTLE_STATE.MENU {
 	{
 		Item_Info_Load();
 		var coord = menu_choice[2], c_div = floor(coord / 4),
-			itm_ln = item_space, _coord = c_div * 4;
+			itm_ln = __item_count, _coord = c_div * 4;
 		switch item_scroll_type
 		{
 			case ITEM_SCROLL.DEFAULT:
@@ -69,66 +64,65 @@ if battle_state == BATTLE_STATE.MENU {
 				for (var i = 0, n = min(4, itm_ln - _coord); i < n; ++i) {
 					var xx = (64 + ((i % 2) * 256)) + 32,
 						yy = 272 + (floor(i / 2) * 32);
-					draw_text_scribble(xx, yy, $"{DefaultFont}* {item_name[i + _coord]}");
+					draw_text(xx, yy, "* " + item_name[i + _coord]);
 				}
 				// Heal text and Page
 				if show_predict_hp
-					draw_text_scribble(128, 341, $"{DefaultFont}[c_lime](+{item_heal[coord]})");
-				draw_text_scribble(384, 341, DefaultFont + LangItemPageText[c_div]);
+					draw_text_color(128, 341, string_concat("(+", item_heal[coord], ")"), c_lime, c_lime, c_lime, c_lime, 1);
+				draw_text(384, 341, __LangItemPageText[c_div]);
 				break;
-			
 			case ITEM_SCROLL.VERTICAL:
-				c_div = coord;
-				_coord = c_div;
 				Battle_Masking_Start(true);
+				draw_set_font(DefaultFontAsset);
 				for (var i = 0; i < itm_ln; ++i)
 				{	
-					var xx = item_lerp_x[i],
-						yy = item_lerp_y[0] + (32 * (i));
-					draw_set_font(asset_get_index(DefaultFontNB));
-					var color = merge_color(c_black, c_white, item_lerp_color_amount[i]);
-					draw_set_color(color);
-					draw_text(xx, yy, "* " + item_name[i]);
+					var xx = __item_lerp_x[i],
+						yy = __item_lerp_y[0] + (32 * (i));
+					var color = merge_color(c_black, c_white, __item_lerp_color_amount[i]);
+					draw_text_color(xx, yy, "* " + item_name[i], color, color, color, color, 1);
 					//Item description
-					draw_set_alpha(item_desc_alpha);
-					draw_set_color(c_gray);
-					if i == c_div draw_text(item_desc_x, yy, item_battle_desc[coord]);
-					draw_set_alpha(1);
-					draw_set_color(c_white);
-				}	
+					if i == coord
+						draw_text_color(item_desc_x, yy, item_battle_desc[coord], c_gray, c_gray, c_gray, c_gray, item_desc_alpha);
+				}
 				Battle_Masking_End();
 				break;
+			default: item_custom_draw_method() break;
 		}
 	}
 	else if menu_state == MENU_STATE.MERCY {
 		//Sets the color of Spare
 		i = 0;
-		var spare_col = "[c_white]";
+		var spare_col = c_white;
 		repeat array_length(enemy)
 		{
-			if enemy[i] != noone && enemy[i].enemy_is_spareable spare_col = global.SpareTextColor;
+			if enemy[i] != noone && enemy[i].enemy_is_spareable
+			{
+				spare_col = global.spare_text_color;
+				break;
+			}
 			++i;
 		}
 		//Draw spare text, flee if needed
-		draw_text_scribble(96, 272, spare_col + DefaultFont + LangSpareText + (allow_run ? "[c_white]\n" + LangFleeText : ""));
+		draw_text_color(96, 272, __LangSpareText, spare_col, spare_col, spare_col, spare_col, 1);
+		if enalbe_flee
+			draw_text(96, 272 + string_height(__LangSpareText), __LangFleeText);
 	}
 	else if menu_state == MENU_STATE.ACT_SELECT // Draw Act Texts
 	{
 		var i = 0, enemy_check_texts = "";
 		repeat array_length(enemy_act[target_option])
 		{
-			var assign_act_text = enemy_act[target_option, i];
-			if assign_act_text != "" enemy_check_texts += "* " + assign_act_text;
+			var assign_act_text = enemy_act[target_option][i];
+			if string_width(assign_act_text) != 0 enemy_check_texts += "* " + assign_act_text;
 			if (i % 2) enemy_check_texts += "\n";
 			else
 				//Add spacing for the act options
-				repeat(14 - string_length(enemy_act[target_option, i]))
+				repeat 14 - string_length(assign_act_text)
 					enemy_check_texts += " ";
 			++i;
 		}
-		draw_text_scribble(96, 272, DefaultFont + enemy_check_texts);
+		draw_text(96, 272, enemy_check_texts);
 	}
-
 	else if menu_state == MENU_STATE.FIGHT_AIM //Fight Anim
 	{
 		if Target.Count == 1 //If only 1 bar is used
@@ -161,6 +155,7 @@ if battle_state == BATTLE_STATE.MENU {
 							menu_state = 0;
 							_target_state = 3;
 							battle_state = 0;
+							__menu_text_typist.reset();
 						}
 						//If an input is pressed
 						elif input_confirm && Target.buffer < 0 {
@@ -170,17 +165,16 @@ if battle_state == BATTLE_STATE.MENU {
 							if _aim_distance < 15
 							{
 								//Blurs screen if it is a critical attack
-								if !global.CompatibilityMode
-									Blur_Screen(45, 25 - _aim_distance);
+								Blur_Screen(45, 25 - _aim_distance);
 							}
 							
 							Target.WaitTime = 60;
 							//Set the respective enemy as being attacked
 							var strike_target_x = 160 * (target_option + 1);
-							enemy[target_option].is_being_attacked = true;
-							Calculate_MenuDamage(_aim_distance, target_option);
+							enemy[target_option].__is_being_attacked = true;
+							__CalculateMenuDamage(_aim_distance, target_option);
 							instance_create_depth(strike_target_x, 160, -10, oStrike);
-							audio_play_sound(snd_slice, 50, false);
+							audio_play(snd_slice);
 							menu_choice[0] = 0;
 						}
 					}
@@ -197,7 +191,7 @@ if battle_state == BATTLE_STATE.MENU {
 					//Begin enemy dialog when the target is retracted
 					if _target_xscale < 0.08 || _target_yscale < 0.08 {
 						_target_state = 0;
-						dialog_start();
+						__dialog_start();
 						menu_state = -1;
 					}
 				}
@@ -282,10 +276,10 @@ if battle_state == BATTLE_STATE.MENU {
 				
 					//Input
 					if distance > 273 //Prevent input already registered
-						continue
+						continue;
 				
 					_aim_target_x = Aim.InitialX[i] - (Target.side[i] * _target_time[i]);
-					
+					//Attack bar is pressed
 					if _attack_confirm
 					{
 						with Aim
@@ -300,7 +294,7 @@ if battle_state == BATTLE_STATE.MENU {
 								var attack_sound = -1;
 								
 								//Damage process
-								if distance <= 20 //Perfect
+								if abs(distance) <= 20 //Perfect
 								{
 									//Force set to middle
 									ForceCenter[i] = true;
@@ -326,12 +320,12 @@ if battle_state == BATTLE_STATE.MENU {
 								}
 								Hspeed[i] = 0;
 							
-								if attack_sound != -1
+								if audio_exists(attack_sound)
 									audio_play(attack_sound);
 							}
 						}
 					}
-						
+					//All bars are hit/missed, process damage
 					if Aim.HitCount + Aim.Miss == Target.Count && _target_state == 1
 					{
 						_target_state = 2;
@@ -341,9 +335,9 @@ if battle_state == BATTLE_STATE.MENU {
 						{
 							var TargetCount = Target.Count;
 							Aim.Attack.Distance /= TargetCount;
-							Calculate_MenuDamage(Aim.Attack.Distance, target_option, Aim.Attack.CritAmount);
+							__CalculateMenuDamage(Aim.Attack.Distance, target_option, Aim.Attack.CritAmount);
 							var strike_target_x = 160 * (target_option + 1);
-							enemy[target_option].is_being_attacked = true;
+							enemy[target_option].__is_being_attacked = true;
 							with Aim.Attack
 							{
 								Sprite = global.MultiBarAttackSprite;
@@ -354,18 +348,15 @@ if battle_state == BATTLE_STATE.MENU {
 								}
 							}
 						}
-						else
+						else //Bars are all misses, return to menu
 						{
-							with enemy_instance[menu_choice[0]]
-							{
-								is_miss = true;
-								is_being_attacked = true;
-								draw_damage = true;
-								damage_color = c_ltgray;
-								damage = "MISS";
-							}
+							menu_state = 0;
+							_target_state = 3;
+							battle_state = 0;
+							__menu_text_typist.reset();
 						}
 					}
+					//Set bar as miss if distance is exceeded
 					if distance < -28 && !Aim.Fade[i]
 					{
 						Aim.Fade[i] = true;
@@ -385,73 +376,14 @@ if battle_state == BATTLE_STATE.MENU {
 							_index = Index,
 							_color = Color;
 						}
-						function DrawMultibarAttackStar(sprite)
-						{
-							var size, _time = Aim.Attack.Time;
-							switch sprite
-							{
-								default:
-								case sprFrypanStar:
-									size = 1.5;
-									_time += 7;
-								break;
-								case sprGunStar:
-									size = 0.75;
-								break;
-							}
-							for (var i = 0; i < 8; ++i) {
-								var _star_data = Aim.Attack.StarData[i];
-								var _star_speed = _star_data[4] - _star_data[5] * _time;
-								//Position changing
-								_star_data[3] += _star_speed;
-								var _star_x = 320 + lengthdir_x(_star_data[3], i * 45),
-									_star_y = Aim.Attack.EnemyY + lengthdir_y(_star_data[3], i * 45);
-								//Fading
-								if _star_speed < 5
-								{
-									_star_data[1] -= 0.025;
-									if _star_data[2] > 1 _star_data[2] -= 0.25;
-								}
-								_star_data[0] += _star_data[2];
-								draw_sprite_ext(sprite, 0, _star_x, _star_y, size, size, _star_data[0], Aim.Attack.Color, _star_data[1]);
-								Aim.Attack.StarData[i] = _star_data;
-							}
-						}
-						function DrawMultiAttackMain(sprite)
-						{
-							var size = 1, _time = Aim.Attack.Time, _alpha = Aim.Attack.Alpha;
-							if sprite = sprGunCircle _time -= 9;
-							var size_increase, max_size, size_reduction;
-							switch sprite
-							{
-								case sprFrypanAttack:
-									size_increase = 0.3;
-									max_size = 2.8;
-									size_reduction = 0.6;
-								break
-								case sprGunCircle:
-									size_increase = 0.5;
-									max_size = 3.5;
-									size_reduction = 0.3;
-								break
-							}
-							var time_before_fully_expand = round((max_size - size) / size_increase);
-							if _time < time_before_fully_expand
-								size += size_increase * _time;
-							else 
-							{
-								size = max(0, max_size - size_reduction * (_time - time_before_fully_expand));
-								_alpha -= 0.2;
-							}
-							draw_sprite_ext(sprite, posmod(_time / 2, 2), 320, Aim.Attack.EnemyY, size, size, _time * Aim.Attack.Angle, Aim.Attack.Color, _alpha);
-						}
+						//Change logic based on the attacking sprite
 						switch global.MultiBarAttackSprite
 						{
 							//If weapon is notebook
 							case sprNotebookAttack:
 								if _time < 15
 									scale_x = cos(_time / 4) * 2;
-								if _time == 15
+								else if _time == 15
 								{
 									audio_play(snd_punchstrong);
 									if Aim.Attack.Crit audio_play(global.MultiBarCritSound);
@@ -459,7 +391,7 @@ if battle_state == BATTLE_STATE.MENU {
 									scale_y = 0.5;
 									_sprite = sprFrypanAttack;
 								}
-								if _time > 15
+								else if _time > 15
 								{
 									_index = posmod(_index + 1, 2);
 									scale_x = 0.5 + (_time - 15) * 0.25;
@@ -467,7 +399,8 @@ if battle_state == BATTLE_STATE.MENU {
 									if scale_x > 2 _alpha -= 0.1;
 									if _alpha < 0.1 _target_state = 3;
 								}
-								draw_sprite_ext(_sprite, _index, 320, Aim.Attack.EnemyY, scale_x, scale_y, 0, _color, _alpha);
+								if _sprite != -1
+									draw_sprite_ext(_sprite, _index, 320, Aim.Attack.EnemyY, scale_x, scale_y, 0, _color, _alpha);
 							break
 							case sprFrypanAttack:
 								if _time == 0
@@ -479,25 +412,24 @@ if battle_state == BATTLE_STATE.MENU {
 								//Star
 								DrawMultibarAttackStar(sprFrypanStar);
 								//Actual pan
-								if _time < 70
-									DrawMultiAttackMain(sprFrypanAttack);
-								if _time = 70
-									_target_state = 3;
-							break
+								if _time < 70 DrawMultiAttackMain(sprFrypanAttack);
+								else if _time = 70 _target_state = 3;
+								break;
 							case sprGunStar:
 								if _time == 0
 									audio_play(snd_gunshot);
-								if _time < 5
+								else if _time < 5
 									draw_sprite_ext(sprGunStar, posmod(_time / 2, 2), 320, Aim.Attack.EnemyY, 2, 2, 0, _color, 1);
-								if _time > 7
+								else if _time > 7
 									DrawMultibarAttackStar(sprGunStar);
-								if _time > 9 && _time < 60
-									DrawMultiAttackMain(sprGunCircle);
-								if _time = 10
-									if Aim.Attack.Crit
+								else if _time > 9 && _time < 60
+								{
+									if _time == 10 && Aim.Attack.Crit
 										audio_play(snd_multi_crit);
-								if _time = 60 _target_state = 3;
-							break
+									DrawMultiAttackMain(sprGunCircle);
+								}
+								else if _time = 60 _target_state = 3;
+								break;
 						}
 						_time++;
 						
@@ -521,6 +453,7 @@ if battle_state == BATTLE_STATE.MENU {
 						battle_state = 0;
 					}
 				}
+				//Retract aim BG and target bar
 				else {
 					_target_alpha -= 0.04;
 					if _target_retract_method == 0 _target_xscale -= 0.03;
@@ -528,10 +461,11 @@ if battle_state == BATTLE_STATE.MENU {
 					
 					if _target_xscale < 0.08 || _target_yscale < 0.08 {
 						_target_state = 0;
-						dialog_start();
+						__dialog_start();
 						menu_state = -1;
 					}
 				}
+				//Apply variables
 				with Target
 				{
 					side = _target_side;
@@ -542,7 +476,7 @@ if battle_state == BATTLE_STATE.MENU {
 					alpha = _target_alpha;
 				}
 			}
-			
+			//Apply variables
 			Target.state = _target_state;
 			
 			Aim.scale = _aim_scale;
@@ -552,66 +486,69 @@ if battle_state == BATTLE_STATE.MENU {
 	}
 	else if menu_state = MENU_STATE.FLEE
 	{
-		draw_text_scribble(96, 272, $"{DefaultFont}* {FleeText[FleeTextNum]}");
-		if oSoul.x <= 10 && FleeState == 1
+		//Draw fleeing text
+		draw_text(96, 272, "* " + flee_text_list[__FleeTextNum]);
+		//Exit fight when soul is offscreen
+		if oSoul.x <= 10 && __FleeState == 1
 		{
 			Fader_Fade(0, 1, 30);
-			FleeState++;
+			__FleeState++;
 		}
-		if FleeState == 2 && oGlobal.fader_alpha == 1
+		if __FleeState == 2 && oGlobal.fader_alpha == 1
 		{
-			//Event after fight ends
-			game_restart();
+			__ExitFight();
 		}
 	}
 }
+//Battle result text drawing
 else if battle_state == BATTLE_STATE.RESULT {
 	if !global.BossFight {
-		battle_end_text_writer.starting_format(DefaultFontNB, c_white)
-		battle_end_text_writer.draw(52, 272, battle_end_text_typist)
+		__battle_end_text_writer.draw(52, 272, __battle_end_text_typist);
 
 		if input_cancel {
-			battle_end_text_writer.page(battle_end_text_writer.get_page_count() - 1);
-			battle_end_text_typist.skip();
+			__battle_end_text_writer.page(__battle_end_text_writer.get_page_count() - 1);
+			__battle_end_text_typist.skip();
 		}
-		if battle_end_text_typist.get_state() == 1 && battle_end_text_writer.get_page() < (battle_end_text_writer.get_page_count() - 1)
-			battle_end_text_writer.page(battle_end_text_writer.get_page() + 1)
-		if battle_end_text_typist.get_state() == 1 {
-			if input_confirm
-				game_restart();
-		}
+		if __battle_end_text_typist.get_state() == 1 && __battle_end_text_writer.get_page() < (__battle_end_text_writer.get_page_count() - 1)
+			__battle_end_text_writer.page(__battle_end_text_writer.get_page() + 1);
+		if __battle_end_text_typist.get_state() == 1 && input_confirm
+				 __ExitFight();
 	}
-	else if oGlobal.fader_alpha == 1 game_restart();
+	else if oGlobal.fader_alpha == 1 __ExitFight();
 }
 
 #region Debug
 DrawDebugUI();
 #endregion
 
-#region Buttons 
-// Credits to Scarm for the base code
-var _button_spr =	Button.Sprites,
-	_button_pos =	Button.Position,
-	_button_alpha = Button.Alpha,
-	_button_scale = Button.Scale,
-	_button_color = Button.Color,
-	_button_angle = Button.Angle,
-	_state =		menu_state,
-	_menu =			menu_button_choice,
-	i = 0;
-
-repeat array_length(_button_spr) // Button initialize
+#region Buttons
+if !is_struct(Button) exit;
+with Button
 {
-	// Check if the button is chosen
-	var select = (_menu == i) && _state >= 0;
+	var _button_spr =	Sprites,
+		_button_pos =	Position,
+		_button_alpha = Alpha,
+		_button_scale = Scale,
+		_button_color = Color,
+		_button_angle = Angle;
+}
+var _state = menu_state, _menu = menu_button_choice, i = 0, n = array_length(_button_spr);
 
-	// Draw the button by array order
-	if Button.BackgroundCover
+if Button.BackgroundCover
+{
+	shader_set(shdBlackMask); //Prevent background covers the buttons
+	repeat n // Button initialize
 	{
-		shader_set(shdBlackMask); //Prevent background covers the buttons
+		// Check if the button is chosen
+		var select = (_menu == i) && _state >= 0;
+		// Draw the button by array order
 		draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], merge_color(c_white, c_black, .5 - _button_alpha[i] / 2)	, 1);
-		shader_reset();
 	}
+	shader_reset();
+}
+repeat n
+{
+	var select = (_menu == i) && _state >= 0;
 	draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], _button_color[i], 1);
 
 	// Animation - Color updating in real-time because yes
@@ -625,34 +562,18 @@ repeat array_length(_button_spr) // Button initialize
 }
 //Draws a rectangle to cover the button in the board if needed
 if board_cover_button {
-	Battle_Masking_Start(true);
-	var board = oBoard;
-	if !(board.left + board.right >= 640 && board.up + board.down >= 480 && board_full_cover)
-		draw_sprite_ext(sprPixel, 0, 23, 432, 617, 48, 0, c_black, 1);
+	Battle_Masking_Start();
+	draw_sprite_ext(sprPixel, 0, 23, 432, 617, 48, 0, c_black, 1);
 	Battle_Masking_End();
 }
 #endregion
 
 #region UI (Name - Lv - Hp - Kr)
-	// Credits to Scarm for all the help and this epico code!
-	var hp_x =				ui_x - global.kr_activation * 20,
-		hp_y =				ui_y,
-		name_x =			ui_x - 245,
-		name_y =			ui_y,
+	var hp_x =				ui.x - global.kr_activation * 20,
+		name_x =			ui.x - 245,
 		name =				Player.Name(),
-		default_col =		c_white,
-		name_col =			c_white,
-		lv_col =			c_white,
-		lv_counter_col =	c_white,
-		hp_max_col =		c_red,
-		hp_col =			c_yellow,
-		kr_col =			c_fuchsia,
-		krr_col =			c_white,
-		hp_pre_col =		c_lime,
 		bar_multiplier =	1.2, //Default multiplier from UNDERTALE
-		hp_text =			"HP",
-		kr_text =			"KR",
-		_alpha =			ui_alpha;
+		_alpha =			ui.alpha;
 
 	// Linear health updating / higher refill_speed = faster refill / max refill_speed is 1
 	hp += (global.hp - hp) * refill_speed;
@@ -670,40 +591,41 @@ if board_cover_button {
 
 	draw_set_font(fnt_mnc); // Name - LV Font
 	// Name
-	var f_alpha = min(ui_override_alpha[0], _alpha);
+	var f_alpha = min(ui.override_alpha[0], _alpha);
 	if f_alpha > 0
-		draw_text_color(name_x, name_y, name, name_col, name_col, name_col, name_col, f_alpha);
+		draw_text_color(name_x, ui.y, name, name_col, name_col, name_col, name_col, f_alpha);
+	//Debug indication
 	if ALLOW_DEBUG && debug_alpha > 0
 	{
-		var col = make_color_hsv(global.timer % 255, 255, 255)
-		draw_text_color(name_x, name_y, name, col, col, col, col, debug_alpha);
+		var col = make_color_hsv(global.timer % 255, 255, 255);
+		draw_text_color(name_x, ui.y, name, col, col, col, col, debug_alpha);
 	}
 	// LV Icon
-	f_alpha = min(ui_override_alpha[1], _alpha);
+	f_alpha = min(ui.override_alpha[1], _alpha);
 	if f_alpha > 0
 	{
 		var str_width = string_width(name);
-		draw_text_color(name_x + str_width, name_y, "   LV ", lv_col, lv_col, lv_col, lv_col, f_alpha);
+		draw_text_color(name_x + str_width, ui.y, "   LV ", lv_num_col, lv_num_col, lv_num_col, lv_num_col, f_alpha);
 		// LV Counter
 		str_width += string_width("   LV ");
-		draw_text_color(name_x + str_width, name_y, Player.LV(), lv_counter_col, lv_counter_col, lv_counter_col, lv_counter_col, f_alpha);
+		draw_text_color(name_x + str_width, ui.y, Player.LV(), lv_text_col, lv_text_col, lv_text_col, lv_text_col, f_alpha);
 	}
 
 	draw_set_font(fnt_uicon); // Icon Font
 	// HP Icon
-	f_alpha = min(ui_override_alpha[2], _alpha);
+	f_alpha = min(ui.override_alpha[2], _alpha);
 	if f_alpha > 0
-		draw_text_color(hp_x - 31, hp_y + 5, hp_text, default_col, default_col, default_col, default_col, f_alpha);
+		draw_text_color(hp_x - 31, ui.y + 5, hp_text, hp_text_col, hp_text_col, hp_text_col, hp_text_col, f_alpha);
 
 	// Background bar
-	f_alpha = min(ui_override_alpha[3], _alpha);
+	f_alpha = min(ui.override_alpha[3], _alpha);
 	if f_alpha > 0
 	{
-		draw_sprite_ext(sprPixel, 0, hp_x, hp_y, _hp_max, 20, 0, hp_max_col, f_alpha);
+		draw_sprite_ext(sprPixel, 0, hp_x, ui.y, _hp_max, 20, 0, hp_max_col, f_alpha);
 		// HP bar
-		draw_sprite_ext(sprPixel, 0, hp_x, hp_y, _hp, 20, 0, hp_col, f_alpha);
+		draw_sprite_ext(sprPixel, 0, hp_x, ui.y, _hp, 20, 0, hp_bar_col, f_alpha);
 	}
-
+	//Healing Prediction
 	if menu_state == MENU_STATE.ITEM {
 		switch item_scroll_type
 		{
@@ -711,28 +633,26 @@ if board_cover_button {
 			case ITEM_SCROLL.VERTICAL:
 				if show_predict_hp
 				{
-					hp_predict += (item_heal[coord] - hp_predict) * refill_speed;
-					//Healing Prediction
-					draw_sprite_ext(sprPixel, 0, hp_x + _hp, hp_y, min(hp + hp_predict, hp_max) * bar_multiplier - _hp, 20, 0, hp_pre_col, abs(dsin(global.timer * 2) * .5) + .2);
+					__hp_predict += (item_heal[coord] - __hp_predict) * refill_speed;
+					draw_sprite_ext(sprPixel, 0, hp_x + _hp, ui.y, min(hp + __hp_predict, hp_max) * bar_multiplier - _hp, 20, 0, c_lime, abs(dsin(global.timer * 2) * .5) + .2);
 				}
-			break
+				break;
 		}
 	}
 
 	// KR bar
+	var final_kr_col = round(kr) ? kr_bar_col : kr_text_col;
 	if global.kr_activation {
-		krr_col = round(kr) ? kr_col : krr_col;
-		
 		// Draw icon
-		f_alpha = min(ui_override_alpha[4], _alpha);
+		f_alpha = min(ui.override_alpha[4], _alpha);
 		draw_set_alpha(f_alpha);
 		// Draw the bar
 		if round(kr)
-			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, hp_y, max(-_kr, -_hp) - 1, 20, 0, krr_col, 1);
+			draw_sprite_ext(sprPixel, 0, hp_x + _hp + 1, ui.y, max(-_kr, -_hp) - 1, 20, 0, final_kr_col, 1);
 
-		draw_text_color(hp_x + 10 + _hp_max, hp_y + 5, kr_text, krr_col, krr_col, krr_col, krr_col, f_alpha);
+		draw_text_color(hp_x + 10 + _hp_max, ui.y + 5, kr_text, final_kr_col, final_kr_col, final_kr_col, final_kr_col, f_alpha);
 	}
-	draw_set_alpha(ui_alpha);
+	draw_set_alpha(ui.alpha);
 
 	// Zeropadding
 	var hp_counter = string(round(hp)),
@@ -740,27 +660,30 @@ if board_cover_button {
 	if round(hp) < 10 hp_counter = "0" + hp_counter;
 	if round(hp_max) < 10 hp_max_counter = "0" + hp_max_counter;
 
-	// This line below supports multiple digits for Zeropadding, but I just personally don't like it. 
-	// var hp_counter = string_replace_all(string_format(round(hp), string_length(string(hp_max)), 0), " ", "0");
-
 	// Draw the health counter
-	f_alpha = min(ui_override_alpha[5], _alpha);
-	draw_set_alpha(f_alpha);
-	draw_set_color(krr_col);
+	f_alpha = min(ui.override_alpha[5], _alpha);
 	draw_set_font(fnt_mnc); // Counter Font
 	var offset = global.kr_activation ? (20 + string_width(kr_text)) : 15;
-	draw_text(hp_x + offset + _hp_max, hp_y, $"{hp_counter} / {hp_max_counter}");
+	draw_text_color(hp_x + offset + _hp_max, ui.y, string_concat(hp_counter, " / ", hp_max_counter), final_kr_col, final_kr_col, final_kr_col, final_kr_col, f_alpha);
 
 draw_set_color(c_white);
 draw_set_alpha(1);
 #endregion
 //Draws a rectangle to cover the hp bar in the board if needed
-if board_cover_hp_bar {
-	Battle_Masking_Start(true);
-	var board = oBoard;
-	if !(board.left + board.right >= 640 && board.up + board.down >= 480 && board_full_cover)
-		draw_sprite_ext(sprPixel, 0, hp_y, hp_y, 640, 20, 0, c_black, 1);
+if board_cover_ui {
+	Battle_Masking_Start();
+	draw_sprite_ext(sprPixel, 0, name_x, ui.y, 640, 20, 0, c_black, 1);
 	Battle_Masking_End();
 }
-
+//Renders the bullets on screen
 RenderBullets();
+//Debug timer
+if global.debug && battle_state == BATTLE_STATE.IN_TURN {
+	draw_set_color(c_white);
+	draw_set_halign(fa_right);
+	var i = 0, str = "";
+	repeat instance_number(oEnemyParent)
+		str += string_concat("Time: ", instance_find(oEnemyParent, i++).time, "\n");
+	draw_text(640, 10, str);
+	draw_set_halign(fa_left);
+}

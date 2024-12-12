@@ -14,7 +14,7 @@ void main()
     {
         for( float i=1.0/float(Quality);i<=1.0;i+=1.0/float(Quality) )
         {
-                Color += texture2D( gm_BaseTexture, v_vTexcoord+vec2(cos(d),sin(d))*radius*i);
+            Color += texture2D( gm_BaseTexture, v_vTexcoord+vec2(cos(d),sin(d))*radius*i);
         }
     }
     Color /= float(Quality)*float(Directions)+1.0;

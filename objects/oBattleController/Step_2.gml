@@ -7,30 +7,30 @@ if global.kr_activation
 	
 	if global.kr
 	{
-		kr_timer++;
+		__kr_timer++;
 		if
-		(kr_timer == 2 && global.kr >= 40) ||
-		(kr_timer == 4 && global.kr >= 30) || 
-		(kr_timer == 10 && global.kr >= 20) ||
-		(kr_timer == 30 && global.kr >= 10) ||
-		kr_timer == 60
+		(__kr_timer == 2 && global.kr >= 40) ||
+		(__kr_timer == 4 && global.kr >= 30) || 
+		(__kr_timer == 10 && global.kr >= 20) ||
+		(__kr_timer == 30 && global.kr >= 10) ||
+		__kr_timer == 60
 		{
-			kr_timer = 0;
+			__kr_timer = 0;
 			global.kr--;
 			global.hp--;
 		}
 		if global.hp <= 0 global.hp = 1;
 	}
-	else kr_timer = 0;
+	else __kr_timer = 0;
 }
 else
 {
-	kr_timer = 0;
+	__kr_timer = 0;
 	global.kr = 0;
 }
 
 if global.hp <= 0 && global.deadable
-	if !global.debug gameover();
+	if !global.debug __gameover();
 	else
 	{
 		global.hp = global.hp_max;

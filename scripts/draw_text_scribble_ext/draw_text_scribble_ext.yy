@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Quick Functions",
-    "path": "folders/Coalition Engine/Addons/Scribble/Quick Functions.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/Quick Functions.yy",
   },
 }

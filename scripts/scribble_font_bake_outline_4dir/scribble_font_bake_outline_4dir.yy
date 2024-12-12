@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Fonts",
-    "path": "folders/Coalition Engine/Addons/Scribble/Fonts.yy",
+    "name": "Legacy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/Legacy.yy",
   },
 }

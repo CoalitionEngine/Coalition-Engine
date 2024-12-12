@@ -1,6 +1,12 @@
-///Script for the soul to collide with bullet, runs only in soul object for better optimisation
+///@category Soul
+///@title Bullet Collision
+///@text Note that this is an internal function, you may supply the 'exceptions' argument
+
+///@func CollideWithBullet([exceptions])
+///@desc Script for the soul to collide with bullet, runs only in soul object for better optimisation
 ///@param {Array<Asset.GMObject>} Exceptions Exceptions of collision
 function CollideWithBullet(exceptions = []) {
+	aggressive_forceinline
 	static CheckCollisions =
 	[
 		//Parent always goes last
@@ -11,28 +17,30 @@ function CollideWithBullet(exceptions = []) {
 	function(bullet) {
 		bullet = instance_place(x, y, bullet);
 		var collision = bullet != noone;
-		if collision with bullet Soul_Hurt(damage);
+		if collision with bullet if image_alpha < 0.5 return false; else Soul_Hurt(damage);
 		return collision;
 	},
 	//Default function for place_meeting cases for bullets that has different colors
 	DefaultColorPlaceMeetingFunction =
 	function(bullet) {
-			bullet = instance_place(x, y, bullet);
-			var collision = bullet != noone;
-			if collision
+		bullet = instance_place(x, y, bullet);
+		var collision = bullet != noone;
+		if collision
+		{
+			with bullet
 			{
-				with bullet
+				if image_alpha < 0.5 return false;
+				if is_val(type, 1, 2)
 				{
-					if is_val(type, 1, 2)
-					{
-						collision = IsSoulMoving();
-						collision = (type == 1 ? collision : !collision);
-					}
+					collision = Soul_IsMoving();
+					collision = (type == 1 ? collision : !collision);
 					if collision Soul_Hurt(damage);
 				}
+				else if type == 0 Soul_Hurt(damage);
 			}
-			return collision;
-		},
+		}
+		return collision;
+	},
 	
 	CheckFunctions =
 	[
@@ -42,17 +50,17 @@ function CollideWithBullet(exceptions = []) {
 		DefaultPlaceMeetingFunction,
 		//oGB
 		function(bullet) {
-			bullet = instance_position(x, y, bullet);
+			bullet = instance_position(x, y, oGB);
 			var collision = bullet != noone;
 			if collision
 			{
 				with bullet
 				{
-					if state == 4 && beam_alpha >= 0.5
+					if state == 4 && __beam_alpha >= 0.5
 					{
 						if type != 0 && type != 3
 						{
-							collision = IsSoulMoving();
+							collision = Soul_IsMoving();
 							collision = (type == 1 ? collision : !collision);
 						}
 						if collision Soul_Hurt();
@@ -64,28 +72,26 @@ function CollideWithBullet(exceptions = []) {
 		//oBulletParents
 		DefaultColorPlaceMeetingFunction,
 	];
-	var i = 0;
-	repeat size
+	with oBulletParents
 	{
-		if !array_contains(exceptions, CheckCollisions[i]) && instance_exists(CheckCollisions[i])
-			if CheckFunctions[i](CheckCollisions[i]) break;
+		if variable_instance_exists(id, "Axis") image_angle += Axis.angle;
+		if variable_instance_exists(id, "Len") image_angle += Len.angle_extra;
+	}
+	var i = 0;
+	repeat instance_number(oBulletParents)
+	{
+		var curBul = instance_find(oBulletParents, i).object_index;
+		if array_contains(CheckCollisions, curBul)
+		{
+			if CheckFunctions[array_get_index(CheckCollisions, curBul)](curBul) break;
+		}
+		//oBulletParents
+		else if DefaultColorPlaceMeetingFunction(curBul) break;
 		++i;
 	}
-}
-///Adds a bullet collision type and function dynamically, not recommended to put in create event of bullet objects
-///@param {Asset.GMObject} bullet	The object of the attack to add
-///@param {function,string} func	The function for the object to use (Default is place_meeting, for bullets with color, use "color", custom collision functions use function(){})
-function AddBulletCollision(bullet, func = "")
-{
-	var static_script = static_get(CollideWithBullet), ObjList = static_script.CheckCollisions,
-		CollList = static_script.CheckFunctions;
-	if !array_contains(ObjList, bullet)
+	with oBulletParents
 	{
-		static_script.size++;
-		array_push(ObjList, bullet);
-		var FinPushFunc = func;
-		if is_string(func)
-			FinPushFunc = func == "" ? static_script.DefaultPlaceMeetingFunction : static_script.DefaultColorPlaceMeetingFunction;
-		array_push(CollList, func);
+		if variable_instance_exists(id, "Axis") image_angle -= Axis.angle;
+		if variable_instance_exists(id, "Len") image_angle -= Len.angle_extra;
 	}
 }

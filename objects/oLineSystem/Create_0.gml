@@ -1,8 +1,2 @@
-///@desc System Init
-if instance_number(oLineSystem) > 1
-{
-	instance_destroy();
-	exit;
-}
-
-LineSystem_Load();
+LineSys = new __LineSystem();
+pixel_texture = sprite_get_texture(sprPixel, 0);

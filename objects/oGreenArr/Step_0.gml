@@ -22,4 +22,3 @@ if mode == 1 || mode == 3
 
 x = lengthdir_x(len, dir + dir_e + dir_a) + soul.x;
 y = lengthdir_y(len, dir + dir_e + dir_a) + soul.y;
-

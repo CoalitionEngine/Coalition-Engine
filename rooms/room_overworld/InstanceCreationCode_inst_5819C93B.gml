@@ -1,5 +1,4 @@
 sprite_index = sprPixel;
-image_yscale = 200;
 Event = function()
 {
 	with oOWPlayer

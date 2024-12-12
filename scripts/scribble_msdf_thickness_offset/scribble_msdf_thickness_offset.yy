@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Miscellaneous",
-    "path": "folders/Coalition Engine/Addons/Scribble/Miscellaneous.yy",
+    "name": "Deprecated",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/(System - don't call these functions)/Deprecated.yy",
   },
 }

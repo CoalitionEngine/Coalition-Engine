@@ -1,6 +1,6 @@
 ///@desc Normal layer
-switch OverWorld_ID
+switch room
 {
-	case OVERWORLD.CORRIDOR:
-		break
+	case room_overworld:
+		break;
 }

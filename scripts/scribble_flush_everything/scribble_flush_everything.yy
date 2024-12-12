@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Miscellaneous",
-    "path": "folders/Coalition Engine/Addons/Scribble/Miscellaneous.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/Miscellaneous.yy",
   },
 }

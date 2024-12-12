@@ -13,7 +13,7 @@
   "duration": 1.256553,
   "parent": {
     "name": "SFX",
-    "path": "folders/Coalition Engine/Sounds/SFX.yy",
+    "path": "folders/Coalition Engine/Internal/Sounds/SFX.yy",
   },
   "preload": false,
   "sampleRate": 44100,

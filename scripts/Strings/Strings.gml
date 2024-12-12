@@ -1,29 +1,33 @@
-/**
-	Converts a string to an array
-	@param {string} string	The string to convert the array to
- */
+///@category Special Scripts
+///@title Strings
+
+///@func string_to_array(string)
+///@desc Converts a string to an array
+///@param {string} string The string to convert the array to
+///@return {Array<String>}
 function string_to_array(str)
 {
-	gml_pragma("forceinline");
-	var i = 1, arr = [];
-	repeat string_length(str) array_push(arr, string_copy(str, i++, 1));
+	forceinline
+	var i = 1, len = string_length(str), arr = array_create(len, "");
+	repeat len arr[i] = string_copy(str, i++, 1);
 	return arr;
 }
-/**
-	Converts a array to a string
-	@param {Array<string>} array	The array to convert the string to
-*/
+///@func array_to_string(array)
+///@desc Converts a array to a string
+///@param {Array<string>} array The array to convert the string to
+///@return {string}
 function array_to_string(arr)
 {
-	gml_pragma("forceinline");
+	forceinline
 	var i = 0, txt = "";
 	repeat array_length(arr) txt += arr[i++];
 	return txt;
 }
-
-// replaces all Unicode escapes in a string with corresponding characters
+///@func string_replace_unicode(string)
+///@desc replaces all Unicode escapes in a string with corresponding characters
+///@return {string}
 function string_replace_unicode(str) {
-	gml_pragma("forceinline");
+	forceinline
     var ucode_idx = string_pos_ext("\\u", str, 0);
     while ucode_idx >= 1
 	{
@@ -36,10 +40,11 @@ function string_replace_unicode(str) {
     }
     return str;
 }
-
-// parses a hexadecimal number to a corresponding character
+///@func chr_from_hex(string)
+///@dec parses a hexadecimal number to a corresponding character
+///@return {string}
 function chr_from_hex(str) {
-	gml_pragma("forceinline");
+	forceinline
     str = string_upper(str);
     var result = 0, length = string_length(str);
     for (var i = 1; i <= length; i++) {
@@ -48,24 +53,24 @@ function chr_from_hex(str) {
     }
     return chr(result);
 }
-/**
-	Returns a given value as a string of hexadecimal digits.
-	Hexadecimal strings can be padded to a minimum length.
-	Note: If the given value is negative, it will
-	be converted using its two's complement form.
-	@param  {real}      dec		integer
-	@param  {real}      len		minimum number of digits
-*/
+///@func dec_to_hex(decimal, digits)
+///@desc Returns a given value as a string of hexadecimal digits.
+///Hexadecimal strings can be padded to a minimum length.
+///Note: If the given value is negative, it will
+///be converted using its two's complement form.
+///@param {real} dec integer
+///@param {real} len minimum number of digits
+///@return {string}
 function dec_to_hex(dec, len = 1) 
 {
-	gml_pragma("forceinline");
+	forceinline
     var hex = "";
 
     if (dec < 0) {
         len = max(len, ceil(logn(16, 2 * abs(dec))));
     }
 
-    var dig = "0123456789ABCDEF";
+    static dig = "0123456789ABCDEF";
     while (len-- || dec) {
         hex = string_char_at(dig, (dec & $F) + 1) + hex;
         dec = dec >> 4;
@@ -73,8 +78,12 @@ function dec_to_hex(dec, len = 1)
 
     return hex;
 }
-
+///@func buffer_read_utf8(buffer)
+///@desc Reads a utf8 string from a buffer
+///@param {Id.Buffer} buffer The buffer to read from
+///@return {real}
 function buffer_read_utf8(_buffer) { // To help read UTF8 strings
+	aggressive_forceinline
 	var _value = buffer_read(_buffer, buffer_u8);
 	if ((_value & 0xE0) == 0xC0) { //two-byte
 		_value  = (_value & 0x1F) <<  6;
@@ -92,11 +101,13 @@ function buffer_read_utf8(_buffer) { // To help read UTF8 strings
 		
 	return _value;	
 }
-
-///Lowers a string using the buffer method, this is faster than the built-in string_lower()
+///@func string_lower_buffer(string)
+///@desc Lowers a string using the buffer method, this is faster than the built-in string_lower()
+///@param {string} string The string to lower the cases of
+///@return {string}
 //Credits to TabularElf
 function string_lower_buffer(_string) {
-	gml_pragma("forceinline");
+	aggressive_forceinline
 	static _strBuffer = buffer_create(1024, buffer_grow, 1);
 	
 	// Exit early

@@ -9,6 +9,35 @@
             "Flee": "* 逃跑",
             "Win": "你赢了![delay,333]\n* 你得到了{0}点经验值及{1}个金币。",
             "LoveInc": "\n[delay,333]* 你的 LOVE 提升了!"
+        },
+        "Shop": {
+            "InsufficientGText": "你没钱",
+            "ItemFullText": "你持有太多物品了。",
+            "ItemBuyText": "要以 {0} G购买吗？",
+            "ItemSellText": "要以 {0} G售出吗？"
+        },
+        "Overworld": {
+            "Item": "物品",
+            "Stat": "状态",
+            "Cell": "电话",
+            "Use": "使用",
+            "Info": "检视",
+            "Drop": "丢弃"
+        },
+        "Intro": {
+            "Instruction": {
+                "Label": "--- Instruction ---",
+                "Text" : "[[Z or ENTER] - Confirm\n[[X or SHIFT] - Cancel\n[[C or CTRL] - Menu (In-game)\n[[F4] - Fullscreen\n[[Hold ESC] - Quit\nWhen HP is 0, you lose."
+            },
+            "ConfirmName": "Is this name correct?",
+            "Begin Game": "Begin Game",
+            "Settings": "Settings",
+            "Quit": "Quit",
+            "Backspace": "Backspace",
+            "Done": "Done",
+            "No": "No",
+            "Yes": "Yes",
+            "Go Back": "Go Back"
         }
     }
 }

@@ -1,11 +1,11 @@
 //Collision event with bulets
-with(oBulletParents)
-	if place_meeting(x, y, other)
+with oBulletParents
+	if YellowCollidable && place_meeting(x, y, other)
 	{
-		instance_destroy();
+		if YellowDestroyable instance_destroy();
 		instance_destroy(other);
 	}
 //Draw trail
-TrailEffect(10);
+if __has_trail TrailEffect(10).depth = oBoard.depth - 1;
 //Auto destroy
 if check_outside() instance_destroy();

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Batches",
-    "path": "folders/Coalition Engine/Addons/Clean Shapes/Batches.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Clean Shapes/Batches.yy",
   },
 }

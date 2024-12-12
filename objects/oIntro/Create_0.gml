@@ -1,7 +1,7 @@
 audio_play(snd_logo);
-hint = 0;
-TweenFire(self, "", 0, 0, 119, 1, "hint>", 1);
-y = 0;
+//Whether to display the buttom text
+hint = false;
+invoke(function() { hint = true; }, [], 120);
 
 enum INTRO_MENU_STATE
 {
@@ -14,20 +14,16 @@ enum INTRO_MENU_STATE
 	NAME_CHOSEN, // Name changing locked after first time naming ever
 	MENU,
 }
-
+//The menu state
 menu_state = INTRO_MENU_STATE.LOGO;
-menu_choice = [0, 0];
-input_buffer = 0;
-
+//The menu choices MENU - SETTINGS
+menu_choice = array_create(2, 0);
+//Localization
+ReloadTexts();
 #region Introduction
-instruction_label = "--- Instruction ---";
-instruction_text =
-@"[[Z or ENTER] - Confirm
-[[X or SHIFT] - Cancel
-[[C or CTRL] - Menu (In-game)
-[[F4] - Fullscreen
-[[Hold ESC] - Quit
-When HP is 0, you lose.";
+//Self-explanatory
+instruction_label = __LangInstructionLabel;
+instruction_text = __LangInstructionText;
 #endregion
 
 #region // Naming function
@@ -43,7 +39,7 @@ repeat 27
 naming_choice = 0;
 naming_alpha = [1, 0];
 name = "";
-name_desc = "Is this name correct?";
+name_desc = __LangConfirmName;
 name_x = 320;
 name_y = 110;
 name_scale = 1;
@@ -54,11 +50,13 @@ name_check = false;
 #endregion
 
 #region // Settings
+///Checks whether the name contains a custom message, you may modify this
+///@param {string} name The name to check
 function CheckName(checkname){
 	switch string_lower_buffer(checkname)
 	{
 		default:
-			name_desc = "Is this name correct?";
+			name_desc = __LangConfirmName;
 			name_usable = true;
 			break;
 		case "chara":
@@ -174,4 +172,16 @@ function CheckName(checkname){
 }
 LogoText = "UNDERTALE";
 fading = false;
+#endregion
+#region Scribble caches
+__scribble_caches = {};
+with __scribble_caches
+{
+	logo =				scribble("[fnt_logo][fa_center]" + other.LogoText);
+	hint =				scribble("[fnt_cot][c_ltgray][fa_center][[PRESS Z OR ENTER]");
+	instruction_label = scribble("[fa_center][c_ltgray][fnt_dt_sans]" + other.instruction_label);
+	instruction_text =	scribble("[c_ltgray][fnt_dt_sans]" + other.instruction_text);
+	fallen_human =		scribble("[fa_center][fnt_dt_sans]Name the fallen human.");
+	credit_text =		scribble($"[c_gray][fa_center][fa_bottom][fnt_cot]UNDERTALE (C) TOBY FOX 2015-{current_year}\nCoalition Engine {__COALITION_ENGINE_VERSION} by Cheetos Bakery");
+}
 #endregion

@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "10  Cursor Control",
-    "path": "folders/Coalition Engine/Addons/Input/10  Cursor Control.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Input/10  Cursor Control.yy",
   },
 }

@@ -33,7 +33,7 @@ repeat array_length(Fade.Activate)
 #endregion
 
 //Draws above shaders
-if global.ShowFPS && !global.debug && room != rRestart  //Prevent debug UI overlap
+if global.ShowFPS && !global.debug  //Prevent debug UI overlap
 {
 	draw_text_scribble(635, 5, "[fnt_dotum][fa_right][c_red]FPS: " + string(fps));
 }

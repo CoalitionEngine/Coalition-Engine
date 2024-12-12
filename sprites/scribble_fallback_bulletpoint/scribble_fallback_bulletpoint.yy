@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "scribble_fallback_bulletpoint",
-  "bbox_bottom": 10,
-  "bbox_left": 1,
-  "bbox_right": 10,
-  "bbox_top": 1,
+  "bbox_bottom": 63,
+  "bbox_left": 0,
+  "bbox_right": 63,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "(System - don't call these functions)",
-    "path": "folders/Coalition Engine/Addons/Scribble/(System - don't call these functions).yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/(System - don't call these functions).yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

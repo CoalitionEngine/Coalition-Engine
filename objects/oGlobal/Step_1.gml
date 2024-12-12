@@ -1,18 +1,16 @@
 /// @description Global
-if input_check("pause") or input_check_double("pause")
+//Quitting
+if input_check("pause") || input_check_double("pause")
 {
 	if quit_timer++ >= 60 game_end();
 }
 else quit_timer = quit_timer > 0 ? quit_timer - 2 : 0;
-
+//Global timer
 global.timer++;
-
+//Restart game
 if keyboard_check_pressed(vk_f2)
-{
-	audio_stop_all();
-	//room_goto(rRestart);
 	game_restart();
-}
+//Fullscreen
 if keyboard_check_pressed(vk_f4)
 {
 	window_set_fullscreen(!window_get_fullscreen());
@@ -30,11 +28,6 @@ if ALLOW_DEBUG
 			Screenshot(room_get_name(room));
 	if keyboard_check_pressed(vk_f5) room_restart();
 }
-
-if room == rRestart
-{
-	if restart_timer++ == restart_ender game_restart();
-}
-
-if RGBShake > 0 RGBShake -= RGBDecrease;
-else if !surface_exists(RGBSurf) RGBSurf = surface_create(640, 480);
+//RGB Decrease
+if __RGBShake > 0 __RGBShake -= RGBDecrease;
+else if !surface_exists(__RGBSurf) __RGBSurf = surface_create(640, 480);

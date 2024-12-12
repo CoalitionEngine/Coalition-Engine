@@ -29,7 +29,7 @@
   "origin": 4,
   "parent": {
     "name": "Soul",
-    "path": "folders/Coalition Engine/Sprites/Battle/Soul.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Battle/Soul.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -71,8 +71,8 @@
   "swatchColours": null,
   "swfPrecision": 2.525,
   "textureGroupId": {
-    "name": "Default",
-    "path": "texturegroups/Default",
+    "name": "texbattle",
+    "path": "texturegroups/texbattle",
   },
   "type": 0,
   "VTile": false,

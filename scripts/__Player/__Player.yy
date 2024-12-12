@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "In Game Datas",
-    "path": "folders/Coalition Engine/Scripts/In Game Datas.yy",
+    "name": "In Game Data",
+    "path": "folders/Coalition Engine/Internal/(System)/Scripts/In Game Data.yy",
   },
 }

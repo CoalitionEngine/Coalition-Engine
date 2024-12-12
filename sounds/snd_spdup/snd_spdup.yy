@@ -13,7 +13,7 @@
   "duration": 0.689342,
   "parent": {
     "name": "Menu",
-    "path": "folders/Coalition Engine/Sounds/SFX/Battle/Menu.yy",
+    "path": "folders/Coalition Engine/Internal/Sounds/SFX/Battle/Menu.yy",
   },
   "preload": false,
   "sampleRate": 44100,

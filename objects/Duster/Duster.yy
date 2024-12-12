@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Optional",
-    "path": "folders/Coalition Engine/Objects/Effects/Optional.yy",
+    "name": "Duster",
+    "path": "folders/Coalition Engine/Internal/(System)/Objects/Effects/Optional/Duster.yy",
   },
   "parentObjectId": null,
   "persistent": false,

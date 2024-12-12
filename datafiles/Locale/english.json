@@ -3,12 +3,45 @@
     "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
     "text": {
         "Font": "fnt_dt_mono",
+        "No": "No",
+        "Yes": "Yes",
         "Battle": {
             "ItemPage": "PAGE {0}",
             "Spare": "* Spare",
             "Flee": "* Flee",
             "Win": "You WON![delay,333]\n* You earned {0} XP and {1} gold.",
             "LoveInc": "\n[delay,333]* Your LOVE increased!"
+        },
+        "Shop": {
+            "InsufficientGText": "you broke lmao",
+            "ItemFullText": "You are carrying too many items.",
+            "ItemBuyText": "Buy it for {0} G?",
+            "ItemSellText": "Sell it for {0} G?",
+            "Buy": "Buy",
+            "Sell": "Sell",
+            "Talk": "Talk",
+            "Exit": "Exit"
+        },
+        "Overworld": {
+            "Item": "ITEM",
+            "Stat": "STAT",
+            "Cell": "CELL",
+            "Use": "USE",
+            "Info": "INFO",
+            "Drop": "DROP"
+        },
+        "Intro": {
+            "Instruction": {
+                "Label": "--- Instruction ---",
+                "Text" : "[[Z or ENTER] - Confirm\n[[X or SHIFT] - Cancel\n[[C or CTRL] - Menu (In-game)\n[[F4] - Fullscreen\n[[Hold ESC] - Quit\nWhen HP is 0, you lose."
+            },
+            "ConfirmName": "Is this name correct?",
+            "Begin Game": "Begin Game",
+            "Settings": "Settings",
+            "Quit": "Quit",
+            "Backspace": "Backspace",
+            "Done": "Done",
+            "Go Back": "Go Back"
         }
     }
 }

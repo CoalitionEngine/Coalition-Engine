@@ -1,4 +1,502 @@
-Update Logs (This is the beta builds)
+v0.8.0 (Eden)
+Manually reviewed every single piece of code for project maintainence
+You MUST clean install
+Note that this update is the largest update since inital release, therefore this change log may not be fully accurate
+
+Removed:
+- Hitbox display of oGB (The hitbox is the sprite)
+- Grazing
+
+Fixed:
+- Shop text may not display
+- Optimized some shaders
+- Removed some unused variables
+- Further normalized variable names
+- `clear_timesource` actually clears timesources now
+- Reassigned sprites to their texture groups
+- Orange soul angle was affected by `draw_angle`
+- DIR.DOWN_RIGHT was misset as 325 instead of 315
+- If the bullet has `hit_destroy` set to true, it will crash when colliding with the player
+- Green soul shields no longer freeze in place
+- Fixed `DetermineTurn` may yield different dialog-turn pair
+- Vertical item scrolling crashes
+- Multibar attacks may break
+- Inconsistent gameover logic
+- Option swapping still available when name is not in oIntro
+- Enforced coding style
+- Enforced localization
+- Removed unused variables
+- Misc. comment typos
+- oOWDrawer was not checked to be existing
+- `AddBulletCollision` adds the bullet instead of the function to the function check list
+- `oOWPlayer` sprinting variable was misnamed as `FleeEnabled`, now renamed to `enable_sprint`
+- Item data are not saved when game is restarted (Such as item uses left)
+- Converting a normal board to vertex board causes it to shrink a bit
+
+Updated:
+- Converted template strings ($"") to `string_concat` as it is more efficient in both VM and YYC
+- Optimised input checking using stored hashes instead
+- Optimised `show_hitbox`
+- Optimised cutscene system
+- Debloated Debug UI
+- `Screenshot` now with option to contain time in the file name
+- Modified `ButtonSprites`, `DrawSpeechBubble` for more user defined preferences
+- `oBoardCover` is now up to date
+- Renamed `GreenCircle` to `green_soul_draw_circle` in `oSoul`
+- Renamed `FleeEnabled` and `FleeText` to `enable_flee` and `flee_text_list` respectively in `oBattleController`
+- Moved `oIntro` to External as each user may want a different logo
+- Updated enemy dusting method
+- Updated oOWDrawer drawing logic to be more user friendly (And moved it to External)
+- Updated TurboGML to v4.0.1 (i contributed lol)
+- Updated Lexicon to 3.0.5
+- Updated Input to 7.0.1
+- Updated READ ME.md
+
+v0.7.6.1 (Eden)
+Fixed: oIntro is now up to date
+
+v0.7.6 (Eden)
+This update requires a clean install
+
+Fixed:
+Sigma was not renammed to Summation when all the references are renamed
+Rendering and colliding bullets are not functioning properly in newer GM versions
+Save point now saves things
+Bullets with Axis or Len angle will have incorrect collision when angle is modified
+Incorrect board masking calculation order
+oBulletParents may not be masked if depth is set to anything other than the depth of the board
+Typos in comments
+Fixed bone collision
+
+Updated:
+Overhauled array_equals for it to support structs
+Optimised oBoard logic, bullet collision, rendering, other misc. functions
+Gameover clears time sources
+oBulletBone supports outlined bones
+Updated Scribble to 9.3.1
+Seperated user defined macros and engine macros to two different scripts
+Cutscene system for the overworld, simply use Cutscene*
+Overworld BGM implementation, read the documentation for more information
+Added `InitSprite()` and `SetWiggle()` in enemy object for easier sprite setting
+
+v0.7.5 (Eden)
+Fixed:
+Overworld dialog box persists when entering encounter
+Shop text scaled incorrectly
+Bug in bullet collision due to unchecked parent
+Changing rooms when any instances were previously culled will result in all instances to be culled
+Buffer was not deleted in data saving/loading
+Player still has moving animation when running against a wall
+Overworld collision bugs
+Typos in documentation
+
+Updated:
+Fallback room from shop
+You can now use oOWCamLock for camera locking for sub-rooms
+Added a 'Name' for the oOWChars for debugging use
+Normalized variable naming convections
+- RGBBlaster -> blaster_enable_rgb
+- SpareTextColor -> spare_text_color
+- TextSkipEnabled -> enable_text_skipping
+- Sigma -> Summation
+
+More examples are in the overworld, including each of the collision objects and a random encounter
+
+v0.7.4 (Eden)
+smol update lol, the doc will be updated soon, tight on time rn
+
+Fixed:
+Overworld collision after interacting with objects may stuck in infinite loop
+Shop text may overflow
+
+Updated:
+Optimised Cell and Player
+Added `EnterShop` for, well, entering the shop
+
+Removed:
+Useless tile
+
+v0.7.3 (Eden)
+Fixed:
+Box crashes
+Incorrect out of bounds check for bullets
+oBulletBone has unessacary variable declarations and event calls
+Incorrect oBulletBone in-screen checking
+Blaster beam overlapping bug
+Talking in shop does not move the soul
+You can now leave the shop
+Shop desc text now fits to box, requires manual line breaking
+
+Updated:
+Updated Input to 7.0.0 and TurboGML to 4.0.0
+Optimised bullet rendering
+Exiting an encounter will spawn you at the overworld
+Used global variables for input checking and struct hashing for hitbox display for better performance
+Added support for setting overworld instances as a child of oOWChars will automatically check for collision by the player
+
+v0.7.2 (Eden)
+Fixed:
+Item count not updating in battle
+Board.GetUp/DownPos() returning the opposite values
+Fixed GPU state stack overflow
+
+Updated:
+Variable in oEnemyParent to toggle auto masking
+
+v0.7.1 (Eden)
+Removed:
+Duplicate files
+
+Fixed:
+Blue soul not registering on ground/ceiling correctly for left/upwards direction
+if time == 0 doesn't work in attack creation
+Battle button soul lerp was incorrectly set
+Dialog bubble appears for 1 frame when there is no dialog
+Dialog text sound not updating when edited
+Soul_Hurt scope was set incorrectly to self instead of object_index
+Act amount incorrectly set
+Board.Get* functions return incorrect values
+Missing text in battle menu
+Typos in jsDoc
+
+Updated:
+Added option to remove the asterisk in battle menu dialog
+Added option to change the soul angle or not in battle menu
+Added a line system for creating special effects
+Optimised enemy turn functions
+Added Board.GetAngle() and BoardMaskAll()
+Optimised initalization
+Added more button variables for more user freedom
+Further organised folders for preventing code being overwritten from updates
+
+v0.7.0 (Eden)
+Removed:
+Unused variables
+oTextController
+
+Fixed:
+PostAttackFunction may call a different turn when DetermineTurn() is used.
+is_rectangle() finally works
+Save point 'input_confirm' not defined
+Save point soft-softlocks you
+Scribble typists doesn't reset it's typing state when room ends
+Sideways blue soul is not properly clamped in polygon board
+Masking of ui is incorrect
+HP bar of enemies on the menu is not updated after being attacked
+HP bar of enemies during attack animation still has HP left when killed
+Typo in the SetEncounter script
+
+Updated:
+Removed uneeded item functions and renamed Item_Add() to Item_Set()
+Minor adjustments to some code for better readability
+Converted some Array<Bool> into bits, to update the variables, change them to "^= quick_pow(2, original array index)"
+Converted ui_* in oBattleController into a struct
+Renamed most variables for a more consistent naming convection
+Renamed 'allow_run' to 'FleeEnabled' in oBattleController
+Added new lerping functions to replace `lerp()` as it is broken
+Optimised input checking method
+Added Shop
+Changed game_restart() into a customized __game_restart function
+Changed function variables into methods
+New macro for an empty function
+Cells can now be used multiple times with different text displays
+Multiple enemies are now functional (i.e. timer and individual turns)
+ -> Therefore there are now two types of turns, Enemy Turn and Battle Turn, do not confuse them
+Updated tempoary data get/set method to be more optimised
+Minor changes to initialisation method for more optimisation
+Minor changes to the global box array, which is now a struct
+Moved starting format for scribble texts to the create event to prevent regeneration per frame
+EnemyData, BoxData, CellData has been renamed to Enemy, Box, Cell respectively
+Other minor adjustments for optimisation
+
+Notes:
+Documentation has been added to this engine
+Thinking on how to convert polyboard blue soul collision check to bit instead of array for further optimization
+
+v0.6.2 (Eden)
+Fixed:
+Menu text does not reset when attack timed out
+Battle aiming sprite is TML engine sprite instead of base Undertale sprite (me playing too much tml engine games to notice this issue fr)
+Typo in internal function
+Removed unused codes in internal functions
+struct_equals() not accounting for NaN
+
+Updated:
+Updated engine organisation for better user experience
+Updated cell related functions for better readability and is more optimised
+Updated some item library setting functions
+Optimised some functions by returning self in with statements
+Added forceinline and aggressive_forceinline for better YYC compilation optimisation
+
+Notes:
+Last push before testing documentation generator
+
+v0.6.1 (Eden)
+Fixed:
+Incorrect overworld player argument for camera
+Disabling draw damage should be instantaneous instead of constant
+Button update function should be based on amount of buttons
+Activating turn in ACT does not process user defined turn function
+Colored bullets do damage anyways
+Incorrect usage of blue soul on ground/ceiling
+Incorrect order for PostAttackFunctions to execute
+Purple soul referenced a variable outside scope
+
+Updated:
+Added a variable for purple soul for disabling vertical lines'
+Added variables to bullets to set whether it is collidable and destroyable by yellow soul bullets
+Changed the drawing method of the dialog box in battle for better customability
+Added 'RenderCheck' as a function for checking whether the bullet should be rendered (oBulletParents exclusive for now)
+
+Notes:
+You may notice more missing references to Tome related assets during project load, it is due to me making documentation for the engine
+
+v0.6.0 (Eden)
+Fixed:
+Custom bullet collision function bug
+Platform masking
+Masking of bonewalls
+Debug UI surface order (also optimised)
+Debug UI audio doesn't stop
+Naming UI bugs
+Blue soul does not return correct on ground/ceiling when board is tilted
+
+Updated:
+Engine icon
+Polygon board masking
+Polygon board soul clamping (flexing calculus knowledge)
+Language based texts are now only reloaded when needed
+New data saving/loading method (less cancerous but still secure)
+Changed draw_rectangle_width and draw_rectangle_width_ext into CleanRectangle
+Overworld dialog options have been remade
+Converted all 'and' and 'or'' into '&&' and '||'
+Optimised codes for performance and compiling
+Added comments to codes for better understanding
+
+Removed:
+Line system (not useful)
+DoLater (not useful)
+GPU controlling (I believe in the level of intelligence of users)
+Deprecated Scribble and Input functions
+
+Notes:
+Input debug is disabled
+Gamepad input is disabled
+
+v0.6.0 Beta 1 (Eden)
+Removed:
+GMLive functions on green soul
+Some deprecated codes
+Unessacary assets
+
+Fixed:
+Shader controller surface drawing method not applying
+Debug mouse pointer doesn't register save point
+Overworld dialog sprite remains after activating a dialog that has a dialog sprite
+Optimised overworld UI drawing event
+Item button remains in default colors when there are no items
+Sparing softlocks you
+Loading multiple arrays using Load_Data will cause a crash
+Releasing a game build would cause oBattleController to crash
+
+Updated:
+New sine wave shader with 7 modes
+Option for custom sprite for target background in battle
+Changed button updating function
+Custom angled bonewall can now be created (Currently not very user-friendly)
+Option to enable player running in overworld
+New method on room transition in overworld for better optimisation and user-friendlier
+Updated overworld save UI state for better organisation
+Changed some variables in scripts into static variables to boost performance
+Updated addons to newest versions
+Data saving is now avalible
+Changed macro statements for faster compiling
+Set overworld dialog to be skippable or end because I forgot (bruh)
+Added a seperate parent object for every overworld character for better controlling
+Further optimised objects by changing local constant variables into constants
+Optimised blaster drawing
+You can now dynamically add items using ItemLibraryAdd()
+Fixed some fundemental engine logic
+Fixed overworld collision bug
+Bullet collisions are now optimised and is controlled via a script
+
+v5.3.1 (Eden)
+Fixed bugs:
+I untangled the corruption manually so the green soul functions now re-exist
+Updated:
+New checker to check for compatibility of engine to your GM version
+Green soul is basically done, you now have the basic things you need for green soul attacks
+
+v5.3.0 (Eden)
+Updated:
+Added options for disabling lerping
+Changed engine error log property
+Updated Input to v6.1.0
+
+Currently fixing green soul, planning to add more soul modes in near future
+
+v5.2.3 (Eden)
+Fixed bugs:
+Pre/Post attack functions not working correctly on turns generated by DetermineTurn()
+Enemy slamming index not displaying properly at end of animation (It is best to use your own codes for more customability)
+Updated:
+Changed bone wave script to be more user friendly
+
+v5.2.2 (Eden)
+Fixed bugs:
+Len of bullets are not functioning properly
+Blaster won't create properly
+Enemy_NameUpdate() is called but the script doesn't exist
+Bone collision is a 1 pixel line instead of a 5 pixel line
+Menu text is not reset properly after acting/using an item
+Battle controller detects the incorrect amonut of enemies on menu
+Bone wall on the left and right side has incorrect drawing size
+Enemy sprites are not reset to default after slamming animation ended
+New features:
+New script for creating blaster circles
+New error logging function for some commonly encountered errors
+
+v5.2.1 (Eden)
+added more comments on codes for better understanding
+converted camera functions into static functions
+new shader drawing method
+optimised some array related codes
+
+v5.2 (Eden + TK)
+converted save point into a seperate object for better user placing
+optimised overworld controller and cleaned its logic
+added comments on codes for better understanding (only in the codes you need to know)
+removed unused codes
+fixed bugs
+optimised codes (too many)
+
+v5.1.2 (Eden)
+cleaned a lot of codes
+
+v5.1.1 (Eden)
+fixed bug where battle breaks with multiple enemies of the same type
+
+v5.1 (Eden)
+converted enemy related functions into constructor format
+converting blaster scripts
+updated multi-language support
+fixed battle logic related to act
+converted some features relating to surfaces
+
+v5.0 (Eden)
+optimised codes
+updated battle logic so it is more user friendly and less bugs will occur due to the unreadibility of code making the dev (aka im so dumb i cant read my own stupid codes) unable to fix
+function of polygon board has started making
+
+!IMPORTANT!
+from this point forth, TurnCreate (and variables associated), some names of Battle related functions, are removed / renamed into another function
+
+v4.8.8.2 (Eden)
+optimised codes
+
+v4.8.8.1 (Eden)
+added clean shapes by JujuAdams
+sorted some file into groups
+added color blending for effects (most likely useless to 99% of the people)
+
+v4.8.8 (Eden)
+changed encounter enemy template template
+will improve readability next update
+
+v4.8.7 (Eden)
+fixed bugs and changed some functions
+
+v4.8.6 (Eden)
+added border
+
+v4.8.5 (Eden)
+optimised more functions
+added screen splicing (like in the epic sword fighting game edgetale, but the method is better because zy code is lag simulator)
+added secret cutscene
+
+v4.8.4 (Eden)
+optimised draw_cube_width
+changed color lerping method of buttons and made them into structs (faster lmao)
+oBattleController is no longer decompilable (for now)
+
+v4.8.3 (Eden)
+bug fixes
+changed some functions
+added some more macros
+please remind me to change button color lerp to merge_color
+
+v4.8.2 (Eden)
+added some functions and fixed some things
+
+v4.8.1 (Eden)
+added a room transition and camera locking system for overworld, currently only supports sub-room transitioning
+the method looks very dumb but its actually how commerical games work lmfao
+
+v4.8.0 (Eden)
+added a ruins sprite for camera lock testing
+fixed draw_invert_polygon (its like literal me sucking at math and fail whywhywhhwywyhw)
+replaced overworld camrea targetting to manual because camera_set_view_target() is trash
+
+v4.7.12 (Eden)
+fixed some bugs
+added demo of multi language support
+moved included files to a seperate folder because tidy
+
+v4.7.11 (Eden)
+changed some variable names to know its a internal variable
+fixed some bugs
+optimised (what how)
+moved the sans drawing template from the parent object to the sans object (no idea why it was at parent object at all lmao)
+added function for mid-turn dialog
+
+v4.7.10 (Eden)
+2.5D camera is semi functional, angle is broken, thinking how to fix
+fixed some functions
+
+v4.7.9 (Eden)
+moved debug ui drawing to a function
+overworld dialog now fully supports face (character face during dialog), i dont know why this isnt a thing before its so easy
+
+v4.7.8 (Eden)
+added new function for drawing rectangles
+optimised oOWController for a bit
+fixed box
+
+v4.7.7 (Eden)
+updated debug room for more functions like external audio loading
+updated RGB shaking
+added 2.5D camera to oGlobal, useless for now
+added some more user friendly functions so drawing sprites in overworld is easier
+
+v4.7.6 (Eden)
+updated input to 6.0.4
+added text controller for easier text typer thing
+optimised oDebug for a little
+
+v4.7.5 (Eden)
+added debug room because why not, its literally room list sound list and sprite list, literally nothing useful because you can just see them in game maker anyways, but room can let you teleport so there is some use i guess
+added a nosie fade thingy, the use of this doesnt exist so uh yeah code flex real?
+
+v4.7.4 (Eden)
+optimised battle engine
+updated TurboGML
+added function descriptions and user friendly functions
+fixed camera bug of having target wont allow you to shake it (game maker issue, bypassed it with cringe way that is another bug but it works)
+
+v4.7.3 (Eden)
+fixed turn looping
+
+v4.7.2 (Eden)
+fixed blur shader
+
+v4.7.1 (Eden)
+testing polyboard collision
+added gradient drawing, very optimised lmao literally 0.03ms for 4 sides
+fixed shader scripts, added blue reducing shader and gradient shader
+
+v4.7 (Eden)
+added an object for effects (currently only sprite fading)
+i completely forgot lmfao
 
 v4.6.9.5 (Eden)
 better overworld object collision
@@ -419,18 +917,4 @@ Added movement for enemy while under attack (the damage and miss)
 v3.5.3 (Panthervention)
 Proper Game Over added, adjusted and fixing KR, adjusting enemy hp bar on menu. (Do not touch KR mechanic!)
 
-v3.5 (Eden)
-Added angled soul in menu, modified item ui, fixed dialog bug, fixed kr, fixed blaster (basically brute force the bugs, h)
-
-v3.4 (Eden)
-Added dialog system
-(v3.41: fixed Enemey_Function_Load)
-
-v3.3 (Eden)
-Added color/retraction to aiming, fixed item text became menu text, added enemy hp bar drawing on menu (is optional), fixed some enemy data bugs (i++ and ++i, imagine)
-
-v3.2 (Eden)
-Polished Menu Dialog System, Turn System and gameover
-
-v3.1 (Eden)
-Made Structure of Turn System, Bullet System
+v3.5 

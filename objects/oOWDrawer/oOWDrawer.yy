@@ -12,8 +12,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "Controllers",
-    "path": "folders/Coalition Engine/Objects/Controllers.yy",
+    "name": "Overworld",
+    "path": "folders/Coalition Engine/External/Objects/Overworld.yy",
   },
   "parentObjectId": null,
   "persistent": false,

@@ -14,12 +14,16 @@
 #macro SCRIBBLE_FLEXIBLE_WHITESPACE_WIDTH     true   //Controls if spaces and tabs have a fixed, unchanging size. Setting this to <false> will ensure that spaces are always the same size, which is useful for monospaced fonts
 #macro SCRIBBLE_PIN_ALIGNMENT_USES_PAGE_SIZE  false  //Sets whether pin alignments use the size of the page for positioning, or the size of the text element (the bounding box across all pages)
 #macro SCRIBBLE_ALLOW_TEXT_GETTER             false  //Set to <true> to enable the .get_text() method on text elements. This will apply to all text elements and carries a performance penalty
-#macro SCRIBBLE_ALLOW_GLYPH_DATA_GETTER       true   //Set to <true> to enable the .get_glyph_data() method on text elements (and a few other features too). This will apply to all text elements and carries a performance penalty
+#macro SCRIBBLE_ALLOW_GLYPH_DATA_GETTER       true  //Set to <true> to enable the .get_glyph_data() method on text elements (and a few other features too). This will apply to all text elements and carries a performance penalty
 #macro SCRIBBLE_AUTOFIT_INLINE_SPRITES        false  //Whether to automatically scale sprites to fit into the line of text. This is based on the font height of the current font
 #macro SCRIBBLE_AUTOFIT_INLINE_SURFACES       false  //Whether to automatically scale surfaces to fit into the line of text. This is based on the font height of the current font
 #macro SCRIBBLE_USE_KERNING                   true
 #macro SCRIBBLE_SPRITE_BILINEAR_FILTERING     undefined
 #macro SCRIBBLE_DELAY_LAST_CHARACTER          false
+#macro SCRIBBLE_USE_ASCENDER_OFFSET           true
+#macro SCRIBBLE_USE_FONT_ALIGNMENT_OFFSETS    true
+#macro SCRIBBLE_USE_SPRITE_WHITELIST          false
+#macro SCRIBBLE_USE_SOUND_WHITELIST           false
 
 
 
@@ -27,7 +31,7 @@
 
 #macro SCRIBBLE_TICK_SIZE                      (delta_time / 16666) //Animation tick size per step. The default macro (delta_time / 16666) ensures that animations are smooth and consistent at all framerates
 #macro SCRIBBLE_DEFAULT_UNIQUE_ID              ":default" //Default value to use for text element unique IDs. This is used when no unique ID is specified. This value must be a string, and must start with a colon (:)
-#macro SCRIBBLE_VERBOSE                        false      //Enables verbose console output to aid with debugging
+#macro SCRIBBLE_VERBOSE                        DEBUG      //Enables verbose console output to aid with debugging
 #macro SCRIBBLE_BEZIER_ACCURACY                20         //Controls how accurately text fits Beziér curves. Higher is more accurate but slower
 #macro SCRIBBLE_NEWLINES_TRIM_LEFT_SPACE       false      //Whether to trim off empty left-hand space when moving a word to a new line. This can cause issues with spritefonts in some situations
 #macro SCRIBBLE_NEWLINES_PAD_LEFT_SPACE        true       //Whether to pad extra space left-hand space when moving a word to a new line
@@ -38,7 +42,7 @@
 #macro SCRIBBLE_SPRITEFONT_IGNORE_ORIGIN       false      //Set to <true> to ignore a sprite origin's contribution to its spritefont glyph x/y offsets
 #macro SCRIBBLE_SPRITEFONT_LEGACY_HEIGHT       false      //Version 8 uses GameMaker's native spritefont dimensions. Older versions used the tight bounding box leading to narrower lines. Set this macro to <true> to use the tighter legacy behaviour
 #macro SCRIBBLE_SDF_BORDER_TRIM                0          //Edge trimming around the bounding box for SDF glyphs (in pixels). This is useful for tidying up any glitches when scaling
-#macro SCRIBBLE_ALWAYS_DOUBLE_DRAW             false      //Whether to force double-draw behaviour. This is useful for fixing problems with SDF glyph border overlap
+#macro SCRIBBLE_ALWAYS_DOUBLE_DRAW             false      //Whether to force double-draw behaviour. This is useful for fixing problems with SDF glyph outline overlap
 
 #macro SCRIBBLE_COMMAND_TAG_OPEN          ord("[") //Character used to open a command tag. First 127 ASCII chars only
 #macro SCRIBBLE_COMMAND_TAG_CLOSE         ord("]") //Character used to close a command tag. First 127 ASCII chars only

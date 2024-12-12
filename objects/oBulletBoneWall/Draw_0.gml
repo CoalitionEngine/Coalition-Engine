@@ -7,7 +7,7 @@ if active
 		board_d = board_y + board.down,
 		board_l = board_x - board.left,
 		board_r = board_x + board.right;
-
+	//If it is still at the warning phase, draw the warning box
 	if time_warn
 	{
 		time_warn--;
@@ -27,12 +27,10 @@ if active
 			x1 = dir == DIR.LEFT ? board_l + 2 : board_r - 2;
 			x2 = dir == DIR.LEFT ? board_l + height - 2 + 5 : board_r - height - 5;
 		}
-		
-		draw_set_color(warn_color);
 		//Warning rectangle
 		draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, warn_color, warn_alpha_filled);
 		//Warning outline
-		draw_rectangle(x1, y1, x2, y2, true);
+		draw_rectangle_color(x1, y1, x2, y2, warn_color, warn_color, warn_color, warn_color, true);
 	}
 	else //Draw bones
 	{

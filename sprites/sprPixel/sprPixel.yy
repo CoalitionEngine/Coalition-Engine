@@ -11,7 +11,7 @@
   "collisionTolerance": 0,
   "DynamicTexturePage": false,
   "edgeFiltering": false,
-  "For3D": false,
+  "For3D": true,
   "frames": [
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"0133dd89-40ed-41b2-9d0a-15794c202e85",},
   ],
@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "Global",
-    "path": "folders/Coalition Engine/Sprites/Global.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Global.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

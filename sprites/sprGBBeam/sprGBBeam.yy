@@ -6,7 +6,7 @@
   "bbox_left": 0,
   "bbox_right": 20,
   "bbox_top": 0,
-  "bboxMode": 1,
+  "bboxMode": 0,
   "collisionKind": 4,
   "collisionTolerance": 0,
   "DynamicTexturePage": false,
@@ -49,7 +49,7 @@
   "origin": 9,
   "parent": {
     "name": "Bullet",
-    "path": "folders/Coalition Engine/Sprites/Battle/Bullet.yy",
+    "path": "folders/Coalition Engine/Internal/(System)/Sprites/Battle/Bullet.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -88,8 +88,8 @@
   "swatchColours": null,
   "swfPrecision": 2.525,
   "textureGroupId": {
-    "name": "Default",
-    "path": "texturegroups/Default",
+    "name": "texbattle",
+    "path": "texturegroups/texbattle",
   },
   "type": 0,
   "VTile": false,

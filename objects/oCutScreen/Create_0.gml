@@ -4,3 +4,4 @@ duration = 0;
 endduration = 15;
 dir = random(360);
 displace = 10;
+EasingFunction = EaseOutQuad;

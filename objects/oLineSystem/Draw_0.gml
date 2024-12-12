@@ -1,29 +1,30 @@
-///@desc Background Lines
-var LineAmount = global.Line.Lines;
-for(var i = 0; i < LineAmount; ++i)
+var i = 0, Lines = LineSys.__Lines, pix_tex = pixel_texture;
+gpu_push_state();
+gpu_set_zwriteenable(true);
+gpu_set_ztestenable(true);
+repeat ds_list_size(Lines)
 {
-	if global.Line.LineLayer[| i] == LineLayer.BELOW
+	var curLine = Lines[| i];
+	with curLine
 	{
-		var LinePoints = global.Line.LinePoints[| i];
-		draw_set_alpha(global.Line.LineAlpha[| i]);
-		draw_set_color(global.Line.LineColor[| i]);
-		draw_line_width(LinePoints[0], LinePoints[1], LinePoints[2], LinePoints[3], global.Line.LineWidth[| i]);
+		if !gui
+		{
+			gpu_set_depth(depth);
+			if ds_list_size(DragLines) > 0
+			{
+				var ii = 0;
+				repeat ds_list_size(DragLines)
+				{
+					DragLines[| ii].Draw();
+					++ii;
+				}
+			}
+			Draw();
+			//Masking
+			if instance_exists(oBoard) && depth > oBoard.depth
+				BoardMaskAll();
+		}
 	}
+	++i;
 }
-
-//Fading lines
-if FadingLines > 0
-{
-	for(var i = 0; i < FadingLines; ++i)
-	{
-		var n = FadingLineParentIndex[i];
-		var LinePoints = FadingPosition[i];
-		draw_set_alpha(FadingAlpha[i]);
-		draw_set_color(global.Line.LineColor[| n]);
-		draw_line_width(LinePoints[0], LinePoints[1], LinePoints[2], LinePoints[3], global.Line.LineWidth[| n]);
-	}
-}
-
-draw_set_alpha(1);
-draw_set_color(c_white);
-
+gpu_pop_state();

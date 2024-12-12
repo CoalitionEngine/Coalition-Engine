@@ -1,10 +1,7 @@
-//
-// Simple passthrough fragment shader
-//
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 varying vec3 v_vPosition;
-//
+
 uniform vec4 u_rect;
 uniform sampler2D u_mask;
 

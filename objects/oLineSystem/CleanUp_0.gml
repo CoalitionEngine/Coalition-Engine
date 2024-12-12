@@ -1,1 +1,1 @@
-LineSystem_CleanUp();
+DisposeAllLines();
