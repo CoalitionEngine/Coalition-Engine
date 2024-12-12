@@ -28,11 +28,11 @@ This is the version of external libraries that are packaged with this engine.
 > 
 > X : Vice versa
 
-> O : Bleeding Edge : This branch is frequently updated, which means you'll occassionally cause unexpected exceptions or errors while using it.
+> X : Bleeding Edge : This branch is frequently updated, which means you'll occassionally cause unexpected exceptions or errors while using it.
 
 > X : Beta : This branch will get updates less frequently than Bleeding-Edge, but this branch is for developers who want somewhat stable engine and frequently new features.
 
-> X : Stable : This branch provides the most **stable** project, But the frequency of updating is the slowest among these three.
+> O : Stable : This branch provides the most **stable** project, But the frequency of updating is the slowest among these three.
 
 ## What does this Undertale Engine feature?
 
