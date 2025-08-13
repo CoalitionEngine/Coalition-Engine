@@ -17,7 +17,7 @@ datafiles/Tome*
 objects/__tome*
 
 # Private Coalition Visual Assets
-objects/oCoalVisMain*
-objects/oCoalVisMainAtk*
-objects/oCoalVisMainOld*
-rooms/rCoalVis
+**/*CoalVis*
+
+**/ImGui*
+shaders/shdImGui/

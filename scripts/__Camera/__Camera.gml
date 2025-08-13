@@ -100,7 +100,6 @@ function __Camera() constructor
 	static SetPos = function(_x, _y, duration = 0, delay = 0, ease = "")
 	{
 		forceinline
-		forceinline
 		with (oGlobal.__MainCamera)
 		{
 			if (duration == 0)

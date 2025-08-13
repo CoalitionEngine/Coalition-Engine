@@ -550,7 +550,7 @@ function __ExitFight()
 		oOWController.__OverworldSubRoom = global.__CurrentOverworldSubRoom;
 		oOWPlayer.x = global.__CurrentOverworldPosition.x;
 		oOWPlayer.y = global.__CurrentOverworldPosition.y;
-		oOWPlayer.dir = global.__CurrentOverworldDirection;
+		oOWPlayer.FacingDirection = global.__CurrentOverworldDirection;
 	}
 	//Event after fight ends
 	//If player came from an overworld, go back

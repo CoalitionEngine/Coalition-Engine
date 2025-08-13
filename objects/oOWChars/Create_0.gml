@@ -26,7 +26,7 @@ function CollideWithAnything(x, y)
 	return (layer_exists("TileCollision") && tile_meeting(x, y, "TileCollision")) || place_meeting(x, y, oOWChars) || (place_meeting(x, y, oOWCollision) && instance_place(x, y, oOWCollision).Interactable);
 }
 function __SpriteShouldFlip() {
-	return FacingDirection == SpriteFlipDirection && SpriteFlipDirection != -1;
+	return abs(angle_difference(FacingDirection, SpriteFlipDirection)) <= 45 && SpriteFlipDirection != -1;
 }
 function __GetDirectionalSprite(dir) {
 	return DirSprites[dir / 90];

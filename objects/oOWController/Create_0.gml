@@ -163,8 +163,8 @@ function ExitSave() {
 ///Sets the camera to the player
 function SnapCamera() {
 	forceinline
-	var target_x = oOWPlayer.x - oGlobal.__MainCamera.view_width / oGlobal.__MainCamera.x / 2,
-		target_y = oOWPlayer.y - oGlobal.__MainCamera.view_height / oGlobal.__MainCamera.y / 2,
+	var target_x = oOWPlayer.x - oGlobal.__MainCamera.view_width / oGlobal.__MainCamera.scale.x / 2,
+		target_y = oOWPlayer.y - oGlobal.__MainCamera.view_height / oGlobal.__MainCamera.scale.y / 2,
 		half_rwidth = room_width / 2, curLock = __CameraLockPositions[$ __OverworldSubRoom],
 		half_sprwidth = sprite_get_width(OverworldSprite) / 2;
 	//Entire room clamping

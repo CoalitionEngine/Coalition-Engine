@@ -198,6 +198,21 @@ function __Player() constructor
 		global.__CoalitionPlayerMaxKR = max_kr;
 		return self;
 	}
+	///@method Inv([inv])
+	///@desc Sets/Gets the invincibility frames of the player
+	///@param {real} inv The invincibility frames to set (If needed)
+	///@return {Struct.__Player,Real}
+	static Inv = function(inv = NaN)
+	{
+		forceinline
+		if (!is_nan(inv))
+		{
+			global.__CoalitionPlayerInvincibilityFrames = inv;
+			return self;
+		}
+		else
+			return global.__CoalitionPlayerInvincibilityFrames;
+	}
 }
 ///@text
 ///?> If the function is to set data rather than getting them, you can use them like a fluent

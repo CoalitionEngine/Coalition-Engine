@@ -286,7 +286,7 @@ function __Shop() constructor {
 							oOWController.__OverworldSubRoom = global.__CurrentOverworldSubRoom;
 							oOWPlayer.x = global.__CurrentOverworldPosition.x;
 							oOWPlayer.y = global.__CurrentOverworldPosition.y;
-							oOWPlayer.dir = global.__CurrentOverworldDirection;
+							oOWPlayer.FacingDirection = global.__CurrentOverworldDirection;
 							oOWPlayer.__ForceCollideless = true;
 						}, [], 31);
 					else

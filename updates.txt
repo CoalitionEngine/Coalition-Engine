@@ -1,5 +1,23 @@
 Update Logs
 
+v1.0.1 (TK)
+
+Fixed:
+
+- Overworld character sprites not flipping properly
+- Overworld camera not snapping properly
+- Overworld character sprite is still at moving state when colliding with an object
+- Game crashes when leaving shop or battle
+
+Added:
+
+- `Player.Inv` Get/Set function
+
+Removed:
+
+- Double `forceinline` in `Camera.SetPos`
+
+
 v1.0.0 (Eden & TK)
 Manually reviewed every single piece of code for project maintenance.
 You MUST clean install.

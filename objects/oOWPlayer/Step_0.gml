@@ -62,7 +62,7 @@ if (input_menu && !oOWController.__menu_opened && !oOWController.__menu_disabled
 	Movable = false;
 }
 
-var PlayerCanMove = (!CutsceneIsActive() && Movable && !oOWController.__menu_opened) || (CutsceneIsActive() && CutsceneCharacterCanMove());
+var PlayerCanMove = (CutsceneIsActive() ? CutsceneCharacterCanMove() : (Movable && !oOWController.__menu_opened));
 
 if (PlayerCanMove) // When the player can move around
 {
@@ -86,7 +86,6 @@ if (PlayerCanMove) // When the player can move around
 		if (input_vertical != 0 && !y_stop)
 		{
 			//Sets sprite to vertical sprite
-			print(input_vertical);
 			assign_sprite = __GetDirectionalSprite(input_vertical > 0.5 ? DIR.DOWN : DIR.UP);
 			scale_x = 1;
 			//Check whether the movement is moving into a tile
@@ -114,7 +113,7 @@ if (assign_sprite != -1)
 //Player walking
 if (CHECK_MOVING && PlayerCanMove && !(x_stop && y_stop))
 	image_speed = spd / 12;
-if (PlayerCanMove && !CHECK_MOVING)
+if ((PlayerCanMove ? !CHECK_MOVING : !CutsceneIsActive()))
 {
 	image_speed = 0;
 	image_index = 0;
