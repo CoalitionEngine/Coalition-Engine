@@ -280,7 +280,6 @@
     {"id":{"name":"oVertexBoard","path":"objects/oVertexBoard/oVertexBoard.yy",},},
     {"id":{"name":"oYellowBullet","path":"objects/oYellowBullet/oYellowBullet.yy",},},
     {"id":{"name":"rCoalitionDebug","path":"rooms/rCoalitionDebug/rCoalitionDebug.yy",},},
-    {"id":{"name":"rCoalVisAtk","path":"rooms/rCoalVisAtk/rCoalVisAtk.yy",},},
     {"id":{"name":"rInitialize","path":"rooms/rInitialize/rInitialize.yy",},},
     {"id":{"name":"rmExample","path":"rooms/rmExample/rmExample.yy",},},
     {"id":{"name":"room_battle","path":"rooms/room_battle/room_battle.yy",},},
@@ -931,7 +930,6 @@
     {"roomId":{"name":"rUTDemo","path":"rooms/rUTDemo/rUTDemo.yy",},},
     {"roomId":{"name":"room_shop","path":"rooms/room_shop/room_shop.yy",},},
     {"roomId":{"name":"rmExample","path":"rooms/rmExample/rmExample.yy",},},
-    {"roomId":{"name":"rCoalVisAtk","path":"rooms/rCoalVisAtk/rCoalVisAtk.yy",},},
   ],
   "templateType":null,
   "TextureGroups":[
