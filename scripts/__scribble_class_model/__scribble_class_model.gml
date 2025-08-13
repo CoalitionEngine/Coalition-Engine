@@ -86,6 +86,8 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     
     static __flush = function()
     {
+        //Don't forget to update scribble_flush_everything() if you change anything here!
+        
         if (__flushed) return undefined;
         if (__SCRIBBLE_DEBUG) __scribble_trace("Flushing model \"" + string(__cache_name) + "\"");
         
@@ -313,8 +315,9 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     __scribble_gen_6_build_lines();
     __scribble_gen_7_build_pages();
     __scribble_gen_8_position_glyphs();
-    __scribble_gen_9_write_vbuffs();
-    __scribble_gen_10_set_padding_flags();
+    __scribble_gen_9_build_vbuff_grids();
+    __scribble_gen_10_write_vbuffs();
+    __scribble_gen_11_set_padding_flags();
     
     if (SCRIBBLE_VERBOSE)
     {

@@ -1,10 +1,10 @@
 {
     "English": {
         "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
-        "file": "./english.json"
+        "file": ["./English/UI.json", "./English/Equipments.json", "./English/Items.json"]
     },
     "SimpZH": {
         "locale": "zh-MO",
-        "file": "./simpzh.json"
+        "file": ["./SimpZH/UI.json", "./SimpZH/Equipments.json", "./SimpZH/Items.json"]
     }
 }

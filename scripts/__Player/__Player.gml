@@ -1,4 +1,4 @@
-///@category In Game Data
+///@category Player Data
 ///@title Player
 ///@text These functions are for mainipulating player data.
 
@@ -7,90 +7,44 @@
 function ConvertItemNameToStat()
 {
 	aggressive_forceinline
-	global.MultiBarAttackSprite = -1;
-	global.MultiBarCritSound = snd_multiattack_crit;
-	switch COALITION_DATA.AttackItem
+	//Weapon
+	var AtkItem = COALITION_DATA.AttackItem;
+	if (is_struct(AtkItem) && is_instanceof(AtkItem, Equipment))
 	{
-		case "Stick":
-			global.player_attack = 0;
-			global.bar_count = 1;
-			break;
-		case "Toy Knife":
-			global.player_attack = 3;
-			global.bar_count = 1;
-			break;
-		case "Tough Glove":
-		case "Glove":
-			global.player_attack = 5;
-			global.bar_count = 1;
-			//Insert mashing stuff
-			break;
-		case "Ballet Shoes":
-		case "Shoes":
-			global.player_attack = 7;
-			global.bar_count = 3;
-			break;
-		case "Torn Notebook":
-		case "Notebook":
-			global.player_attack = 2;
-			global.bar_count = 2;
-			global.MultiBarAttackSprite = sprNotebookAttack;
-			global.MultiBarOverrideSound = snd_notebook_spin;
-			break;
-		case "Burnt Pan":
-		case "Pan":
-			global.player_attack = 10;
-			global.bar_count = 4;
-			global.MultiBarAttackSprite = sprFrypanAttack;
-			global.MultiBarOverrideSound = snd_frypan_hit;
-			break;
-		case "Empty Gun":
-		case "Gun":
-			global.player_attack = 12;
-			global.bar_count = 4;
-			global.MultiBarAttackSprite = sprGunStar;
-			global.MultiBarOverrideSound = snd_gunshot;
-			break;
-		case "Worn Dagger":
-		case "Dagger":
-			global.player_attack = 15;
-			global.bar_count = 1;
-			break;
-		case "Real Knife":
-		case "Knife":
-			global.player_attack = 99;
-			global.bar_count = 1;
-			break;
+		global.player_attack = AtkItem.Attack;
+		global.__CoalitionAttackBarCount = AtkItem.BarCount;
 	}
-	switch COALITION_DATA.DefenseItem
+	else if (__COALITION_VERBOSE)
+		print($"Coalition Engine: Weapon \"{AtkItem}\" is not an instance of the Equipment constructor");
+	//Armor
+	var DefItem = COALITION_DATA.DefenseItem;
+	if (is_struct(DefItem) && is_instanceof(DefItem, Equipment))
+		global.player_defense = DefItem.Defense;
+	else if (__COALITION_VERBOSE)
+		print($"Coalition Engine: Armor \"{DefItem}\" is not an instance of the Equipment constructor");
+}
+function __ResetBoostStats() {
+	with (global)
 	{
-		case "Bandage":			global.player_def = 0;	break;
-		case "Faded Ribbon":	global.player_def = 3;	break;
-		case "Manly Bandanna":	global.player_def = 7;	break;
-		case "Old Tutu":		global.player_def = 10; break;
-		case "Cloudy Glasses":	global.player_def = 6;	global.player_inv_boost = 9; break;
-		case "Temmie Armor":	global.player_def = 6;	global.player_inv_boost = 3; break;
-		case "Stained Apron":	global.player_def = 11; break;
-		case "Cowboy Hat":		global.player_def = 12; global.player_attack += 5; break;
-		case "Heart Locket":	global.player_def = 15; break;
-		case "The Locket":		global.player_def = 99; break;
+		__CoalitionPlayerAttackBoost = 0;
+		__CoalitionPlayerDefenseBoost = 0;
+		__CoalitionPlayerInvincibilityBoost = 0;
 	}
 }
-
 
 ///@constructor
 ///@func __Player()
 ///@desc Player data, to call these functions, simply use `Player.XXX()`
 function __Player() constructor
 {
-	///@method GetBaseStats()
-	///@desc Gets the base ATK and DEF of the player and then automatically sets it
+	///@method SetBaseStats()
+	///@desc Sets the base ATK and DEF of the player
 	///@return {Struct.__Player}
-	static GetBaseStats = function()
+	static SetBaseStats = function()
 	{
 		forceinline
-		global.player_base_atk = LV() * 2 - 2;
-		global.player_base_def = floor(LV() / 5);
+		global.__CoalitionPlayerBaseAttack = LV() * 2 - 2;
+		global.__CoalitionPlayerBaseDefense = floor(LV() / 5);
 		return self;
 	}
 	///@method GetLvBaseExp()
@@ -123,13 +77,14 @@ function __Player() constructor
 	///@return {Struct.__Player,String}
 	static Name = function(name = NaN)
 	{
-		static hash = variable_get_hash("name");
-		if !is_nan(name)
+		static hash = variable_get_hash("Name");
+		if (!is_nan(name))
 		{
 			struct_set_from_hash(COALITION_DATA, hash, name);
 			return self;
 		}
-		else return struct_get_from_hash(COALITION_DATA, hash);
+		else
+			return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method LV([lv])
 	///@desc Sets/Gets the lv of the player
@@ -137,13 +92,14 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static LV = function(lv = NaN)
 	{
-		static hash = variable_get_hash("lv");
-		if !is_nan(lv)
+		static hash = variable_get_hash("LV");
+		if (!is_nan(lv))
 		{
 			struct_set_from_hash(COALITION_DATA, hash, lv);
 			return self;
 		}
-		else return struct_get_from_hash(COALITION_DATA, hash);
+		else
+			return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Gold([gold])
 	///@desc Sets/Gets the current Gold the player has
@@ -152,12 +108,13 @@ function __Player() constructor
 	static Gold = function(amount = NaN)
 	{
 		static hash = variable_get_hash("Gold");
-		if !is_nan(amount)
+		if (!is_nan(amount))
 		{
 			struct_set_from_hash(COALITION_DATA, hash, amount);
 			return self;
 		}
-		else return struct_get_from_hash(COALITION_DATA, hash);
+		else
+			return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Exp([exp])
 	///@desc Sets/Gets the current Exp the player has
@@ -166,12 +123,13 @@ function __Player() constructor
 	static Exp = function(amount = NaN)
 	{
 		static hash = variable_get_hash("Exp");
-		if !is_nan(amount)
+		if (!is_nan(amount))
 		{
 			struct_set_from_hash(COALITION_DATA, hash, amount);
 			return self;
 		}
-		else return struct_get_from_hash(COALITION_DATA, hash);
+		else
+			return struct_get_from_hash(COALITION_DATA, hash);
 	}
 	///@method Spd([spd])
 	///@desc Sets/Gets the speed of the player
@@ -179,12 +137,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static Spd = function(spd = NaN)
 	{
-		if !is_nan(spd)
+		if (!is_nan(spd))
 		{
-			global.spd = spd;
+			global.__CoalitionPlayerSpeed = spd;
 			return self;
 		}
-		else return global.spd;
+		else
+			return global.__CoalitionPlayerSpeed;
 	}
 	///@method HP([hp])
 	///@desc Sets/Gets the hp of the player
@@ -192,12 +151,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static HP = function(hp = NaN)
 	{
-		if !is_nan(hp)
+		if (!is_nan(hp))
 		{
-			global.hp = hp;
+			global.HP = hp;
 			return self;
 		}
-		else return global.hp;
+		else
+			return global.HP;
 	}
 	///@method HPMax([max_hp])
 	///@desc Sets/Gets the max hp of the player
@@ -205,12 +165,38 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static HPMax = function(maxhp = NaN)
 	{
-		if !is_nan(maxhp)
+		if (!is_nan(maxhp))
 		{
-			global.hp_max = maxhp;
+			global.MaxHP = maxhp;
 			return self;
 		}
-		else return global.hp_max;
+		else
+			return global.MaxHP;
+	}
+	///@method Heal(amount, [audio])
+	///@desc Heals the player
+	///@param {real} amount		The amount of HP to heal
+	///@param {bool} audio		Whether the healing SFX will be played (Default true)
+	///@return {Struct.__Player}
+	static Heal = function(amount, audio = true)
+	{
+		forceinline
+		HP(min(HP() + amount, HPMax()));
+		if (audio)
+			audio_play(snd_item_heal);
+		return self;
+	}
+	///@method EnableKR(enabled)
+	///@desc Sets whether KR is enabled
+	///@param {bool} enabed	Whether to enable KR
+	///@param {real} max_kr The maximum amount of KR the player can have (Default 40)
+	///@return {Struct.__Player}
+	static EnableKR = function(enabled, max_kr = 40)
+	{
+		forceinline
+		global.__CoalitionPlayerKREnabled = enabled;
+		global.__CoalitionPlayerMaxKR = max_kr;
+		return self;
 	}
 }
 ///@text

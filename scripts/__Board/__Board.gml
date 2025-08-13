@@ -109,15 +109,16 @@ function __Board() constructor {
 	static SetSize = function(up = 65, down = 65, left = 283, right = 283, time = {dist: 10}, ease = "oQuad", board = undefined)
 	{
 		forceinline
-		board ??= BattleBoardList[TargetBoard];
-		if time == 0
+		board ??= COALITION_CURRENT_BOARD;
+		if (time == 0)
 		{
 			board.up = up;
 			board.down = down;
 			board.left = left;
 			board.right = right;
 		}
-		else TweenFire(board, ease, 0, false, 0, time, "up>", up, "down>", down, "left>", left, "right>", right);
+		else
+			TweenFire(board, ease, 0, false, 0, time, "up>", up, "down>", down, "left>", left, "right>", right);
 	}
 	///@method SetAngle([angle], [time], [ease], [target])
 	///@desc Sets the angle of the board with Anim
@@ -128,9 +129,12 @@ function __Board() constructor {
 	static SetAngle = function(angle = 0, time = {dist: 10}, ease = "oQuad", board = undefined)
 	{
 		forceinline
-		board ??= BattleBoardList[TargetBoard];
-		if time == 0 board.image_angle = angle;
-		else TweenFire(board, ease, 0, false, 0, time, "image_angle>", angle);
+		//YYC compatibility
+		board ??= COALITION_CURRENT_BOARD;
+		if (time == 0)
+			board.image_angle = angle;
+		else
+			TweenFire(board, ease, 0, false, 0, time, "image_angle>", angle);
 	}
 	///@method SetPos([x], [y], [time], [ease], [board])
 	///@desc Sets the x and y position of the board
@@ -142,16 +146,18 @@ function __Board() constructor {
 	static SetPos = function(xx = 320, yy = 320, time = {dist: 10}, ease = "oQuad", board = undefined)
 	{
 		forceinline
-		board ??= BattleBoardList[TargetBoard];
-		if time == 0
+		//YYC compatibility
+		board ??= COALITION_CURRENT_BOARD;
+		if (time == 0)
 		{
-			with board
+			with (board)
 			{
 				x = xx;	
 				y = yy;
 			}
 		}
-		else TweenFire(board, ease, 0, false, 0, time, "x>", xx, "y>", yy);
+		else
+			TweenFire(board, ease, 0, false, 0, time, "x>", xx, "y>", yy);
 	}
 	///@method GetID(target)
 	///@desc Gets the ID of the board in the global board list
@@ -159,21 +165,18 @@ function __Board() constructor {
 	static GetID = function(board)
 	{
 		forceinline
-		var i = 0;
-		repeat array_length(BattleBoardList) if BattleBoardList[i] != board.id i++; else return i;
+		return array_get_index(BattleBoardList, board);
 	}
-	///@method Mask()
-	///@desc Automatically masks the board with the default background color
-	static Mask = function()
-	{
+	///@method Reset()
+	///@desc Resets the board state to default
+	///@param {bool} anglediv Whether the angle of the board be fixed between -90 < x < 90 or not
+	static Reset = function(anglediv = true) {
 		forceinline
-		static PixTex = sprite_get_texture(sprPixel, 0);
-		with other
-		{
-			Battle_Masking_Start();
-			draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, oBoard.bg_color, 1);
-			Battle_Masking_End();
-		}
+		SetSize();
+		if (anglediv)
+			oBoard.image_angle %= 90;
+		SetAngle();
+		SetPos();
 	}
 }
 ///@function BoardMaskAll()
@@ -184,37 +187,21 @@ function BoardMaskAll()
 	static pix_tex = sprite_get_texture(sprPixel, 0);
 	var i = 0;
 	//Masking of normal boards
-	repeat instance_number(oBoard) - instance_number(oVertexBoard)
-	{
-		var curBoard = instance_find(oBoard, i);
-		if !curBoard.VertexMode
-		{
-			draw_set_color(curBoard.bg_color);
-			draw_primitive_begin_texture(pr_trianglestrip, pix_tex);
-			with Board
-			{
-				draw_vertex_texture(GetLeftPos(i), GetUpPos(i), 0, 0);
-				draw_vertex_texture(GetRightPos(i), GetUpPos(i), 1, 0);
-				draw_vertex_texture(GetLeftPos(i), GetDownPos(i), 0, 1);
-				draw_vertex_texture(GetRightPos(i), GetDownPos(i), 1, 1);
-			}
-			draw_primitive_end();
-		}
-		++i;
-	}
-	i = 0;
+	with (oBoard)
+		__DrawBackground();
 	var k = 0;
 	//Masking of vertex boards
-	repeat instance_number(oVertexBoard)
+	repeat (instance_number(oVertexBoard))
 	{
-		with instance_find(oVertexBoard, k)
+		with (instance_find(oVertexBoard, k))
 		{
-			draw_set_color(bg_color);
+			draw_set_color(BackgroundColor);
 			draw_primitive_begin(pr_trianglelist);
-			repeat triangulationIndicesCount
+			repeat (__triangulated_indice_count)
 			{
-				for (var j = 0, triangle = triangulationIndices[| i++]; j < 3; j++) {
-					var Result = Vertices[| triangle[j]].Rotated(image_angle);
+				for (var j = 0, triangle = __triangulated_indices[| i++]; j < 3; j++)
+				{
+					var Result = __poly_vertices[| triangle[j]].Rotated(image_angle);
 					draw_vertex(Result.x, Result.y);
 				}
 			}

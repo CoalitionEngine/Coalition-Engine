@@ -1,4 +1,4 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Audio
 
 ///@func audio_play(soundid, [single], [loop], [volume], [pitch], [time], [position]
@@ -14,10 +14,12 @@
 function audio_play(soundid, single = false, loop = false, volume = 1, pitch = 1, time = 0, position = 0)
 {
 	forceinline
-	if single audio_stop_sound(soundid);
+	if (single)
+		audio_stop_sound(soundid);
 	var audio = audio_play_sound(soundid, 1, loop, volume, 0, pitch);
 	audio_sound_gain(audio, volume, time);
-	if position != 0 audio_sound_set_track_position(audio, position);
+	if (position != 0)
+		audio_sound_set_track_position(audio, position);
 	return audio;
 }
 
@@ -30,7 +32,7 @@ function audio_play(soundid, single = false, loop = false, volume = 1, pitch = 1
 function AudioStickToTime(aud, time, margin = 3/60)
 {
 	forceinline
-	if abs(audio_sound_get_track_position(aud) - time) >= margin
+	if (abs(audio_sound_get_track_position(aud) - time) >= margin)
 		audio_sound_set_track_position(aud, time);
 }
 
@@ -56,7 +58,8 @@ function audio_destroy_stream_array(arr)
 {
 	forceinline
 	var i = 0;
-	repeat array_length(arr) audio_stream_destroy(arr[i++]);
+	repeat (array_length(arr))
+		audio_stream_destroy(arr[i++]);
 	arr = -1;
 }
 
@@ -74,8 +77,9 @@ function audio_destroy_stream_array(arr)
 function audio_transition(init_aud, target_aud, time, single = false, loop = false, volume = 1, pitch = 1, position = 0)
 {
 	forceinline
-	if !audio_is_playing(init_aud) && __COALITION_VERBOSE
+	if (!audio_is_playing(init_aud) && __COALITION_VERBOSE)
 		show_debug_message("The audio is not playing");
-	else audio_sound_gain(init_aud, 0, time);
+	else
+		audio_sound_gain(init_aud, 0, time);
 	return audio_play(target_aud, single, loop, volume, pitch, time, position);
 }

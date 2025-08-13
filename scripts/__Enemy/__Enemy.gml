@@ -10,44 +10,41 @@ function __Enemy() constructor {
 	///@desc Loads the datas of an encounter that you have stored in this script
 	///@param {real} encounter_number Loads the data of the argument
 	///@return {undefined}
-	static LoadEncounter = function(encounter_number = global.battle_encounter) {
+	static LoadEncounter = function(encounter_number = global.EncounterID) {
 		forceinline
-		with oBattleController
+		with (oBattleController)
 		{
-			enemy = array_create(3, noone);
-			enemy_name = [];
-			enemy_hp = [];
-			enemy_hp_max = [];
-			enemy_draw_hp_bar = [];
-			enemy_name_extra = array_create(3, "");
-	
-			var enemy_presets = global.enemy_presets;
-	
-			enemy_instance = array_create(3, noone);
+			__enemies = array_create(3, noone);
+			var enemy_presets = global.__CoalitionEnemyEncounterLibrary;
 			for (var i = 0, enemies = []; i < 3; ++i)
 			{
 				enemies[i] = enemy_presets[encounter_number][i];
-				if enemies[i] != noone
+				//Check if the 'enemy' is using the constructor method
+				var enemy_is_struct = is_instanceof(enemies[i], EnemyData);
+				if (enemies[i] != noone || enemy_is_struct)
 				{
-					enemy_instance[i] = instance_create_depth(160 * (i + 1), 250, 1, enemies[i]);
-					enemy[i] = enemy_instance[i];
-					enemy_name[i] = enemies[i].enemy_name;
-					enemy_hp[i] = enemies[i].enemy_hp;
-					enemy_hp_max[i] = enemies[i].enemy_hp_max;
-					enemy_draw_hp_bar[i] = enemies[i].enemy_draw_hp_bar;
-					enemy[i].__enemy_slot = i;
-					var ii = 0;
-					repeat array_length(enemies[i].enemy_act)
+					__enemies[i] = enemy_is_struct ?
+						instance_create_depth(160 * (i + 1), 250, 1, oEnemyParent, { __Struct_Step: enemies[i].Step, __Struct_Draw: enemies[i].Draw }) :
+						instance_create_depth(160 * (i + 1), 250, 1, enemies[i]);
+					__enemies[i].__enemy_slot = i;
+					if (enemy_is_struct)
 					{
-						enemy_act[i][ii] =			enemies[i].enemy_act[ii];
-						enemy_act_text[i][ii] =		enemies[i].enemy_act_text[ii];
-						enemy_act_function[i][ii] = enemies[i].enemy_act_function[ii];
-						++ii;
+						with (__enemies[i])
+						{
+							__EnemyStruct = enemies[i];
+							__EnemyStruct.Create();
+							array_copy(__AttackFunctions, 0, __EnemyStruct.__AttackFunctions, 0, array_length(__EnemyStruct.__AttackFunctions));
+							array_copy(__PreAttackFunctions, 0, __EnemyStruct.__PreAttackFunctions, 0, array_length(__EnemyStruct.__PreAttackFunctions));
+							array_copy(__PostAttackFunctions, 0, __EnemyStruct.__PostAttackFunctions, 0, array_length(__EnemyStruct.__PostAttackFunctions));
+						}
 					}
-					global.BossFight = enemies[i].is_boss;
-					if enemies[i].begin_at_turn {
-						menu_state = -1;
-						battle_turn++;
+					//Since there can only be one boss at a time, this will always hold true
+					//Even if the boss summons minion enemies, it is still a boss fight
+					global.__BossFight = enemies[i].IsBoss;
+					if (enemies[i].BeginAtTurn)
+					{
+						__menu_state = -1;
+						__battle_turn++;
 						__dialog_start();
 						oSoul.visible = true;
 					}
@@ -58,13 +55,13 @@ function __Enemy() constructor {
 	///@method SetEncounter([enconter], [left], [middle], [right])
 	///@desc Sets the enemies in the provided encounter
 	///@param {real} Encounter The encounter to set from (Default max)
-	///@param {Asset.GMObject} Left The enemy on the left (Default none)
-	///@param {Asset.GMObject} Middle The enemy on the middle (Default none)
-	///@param {Asset.GMObject} Right The enemy on the right (Default none)
+	///@param {Asset.GMObject,Struct.EnemyData} Left The enemy on the left (Default none)
+	///@param {Asset.GMObject,Struct.EnemyData} Middle The enemy on the middle (Default none)
+	///@param {Asset.GMObject,Struct.EnemyData} Right The enemy on the right (Default none)
 	///@return {undefined}
-	static SetEncounter = function(encounter = array_length(global.enemy_presets), left = noone, middle = noone, right = noone) {
+	static SetEncounter = function(encounter = array_length(global.__CoalitionEnemyEncounterLibrary), left = noone, middle = noone, right = noone) {
 		forceinline
-		global.enemy_presets[encounter] = [left, middle, right];
+		global.__CoalitionEnemyEncounterLibrary[encounter] = [left, middle, right];
 	}
 	///@method SetName(enemy, text)
 	///@desc Sets the name of the enemy
@@ -74,7 +71,7 @@ function __Enemy() constructor {
 	static SetName = function(enemy, text)
 	{
 		forceinline
-		enemy.enemy_name = text;
+		enemy.Name = text;
 		return Enemy;
 	}
 	///@method SetAct(enemy, act, name, text, function, [trigger_turn])
@@ -86,16 +83,25 @@ function __Enemy() constructor {
 	///@param {function} function The function to execute if selected (Optional)
 	///@param {bool} trigger Whether the action will trigger the turn
 	///@return {Struct.__Enemy}
-	static SetAct = function(enemy, act, name, text, func = -1, trigger = oBattleController.__button_choice_activate_turn & 2)
+	static SetAct = function(enemy, act, name, text, func = COALITION_EMPTY_FUNCTION, trigger = oBattleController.__button_choice_activate_turn & 2)
 	{
 		forceinline
-		with enemy
+		with (enemy)
 		{
-			enemy_act[act] = name;
-			enemy_act_text[act] = text;
-			enemy_act_function[act] = func;
-			if trigger
-				oBattleController.__action_trigger_turn ^= quick_pow(2, act);
+			__ActNames[act] = name;
+			__ActTexts[act] = text;
+			__ActFunctions[act] = func;
+			if (trigger)
+			{
+				act = quick_pow(2, act);
+				with (oBattleController)
+				{
+					//Clear bit
+					__action_trigger_turn = __action_trigger_turn & ~act;
+					//Assign bit
+					__action_trigger_turn ^= act;
+				}
+			}
 		}
 		return Enemy;
 	}
@@ -109,12 +115,12 @@ function __Enemy() constructor {
 	static SetHPStats = function(enemy, max_hp, current_hp = max_hp, draw_hp_bar = true)
 	{
 		forceinline
-		with enemy
+		with (enemy)
 		{
-			enemy_hp_max = max_hp;
-			enemy_hp = current_hp;
-			_enemy_hp = enemy_hp;
-			enemy_draw_hp_bar = draw_hp_bar;
+			MaxHP = max_hp;
+			HP = current_hp;
+			__HPBarHP = HP;
+			MenuDrawHPBar = draw_hp_bar;
 		}
 		return Enemy;
 	}
@@ -126,7 +132,7 @@ function __Enemy() constructor {
 	static SetDefense = function(enemy, value)
 	{
 		forceinline
-		enemy.enemy_defense = value;
+		enemy.__defense = value;
 		return Enemy;
 	}
 	///@method SetDamage(enemy, damage)
@@ -137,7 +143,7 @@ function __Enemy() constructor {
 	static SetDamage = function(enemy, damage)
 	{
 		forceinline
-		enemy.damage = damage;
+		enemy.__damage = damage;
 		return Enemy;
 	}
 	///@method SetSpareable(enemy, spareable)
@@ -148,7 +154,7 @@ function __Enemy() constructor {
 	static SetSpareable = function(enemy, spareable)
 	{
 		forceinline
-		enemy.enemy_is_spareable = spareable;
+		enemy.__spareable = spareable;
 		return Enemy;
 	}
 	///@method SetReward(enemy, Exp, Gold)
@@ -160,7 +166,7 @@ function __Enemy() constructor {
 	static SetReward = function(enemy, Exp, Gold)
 	{
 		forceinline
-		with enemy
+		with (enemy)
 		{
 			__exp_reward = Exp;
 			__gold_reward = Gold;
@@ -174,8 +180,36 @@ function __Enemy() constructor {
 	///@return {real,Struct.__Enemy}
 	static Turn = function(enemy, turn = NaN)
 	{
-		if is_nan(turn) return enemy.current_turn;
-		else enemy.current_turn = turn;
+		if (is_nan(turn))
+			return enemy.__current_turn;
+		else
+			enemy.__current_turn = turn;
 		return Enemy;
 	}
 }
+
+///@constructor
+///@func EnemyData()
+///@desc The alternative to creating enemies, no object is required for this one, look into the methods for further information
+function EnemyData() constructor
+{
+	//Clone enemy variables
+	var temp = instance_create_depth(0, 0, 0, oEnemyParent);
+	var __enemy_struct = {}, __var_names = variable_instance_get_names(temp), i = 0;
+	repeat (variable_instance_names_count(temp))
+	{
+		struct_set(self, __var_names[i], variable_instance_get(temp, __var_names[i]));
+		++i;
+	}
+	instance_destroy(temp);
+	///@method Create()
+	///@desc The create event of the enemy
+	static Create = function() { }
+	///@method Step()
+	///@desc The step event of the enemy
+	static Step = function() { }
+	///@method Draw()
+	///@desc The draw event of the enemy
+	static Draw = function() { }
+}
+///@text `EnemyData` is a very bare-bone method on creating enemies, the upside is that you do not need to re-set the object parent into `oEnemyParent` as it is independent of an object, however it's bare-bone nature also caused it to lack some functions such as Begin Step and User Events etc.

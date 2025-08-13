@@ -4,7 +4,7 @@ Event = function() {
 	if minimal_interval > 0
 	{
 		minimal_interval--;
-		Collided = false;
+		__Collided = __COALITION_COLLISION_STATE.NOT_COLLIDED;
 	}
 	else if !irandom(5)
 	{

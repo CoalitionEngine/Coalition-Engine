@@ -1,4 +1,4 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Strings
 
 ///@func string_to_array(string)
@@ -9,7 +9,8 @@ function string_to_array(str)
 {
 	forceinline
 	var i = 1, len = string_length(str), arr = array_create(len, "");
-	repeat len arr[i] = string_copy(str, i++, 1);
+	repeat (len)
+		arr[i] = string_copy(str, i++, 1);
 	return arr;
 }
 ///@func array_to_string(array)
@@ -20,7 +21,8 @@ function array_to_string(arr)
 {
 	forceinline
 	var i = 0, txt = "";
-	repeat array_length(arr) txt += arr[i++];
+	repeat (array_length(arr))
+		txt += arr[i++];
 	return txt;
 }
 ///@func string_replace_unicode(string)
@@ -29,11 +31,10 @@ function array_to_string(arr)
 function string_replace_unicode(str) {
 	forceinline
     var ucode_idx = string_pos_ext("\\u", str, 0);
-    while ucode_idx >= 1
+    while (ucode_idx >= 1)
 	{
         // replace a Unicode escape with its corresponding character
-        var hex = string_copy(str, ucode_idx + 2, 4),
-			character = chr_from_hex(hex);
+        var hex = string_copy(str, ucode_idx + 2, 4), character = chr_from_hex(hex);
         str = string_copy(str, 1, ucode_idx - 1) + character + string_delete(str, 1, ucode_idx + 3);
         // the next Unicode sequence will be after the recently found one
         ucode_idx = string_pos_ext("\\u", str, ucode_idx);
@@ -45,10 +46,11 @@ function string_replace_unicode(str) {
 ///@return {string}
 function chr_from_hex(str) {
 	forceinline
+	static lookup_str = "0123456789ABCDEF";
     str = string_upper(str);
     var result = 0, length = string_length(str);
     for (var i = 1; i <= length; i++) {
-        var c = string_char_at(str, i), val = string_pos(c, "0123456789ABCDEF")-1;
+        var c = string_char_at(str, i), val = string_pos(c, lookup_str)-1;
         result = (result << 4) + val;
     }
     return chr(result);
@@ -66,12 +68,12 @@ function dec_to_hex(dec, len = 1)
 	forceinline
     var hex = "";
 
-    if (dec < 0) {
+    if (dec < 0)
         len = max(len, ceil(logn(16, 2 * abs(dec))));
-    }
 
     static dig = "0123456789ABCDEF";
-    while (len-- || dec) {
+    while (len-- || dec)
+	{
         hex = string_char_at(dig, (dec & $F) + 1) + hex;
         dec = dec >> 4;
     }

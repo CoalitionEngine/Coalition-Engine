@@ -1,6 +1,5 @@
 ///@desc (Above) Background Layer
-switch room
+switch (room)
 {
-	case room_overworld:
-		break;
+	default: break;
 }

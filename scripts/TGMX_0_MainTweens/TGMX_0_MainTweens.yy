@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "TGMX_0_MainTweens",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "User",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/TweenGMX/User.yy",
+  "$GMScript":"v1",
+  "%Name":"TGMX_0_MainTweens",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"TGMX_0_MainTweens",
+  "parent":{
+    "name":"User",
+    "path":"folders/Coalition Engine/Libraries/TweenGMX/User.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

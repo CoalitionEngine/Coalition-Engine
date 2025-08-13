@@ -1,9 +1,73 @@
-Update Logs (This is the beta builds)
+Update Logs
+
+v1.0.0 (Eden & TK)
+Manually reviewed every single piece of code for project maintenance.
+You MUST clean install.
+Note that this update is the largest update since initial release, therefore this change log may not be fully accurate.
+(TK: I copied it from the last update. Also there might be some bug fixes or changes I failed to mention here due to the sheer scale of this update)
+
+Fixed:
+- `Camera.Scale` crashes
+- Extracting items from boxes causes a crash
+- Blaster crashes when destroyed
+- READ ME was merged from last push
+- Enemy speech bubble not being displayed
+- Enemy slamming sprites will crash
+- Custom Bonewall leads to a crash and has unexpected behavior when not
+- Bone waves do not automatically destroy itself
+- Enemy dialog not working properly
+- When camera shakes, the bullet rendering may break
+- Enemy's damage text coordinate was not changeable
+- Platform coordinates are 'readonly'
+- Platform does not carry you when a tween was used
+- Enemy will display a speech bubble for 1 frame when there is no dialog
+- Cover board masking
+- Fixed oOWCollision collision code
+- You cannot make more than 1 cutscene in overworld
+- You can pull up the menu during room transition
+- Gameover can crash if no particles exist
+- Dialog will skip to the last page instead of the last pause in overworld dialog
+- You can move the player during a cutscene
+- Collision detection was working incorrectly right after re-entering a room
+- Battle item ui does not have vertical movement
+- Battle menu texts not skipping properly
+- Confirm input not cleared when the item text during battle is over and item does not activate a turn
+- Battle menu text not wrapping properly when the board is too small at turn end
+- Overworld character sprite array order was incorrect
+
+Updated:
+- i dont know why i was high and used `surface_copy` when it can lead to a memory leak
+- Added a layer check in `oOWDrawer` to ensure there exist collision tile layer
+- Used `array_get_index` instead of manual iteration in some functions
+- Overhauled `array_create()` with a faster method on initializing arrays
+- Added `EnemyData` as an alternative way to create enemies
+- Optimized Enemy drawing method
+- Further optimized `RenderBullets`
+- Updated Input to v10
+- Updated Scribble to 9.5
+- MoveToRoom() now as an additional optional argument of where the player will face after room changes
+- Optimized overworld character logic
+- You only need to put `oOWPlayer` in the overworld for it to work now
+- Added an overworld camera debug tool
+- Enforced code formatting
+- Rearranged how the folders are organized
+- Added several Cutscene* functions
+- Renamed `Screenshot` into `CoalitionScreenshot`
+- Added an equipment system
+- Items are now localization friendly
+- Renamed numerous functions and variables as naming convention is enforced
+- Optimized battle turn logic
+- Changed functions that create multiple bones to always return an array of bones for consistency
+
+Removed:
+- Deprecated or unnecessary functions
+- Leftover files
+- Unused assets
 
 v0.8.0 (Eden)
-Manually reviewed every single piece of code for project maintainence
+Manually reviewed every single piece of code for project maintenance
 You MUST clean install
-Note that this update is the largest update since inital release, therefore this change log may not be fully accurate
+Note that this update is the largest update since initial release, therefore this change log may not be fully accurate
 
 Removed:
 - Hitbox display of oGB (The hitbox is the sprite)
@@ -17,7 +81,7 @@ Fixed:
 - `clear_timesource` actually clears timesources now
 - Reassigned sprites to their texture groups
 - Orange soul angle was affected by `draw_angle`
-- DIR.DOWN_RIGHT was misset as 325 instead of 315
+- DIR.DOWN_RIGHT was mis set as 325 instead of 315
 - If the bullet has `hit_destroy` set to true, it will crash when colliding with the player
 - Green soul shields no longer freeze in place
 - Fixed `DetermineTurn` may yield different dialog-turn pair
@@ -61,7 +125,7 @@ v0.7.6 (Eden)
 This update requires a clean install
 
 Fixed:
-Sigma was not renammed to Summation when all the references are renamed
+Sigma was not renamed to Summation when all the references are renamed
 Rendering and colliding bullets are not functioning properly in newer GM versions
 Save point now saves things
 Bullets with Axis or Len angle will have incorrect collision when angle is modified

@@ -1,1 +1,1 @@
-ds_grid_destroy(WarningBoxPos);
+ds_grid_destroy(__warning_box_positions);

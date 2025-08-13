@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__lexicon_file_types",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "File_Types",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Internal/File_Types.yy",
+  "$GMScript":"v1",
+  "%Name":"__lexicon_file_types",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__lexicon_file_types",
+  "parent":{
+    "name":"File_Types",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Internal/File_Types.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

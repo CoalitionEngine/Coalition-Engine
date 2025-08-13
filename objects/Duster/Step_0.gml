@@ -1,23 +1,15 @@
-/// @description 
-// Restart
-//if (keyboard_check_pressed(ord("R"))) {
-//	room_restart();
-//}
-
-// Start animation with S
-//if (!animStart && keyboard_check_pressed(ord("S"))) {
-//	animStart = true;
-//}
-
-
 // Animation started
-if animStart {
+if (animStart)
+{
 	// Animation progress value
-	if animVal < 1 animVal += animSpeed;
-	else animVal = 1;
+	if (animVal < 1)
+		animVal += animSpeed;
+	else
+		animVal = 1;
 
 	// Create particles, if interval met
-	if animVal - animPartLast > animPartInterval {
+	if (animVal - animPartLast > animPartInterval)
+	{
 		// Get top-left coordinate of instance
 		var _xBase = x - sprite_get_xoffset(sprite_index);
 		var _yBase = y - sprite_get_yoffset(sprite_index);
@@ -33,7 +25,7 @@ if animStart {
 		if (_endVal >= 1) _iMargin = (_endVal - 1) / 2;
 		
 		// Run loop for diagonal line
-		for (var i=_iMargin; i<1 - _iMargin; i+=_incr) {
+		for (var i = _iMargin; i < 1 - _iMargin; i += _incr) {
 			// Get relative position (0-1)
 			var _xRel = _endVal * i;
 			var _yRel = _endVal * (1 - i);

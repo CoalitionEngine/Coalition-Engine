@@ -1,18 +1,20 @@
 ///@category Battle
 ///@title Bullet Variable Functions
-///@text These functions create additional variables for bullet objects
+///@text These functions create additional variables for bullet objects.<br>
 
-///@text len_* functions are for creating variables for a circular pattern, dismissing the need for manually calculating.
-///To use these functions, simply call len_load() in the create event and call len_step() in step event,
-///be sure to add len_clean in the clean up event
+///@text
+///?>`len_*` functions are for creating variables for a circular pattern, dismissing the need for manually calculating.
+///<img src="https://cdn.discordapp.com/attachments/1090643287490170921/1403651807439360102/image.png?ex=6898541d&is=6897029d&hm=01e768c4ad19bbec0aabdb91381d38a7d3fe7301fe2ac0e00d5e99fca90cd096&" width="25%" style="display: block; margin: auto;" />
+///To use these functions, simply call `len_load()` in the create event and call `len_step()` in step event,
+///be sure to add `len_clean` in the clean up event
 
 ///@func len_load()
-///@desc Loads the variables for len
+///@desc Loads the variables for `Len`
 function len_load()
 {
 	forceinline
 	Len = {};
-	with Len
+	with (Len)
 	{
 		activate = false;
 		len = 0;
@@ -28,7 +30,7 @@ function len_load()
 		dir_move = 0;
 	}
 }
-///@text After calling this function in the create event, you can access these variables by using Len.\*.
+///@text After calling this function in the create event, you can access these variables by using `Len.\*`.
 ///
 ///| Variable name | Datatype  | Purpose |
 ///|-----------|-----------|---------|
@@ -47,8 +49,8 @@ function len_load()
 ///```gml
 ///	for (var i = 0; i < 12; i++)
 ///	{
-///		var b = Bullet_Bone(0, 0, 70, 0, 0);
-///		with b.Len
+///		var b = Bullet_Bone(0, 0, 70, 0, 0,,,, i * 30);
+///		with (b.Len)
 ///		{
 ///			activate = true;
 ///			x = 320;
@@ -60,7 +62,7 @@ function len_load()
 ///		}
 ///	}
 ///```
-///This creates a circle of 12 bones that are all 70 pixels away from (320, 320), with all of them rotating around it by 2 degrees per frame/
+///This creates a circle of 12 bones that are all 70 pixels away from (320, 320), with all of them rotating around it by 2 degrees per frame.
 
 
 ///@func len_step()
@@ -68,9 +70,9 @@ function len_load()
 function len_step()
 {
 	forceinline
-	with Len
+	with (Len)
 	{
-		if target != noone && instance_exists(target)
+		if (target != noone && instance_exists(target))
 		{
 			x = target.x;
 			y = target.y;
@@ -81,16 +83,18 @@ function len_step()
 		len += speed;
 		other.x = x + lengthdir_x(len, dir);
 		other.y = y + lengthdir_y(len, dir);
-		if angle other.image_angle += dir_move;
+		if (angle)
+			other.image_angle += dir_move;
 	}
 }
 
 #macro len_clean delete Len
 
 
-///@text axis_* functions are for creating variables for bullets rotating along a certain angle (i.e. when board rotates)
-///To use these functions, simply call axis_load() in the create event and call axis_step() in step event,
-///be sure to add axis_clean in the clean up event
+///@text
+///?>`axis_*` functions are for creating variables for bullets rotating along a certain angle (i.e. when board rotates)
+///To use these functions, simply call `axis_load()` in the create event and call `axis_step()` in step event,
+///be sure to add `axis_clean` in the clean up event
 
 ///@func axis_load()
 ///@desc Lodas the variables for axis
@@ -98,7 +102,7 @@ function axis_load()
 {
 	forceinline
 	Axis = {};
-	with Axis
+	with (Axis)
 	{
 		activate = false;
 		X = other.x;
@@ -106,27 +110,25 @@ function axis_load()
 		angle = 0;
 		override = false;
 		override_angle = 0;
-		if variable_global_exists("TargetBoard")
-			target_board = BattleBoardList[TargetBoard];
+		target_board = COALITION_CURRENT_BOARD;
 	}
 }
-///@text After calling this function in the create event, you can access these variables by using Axis.\*.
+///@text After calling this function in the create event, you can access these variables by using `Axis.\*`.
 ///
 ///| Variable name | Datatype  | Purpose |
 ///|-----------|-----------|---------|
 ///| `activate` | Bool | Whether the axis properties are activated |
-///| `target_board` | Asset.GMObject | The board to target to (Only useful when there are multiple) |
+///| `target_board` | Asset.GMObject | The board to target to (Only useful when there are multiple boards) |
 ///| `override` | Bool | Whether the angle is a user defined angle, instead of the board angle |
 ///| `override_angle` | Real | The angle of the axis rotation |
 ///
-///The other variables are read only and are for internal use only.
 
 ///@func axis_step()
 ///@desc Executes the axis logic
 function axis_step()
 {
 	forceinline
-	with Axis
+	with (Axis)
 	{
 		var board = target_board,
 			_ang = override ? override_angle : board.image_angle;

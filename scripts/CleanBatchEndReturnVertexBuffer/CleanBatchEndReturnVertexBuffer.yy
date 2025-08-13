@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "CleanBatchEndReturnVertexBuffer",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Batches",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Clean Shapes/Batches.yy",
+  "$GMScript":"v1",
+  "%Name":"CleanBatchEndReturnVertexBuffer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CleanBatchEndReturnVertexBuffer",
+  "parent":{
+    "name":"Batches",
+    "path":"folders/Coalition Engine/Libraries/Clean Shapes/Batches.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,2 +1,2 @@
 ///@desc State update
-state++;
+__state++;

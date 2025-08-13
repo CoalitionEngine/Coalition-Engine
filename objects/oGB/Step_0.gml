@@ -1,94 +1,101 @@
-//Moving state
-if state = 0
+//Moving __state
+if (__state == 0)
 {
-	var _x = gbx, _y = gby, _angle = image_angle;
+	var _x = Blaster.x, _y = Blaster.y, _angle = image_angle;
 	//Play charge sound
-	if charge_sound
+	if (__charge_sound)
 	{
 		audio_play(snd_gb_charge, true, false, 1, 1.2);
-		charge_sound = false;
+		__charge_sound = false;
 	}
-	//Move blaster to destined location
-	if __timer_move <= time_move
+	//Move blaster to target location
+	if (__timer_move <= __time_move)
 	{
-		_x += (target_x - _x) * (5 / time_move);
-		_y += (target_y - _y) * (5 / time_move);
-		_angle += (target_angle - _angle) * (5 / time_move);
+		_x += (__target_x - _x) * (5 / __time_move);
+		_y += (__target_y - _y) * (5 / __time_move);
+		_angle += (__target_angle - _angle) * (5 / __time_move);
 		
-		_x += sign(target_x - _x) / 2;
-		_y += sign(target_y - _y) / 2;
-		_angle += sign(target_angle - _angle) / 2;
+		_x += sign(__target_x - _x) / 2;
+		_y += sign(__target_y - _y) / 2;
+		_angle += sign(__target_angle - _angle) / 2;
 		
-		if abs(_x - target_x) < 1.5  _x = target_x;
-		if abs(_y - target_y) < 1.5  _y = target_y;
-		if abs(_angle - target_angle) < 1.5  _angle = target_angle;
+		if (abs(_x - __target_x) < 1.5)
+			_x = __target_x;
+		if (abs(_y - __target_y) < 1.5)
+			_y = __target_y;
+		if (abs(_angle - __target_angle) < 1.5)
+			_angle = __target_angle;
 	}
-	if !time_move || ++__timer_move == time_move 
+	if (!__time_move || ++__timer_move == __time_move)
 	{
 		//Wait for shoot
-		state = 1;
+		__state = 1;
 		__timer_move = 0;
-		_x = target_x;
-		_y = target_y;
-		_angle = target_angle;
-		alarm[0] = max(1, time_pause);
+		_x = __target_x;
+		_y = __target_y;
+		_angle = __target_angle;
+		alarm[0] = max(1, __time_pause);
 	}
-	gbx = _x; gby = _y; image_angle = _angle;
+	Blaster.x = _x; Blaster.y = _y; image_angle = _angle;
 }
 //Just fire
-if state = 2 
+if (__state == 2)
 {
-	state = 3;
+	__state = 3;
 	alarm[0] = 8;
 }
 //Increase index for expansion
-if state == 3 gb_index += 0.5;
+if (__state == 3)
+	Blaster.image_index += 0.5;
 //Firing
-if state == 4
+if (__state == 4)
 {
-	var _angle = image_angle, _yscale = gb_yscale;
+	var _angle = image_angle, _yscale = Blaster.image_yscale;
 	//Auto index
-	if gb_index == sprite_get_number(gb_sprite) - 1 gb_index--;
-	gb_index += 0.5;
+	if (Blaster.image_index == sprite_get_number(Blaster.sprite_index) - 1)
+		Blaster.image_index--;
+	Blaster.image_index += 0.5;
 	direction = _angle - 180;
 	//Movement
-	x = gbx + lengthdir_x(50, image_angle);
-	y = gby + lengthdir_y(50, image_angle);
+	x = Blaster.x + lengthdir_x(50, image_angle);
+	y = Blaster.y + lengthdir_y(50, image_angle);
 	
 	//Fire events
-	if __timer_blast++ == 0
+	if (__timer_blast++ == 0)
 	{
-		if _yscale > 1
+		if (_yscale > 1)
 		{
 			//Camera shaking
 			Camera.Shake(5 * _yscale);
-			//Screen blurring if needed
-			if blurring	Blur_Screen(time_blast, _yscale);
 		}
-		//RGB shaking
-		if global.blaster_enable_rgb oGlobal.__RGBShake = 5 * _yscale;
-		if release_sound
+		__blast_func();
+		if (__release_sound)
 		{
 			audio_play(snd_gb_release, true, 0, 1, 1.2);
 			audio_play(snd_gb_release2, true, 0, 0.8, 1.2);
-			release_sound = false;
+			__release_sound = false;
 		}
 	}
 	//Speed changing of blaster according to time after blasted
-	if __timer_exit++ >= time_stay && __timer_exit < time_stay + 10 speed += 0.5;
-	else if (__timer_exit >= time_stay + 10 && !check_outside()) speed *= 1.1;
-	gbx += lengthdir_x(speed, direction); gby += lengthdir_y(speed, direction);
+	if (__timer_exit++ >= __time_stay && __timer_exit < __time_stay + 10)
+		speed += 0.5;
+	else if (__timer_exit >= __time_stay + 10 && !check_outside())
+		speed *= 1.1;
+	Blaster.x += lengthdir_x(speed, direction);
+	Blaster.y += lengthdir_y(speed, direction);
 	//Blaster scale
-	if __timer_blast < 10 __beam_scale += (gb_yscale / 16);
-	else if __timer_blast >= 10 + time_blast
+	if (__timer_blast < 10)
+		__beam_scale += (Blaster.image_yscale / 16);
+	else if (__timer_blast >= 10 + __time_blast)
 	{
 		//Beam settings
 		__beam_scale *= sqrt(0.8);
 		__beam_alpha -= 0.05;
-		if __beam_scale <= .5 && __beam_alpha <= 0 destroy = true;
-		auto_destroy();
+		if (__beam_scale <= .5 && __beam_alpha <= 0 && __timer_exit >= __time_stay)
+			Blaster.__auto_destroy(this);
 	}
-	else __beam_scale = (gb_yscale + sin(__timer_blast / pi) * gb_yscale / 4) / 2;
+	else
+		__beam_scale = (Blaster.image_yscale + sin(__timer_blast / pi) * Blaster.image_yscale / 4) / 2;
 	image_angle = _angle;
 	image_xscale += speed;
 	image_yscale = __beam_scale * 2;

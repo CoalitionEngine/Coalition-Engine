@@ -1,4 +1,4 @@
-///@category Multilingual Support
+///@category Localization
 ///@title Language Changing
 
 ///@func Setlanguage(language_id)

@@ -1,5 +1,6 @@
-live;
 event_inherited();
+Player.EnableKR(true, 40);
+Player.HP(Player.HPMax());
 with Enemy
 {
 	SetName(other, "Sans");
@@ -8,13 +9,13 @@ with Enemy
 	SetAct(other, 2, "sans2", "sans2twxt");
 	SetAct(other, 3, "sans3", "sans3text");
 	SetAct(other, 4, "sans4", "sans4text");
-	SetHPStats(other, 100, 50);
+	SetHPStats(other, 600, 400);
 	SetReward(other, 100, 100);
 }
-enemy_is_spareable = true;
-default_font = "fnt_sans";
-default_sound = snd_txtSans;
-is_dodge = false;
+//__spareable = true;
+Dialog.DefaultFont = "fnt_sans";
+Dialog.DefaultSound = snd_txtSans;
+//CanDodge = true;
 InitSprite(0, spr_sans_legs, 0, "pos", [-47, -50, 47, -50, 47, 0, -47, 0]);
 SetWiggle(0, "sin", 0.1, 0.2, 2.1, 1.3);
 InitSprite(1, spr_sans_body, 0, "ext", [0, -40]);
@@ -28,12 +29,12 @@ SetSlamSprites(90, spr_sans_slam_ver, [1, 0, 0, 1, 2]);
 SetSlamSprites(180, spr_sans_slam_hor, [0, 1, 2, 2, 2]);
 SetSlamSprites(270, spr_sans_slam_ver, [0, 1, 2, 2, 2]);
 
-//begin_at_turn = true;
+//BeginAtTurn = true;
 
 dodge_to = choose(-150, 150);
-dodge_method = function()
+DodgeMethod = function()
 {
-	TweenFire("~", "oQuad", "#p", ">1", "$20", "damage_y>", "@-50");
+	TweenFire("~", "oQuad", "#p", ">1", "$20", "DamageTextY>", "@-50");
 	TweenFire("~", ["oQuad", "iQuad"], "#p", ">1", "|35", "$25", "x>", "@-dodge_to");
 }
 
@@ -41,19 +42,14 @@ surf = -1;
 
 //ShaderSetUniform(AddShaderEffect(shdBlueReduce), "reduceAmount", 0.4);
 
-var text;
-for(var i = 0; i < 12; i++)
-{
-	text = LoadTextFromFile("SansTest2.txt", 1, "@" + string(i));
-	Battle.EnemyDialog(self, i, text);
-}
-dialog.x += 50;
-dialog.y -= 70;
+Dialog.x += 50;
+Dialog.y -= 70;
 event_user(1);
 
-//global.lerp_speed = 1;
-//global.battle_lerp_speed = 1;
-//global.hp = 30;
+
+//global.CoalitionUILerpSpeed = 1;
+//global.CoalitionBattleLerpSpeed = 1;
+//global.HP = 30;
 
 //Shader = AddShaderEffect(shdSine, true);
 //ShaderSetUniform(Shader, "intensity", 1);

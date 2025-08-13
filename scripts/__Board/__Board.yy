@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__Board",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Battle",
-    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Battle.yy",
+  "$GMScript":"v1",
+  "%Name":"__Board",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__Board",
+  "parent":{
+    "name":"Boards",
+    "path":"folders/Coalition Engine/Battle/Boards.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

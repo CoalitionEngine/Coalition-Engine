@@ -1,9 +1,9 @@
 var sprite = object,
-	index = cone ? 4 : 2,
-	spacing = sprite_get_height(object) - (cone ? 2 : 0),
+	index = DrawHead ? 4 : 2,
+	spacing = sprite_get_height(object) - (DrawHead ? 2 : 0),
 	//Color
 	color, color_outline;
-switch type
+switch (type)
 {
 	case 0: color = c_white;	break;
 	case 1: color = c_aqua;		break;
@@ -11,7 +11,8 @@ switch type
 }
 color_outline = color;
 
-var pos = [0, 0],
+var _edge_start = 0,
+	_edge_end = 0,
 	_angle = 0,
 	_x = x,
 	_y = y,
@@ -28,56 +29,50 @@ var pos = [0, 0],
 	board_l = board_x - board.left,
 	board_r = board_x + board.right;
 
-if _dir == DIR.UP || _dir == DIR.DOWN
+if (_dir == DIR.UP || _dir == DIR.DOWN)
 {
-	pos[0] = _dir == DIR.UP ? _y - _height / 14 - 6 : _y - _height + 6;
-	pos[1] = _dir != DIR.UP ? _y + _height / 14 + 6 : _y + _height - 6;
+	_edge_start = _dir == DIR.UP ? _y - _height / 14 - 6 : _y - _height + 6;
+	_edge_end = _dir != DIR.UP ? _y + _height / 14 + 6 : _y + _height - 6;
 	_angle = dir == DIR.UP ? -90 : 90;
-	var tar_y = (pos[0] + pos[1]) / 2, tar_scale = (_height + 12) / 14;
+	var tar_y = (_edge_start + _edge_end) / 2, tar_scale = (_height + 12) / 14;
 	for (var i = board_l - spacing; i < board_r + spacing; i += spacing)
 	{
 		draw_sprite_ext(sprite, index, i, tar_y, tar_scale, 1, _angle, color, _alpha);
 		draw_sprite_ext(sprite, index + 1, i, tar_y, tar_scale, 1, _angle, color_outline, _alpha);
 	}
 	//Check collision
-	if collision_rectangle(board_l, pos[0] + 2, board_r, pos[1] - 2, BattleSoulList[TargetBoard], false, true)
+	if (collision_rectangle(board_l, _edge_start + 2, board_r, _edge_end - 2, BattleSoulList[TargetBoard], false, true))
 	{
 		var collision = true;
-		if type != 0 and type != 3
-		{
-			collision = Soul_IsMoving();
-			collision = (type == 1 ? collision : !collision);
-		}
-		if collision Soul_Hurt(damage);
+		if (type == 1 || type == 2)
+			collision = (type == 1 ? Soul.IsMoving() : !Soul.IsMoving());
+		if (collision) Soul.Hurt(damage);
 	}
 	// Hitbox
-	if global.show_hitbox
-		draw_rectangle_color(board_l, pos[0] + 2, board_r, pos[1] - 2, c_red, c_red, c_red, c_red, false);
+	if (global.__CoalitionShowHitbox)
+		draw_rectangle_color(board_l, _edge_start + 2, board_r, _edge_end - 2, c_red, c_red, c_red, c_red, false);
 }
 		
-else if _dir == DIR.LEFT || _dir == DIR.RIGHT
+else if (_dir == DIR.LEFT || _dir == DIR.RIGHT)
 {
-	pos[0] = dir == DIR.LEFT ? _x - _height / 14 + 10 : _x - _height + 10;
-	pos[1] = dir != DIR.LEFT ? _x + _height / 14 - 10 : _x + _height - 10;
+	_edge_start = dir == DIR.LEFT ? _x - _height / 14 + 10 : _x - _height + 10;
+	_edge_end = dir != DIR.LEFT ? _x + _height / 14 - 10 : _x + _height - 10;
 	_angle = dir == DIR.LEFT ? 0 : 180;
-	var tar_x = (pos[0] + pos[1]) / 2, tar_scale = (_height + 20) / 14;
+	var tar_x = (_edge_start + _edge_end) / 2, tar_scale = (_height + 20) / 14;
 	for (var i = board_u - spacing; i < board_d + spacing; i += spacing)
 	{
 		draw_sprite_ext(sprite, index, tar_x, i, tar_scale, 1, _angle, color, _alpha);
 		draw_sprite_ext(sprite, index + 1, tar_x, i, tar_scale, 1, _angle, color_outline, _alpha);
 	}
 	//Collision
-	if collision_rectangle(pos[0] - 10, board_u - 10, pos[1] + 10, board_d + 10, oSoul, false, true)
+	if (collision_rectangle(_edge_start - 10, board_u - 10, _edge_end + 10, board_d + 10, BattleSoulList[TargetBoard], false, true))
 	{
 		var collision = true;
-		if type != 0 and type != 3
-		{
-			collision = Soul_IsMoving();
-			collision = (type == 1 ? collision : !collision);
-		}
-		if collision Soul_Hurt(damage);
+		if (type == 1  || type == 2)
+			collision = (type == 1 ? Soul.IsMoving() : !Soul.IsMoving());
+		if (collision) Soul.Hurt(damage);
 	}
 	// Hitbox
-	if global.show_hitbox
-		draw_rectangle_color(pos[0] - 10, board_u - 10, pos[1] + 10, board_d + 10, c_red, c_red, c_red, c_red, false);
+	if (global.__CoalitionShowHitbox)
+		draw_rectangle_color(_edge_start - 10, board_u - 10, _edge_end + 10, board_d + 10, c_red, c_red, c_red, c_red, false);
 }

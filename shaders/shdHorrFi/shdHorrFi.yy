@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdHorrFi",
-  "parent": {
-    "name": "Extra Effects",
-    "path": "folders/Coalition Engine/Internal/Shaders/Extra Effects.yy",
+  "$GMShader":"",
+  "%Name":"shdHorrFi",
+  "name":"shdHorrFi",
+  "parent":{
+    "name":"Horrifi",
+    "path":"folders/Coalition Engine/Effects/Optional/Horrifi.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

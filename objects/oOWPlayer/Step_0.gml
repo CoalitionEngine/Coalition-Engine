@@ -1,41 +1,41 @@
 #region Encounter
-if encounter_state
+if (__encounter_state > 0)
 {
-	moveable = false;
+	Movable = false;
 	draw_menu = false;
-	encounter_time++;
-	if encounter_state == 1	//Player is alerted
+	__encounter_time++;
+	if (__encounter_state == 1)	//Player is alerted
 	{
-		if encounter_time == 30
+		if (__encounter_time == 30)
 		{
-			encounter_state++;
-			encounter_time = 0;
-			encounter_draw = 1;
+			__encounter_state++;
+			__encounter_time = 0;
+			__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN;
 		}
 	}
-	if encounter_state == 2	//Soul and screen flashes alternately
+	if (__encounter_state == 2)	//Soul and screen flashes alternately
 	{
-		if !(encounter_time % 5) && encounter_time < 20
+		if (!(__encounter_time % 5) && __encounter_time < 20)
 		{
 			audio_play(snd_noise);
-			encounter_draw ^= 4;
+			__encounter_draw ^= __COALITION_ENCOUNTER_STATE_FLAG.DRAW_SOUL;
 		}
-		elif encounter_time == 20	//Soul moves to FIGHT button position
+		elif (__encounter_time == 20)	//Soul moves to FIGHT button position
 		{
-			encounter_draw = 5;
+			__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN + __COALITION_ENCOUNTER_STATE_FLAG.DRAW_SOUL;
 			audio_play(snd_encounter_soul_move);
-			TweenFire(id, "", 0, false, 0, 30, "encounter_soul_x>", 48, "encounter_soul_y>", 454);
+			TweenFire(id, "", 0, false, 0, 30, "__encounter_soul_x>", 48, "__encounter_soul_y>", 454);
 		}
-		elif encounter_time == 50	//Prepare the fading screen
+		elif (__encounter_time == 50)	//Prepare the fading screen
 		{
-			encounter_state++;
-			encounter_time = 0;
+			__encounter_state++;
+			__encounter_time = 0;
 		}
 	}
 	//Fades screen
-	if encounter_state == 3 && encounter_time == 1
+	if (__encounter_state == 3 && __encounter_time == 1)
 	{
-		Fader_Fade(1, 0 , 20, 0, c_black);
+		Fader_Fade(1, 0, 20, 0, c_black);
 		room_goto(room_battle);
 	}
 }
@@ -45,84 +45,85 @@ var input_horizontal = CHECK_HORIZONTAL,
 	input_vertical =   CHECK_VERTICAL,
 	input_cancel =     HOLD_CANCEL,
 	input_menu =	   PRESS_MENU,
-	spd = (enable_sprint && input_cancel) ? run_speed : global.spd,
-	scale_x = __last_dir,
+	spd = (SprintEnabled && input_cancel) ? SprintSpeed : global.__CoalitionPlayerSpeed,
+	scale_x = __last_horizontal_dir,
 	assign_sprite = __last_sprite,
 	x_stop = false, y_stop = false;
 
-if __ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision)
+if (__ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision))
 	__ForceCollideless = false;
 
 // Menu opening
-if input_menu && !oOWController.menu_opened && !oOWController.menu_disable && !oOWController.dialog_exists
+if (input_menu && !oOWController.__menu_opened && !oOWController.__menu_disabled && !Overworld_DialogExists() && visible)
 {
 	// Open Menu, UI works in oOWController
-	oOWController.menu_opened = true;
+	oOWController.__menu_opened = true;
 	audio_play(snd_menu_switch);
-	moveable = false;
+	Movable = false;
 }
 
-//Debug
-if DEBUG
-	if room == room_overworld && (keyboard_check_pressed(vk_space) || (x >= 830 && encounter_state == 0))
-		Encounter_Begin();
+var PlayerCanMove = (!CutsceneIsActive() && Movable && !oOWController.__menu_opened) || (CutsceneIsActive() && CutsceneCharacterCanMove());
 
-if moveable && !oOWController.menu_opened // When the player can move around
+if (PlayerCanMove) // When the player can move around
 {
-	var displace = 0, dir_spr_size = array_length(dir_sprite);
-	repeat spd
+	FacingDirection = InputDirection(FacingDirection, INPUT_CLUSTER.NAVIGATION);
+	var displace = 0, dir_spr_size = array_length(DirSprites);
+	repeat (spd)
 	{
-		if input_horizontal != 0
+		if (input_horizontal != 0 && !x_stop)
 		{
 			//Sets sprite to horizontal sprite
-			assign_sprite = dir_sprite[image_flip == -1 ? max(0, sign(input_horizontal)) + 2 : 2];
+			assign_sprite = __GetDirectionalSprite(input_horizontal > 0.5 ? DIR.RIGHT : DIR.LEFT);
 			//Sets the sprite as leftwards or rightwards
-			scale_x = image_flip == -1 ? 1 : (dir_spr_size == 3 ? -sign(input_horizontal) : 1);
+			scale_x = __SpriteShouldFlip() ? -1 : 1;
 			//Check whether the movement is moving into a tile
 			displace = sign(input_horizontal);
-			if !CollideWithAnything(x + displace, y)
+			if (!CollideWithAnything(x + displace, y))
 				x += displace;
-			else x_stop = true;
+			else
+				x_stop = true;
 		}
-		if input_vertical != 0
+		if (input_vertical != 0 && !y_stop)
 		{
 			//Sets sprite to vertical sprite
-			assign_sprite = dir_sprite[max(0, sign(input_vertical))];
+			print(input_vertical);
+			assign_sprite = __GetDirectionalSprite(input_vertical > 0.5 ? DIR.DOWN : DIR.UP);
 			scale_x = 1;
 			//Check whether the movement is moving into a tile
 			displace = sign(input_vertical);
-			if !CollideWithAnything(x, y + displace)
+			if (!CollideWithAnything(x, y + displace))
 				y += displace;
-			else y_stop = true;
+			else
+				y_stop = true;
 		}
-		
 	}
 	//Sets the current sprite and direction as usage for player idling
 	__last_sprite = assign_sprite;
-	__last_dir = scale_x;
+	__last_horizontal_dir = scale_x;
 }
 else
 {
-	assign_sprite = oOWController.__cutscene_activated ?
-		dir_sprite[is_even(dir) ? (image_flip == -1 ? max(0, dir == 0) + 2 : 2) : max(0, dir == 270)]
-		: __last_sprite;
-	scale_x = __last_dir;
+	assign_sprite = CutsceneIsActive() ? __GetDirectionalSprite(FacingDirection) : __last_sprite;
+	scale_x = CutsceneIsActive() ? (__SpriteShouldFlip() ? -1 : 1) : __last_horizontal_dir;
+	__last_horizontal_dir = scale_x;
 }
 
 image_xscale = scale_x;
-if assign_sprite != -1 sprite_index = assign_sprite;
+if (assign_sprite != -1)
+	sprite_index = assign_sprite;
 //Player walking
-if (input_horizontal != 0 || input_vertical != 0) && moveable && !(x_stop && y_stop) image_speed = spd / 12;
-else 
+if (CHECK_MOVING && PlayerCanMove && !(x_stop && y_stop))
+	image_speed = spd / 12;
+if (PlayerCanMove && !CHECK_MOVING)
 {
 	image_speed = 0;
-	if !oOWController.__cutscene_activated image_index = 0.5;
+	image_index = 0;
 }
 
 //Menu Idle spriting thing
-if oOWController.menu_opened
+if (oOWController.__menu_opened)
 {
-	switch oOWController.menu_state
+	switch (oOWController.__menu_state)
 	{
 		case 0:		//Selection
 			sprite_index = sprFriskThink;
@@ -137,4 +138,5 @@ if oOWController.menu_opened
 			break;
 	}
 }
-else sprite_index = (assign_sprite == -1 ? dir_sprite[2] : assign_sprite);
+else
+	sprite_index = (assign_sprite == -1 ? __GetDirectionalSprite(FacingDirection) : assign_sprite);

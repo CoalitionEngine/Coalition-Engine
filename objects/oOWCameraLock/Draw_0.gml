@@ -1,3 +1,3 @@
 //Only draws itself when hitbox is displayed
-if global.show_hitbox
+if (global.__CoalitionShowHitbox)
 	draw_self();

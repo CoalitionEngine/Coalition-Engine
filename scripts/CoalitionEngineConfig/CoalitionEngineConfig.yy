@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "CoalitionEngineConfig",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Scripts",
-    "path": "folders/Coalition Engine/External/Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"CoalitionEngineConfig",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CoalitionEngineConfig",
+  "parent":{
+    "name":"Configuration",
+    "path":"folders/Coalition Engine/Configuration.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

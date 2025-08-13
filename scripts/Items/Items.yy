@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Items",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "In Game Data",
-    "path": "folders/Coalition Engine/Internal/(System)/Scripts/In Game Data.yy",
+  "$GMScript":"v1",
+  "%Name":"Items",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Items",
+  "parent":{
+    "name":"Items",
+    "path":"folders/Coalition Engine/Player Data/Items.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

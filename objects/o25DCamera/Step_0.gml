@@ -3,7 +3,7 @@ var _wheel = mouse_wheel_down() - mouse_wheel_up();
 //camFov += _wheel;
 
 // Rotate
-if allowRotation and mouse_check_button(mb_middle)
+if (allowRotation && mouse_check_button(mb_middle))
 {
 	var _deltaX = device_mouse_x_to_gui(0) - mouse_x_prev,
 		_deltaY = device_mouse_y_to_gui(0) - mouse_y_prev;

@@ -1,1 +1,1 @@
-image_angle += rotate;
+image_angle += RotateSpeed;

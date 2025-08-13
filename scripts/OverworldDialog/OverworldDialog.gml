@@ -1,7 +1,7 @@
 ///@category Overworld
 ///@title Dialog
 
-///@func OverworldDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])
+///@func Overworld_CreateDialog(text, [font], [char_sound], [top_bottom], [sprite], [index])
 ///@desc Creates a dialog box in the Overworld
 ///@param {string} text The text in the box
 ///@param {string} font The font of the text (Default is dt_mono)
@@ -9,17 +9,16 @@
 ///@param {bool} top_bottom Decide whether the box is up or down (Default up)
 ///@param {Asset.GMSprite} sprite The sprite of the talking character
 ///@param {real} index The index of the sprite
-function OverworldDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, top_bottom = false, sprite = noone, index = 0)
+function Overworld_CreateDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, top_bottom = false, sprite = noone, index = 0)
 {
 	aggressive_forceinline
-	global.enable_text_skipping = true;
+	global.__CoalitionDialogEnableTextSkipping = true;
 	var dis = 0;
-	with oOWController
+	with (oOWController)
 	{
 		//Sets the character talking sprite if is given
-		dialog_sprite = sprite;
-		dialog_sprite_index = index;
-		dialog_option = false;
+		Overworld_DialogSprite(sprite, index);
+		__dialog_at_option = false;
 		__dialog_typist = scribble_typist()
 			.in(0.5, 0)
 			.sound_per_char(char_sound, 1, 1, " ^!.?,:/\\|*");
@@ -27,9 +26,46 @@ function OverworldDialog(text, font = "fnt_dt_mono", char_sound = snd_txtTyper, 
 		__text_writer = scribble(text, "__Coalition_Overworld").starting_format(font, c_white).page(0);
 		
 		__dialog_text = text;
-		dialog_is_down = top_bottom;
-		dialog_exists = true;
+		__dialog_at_bottom = top_bottom;
+		__dialog_exists = true;
 	}
+}
+///@func Overworld_SetOptionEvents(option_1, option_2)
+///@desc Sets events of each function
+///@param {function} option_1 Functions for the first option
+///@param {function} option_2 Functions for the second option
+function Overworld_SetOptionEvents(option_1, option_2)
+{
+	forceinline
+	var i = 0;
+	repeat (argument_count)
+	{
+		oOWController.__option_events[i] = argument[i];
+		++i;
+	}
+}
+///@desc Checks whether a dialog exists in the overworld
+function Overworld_DialogExists() {
+	forceinline
+	return oOWController.__dialog_exists;
+}
+///@desc Checks whether a dialog is at a point of an option
+function Overworld_DialogAtOption() {
+	forceinline
+	return oOWController.__dialog_at_option;
+}
+///@desc Gets/Sets the sprite and index of the sprite displayed in during a dialog
+///@param {GMAsset.Sprite} sprite	The sprite to set
+///@param {real} index				The index of the sprite
+function Overworld_DialogSprite(sprite, index = 0) {
+	forceinline
+	if (!is_undefined(sprite))
+	{
+		oOWController.__dialog_sprite = sprite;
+		oOWController.__dialog_sprite_index = index;
+	}
+	else
+		return oOWController.__dialog_sprite;
 }
 ///@text ## Text formatting
 ///Since the text writer in this engine is based on [Scribble](https://github.com/JujuAdams/Scribble), the text formatting also follows the format of Scribble.

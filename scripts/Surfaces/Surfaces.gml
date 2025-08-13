@@ -1,4 +1,4 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Surfaces
 
 ///@func draw_surface_rotated_ext(surface, x, y, xscale, yscale, rotation, color, alpha)

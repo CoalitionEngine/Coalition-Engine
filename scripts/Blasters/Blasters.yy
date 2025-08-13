@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Blasters",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Bullet",
-    "path": "folders/Coalition Engine/Internal/Scripts/Bullet.yy",
+  "$GMScript":"v1",
+  "%Name":"Blasters",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Blasters",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Coalition Engine/Battle/Bullet/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

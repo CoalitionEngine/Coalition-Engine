@@ -1,7 +1,7 @@
 audio_play(snd_logo);
 //Whether to display the buttom text
-hint = false;
-invoke(function() { hint = true; }, [], 120);
+__hint = false;
+invoke(function() { __hint = true; }, [], 120);
 
 enum INTRO_MENU_STATE
 {
@@ -15,36 +15,36 @@ enum INTRO_MENU_STATE
 	MENU,
 }
 //The menu state
-menu_state = INTRO_MENU_STATE.LOGO;
+__menu_state = INTRO_MENU_STATE.LOGO;
 //The menu choices MENU - SETTINGS
-menu_choice = array_create(2, 0);
+__menu_choices = array_create(2, 0);
 //Localization
 ReloadTexts();
 #region Introduction
 //Self-explanatory
-instruction_label = __LangInstructionLabel;
-instruction_text = __LangInstructionText;
+__instruction_label = __LangInstructionLabel;
+__instruction_text = __LangInstructionText;
 #endregion
 
 #region // Naming function
-Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+__letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var i = 0;
-naming_letter = ds_grid_create(27, 2);
-repeat 27
+__naming_letters = ds_grid_create(27, 2);
+repeat (27)
 {
-	naming_letter[# i, 0] = string_char_at(Letters, i + 1);
-	naming_letter[# i, 1] = string_lower_buffer(naming_letter[# i, 0]);
+	__naming_letters[# i, 0] = string_char_at(__letters, i + 1);
+	__naming_letters[# i, 1] = string_lower_buffer(__naming_letters[# i, 0]);
 	++i;
 }
-naming_choice = 0;
-naming_alpha = [1, 0];
-name = "";
+__naming_choice = 0;
+__naming_alpha = [1, 0];
+__name_scale = 1;
+__name_confirm = false;
+__name = "";
 name_desc = __LangConfirmName;
 name_x = 320;
 name_y = 110;
-name_scale = 1;
 name_max_length = 6; // In letter ofc
-name_confirm = 0;
 name_usable = true
 name_check = false;
 #endregion
@@ -52,8 +52,8 @@ name_check = false;
 #region // Settings
 ///Checks whether the name contains a custom message, you may modify this
 ///@param {string} name The name to check
-function CheckName(checkname){
-	switch string_lower_buffer(checkname)
+function __CheckName(checkname){
+	switch (string_lower_buffer(checkname))
 	{
 		default:
 			name_desc = __LangConfirmName;
@@ -74,7 +74,7 @@ function CheckName(checkname){
 		case "toriel":
 			name_desc = "I think you should\rthink of your own\rname, my child.";
 			name_usable = false;
-			name_confirm = false;
+			__name_confirm = false;
 			break;
 		case "alphy":
 			name_desc = "Uh.... Ok?";
@@ -83,26 +83,26 @@ function CheckName(checkname){
 		case "alphys":
 			name_desc = "D-Don't do that.";
 			name_usable = false;
-			name_confirm = false;
+			__name_confirm = false;
 			break;
 		case "asgore":
 			name_desc = "You cannot.";
 			name_usable = false;
-			name_confirm = false;
+			__name_confirm = false;
 			break;
 		case "asriel":
 			name_desc = "...";
 			name_usable = false;
-			name_confirm = false;
+			__name_confirm = false;
 			break;
 		case "flowey":
 			name_desc = "I already CHOSE\rthat name.";
-			name_confirm = false;
+			__name_confirm = false;
 			name_usable = false;
 			break;
 		case "sans":
 			name_desc = "nope.";
-			name_confirm = false;
+			__name_confirm = false;
 			name_usable = false;
 			break;
 		case "papyru":
@@ -112,7 +112,7 @@ function CheckName(checkname){
 		case "undyne":
 			name_desc = "Get your OWN name!";
 			name_usable = false;
-			name_confirm = false;
+			__name_confirm = false;
 			break;
 		case "mtt":
 		case "mettat":
@@ -179,8 +179,8 @@ with __scribble_caches
 {
 	logo =				scribble("[fnt_logo][fa_center]" + other.LogoText);
 	hint =				scribble("[fnt_cot][c_ltgray][fa_center][[PRESS Z OR ENTER]");
-	instruction_label = scribble("[fa_center][c_ltgray][fnt_dt_sans]" + other.instruction_label);
-	instruction_text =	scribble("[c_ltgray][fnt_dt_sans]" + other.instruction_text);
+	__instruction_label = scribble("[fa_center][c_ltgray][fnt_dt_sans]" + other.__instruction_label);
+	__instruction_text =	scribble("[c_ltgray][fnt_dt_sans]" + other.__instruction_text);
 	fallen_human =		scribble("[fa_center][fnt_dt_sans]Name the fallen human.");
 	credit_text =		scribble($"[c_gray][fa_center][fa_bottom][fnt_cot]UNDERTALE (C) TOBY FOX 2015-{current_year}\nCoalition Engine {__COALITION_ENGINE_VERSION} by Cheetos Bakery");
 }

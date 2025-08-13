@@ -1,28 +1,30 @@
-var STATE = oBattleController.battle_state, MENU = oBattleController.menu_state;
-if (STATE = BATTLE_STATE.MENU || STATE = BATTLE_STATE.IN_TURN) && (MENU != MENU_STATE.FIGHT_AIM)
-	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle + draw_angle, image_blend, image_alpha);
+var STATE = oBattleController.__battle_state, MENU = oBattleController.__menu_state;
+if ((STATE = BATTLE_STATE.MENU || STATE = BATTLE_STATE.IN_TURN) && (MENU != MENU_STATE.FIGHT_AIM))
+	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle + ExtraAngle, image_blend, image_alpha);
 
-if STATE == BATTLE_STATE.IN_TURN
+if (STATE == BATTLE_STATE.IN_TURN)
 {
 	//Green soul shield drawing
-	if mode = SOUL_MODE.GREEN
+	if (__SoulMode = SOUL_MODE.GREEN)
 	{
 		//The green circle of green soul
-		if green_soul_draw_circle
+		if (DrawGreenShieldCircle)
 		{
 			draw_set_circle_precision(16);
 			draw_circle_colour(x - 0.5, y - 0.5, 30, c_green, c_green, 1);
 		}
 		//Draws the shield and arrows with addictive blending
 		gpu_set_blendmode(bm_max);
-		with oGreenArr draw_self();
-		with oGreenShield draw_sprite_ext(sprite_index, 0, x, y, 1, 1, image_angle, image_blend, image_alpha);
+		with (oGreenArr)
+			draw_self();
+		with (oGreenShield)
+			draw_sprite_ext(sprite_index, 0, x, y, 1, 1, image_angle, image_blend, image_alpha);
 		gpu_set_blendmode(bm_normal);
 	}
 	//Purple soul line drawing
-	else if mode == SOUL_MODE.PURPLE
+	else if (__SoulMode == SOUL_MODE.PURPLE)
 	{
-		var board =			BattleBoardList[min(SoulListID, array_length(BattleBoardList) - 1)],
+		var board =			BattleBoardList[min(__SoulListID, array_length(BattleBoardList) - 1)],
 			board_x	=		board.x,
 			board_y	=		board.y,
 			b_up =			board.up,
@@ -36,13 +38,13 @@ if STATE == BATTLE_STATE.IN_TURN
 			XDifference = (RightLine - LeftLine) / (PurpleSoulData.HLineAmount - 1),
 			YDifference = (BottomLine - TopLine) / (PurpleSoulData.VLineAmount - 1);
 		//Horizontal lines
-		with PurpleSoulData
+		with (PurpleSoulData)
 		{
 			draw_set_alpha(Mode == 0 ? 1 : 0.3);
 			draw_set_color(c_purple);
 			for (var i = TopLine; i <= BottomLine; i += YDifference)
 				draw_line(LeftLine, i, RightLine, i);
-			if AllowVertical
+			if (AllowVertical)
 			{
 				//Vertical lines
 				draw_set_alpha(Mode == 1 ? 1 : 0.3);
@@ -59,4 +61,4 @@ if STATE == BATTLE_STATE.IN_TURN
 		}
 	}
 }
-show_hitbox();
+CoalitionShowHitbox();

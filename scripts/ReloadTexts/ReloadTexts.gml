@@ -1,4 +1,4 @@
-///@category Multilingual Support
+///@category Localization
 ///@title Text Reloading
 
 ///@func ReloadTexts()
@@ -6,10 +6,10 @@
 function ReloadTexts() {
 	forceinline
 	//Shop texts
-	if room == room_shop
+	if (room == room_shop)
 	{
-		InsufficientGText = lexicon_text("Shop.InsufficientGText");
-		ItemFullText = lexicon_text("Shop.ItemFullText");
+		__InsufficientGText = lexicon_text("Shop.InsufficientGText");
+		__ItemFullText = lexicon_text("Shop.ItemFullText");
 		__LangBuy = lexicon_text("Shop.Buy");
 		__LangSell = lexicon_text("Shop.Sell");
 		__LangTalk = lexicon_text("Shop.Talk");
@@ -18,17 +18,17 @@ function ReloadTexts() {
 		__LangYes = lexicon_text("Yes");
 	}
 	//Battle texts
-	elif instance_exists(oBattleController)
+	elif (instance_exists(oBattleController))
 	{
-		DefaultFontNB = lexicon_text("Font");
-		DefaultFont = "[" + DefaultFontNB + "]";
-		DefaultFontAsset = asset_get_index(DefaultFontNB);
+		__DefaultFontNoBracket = lexicon_text("Font");
+		__DefaultFont = "[" + __DefaultFontNoBracket + "]";
+		__DefaultFontAsset = asset_get_index(__DefaultFontNoBracket);
 		__LangItemPageText = [lexicon_text("Battle.ItemPage", "1"), lexicon_text("Battle.ItemPage", "2")];
 		__LangSpareText = lexicon_text("Battle.Spare");
 		__LangFleeText = lexicon_text("Battle.Flee");
 	}
 	//Overworld texts
-	elif instance_exists(oOWController)
+	elif (instance_exists(oOWController))
 	{
 		__LangItemText = lexicon_text("Overworld.Item");
 		__LangStatText = lexicon_text("Overworld.Stat");
@@ -38,7 +38,7 @@ function ReloadTexts() {
 		__LangDropText = lexicon_text("Overworld.Drop");
 	}
 	//Intro screen texts
-	elif instance_exists(oIntro)
+	elif (instance_exists(oIntro))
 	{
 		__LangInstructionLabel= lexicon_text("Intro.Instruction.Label");
 		__LangInstructionText = lexicon_text("Intro.Instruction.Text");

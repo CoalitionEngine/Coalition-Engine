@@ -1,66 +1,15 @@
 //Quit Texts
-if quit_timer
-	draw_sprite_ext(sprQuitMesssge, quit_timer / 14, 4, 4, 2, 2, 0, c_white, quit_timer / 15);
-//RGB effect
-if __RGBShake
-{
-	switch RGBShakeMethod
-	{
-		//Extra surface drawing (has shadow)
-		case 0:
-			surface_copy(__RGBSurf, 0, 0, application_surface);
-			draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_black, 1);
-			gpu_push_state();
-			gpu_set_blendmode(bm_add);
-			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_red, 1);
-			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_blue, 1);
-			draw_surface_ext(__RGBSurf, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_dkgreen, 1);
-			gpu_pop_state();
-			break;
-		//Application surface drawing (No shadow, brighter)
-		case 1:
-			gpu_push_state();
-			gpu_set_blendmode(bm_add);
-			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_red, 1);
-			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_blue, 1);
-			draw_surface_ext(application_surface, random_range(-__RGBShake, __RGBShake), random_range(-__RGBShake, __RGBShake), 1, 1, 0, c_dkgreen, 1);
-			gpu_pop_state();
-			break;
-	}
-}
+if (__quit_timer)
+	draw_sprite_ext(sprQuitMesssge, __quit_timer / 14, 4, 4, 2, 2, 0, c_white, __quit_timer / 15);
 
 //Fader
-if fader_alpha > 0
-	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, fader_color, fader_alpha);
-
-//Song Name
-with Song
-{
-	if Activate
-	{
-		if (room == room_gameover && Time < 180) Time = 180;
-		Time++;
-		var Text = "Now Playing: " + Name, Length = string_width(Text), Height = string_height(Text), dist = Dist;
-		draw_rectangle_color(dist - 10, 10, dist - Length - 20, 30 + Height, c_teal, c_purple,
-							c_purple, c_teal, false);
-		draw_triangle_color(dist - 11, 10, dist + 20, (35 + Height) / 2, dist - 11, 30 + Height,
-							c_purple, c_purple, c_purple, false);
-		draw_text_scribble(dist - Length + 10, 10, "[fnt_dt_sans][c_white]" + Text);
-		if Time < 60 Dist = decay(dist, Length, Lerp);
-		if Time > 180 Dist = decay(dist, -20, Lerp);
-		if Time > 240
-		{
-			Activate = false;
-			Time = 0;
-			Name = "";
-		}
-	}
-}
+if (__fader_alpha > 0)
+	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, __fader_color, __fader_alpha);
 
 //Gradient, pre-baked (will only run once to store the surface)
-if global.timer == 1
+if (global.timer == 1)
 {
-	surface_set_target(GradientSurf);
+	surface_set_target(__GradientSurf);
 	shader_set(shdGradient);
 	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_white, 1);
 	shader_reset();

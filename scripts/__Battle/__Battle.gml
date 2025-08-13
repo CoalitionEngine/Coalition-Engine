@@ -12,18 +12,39 @@ function __Battle() constructor
 	///@param {real} turn The turn to set it to
 	static Turn = function(turn = NaN) {
 		forceinline
-		if !is_nan(turn)
-			oBattleController.battle_turn = turn + 1;
-		else return oBattleController.battle_turn - 1;
+		if (!is_nan(turn))
+		{
+			oBattleController.__battle_turn = turn + 1;
+			return self;
+		}
+		else
+			return oBattleController.__battle_turn - 1;
 	}
 	///@method State([state])
-	///@desc Gets/Sets the State of the battle
+	///@desc Gets/Sets the state of the battle
 	///@param {real} state The state to set it to
 	static State = function(state = NaN) {
 		forceinline
-		if !is_nan(state)
-			oBattleController.battle_state = state;
-		else return oBattleController.battle_state;
+		if (!is_nan(state))
+		{
+			oBattleController.__battle_state = state;
+			return self;
+		}
+		else
+			return oBattleController.__battle_state;
+	}
+	///@method MenuState([state])
+	///@desc Gets/Sets the menu state of the battle menu
+	///@param {real} state The state to set it to
+	static MenuState = function(state = NaN) {
+		forceinline
+		if (!is_nan(state))
+		{
+			oBattleController.__menu_state = state;
+			return self;
+		}
+		else
+			return oBattleController.__menu_state;
 	}
 	///@method SetMenuDialog(text)
 	///@desc Sets the menu dialog of the battle
@@ -31,11 +52,12 @@ function __Battle() constructor
 	///@param {bool} no_asterisk Whether there is an asterisk in front of the dialog (Default false)
 	static SetMenuDialog = function(text, no_asterisk = false) {
 		forceinline
-		with oBattleController
+		with (oBattleController)
 		{
 			__menu_text = text;
-			if !no_asterisk text = "* " + text;
-			__text_writer = scribble(text, "__Coalition_Battle").starting_format(DefaultFontNB, c_white).page(0);
+			if (!no_asterisk)
+				text = "* " + text;
+			__text_writer = scribble(text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
 		}
 	}
 	///@method SetBoardTarget(target)
@@ -61,29 +83,15 @@ function __Battle() constructor
 	///@param {string} text The text of the dialog
 	static EnemyDialog = function(enemy, turn, text) {
 		forceinline
-		with enemy
+		with (__enemies)
 		{
-			if !is_array(text) dialog_text[turn] = text;
-			else dialog_text = text;
-			dialog_init(dialog_text[oBattleController.battle_turn]);
+			if (!is_array(text))
+				__dialog_text[turn] = text;
+			else
+				__dialog_text = text;
+			ParseDialog(__dialog_text[oBattleController.__battle_turn]);
 		}
 	}
-}
-
-///@func ButtonSprites([file_name], [format], [width], [height])
-///@desc Sets the sprite of the buttons with external images
-///@param {string} FileName Folder name of the sprites (Default Normal)
-///@param {string} Format Format of the sprites (Default .png)
-///@param {real} width The width of the button (Default 55)
-///@param {real} height The height of the button (Default 21)
-function ButtonSprites(fname = "Normal", format = ".png", width = 55, height = 21)
-{
-	forceinline
-	static ButtonNames = ["Fight", "Act", "Item", "Mercy"];
-	for (var i = 0, buttons = array_create(4); i < 4; ++i) {
-		buttons[i] = sprite_add("./Sprites/Buttons/" + fname + "/" + ButtonNames[i] + format, 2, 0, 0, width, height);
-	}
-	oBattleController.Button.Sprites = buttons;
 }
 ///@text > You can use imported images for changing button sprites as well
 

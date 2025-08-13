@@ -1,4 +1,4 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Misc. Functions
 
 ///@func check_outside()
@@ -6,7 +6,7 @@
 ///@return {bool}
 function check_outside() {
 	forceinline
-	var cam = oGlobal.MainCamera,
+	var cam = oGlobal.__MainCamera,
 		view_x = cam.x, view_y = cam.y,
 		view_w = cam.view_width, view_h = cam.view_height;
 	
@@ -19,57 +19,10 @@ function check_outside() {
 ///@desc Takes a screenshot and saves it with given filename + current time
 ///@param {string} filename The filename of the screenshot (Default "")
 ///@param {bool} contain_time Whether the filename contains the current time (Default true)
-function Screenshot(filename = "", contain_time = true) {
+function CoalitionScreenshot(filename = "", contain_time = true) {
 	forceinline
 	var date = contain_time ? string_concat(current_year, "y-", current_month, "m-", current_day, "d_", current_hour, "h_", current_minute, "m_", current_second, "s") : "";
 	screen_save(string_concat("Screenshots/", filename, " ", date, ".png"));
-}
-
-///@func LoadTextFromFile(filename, [reading_method], [tag])
-///@desc Loads the text from an external text file, there are 2 reading methods for now:
-///0 is by using numbers to indicate the turn number (during battle)
-///1 is by using tags to let the script read which text to load
-///@param {string} FileName The file name of the txt file, must include .txt at the end
-///@param {real} Read_Method The method of reading the text files, default 0
-///@param {string} Tag The tag of the string to get
-///@return {string}
-function LoadTextFromFile(filename, read_method = 0, tag = "")
-{
-	aggressive_forceinline
-	var file, DialogText, TurnNumber, current, n, i = 0;
-	file = file_text_open_read("./Texts/" + filename);
-	current = object_get_name(object_get_parent(object_index));
-	switch read_method
-	{
-		case 0:
-			repeat array_length(AttackFunctions)
-			{
-				TurnNumber = file_text_read_real(file);
-				file_text_readln(file);
-				DialogText = file_text_read_string(file);
-				file_text_readln(file);
-				Battle.EnemyDialog(self, TurnNumber, DialogText);
-				i++;
-			}
-			break;
-		case 1:
-			var str;
-			while (!file_text_eof(file))
-			{
-				str = file_text_read_string(file);
-				if str == tag
-				{
-					file_text_readln(file);
-					var rtn_str = file_text_read_string(file);
-					file_text_close(file);
-					return rtn_str;
-				}
-				file_text_readln(file);
-			}
-			file_text_close(file);
-			return "";
-	}
-	file_text_close(file);
 }
 
 ///@func mouse_in_rectangle(x1, y1, x2, y2)
@@ -110,10 +63,14 @@ function mouse_in_triangle(x1, y1, x2, y2, x3, y3) {
 ///@desc Checks whether an instance exists, if not, create at (0, 0)
 ///@param {ID.Instance,Asset.GMObject} Instance The instance to check
 ///@param {real} depth The depth of the instance to create (Default 0)
+///@returns {ID.Instance} The specified instance
 function instance_check_create(inst, depth = 0)
 {
 	forceinline
-	if !instance_exists(inst) instance_create_depth(0, 0, depth, inst);
+	if (!instance_exists(inst))	
+		return instance_create_depth(0, 0, depth, inst);
+	else
+		return inst;
 }
 
 #region Point Lists
@@ -137,7 +94,7 @@ function is_rectangle(a, b, c, d)
 		CD = pt_d.Subtract(pt_c),
 		DA = pt_a.Subtract(pt_d);
 	//Check length of sides
-	if AB.Magnitude() != CD.Magnitude() || BC.Magnitude() != DA.Magnitude()
+	if (AB.Magnitude() != CD.Magnitude() || BC.Magnitude() != DA.Magnitude())
 		return false;
 	//Check right angles
 	//Only two is required due to the angle sum of polygon
@@ -156,13 +113,35 @@ function is_rectangle(a, b, c, d)
 function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 {
 	forceinline
-	var DeltaX = pointX - StartX,
-		DeltaY = pointY - StartY,
-		DiffX = EndX - StartX,
-		DiffY = EndY - StartY,
-		Lambda = (DeltaX * DiffX + DeltaY * DiffY) / (DiffX * DiffX + DiffY * DiffY);
-		Lambda = clamp(Lambda, 0, 1);
-	return new Vector2(StartX + Lambda * DiffX, StartY + Lambda * DiffY);
+	//Early exits
+	if (StartX == EndX) return new Vector2(StartX, pointY);
+	if (StartY == EndY) return new Vector2(pointX, StartY);
+	/*
+		Explaination:
+		Let the target coordinates be (A, B).
+		
+		We first find the equation of the line (Start -> End) in "y = mx + c" form.
+		The result would be: B = LineSlope * (A - StartX) + StartY
+		
+		We then find the equation of the line (point -> (A, B)) in "y = mx + c" form.
+		The result would be B = ProjSlope * (A - pointX) + pointY
+		Note that this line is perpendicular to the source line, therefore its slope will be -1 / LineSlope.
+		
+		By obviousness, we can solve A first by combinine the two equations.
+		LineSlope * (A - StartX) + StartY = ProjSlope * (A - pointX) + pointY
+		LineSlope * A - LineSlope * StartX + StartY = ProjSlope * A - ProjSlope * pointX + pointY
+		LineSlope * A - ProjSlope * A = LineSlope * StartX - StartY - ProjSlope * pointX + pointY
+		A = (LineSlope * StartX - ProjSlope * pointX + pointY - StartY) / (LineSlope - ProjSlope)
+		
+		Hence the desired x coordinate is found.
+		
+		We then can substitute the found x coordinate into either of the equations to find the y value.
+	*/
+	var LineSlope = (EndY - StartY) / (EndX - StartX);
+	var ProjSlope = -1 / LineSlope; // Perpendicular lines
+	var X = (LineSlope * StartX - ProjSlope * pointX + pointY - StartY) / (LineSlope - ProjSlope)
+	var Y = ProjSlope * (X - pointX) + pointY;
+	return new Vector2(X, Y);
 }
 #endregion
 
@@ -172,9 +151,8 @@ function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 /// @param {string} filename The path of the file to read the content of.
 function file_read_all_text(_filename) {
 	forceinline
-	if (!file_exists(_filename)) {
+	if (!file_exists(_filename))
 		return undefined;
-	}
 	
 	var _buffer = buffer_load(_filename);
 	var _result = buffer_read(_buffer, buffer_string);

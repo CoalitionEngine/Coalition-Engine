@@ -1,4 +1,4 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Calculation
 
 ///@func posmod(a, b)
@@ -10,7 +10,8 @@ function posmod(a, b)
 {
 	forceinline
 	var value = a % b;
-	while (value < 0 && b > 0) || (value > 0 && b < 0) value += b;
+	while ((value < 0 && b > 0) || (value > 0 && b < 0))	
+		value += b;
 	return value;
 }
 
@@ -83,7 +84,7 @@ function point_xy_array(p_x, p_y)
 function Summation(arr, n, k)
 {
 	forceinline
-	for(var i = n, value = 0; i <= k; ++i)
+	for (var i = n, value = 0; i <= k; ++i)
 		value += arr[i];
 	return value;
 }
@@ -97,7 +98,9 @@ function is_val()
 {
 	forceinline
 	var i = 1;
-	repeat argument_count - 1 if argument[0] == argument[i++] return true;
+	repeat (argument_count - 1)
+		if (argument[0] == argument[i++])
+			return true;
 }
 
 ///@func array_multiply(array, scalar)
@@ -109,7 +112,8 @@ function array_multiply(arr, num)
 {
 	forceinline
 	var i = 0;
-	repeat array_length(arr) arr[i++] *= num;
+	repeat (array_length(arr))
+		arr[i++] *= num;
 	return arr;
 }
 
@@ -133,9 +137,10 @@ function quick_pow(x, n)
 {
 	forceinline
 	var ret = 1, pow = x;
-	while n
+	while (n)
 	{
-		if (n & 1) ret *= pow;
+		if (n & 1)
+			ret *= pow;
 		pow *= pow;
 		n = n >> 1;
 	}
@@ -153,49 +158,54 @@ function struct_equals(struct_a, struct_b)
 		a_count = struct_names_count(struct_a),
 		i = 0, val_a, val_b, hash;
 	//Must not be equal when they have different amount of names
-	if a_count != struct_names_count(struct_b)
+	if (a_count != struct_names_count(struct_b))
 	{
-		print("Incorrect count");
+		if (__COALITION_VERBOSE)
+			print("Incorrect count");
 		return false;
 	}
 	//array_equals aren't used as the names gained from struct_get_names may yield different order of names
 	//while maintaining the same values
 	
 	//Compare values
-	repeat a_count
+	repeat (a_count)
 	{
 		hash = variable_get_hash(struct_a_names[i]);
 		val_a = struct_get_from_hash(struct_a, hash);
 		//Returns false if the variable does not exist in the second struct
-		if !struct_exists(struct_b, struct_a_names[i])
+		if (!struct_exists(struct_b, struct_a_names[i]))
 		{
-			print($"Second struct does not have {struct_a_names[i]} as a variable");
+			if (__COALITION_VERBOSE)
+				print($"Second struct does not have {struct_a_names[i]} as a variable");
 			return false;
 		}
 		//If it does then gets the value for comparison
 		val_b = struct_get_from_hash(struct_b, hash);
-		if is_array(val_a)
+		if (is_array(val_a))
 		{
-			if !array_equals(val_a, val_b)
+			if (!array_equals(val_a, val_b))
 			{
-				print($"{struct_a_names[i]} does not match");
+				if (__COALITION_VERBOSE)
+					print($"{struct_a_names[i]} does not match");
 				return false;
 			}
 		}
-		else if is_struct(val_a)
+		else if (is_struct(val_a))
 		{
-			if !struct_equals(val_a, val_b)
+			if (!struct_equals(val_a, val_b))
 			{
-				print($"{struct_a_names[i]} does not match");
+				if (__COALITION_VERBOSE)
+					print($"{struct_a_names[i]} does not match");
 				return false;
 			}
 		}
-		else if val_a != val_b
+		else if (val_a != val_b)
 		{
 			//Check for obscure variable types
-			if !(is_nan(val_a) && is_nan(val_b))
+			if (!(is_nan(val_a) && is_nan(val_b)))
 			{
-				print($"{struct_a_names[i]} does not match");
+				if (__COALITION_VERBOSE)
+					print($"{struct_a_names[i]} does not match");
 				return false;
 			}
 		}

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "RenderBullets",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Bullets",
-    "path": "folders/Coalition Engine/External/Scripts/Bullets.yy",
+  "$GMScript":"v1",
+  "%Name":"RenderBullets",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"RenderBullets",
+  "parent":{
+    "name":"System",
+    "path":"folders/Coalition Engine/Battle/Bullet/Scripts/System.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

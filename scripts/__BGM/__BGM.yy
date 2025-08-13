@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__BGM",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Overworld",
-    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Overworld.yy",
+  "$GMScript":"v1",
+  "%Name":"__BGM",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__BGM",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Coalition Engine/Overworld/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

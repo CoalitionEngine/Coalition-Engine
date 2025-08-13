@@ -1,19 +1,11 @@
 //Changes warning box color
-if warn_color_swap
-{
+if (WarnSwapColor && __time_warn)
 	__WarnTimer++;
-	if !(__WarnTimer % 5) && time_warn
-	{
-		var change = (__WarnTimer % 10) == 5;
-		warn_color = change ? c_yellow : c_red;
-		warn_alpha_filled = change ? 0.25 : 0.5;
-	}
-}
 
-if time_warn
+if (__time_warn)
 {
-	time_warn--;
-	__width = point_distance(Board.GetLeftPos(), Board.GetUpPos(), Board.GetRightPos(), Board.GetDownPos());
+	__time_warn--;
+	__width = sqrt(sqr(Board.GetWidth()) * Board.GetHeight());
 	
 	//Since the centre position of the warning box is the x/y position, calculate the corner
 	//positions of the warning box
@@ -22,48 +14,46 @@ if time_warn
 	TargetX -= lengthdir_x(__width / 2 + 1, image_angle + 90);
 	TargetY -= lengthdir_y(__width / 2 + 1, image_angle + 90);
 	//Top left corner (With respect to image_angle = 0)
-	WarningBoxPos[# 0, 0] = TargetX + lengthdir_x(distance[1] - distance[0] - height / 2, image_angle);
-	WarningBoxPos[# 0, 1] = TargetY + lengthdir_y(distance[1] - distance[0] - height / 2, image_angle);
+	__warning_box_positions[# 0, 0] = TargetX + lengthdir_x(__distances[1] - __distances[0] - __height / 2, image_angle);
+	__warning_box_positions[# 0, 1] = TargetY + lengthdir_y(__distances[1] - __distances[0] - __height / 2, image_angle);
 	//Top Right corner
-	WarningBoxPos[# 1, 0] = TargetX;
-	WarningBoxPos[# 1, 1] = TargetY;
+	__warning_box_positions[# 1, 0] = TargetX;
+	__warning_box_positions[# 1, 1] = TargetY;
 	//Apply second displacement
 	TargetX += lengthdir_x(__width + 1, image_angle + 90);
 	TargetY += lengthdir_y(__width + 1, image_angle + 90);
 	//Bottom left corner (With respect to image_angle = 0)
-	WarningBoxPos[# 3, 0] = TargetX + lengthdir_x(distance[1] - distance[0] - height / 2, image_angle);
-	WarningBoxPos[# 3, 1] = TargetY + lengthdir_y(distance[1] - distance[0] - height / 2, image_angle);
+	__warning_box_positions[# 3, 0] = TargetX + lengthdir_x(__distances[1] - __distances[0] - __height / 2, image_angle);
+	__warning_box_positions[# 3, 1] = TargetY + lengthdir_y(__distances[1] - __distances[0] - __height / 2, image_angle);
 	//Bottom Right corner
-	WarningBoxPos[# 2, 0] = TargetX;
-	WarningBoxPos[# 2, 1] = TargetY;
+	__warning_box_positions[# 2, 0] = TargetX;
+	__warning_box_positions[# 2, 1] = TargetY;
 }
-else if state == 1
+else if (__state == 1)
 {
 	//Play sound
-	if sound_create audio_play(snd_bonewall);
-	state = 2;
+	if (__play_sound_at_create)
+		audio_play(snd_bonewall);
+	__state = 2;
 	//Creates each individual bone and sets its easing
 	for (var i = round(-__width / 2),
-			sprite = object_get_sprite(object),
+			sprite = object_get_sprite(__object),
 			spacing = sprite_get_height(sprite),
-			MoveTime = time_move, StayTime = time_stay,
-			EaseIn = ease[0], EaseOut = ease[1],
-			InitDistance = distance[0], Displace = distance[1]; i < __width / 2; i += spacing) {
+			EaseIn = __animation_ease[0], EaseOut = __animation_ease[1],
+			InitDistance = __distances[0], Displace = __distances[1]; i < __width / 2; i += spacing)
+	{
 		var X = x + lengthdir_x(i, image_angle + 90),
 			Y = y + lengthdir_y(i, image_angle + 90);
-		with Bullet_Bone(X, Y, height, 0, 0, type,,, image_angle,, false, StayTime + MoveTime * 2 + time_warn)
+		with (Bullet_Bone(X, Y, __height, 0, 0, __type,,, image_angle,, false, __time_stay + __time_move * 2 + __time_warn, c_white))
 		{
-			TweenFire(self, EaseIn, 0, 0, 0, MoveTime,
+			TweenFire(self, EaseIn, 0, 0, 0, __time_move,
 			"x>", x - lengthdir_x(InitDistance - Displace, image_angle),
 			"y>", y - lengthdir_y(InitDistance - Displace, image_angle));
-			TweenFire(self, EaseOut, 0, 0, StayTime, MoveTime,
-			"x>", x + lengthdir_x(InitDistance, image_angle),
-			"y>", y + lengthdir_y(InitDistance, image_angle));
+			TweenFire(self, EaseOut, 0, 0, __time_stay, __time_move,
+			"x>", x + lengthdir_x(Displace, image_angle),
+			"y>", y + lengthdir_y(Displace, image_angle));
 		}
 	}
 }
-if state >= 2
-{
-	if __timer == ceil(time_move * 2 + time_stay + time_move) instance_destroy();
-	__timer++;
-}
+if (__state >= 2 && __timer++ == ceil(__time_move * 2 + __time_stay + __time_move))
+	instance_destroy();

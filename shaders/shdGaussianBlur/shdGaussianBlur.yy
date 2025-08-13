@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdGaussianBlur",
-  "parent": {
-    "name": "Engine Essential",
-    "path": "folders/Coalition Engine/Internal/Shaders/Engine Essential.yy",
+  "$GMShader":"",
+  "%Name":"shdGaussianBlur",
+  "name":"shdGaussianBlur",
+  "parent":{
+    "name":"Blur",
+    "path":"folders/Coalition Engine/Effects/Required/Blur.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

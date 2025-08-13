@@ -1,5 +1,5 @@
-///@category Saving and Loading
-///@title Data mainipulation
+///@category Player Data
+///@title Save Load
 ///@text You can freely change the encoding/decoding method
 ///Be sure to keep it consistent
 
@@ -15,7 +15,7 @@ function SetTempData(name, value)
 
 ///@func GetTempData(name)
 ///@desc Get tempoary data
-///@param {string} name The name of the slot to be aquired
+///@param {string} name The name of the slot to be acquired
 function GetTempData(name)
 {
 	forceinline
@@ -23,7 +23,7 @@ function GetTempData(name)
 }
 
 ///@func SaveData(filename, struct, [function])
-///@desc Saves all data from global.__CoalitionTempData into a TempData.dat file
+///@desc Saves a struct into a .dat file
 ///@param {string} filename The file name of the file to store the data with
 ///@param {struct,Id.dsmap} struct The struct/ds_map to save
 ///@param {function} function The custom function for encoding (Input: string, Output: string)
@@ -31,8 +31,9 @@ function SaveData(fname, struct, func = undefined)
 {
 	aggressive_forceinline
 	//Check whether it is a map (Legacy)
-	if !is_struct(struct) && ds_exists(struct, ds_type_map) struct = ds_map_to_struct(struct);
-	if struct_is_empty(struct)
+	if (!is_struct(struct) && ds_exists(struct, ds_type_map))
+		struct = ds_map_to_struct(struct);
+	if (struct_is_empty(struct))
 	{
 		print("Coalition Engine: Warning! Cannot save empty data");
 		exit;
@@ -48,7 +49,8 @@ function SaveData(fname, struct, func = undefined)
 	//Layer 2 of encoding: String reversing
 	json_file = string_reverse(json_file);
 	//Layer 3 of encoding: User defined encoding method
-	if func != undefined json_file = func(json_file);
+	if (func != undefined)
+		json_file = func(json_file);
 	//Writing the final json into the buffer and then write it into the file
 	buffer_write(target_buffer, buffer_text, json_file);
 	buffer_save(target_buffer, fname);
@@ -64,13 +66,19 @@ function LoadData(fname, func = undefined)
 {
 	aggressive_forceinline
 	//If file doesn't exist, exit
-	if !file_exists(fname) return {};
+	if (!file_exists(fname))
+	{
+		if (__COALITION_VERBOSE)
+			print($"Coalition Engine: The file you are trying to load({fname}) does not exist.");
+		return {};
+	}
 	//Loads the buffer
 	var target_buffer = buffer_load(fname);
 	buffer_seek(target_buffer, buffer_seek_start, 0);
 	var json_file = buffer_read(target_buffer, buffer_text);
-	//Decrypt layer 3: User defined dncoding method
-	if func != undefined json_file = func(json_file);
+	//Decrypt layer 3: User defined decoding method
+	if (func != undefined)
+		json_file = func(json_file);
 	//Decrypt Layer 2: String reversing
 	json_file = string_reverse(json_file);
 	//Decrypt Layer 1: base64
@@ -82,14 +90,11 @@ function LoadData(fname, func = undefined)
 	//In normal circumstances, the name should be the same as the value
 	//It will only be different when the player modifies it
 	//This displays a custom error function to tell the players they messed up big time
-	if !struct_equals(name, vals)
+	if (!struct_equals(name, vals))
 	{
 		//Display what went wrong
-		if DEBUG
-		{
-			print(name);
-			print(vals);
-		}
+		if (__COALITION_VERBOSE)
+			print($"Coalition Engine: The file you are trying to load is either modified or damaged. The keys for the struct are\n{name}\nand the values are\n{vals}");
 		exception_unhandled_handler(function(ex)
 		{
 			window_set_caption("Code Error");

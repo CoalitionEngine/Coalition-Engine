@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdBlackMask",
-  "parent": {
-    "name": "Engine Essential",
-    "path": "folders/Coalition Engine/Internal/Shaders/Engine Essential.yy",
+  "$GMShader":"",
+  "%Name":"shdBlackMask",
+  "name":"shdBlackMask",
+  "parent":{
+    "name":"Required",
+    "path":"folders/Coalition Engine/Effects/Required.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

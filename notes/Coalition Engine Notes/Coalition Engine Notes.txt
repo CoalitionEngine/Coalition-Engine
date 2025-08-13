@@ -11,35 +11,10 @@ Coalition Engine is an Undertale engine that aims to create the most optimized e
 
 This engine features:
 
-- Existing documentation (how is this even a feature, it's supposed to be a basic thing)
+- Existing documentation (You are reading it now.)
+- Complete battle and overworld mechanics
+- Active support on troubleshooting
 - Potential cross platform support
-- Safe data saving
-- Optimized polygon board
-- Anti-UTMT support (kind of)
-- Active maintainence
-
-## What platforms does this engine support?
-
-Due to our dependency on public libraries, the supported platforms are the platforms that they support, which is potentially every except for HTML5.
-
-## Which Game Maker version should I use to use this engine?
-
-Since this engine is developed in 2023.11.1.129 as of version 0.8.0, this will be the minimal version of GM required, note that this engine is rather dependant on external libraries so you may need to update GM to match their minimal versions.
-
-## I encountered a bug on XXX, how do I fix it?
-
-You can file a bug report on Github using 'Issues' (Label 'bug'), or use the bug report channel on the [official Discord server](https://discord.gg/VyYghseRHf), both are acceptable!
-
-## You didn't add a feature that was in Undertale!/There is a feature that would be cool to add!
-
-Good! You proved that we are idiots! Go put your suggestion in Github 'Issues' (Label 'enhancements') or on the suggestions channel in our server!
-
-# Need to know
-
-You should not edit anything in the 'Internal' folder unless you have some degree of GML knowledge.
-Folders marked with '()' i.e. (Camera) can be removed if you do not need them as these functions
-only acts as easy access to the static functions for lesser experienced users.
-'(System)' is an exception, this group of functions **should not be modified**.
 
 ## Engine updating
 
@@ -59,26 +34,27 @@ removed assets that need to be deleted after importing the file.**
 If you intend to update the engine via pulling from Github, you should delete the entire 'Coalition Engine'
 folder before pulling.
 
-!> By clean installing through Github pulling, references to core objects like `oEnemyParent` and 
-overworld collision tiles/objects in rooms may be lost.
+!> By clean installing through Github pulling, references to core objects like `oEnemyParent`, 
+overworld collision tiles/objects in rooms, and audio groups may be lost.
 You are required to manually set them again after updating it this way.
 
 !> Sometimes it is required to clean install the engine for updating, you should read the update logs carefully
 to be notified whether you must clean install or not.
 
-?> If you have little to no GML knowledge, you should look up the Game Maker Manual or at least Google before asking questions like "How do I make an object" or "I don't know how to use this Game Maker function".
+?> If you have little to no GML knowledge, you should look up the Game Maker Manual or at least Google before
+asking questions like "How do I make an object" or "I don't know how to use this Game Maker function".<br>
+**Questions like that will not be answered.**
 
-## Naming convection
+## Naming convention
 
-There is a general naming convection in this engine.
-Variables that begin with '__' are for internal use and should not be called directly to prevent incompatibllity for future updates.
-Variables that uses camelCase or PascalCase are generally for internal use, however they can be modified by users as they do not have
-a signifacant impact to the internal system.
-Variables that uses snake_case can be freely defined by users, they are ment for users to edit.
+There is a general naming convention in this engine.<br>
+Variables that begin with '__' are for internal use and should not be called directly as they are internal variables.<br>
+Variables that uses `camelCase` or `PascalCase` are for public use, they can be modified by users as they are
+meant for editing to accommodate to individual settings.
 
-Assets follow a general naming convection of:
-Objects: oName
-Scripts: __* are internal functions, ones without __ are for usage
-Shader: shdName
-Sprites: sprName
-Audio: snd_name
+Assets in the engine follow a general naming convection of:<br>
+Objects: oName<br>
+Scripts: __* are internal functions, others generally follow `PascalCase` or `Pascal_Snake_Case`<br>
+Shader: shdName<br>
+Sprites: sprName<br>
+Audio: snd_name<br>

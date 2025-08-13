@@ -1,20 +1,20 @@
 event_inherited();
 
-hit_destroy = true;
+DestroyOnHit = true;
 //The direction of the arrow
-dir = 0;
+Direction = 0;
 //The target direction of the arrow
-target_dir = 0;
+__TargetDirection = 0;
 //Direction displacement of the arrow
-dir_a = 0;
+DirectionDisplace = 0;
 //The speed of the arrow
-spd = 5;
+Speed = 5;
 //The image index of the arrow
-index = 0;
+__base_index = 0;
 //The mode of the arrow, whether it is a yellow arrow, diagonal arrow etc
-mode = 0;
+__ArrowMode = 0;
 //The distance between the arrow and the target
-len = 1000;
+__DistanceToTarget = 1000;
 //The color of the shield the arrow should hit
 Color = 0;
 //The rotation direction of the arrow (Yellow arrows), 1 for couterclockwise and -1 for clockwise
@@ -29,8 +29,8 @@ JudgeMode = "Strict";
 
 function IsNearest() {
 	for (var i = 0, num = instance_number(oGreenArr), inst = array_create(num); i < num; ++i) {
-		inst[i] = instance_find(oGreenArr, i).len;
+		inst[i] = instance_find(oGreenArr, i).__DistanceToTarget;
 	}
 	array_sort(inst, true);
-	return self.len == inst[0];
+	return self.__DistanceToTarget == inst[0];
 }

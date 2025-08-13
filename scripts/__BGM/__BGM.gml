@@ -8,17 +8,17 @@
 function LoadBGM(bgm)
 {
 	forceinline
-	oOWController.BGMStream = false;
-	if audio_exists(bgm)
-		oOWController.BGM = bgm;
+	oOWController.__OverworldBGMStream = false;
+	if (audio_exists(bgm))
+		oOWController.__OverworldBGM = bgm;
 	else
 	{
-		if audio_exists(asset_get_index(bgm))
-			oOWController.BGM = asset_get_index(bgm);
+		if (audio_exists(asset_get_index(bgm)))
+			oOWController.__OverworldBGM = asset_get_index(bgm);
 		else
 		{
-			oOWController.BGMStream = audio_create_stream(bgm);
-			oOWController.BGMStream = true;
+			oOWController.__OverworldBGMStream = audio_create_stream(bgm);
+			oOWController.__OverworldBGMStream = true;
 		}
 	}
 }
@@ -27,14 +27,14 @@ function LoadBGM(bgm)
 function PlayBGM()
 {
 	forceinline
-	oOWController.Audio = audio_play(oOWController.BGM, true, true);
+	oOWController.__OverworldAudio = audio_play(oOWController.__OverworldBGM, true, true);
 }
 ///@func StopBGM()
 ///@desc Stops the stored BGM in the system
 function StopBGM()
 {
 	forceinline
-	audio_stop_sound(oOWController.Audio);
+	audio_stop_sound(oOWController.__OverworldAudio);
 }
 ///@func GetBGM()
 ///@desc Gets the bgm stored in the system
@@ -42,6 +42,6 @@ function StopBGM()
 function GetBGM()
 {
 	forceinline
-	return oOWController.Audio;
+	return oOWController.__OverworldAudio;
 }
 ///@text > You can use `GetBGM` to get the audio id of the bgm and do some audio effects like looping, fading etc using the audio_* functions.

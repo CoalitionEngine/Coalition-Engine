@@ -1,17 +1,17 @@
-//Sprites for each direction, Up-Down-Left-Right
-dir_sprite = array_create(4);
+//Sprites for each direction, Right - Up - Left - DOwn
+DirSprites = array_create(4);
 //Stores the previous sprite being drawn
 __last_sprite = -1;
 //Stores the previous direction the player is facing, 1 if right and -1 if left
-__last_dir = 1;
+__last_horizontal_dir = 1;
 sprite_index = -1;
 //Current direction the char is facing
-dir = DIR.DOWN;
+FacingDirection = DIR.DOWN;
 //Which direction will the sprite flip, set this to -1 if you don't want it
-image_flip = DIR.RIGHT;
+SpriteFlipDirection = DIR.RIGHT;
 image_speed = 0;
 //For preventing infinite loop of room transition
-if !variable_global_exists("SetForceCollideles")
+if (!variable_global_exists("SetForceCollideless"))
 	global.__SetForceCollideless = false;
 __ForceCollideless = false;
 //The name of the char shown in the debug view
@@ -23,5 +23,11 @@ Name = "Unnamed Overworld Char";
 */
 function CollideWithAnything(x, y)
 {
-	return tile_meeting(x, y, "TileCollision") || place_meeting(x, y, oOWChars) || (place_meeting(x, y, oOWCollision) && instance_place(x, y, oOWCollision).Interactable);
+	return (layer_exists("TileCollision") && tile_meeting(x, y, "TileCollision")) || place_meeting(x, y, oOWChars) || (place_meeting(x, y, oOWCollision) && instance_place(x, y, oOWCollision).Interactable);
+}
+function __SpriteShouldFlip() {
+	return FacingDirection == SpriteFlipDirection && SpriteFlipDirection != -1;
+}
+function __GetDirectionalSprite(dir) {
+	return DirSprites[dir / 90];
 }

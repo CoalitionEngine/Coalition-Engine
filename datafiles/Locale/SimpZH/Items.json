@@ -1,0 +1,16 @@
+{
+    "language": "English",
+    "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
+    "text": {
+        "Items": {
+            "Pie": {
+                "Name": "Pie",
+                "Desc": "* Random slice of pie which is so\n  cold you cant eat it.",
+                "Use1": "* You eat the Butterscotch Pie.",
+                "Use0": "* You eat the Butterscotch Pie again.",
+                "Throw": "Throw pie",
+                "BattleDesc": "Heals FULL HP"
+            }
+        }
+    }
+}

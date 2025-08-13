@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__lexicon_parse_json",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Parsers",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Internal/Parsers.yy",
+  "$GMScript":"v1",
+  "%Name":"__lexicon_parse_json",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__lexicon_parse_json",
+  "parent":{
+    "name":"Parsers",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Internal/Parsers.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

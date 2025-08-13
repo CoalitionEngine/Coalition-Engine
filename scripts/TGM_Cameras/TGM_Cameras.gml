@@ -5,7 +5,7 @@
 /// @param {array} projMat The camera projection matrix.
 /// @returns {real}
 function camera_get_fov(_projMat) {
-	return radtodeg(arctan(1.0/_projMat[5]) * 2.0);
+	return darctan(1.0/_projMat[5]) * 2.0;
 }
 
 /// @desc Get camera's aspect ratio.

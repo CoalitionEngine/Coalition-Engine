@@ -1,27 +1,35 @@
 /// @category Battle
 /// @title Battle Masking Functions
-/// @text Below are the functions you'll use to mask sprites inside the board
+/// @text Below are the functions you'll use to mask things inside the board
 
-/// @func Battle_Masking_Start([spr], [board])
+/// @func Battle_Masking_Start([spr])
 /// @desc Begins the drawing of board masking
 /// @param {bool} sprite Whether a sprite used for masking
-/// @param {Asset.GMObject} board Which board to mask in
-function Battle_Masking_Start(spr = false, board = undefined) {
+function Battle_Masking_Start(spr = false) {
 	aggressive_forceinline
-	board ??= BattleBoardList[TargetBoard];
-	var target_surf = board.surface;
-	if board.VertexMode
+	static __surf = surface_create(640, 480);
+	if (oGlobal.__MainCamera.enable_z)
+		exit;
+	//Store all board surfaces
+	if (!surface_exists(__surf)) __surf = surface_create(640, 480);
+	surface_set_target(__surf);
+	draw_clear_alpha(c_black, 0);
+	var i = 0;
+	repeat (instance_number(oVertexBoard))
+		draw_surface(instance_find(oVertexBoard, i++).__clip_surf, 0, 0);
+	i = 0;
+	repeat (instance_number(oBoard))
 	{
-		board = VertexBoardList[TargetBoard];
-		//target_surf = board.ClipSurfTex;
-		target_surf = board.ClipSurf;
+		var curBoard = instance_find(oBoard, i++);
+		if (!curBoard.VertexMode)
+			draw_surface(curBoard.__surface, 0, 0);
 	}
-	if oGlobal.MainCamera.enable_z exit;
+	surface_reset_target();
+	//Masking shader
 	var shader = spr ? shdClipMaskSpr : shdClipMask;
 	shader_set(shader);
 	var u_mask = shader_get_sampler_index(shader, "u_mask");
-	//texture_set_stage(u_mask, is_ptr(target_surf) ? target_surf: surface_get_texture(target_surf));
-	texture_set_stage(u_mask, surface_get_texture(target_surf));
+	texture_set_stage(u_mask, surface_get_texture(__surf));
 	var u_rect = shader_get_uniform(shader, "u_rect"),
 		window_width = 640, window_height = 480;
 	shader_set_uniform_f(u_rect, 0, 0, window_width, window_height);
@@ -29,10 +37,8 @@ function Battle_Masking_Start(spr = false, board = undefined) {
 
 ///@func Battle_Masking_End([board])
 ///@desc Ends the masked drawing
-///@param {Asset.GMObject} board Which board that was used to mask in
-function Battle_Masking_End(board = undefined) {
+function Battle_Masking_End() {
 	forceinline
-	board ??= BattleBoardList[TargetBoard];
-	if oGlobal.MainCamera.enable_z exit;
-	shader_reset();
+	if (!oGlobal.__MainCamera.enable_z)
+		shader_reset();
 }

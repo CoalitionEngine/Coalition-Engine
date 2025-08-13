@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "lexicon_index_fallback_language_set",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Index",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Index.yy",
+  "$GMScript":"v1",
+  "%Name":"lexicon_index_fallback_language_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"lexicon_index_fallback_language_set",
+  "parent":{
+    "name":"Index",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Index.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

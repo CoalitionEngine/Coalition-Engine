@@ -1,11 +1,11 @@
 ///@desc Unloads everything
-delete Result;
+delete __Result;
 delete Effect;
 delete Target;
-delete Aim.Attack;
-delete Aim;
+delete __Aim.Attack;
+delete __Aim;
 delete Button;
-delete ui;
+delete UI;
 texturegroup_unload("texbattle");
 audio_group_unload(audgrpbattle);
 scribble_flush_everything();

@@ -1,4 +1,4 @@
-if active
+if (active)
 {	
 	var board = target_board,
 		board_x = board.x,
@@ -8,19 +8,19 @@ if active
 		board_l = board_x - board.left,
 		board_r = board_x + board.right;
 	//If it is still at the warning phase, draw the warning box
-	if time_warn
+	if (time_warn)
 	{
 		time_warn--;
 		//Set corner locations
 		var x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-		if dir == DIR.UP || dir == DIR.DOWN
+		if (dir == DIR.UP || dir == DIR.DOWN)
 		{
 			x1 = board_l + 2;
 			x2 = board_r - 3;
 			y1 = dir == DIR.UP ? board_u + 2 : board_d - 2;
 			y2 = dir == DIR.UP ? board_u + height - 2 - 5 : board_d - height + 5;
 		}
-		else if dir == DIR.LEFT || dir == DIR.RIGHT
+		else if (dir == DIR.LEFT || dir == DIR.RIGHT)
 		{
 			y1 = board_u + 2;
 			y2 = board_d - 3;
@@ -28,18 +28,18 @@ if active
 			x2 = dir == DIR.LEFT ? board_l + height - 2 + 5 : board_r - height - 5;
 		}
 		//Warning rectangle
-		draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, warn_color, warn_alpha_filled);
+		draw_sprite_ext(sprPixel, 0, x1, y1, x2 - x1, y2 - y1, 0, WarnColor, WarnAlpha);
 		//Warning outline
-		draw_rectangle_color(x1, y1, x2, y2, warn_color, warn_color, warn_color, warn_color, true);
+		draw_rectangle_color(x1, y1, x2, y2, WarnColor, WarnColor, WarnColor, WarnColor, true);
 	}
 	else //Draw bones
 	{
-		if !oBoard.VertexMode
+		if (!oBoard.VertexMode)
 		{
 			Battle_Masking_Start(true);
 			event_user(0);
 			Battle_Masking_End();
 		}
-		if state == 1 state = 2;
+		if (state == 1) state = 2;
 	}
 }

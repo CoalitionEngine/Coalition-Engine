@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__lexicon_cache_text",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Cache",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Internal/Cache.yy",
+  "$GMScript":"v1",
+  "%Name":"__lexicon_cache_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__lexicon_cache_text",
+  "parent":{
+    "name":"Cache",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Internal/Cache.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

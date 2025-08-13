@@ -52,9 +52,9 @@ function DisposeLine(line)
 	forceinline
 	static LineSystemLines = oLineSystem.LineSys.__Lines;
 	var line_id, i = 0;
-	repeat ds_list_size(LineSystemLines)
+	repeat (ds_list_size(LineSystemLines))
 	{
-		if LineSystemLines[| i] == line
+		if (LineSystemLines[| i] == line)
 		{
 			line_id = i;
 			break;
@@ -72,7 +72,7 @@ function DisposeAllLines()
 {
 	forceinline
 	static LineSystemLines = oLineSystem.LineSys.__Lines;
-	repeat ds_list_size(LineSystemLines)
+	repeat (ds_list_size(LineSystemLines))
 		DisposeLine(LineSystemLines[| 0]);
 }
 #endregion
@@ -129,7 +129,7 @@ function __LineBase(image_index = 0, image_blend = c_white, image_alpha = 1, dep
 	///@returns {Struct.DragLine} The drag line created
 	static AddDragLine = function(lag, image_alpha = 1)
 	{
-		if lag == 0
+		if (lag == 0)
 		{
 			print("Drag Line delay cannot be 0, refactoring it to 1");
 			lag = 1;
@@ -165,7 +165,8 @@ function DragLine(lag, parent_line, image_index, image_blend, image_alpha, depth
 	///@return {undefined}
 	static Step = function()
 	{
-		if time++ < 0 exit;
+		if (time++ < 0)
+			exit;
 		var ParentData = parent_line.DragData[| time];
 		//Passing base line variables
 		variable_clone(ParentData);
@@ -174,14 +175,14 @@ function DragLine(lag, parent_line, image_index, image_blend, image_alpha, depth
 		Draw = static_get(parent_line).Draw;
 		//Pass unique data of each line type
 		//If the parent line is a normal line
-		if is_instanceof(parent_line, NormalLine)
+		if (is_instanceof(parent_line, NormalLine))
 		{
 			x = ParentData.x;
 			y = ParentData.y;
 			image_angle = ParentData.image_angle;
 		}
 		//If the parent line is a vector line
-		else if is_instanceof(parent_line, VectorLine)
+		else if (is_instanceof(parent_line, VectorLine))
 		{
 			x1 = ParentData.x1;
 			y1 = ParentData.y1;
@@ -225,11 +226,14 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 	{
 		//Storing drag line data
 		ds_list_add(DragData, variable_clone(self));
-		if hspeed != 0 x += hspeed;
-		if vspeed != 0 y += vspeed;
-		if speed != 0
+		if (hspeed != 0)
+			x += hspeed;
+		if (vspeed != 0)
+			y += vspeed;
+		if (speed != 0)
 		{
-			if friction != 0 speed -= friction;
+			if (friction != 0)	
+				speed -= friction;
 			x += lengthdir_x(speed, direction);
 			y += lengthdir_y(speed, direction);
 		}
@@ -250,10 +254,11 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 			color_count = color_array ? array_length(image_blend) : 0,
 			final_blend = image_blend;
 		//Alpha pre-multipling
-		if !pre_multiply_alpha draw_set_alpha(image_alpha);
+		if (!pre_multiply_alpha)
+			draw_set_alpha(image_alpha);
 		else
 		{
-			if !color_array
+			if (!color_array)
 			{
 				var r = color_get_red(image_blend) * image_alpha,
 					g = color_get_green(image_blend) * image_alpha,
@@ -263,7 +268,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 			else
 			{
 				var i = 0;
-				repeat color_count
+				repeat (color_count)
 				{
 					var r = color_get_red(image_blend[i]) * image_alpha,
 						g = color_get_green(image_blend[i]) * image_alpha,
@@ -274,7 +279,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 			}
 		}
 		draw_primitive_begin_texture(pr_trianglestrip, __tex);
-		if !color_array
+		if (!color_array)
 		{
 			//This is faster than draw_vertex_texture_color
 			draw_set_color(final_blend);
@@ -295,7 +300,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 		var __follow_cam = mirror.follow_camera,
 			mirror_width = __follow_cam ? Camera.ViewWidth() : 640,
 			mirror_height = __follow_cam ? Camera.ViewHeight() : 480;
-		if mirror.horizontal
+		if (mirror.horizontal)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(mirror_width - (x - __length_x - __thick_x), y - __length_y - __thick_y, 0, 0);
@@ -304,7 +309,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 			draw_vertex_texture(mirror_width - (x + __length_x + __thick_x), y + __length_y + __thick_y, 1, 1);
 			draw_primitive_end();
 		}
-		if mirror.vertical
+		if (mirror.vertical)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(x - __length_x - __thick_x, mirror_height - (y - __length_y - __thick_y), 0, 0);
@@ -313,7 +318,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 			draw_vertex_texture(x + __length_x + __thick_x, mirror_height - (y + __length_y + __thick_y), 1, 1);
 			draw_primitive_end();
 		}
-		if mirror.oblique
+		if (mirror.oblique)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(mirror_width - (x - __length_x - __thick_x), mirror_height - (y - __length_y - __thick_y), 0, 0);
@@ -362,19 +367,20 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 	{
 		//Storing drag line data
 		ds_list_add(DragData, variable_clone(self));
-		if hspeed != 0
+		if (hspeed != 0)
 		{
 			x1 += hspeed;
 			x2 += hspeed;
 		}
-		if vspeed != 0
+		if (vspeed != 0)
 		{
 			y1 += vspeed;
 			y2 += vspeed;
 		}
-		if speed != 0
+		if (speed != 0)
 		{
-			if friction != 0 speed -= friction;
+			if (friction != 0)
+				speed -= friction;
 			x1 += lengthdir_x(speed, direction);
 			x2 += lengthdir_x(speed, direction);
 			y1 += lengthdir_y(speed, direction);
@@ -394,12 +400,13 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 			color_array = is_array(image_blend),
 			color_count = color_array ? array_length(image_blend) : 0,
 			final_blend = image_blend;
-		if !pre_multiply_alpha draw_set_alpha(image_alpha);
+		if (!pre_multiply_alpha)
+			draw_set_alpha(image_alpha);
 		else
 		{
-			if !color_array
+			if (!color_array)
 			{
-				var r = color_get_red(image_blend) * image_alpha,
+				var r = (image_blend >> 255 * 255) * image_alpha,
 					g = color_get_green(image_blend) * image_alpha,
 					b = color_get_blue(image_blend) * image_alpha;
 				final_blend = make_color_rgb(r, g, b);
@@ -407,7 +414,7 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 			else
 			{
 				var i = 0;
-				repeat color_count
+				repeat (color_count)
 				{
 					var r = color_get_red(image_blend[i]) * image_alpha,
 						g = color_get_green(image_blend[i]) * image_alpha,
@@ -418,7 +425,7 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 			}
 		}
 		draw_primitive_begin_texture(pr_trianglestrip, __tex);
-		if !color_array
+		if (!color_array)
 		{
 			//This is faster than draw_vertex_texture_color
 			draw_set_color(final_blend);
@@ -439,7 +446,7 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 		var __follow_cam = mirror.follow_camera,
 			mirror_width = __follow_cam ? Camera.ViewWidth() : 640,
 			mirror_height = __follow_cam ? Camera.ViewHeight() : 480;
-		if mirror.horizontal
+		if (mirror.horizontal)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(mirror_width - (x1 - __thick_x), y1 - __thick_y, 0, 0);
@@ -448,7 +455,7 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 			draw_vertex_texture(mirror_width - (x2 + __thick_x), y2 + __thick_y, 1, 1);
 			draw_primitive_end();
 		}
-		if mirror.vertical
+		if (mirror.vertical)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(x1 - __thick_x, mirror_height - (y1 - __thick_y), 0, 0);
@@ -457,7 +464,7 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 			draw_vertex_texture(x2 + __thick_x, mirror_height - (y2 + __thick_y), 1, 1);
 			draw_primitive_end();
 		}
-		if mirror.oblique
+		if (mirror.oblique)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
 			draw_vertex_texture(mirror_width - (x1 - __thick_x), mirror_height - (y1 - __thick_y), 0, 0);

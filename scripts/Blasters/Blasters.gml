@@ -15,29 +15,35 @@
 ///@param {real} pause The pause time of the blaster before it shoots after it finished moving
 ///@param {real} duration The duration of the blast
 ///@param {real} color The color of the blaster (Default 0)
-///@param {bool} blur Whether the blaster blurs the screen upon firing (Default false)
+///@param {bool} release_func The function to execute when the blaster fires
 ///@param {bool} create_sound Whether the creation sound plays (Default true)
 ///@param {bool} release_sound Whether the firing sound plays (Default true)
 ///@return {Id.Instance<oGB>} The created blaster
-function CreateBlaster(x, y, t_x, t_y, i_angle = undefined, t_angle, s_x, s_y, move, pause, dur, col = 0, blur = false, c_sound = true, r_sound = true) {
+function CreateBlaster(x, y, t_x, t_y, i_angle = undefined, t_angle, s_x, s_y, move, pause, dur, col = 0, release_func = undefined, c_sound = true, r_sound = true) {
 	forceinline
 	i_angle ??= t_angle + choose(180, -180);
-	with instance_create_depth(x, y, -10, oGB)
+	with (instance_create_depth(x, y, -10, oGB))
 	{
-		gbx = x; gby = y;
-		gb_xscale = s_y; gb_yscale = s_x;
+		with (Blaster)
+		{
+			x = x;
+			y = y;
+			image_xscale = s_y;
+			image_yscale = s_x;
+		}
 		image_angle = i_angle;
 		
-		target_x = t_x; target_y = t_y;
-		target_angle = t_angle;
+		__target_x = t_x;
+		__target_y = t_y;
+		__target_angle = t_angle;
 		
-		time_move = move;
-		time_pause = pause;
-		time_blast = dur;
-		type = col;
-		blurring = blur;
-		charge_sound = c_sound;
-		release_sound = r_sound;
+		__time_move = move;
+		__time_pause = pause;
+		__time_blast = dur;
+		__type = col;
+		__charge_sound = c_sound;
+		__release_sound = r_sound;
+		__blast_func = release_func ?? COALITION_EMPTY_FUNCTION;
 		return self;
 	}
 }

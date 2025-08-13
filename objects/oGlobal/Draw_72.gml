@@ -1,6 +1,6 @@
 ///desc Update 3D camera
 //why this exists lmao, camera angle is broken when enabled
-if MainCamera.enable_z
+if (__MainCamera.enable_z)
 {
 	var camera = view_camera[0],
 		_camAngX = camAngleX + camAngleXShake,
@@ -11,7 +11,7 @@ if MainCamera.enable_z
 		_camY = camera_get_view_y(camera) + 480 / (2 * camera_scale_y),
 		_camDist = camDist / camera_scale_x,
 		_camTar = camera_target;
-	if instance_exists(_camTar)
+	if (instance_exists(_camTar))
 	{
 		_camX = _camTar.x - camera_x;
 		_camY = _camTar.y - camera_y;
@@ -28,8 +28,12 @@ if MainCamera.enable_z
 
 	camera_apply(camera);
 	
-	if camAngleXShake != 0 camAngleXShake *= 0.8;
-	if camAngleYShake != 0 camAngleYShake *= 0.8;
-	if abs(camAngleXShake) < 0.2 camAngleXShake = 0;
-	if abs(camAngleYShake) < 0.2 camAngleYShake = 0;
+	if (camAngleXShake != 0)
+		camAngleXShake *= 0.8;
+	if (camAngleYShake != 0)
+		camAngleYShake *= 0.8;
+	if (abs(camAngleXShake) < 0.2)
+		camAngleXShake = 0;
+	if (abs(camAngleYShake) < 0.2)
+		camAngleYShake = 0;
 }

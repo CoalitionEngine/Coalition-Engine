@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__lexicon_file_handle_load",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Loading",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Internal/Loading.yy",
+  "$GMScript":"v1",
+  "%Name":"__lexicon_file_handle_load",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__lexicon_file_handle_load",
+  "parent":{
+    "name":"Loading",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Internal/Loading.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

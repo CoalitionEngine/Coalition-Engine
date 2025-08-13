@@ -1,18 +1,19 @@
-var input_confirm = CheckConfirm(), collide = CheckCollide() && !oOWPlayer.__ForceCollideless && oOWPlayer.moveable;
-switch sprite_index
+var input_confirm = CheckConfirm(), collide = CheckCollide() && !oOWPlayer.__ForceCollideless && oOWPlayer.Movable;
+switch (sprite_index)
 {
 	default:
 		//Check for collision and interactibility
-		if collide && (Interactable && CheckConfirm() || !Interactable) && !Collided
+		if (collide && (Interactable && CheckConfirm() || !Interactable) && __Collided == __COALITION_COLLISION_STATE.NOT_COLLIDED)
 		{
-			Collided = true;
-			if is_callable(Event)
+			__Collided = __COALITION_COLLISION_STATE.COLLIDING;
+			if (is_callable(Event))
 				Event();
 		}
 		//Buffers collision
-		elif collide && Collided
-			Collided = 2;
+		elif (collide && __Collided == __COALITION_COLLISION_STATE.COLLIDING)
+			__Collided = __COALITION_COLLISION_STATE.COLLIDED;
 		//Reset collision state
-		if !collide && Collided == 2 Collided = false;
+		if (!collide && __Collided == __COALITION_COLLISION_STATE.COLLIDED)
+			__Collided = __COALITION_COLLISION_STATE.NOT_COLLIDED;
 		break;
 }

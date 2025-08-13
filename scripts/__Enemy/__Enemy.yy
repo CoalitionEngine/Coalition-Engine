@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__Enemy",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Battle",
-    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Battle.yy",
+  "$GMScript":"v1",
+  "%Name":"__Enemy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__Enemy",
+  "parent":{
+    "name":"Enemy",
+    "path":"folders/Coalition Engine/Battle/Enemy.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

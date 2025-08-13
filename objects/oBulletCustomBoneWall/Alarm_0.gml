@@ -1,3 +1,3 @@
 ///@desc True creation
-active = true;
-state = 1;
+__active = true;
+__state = 1;

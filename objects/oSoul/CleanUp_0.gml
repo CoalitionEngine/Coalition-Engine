@@ -1,5 +1,5 @@
 //Destroy green shield variables
-with __GreenShieldData
+with (__GreenShieldData)
 {
 	ds_list_destroy(Angle);
 	ds_list_destroy(TargetAngle);
@@ -8,7 +8,8 @@ with __GreenShieldData
 	ds_list_destroy(Color);
 	ds_list_destroy(HitColor);
 	ds_list_destroy(RotateDirection);
-	for (var i = 0; i < Amount; ++i) instance_destroy(List[| i]);
+	for (var i = 0; i < Amount; ++i)
+		instance_destroy(List[| i]);
 	ds_list_destroy(List);
 	ds_grid_destroy(Input);
 }
@@ -18,4 +19,13 @@ part_type_destroy(__SoulEffectType);
 part_system_destroy(__SoulEffectSystem);
 
 //Removes itself form the global soul array
-array_delete(BattleSoulList, array_get_index(BattleSoulList, id), 1);
+array_delete(BattleSoulList, __SoulListID, 1);
+//Update soul ids
+var i = 0;
+repeat (instance_number(oSoul))
+{
+	var findSoul = instance_find(oSoul, i);
+	if (findSoul != self)
+		findSoul.__SoulListID = array_get_index(BattleSoulList, findSoul);
+	++i;
+}

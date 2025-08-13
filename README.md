@@ -43,7 +43,11 @@ The system in this Undertale Engine provides players high FPS(Frame-Per-Second) 
 ### Decompiling Protection
 
 Our engine developers are trying hard to find a way to prevent decompiling tools (such as Underanalyzer, UndertaleModTool) from decompiling games based on this engine, So you can safely compile your project without having to compile your project with YYC method(Visual Studio is required if you are asking).
+<<<<<<< Updated upstream
 The methods used in the project are the very basics of anti-decompilation, the more advanced methods are currently not disclosed to the public.
+=======
+The methods used in the project are the very basics of anti-decompilation, the more advanced methods are currently not disclosed to the public.=
+>>>>>>> Stashed changes
 
 ![Credits](https://user-images.githubusercontent.com/83257329/226114492-749f7f25-9780-4a28-80b2-1bb4bad86e22.png)
 

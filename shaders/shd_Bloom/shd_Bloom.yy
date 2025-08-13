@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_Bloom",
-  "parent": {
-    "name": "Bloom",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Bloom.yy",
+  "$GMShader":"",
+  "%Name":"shd_Bloom",
+  "name":"shd_Bloom",
+  "parent":{
+    "name":"Bloom",
+    "path":"folders/Coalition Engine/Effects/Required/Bloom.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

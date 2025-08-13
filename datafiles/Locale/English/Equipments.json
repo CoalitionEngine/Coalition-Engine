@@ -1,0 +1,128 @@
+{
+    "language": "English",
+    "locale": ["en-US", "en-AU", "en-CA", "en-UK"],
+    "text": {
+        "Equipments": {
+            "Nothing": {
+                "Name": "Nothing",
+                "Use": "* You should not have this.",
+                "Info": "* You should not have this.",
+                "Drop": ""
+            },
+            "Stick": {
+                "Name": "Stick",
+                "Use": "* You equipped the Stick",
+                "Info": "* \"Stick\" - Weapon AT 0\n* Its bark is worse than\n  its bite.",
+                "Drop": ""
+            },
+            "Toy Knife": {
+                "Name": "Toy Knife",
+                "Use": "* You equipped Toy Knife.",
+                "Info": "* \"Toy Knife\" - Weapon AT 3\n* Made of plastic.\n* A rarity nowadays.",
+                "Drop": ""
+            },
+            "Tough Glove": {
+                "Name": "Tough Glove",
+                "Use": "* You equipped Tough Glove.",
+                "Info": "* \"Tough Glove\" - Weapon AT 5\n* A worn pink leather glove.[fdelay,60]\n* For five-fingered folk.",
+                "Drop": ""
+            },
+            "Ballet Shoes": {
+                "Name": "Ballet Shoes",
+                "Use": "* You equipped Ballet Shoes.",
+                "Info": "* \"Ballet Shoes\" - Wpn AT 7\n* These used shoes make you\n  feel incredibly dangerous.",
+                "Drop": ""
+            },
+            "Torn Notebook": {
+                "Name": "Torn Notebook",
+                "Use": "* You equipped the Torn Notebook.",
+                "Info": "* \"Torn Notebook\" - Weapon AT 2\n* Contains illegible scrawls.\n* Increases INV by 6.",
+                "Drop": ""
+            },
+            "Burnt Pan": {
+                "Name": "Burnt Pan",
+                "Use": "* You equipped the Burnt Pan.",
+                "Info": "* \"Burnt Pan\" - Weapon AT 10\n* Damage is rather consistent.\n* Consumable items heal 4 more HP.",
+                "Drop": ""
+            },
+            "Empty Gun": {
+                "Name": "Empty Gun",
+                "Use": "* You equipped the Empty Gun.",
+                "Info": "* \"Empty Gun\" - Weapon AT 12\n* An antique revolver.[fdelay,60]\n* It has no ammo.",
+                "Drop": ""
+            },
+            "Worn Dagger": {
+                "Name": "Worn Dagger",
+                "Use": "* You equipped the Worn Dagger.",
+                "Info": "* \"Worn Dagger\" - Weapon AT 15\n* Perfect for cutting plants\n  and vines.",
+                "Drop": ""
+            },
+            "Real Knife": {
+                "Name": "Real Knife",
+                "Use": "* About time.",
+                "Info": "* \"Real Knife\" - Weapon AT 99\n* Here we are!",
+                "Drop": ""
+            },
+            "Bandage": {
+                "Name": "Bandage",
+                "Use": "* You re-applied the bandage.\n* Still kind of gooey.",
+                "Info": "* \"Bandage\" - Heals 10 HP\n* It has already been used\n  several times.",
+                "Drop": ""
+            },
+            "Faded Ribbon": {
+                "Name": "Faded Ribbon",
+                "Use": "* You equipped the ribbon.",
+                "Info": "* \"Faded Ribbon\" - Armor DF 3\n* If you're cuter[fdelay,60], monsters\n  won't hit you as hard.",
+                "Drop": ""
+            },
+            "Manly Bandanna": {
+                "Name": "Manly Bandanna",
+                "Use": "* You equipped Manly Bandanna.",
+                "Info": "* \"Manly Bandanna\" - Armor DF 7\n* It has seen some wear.\n* It has abs drawn on it.",
+                "Drop": ""
+            },
+            "Old Tutu": {
+                "Name": "Old Tutu",
+                "Use": "* You equipped the Old Tutu.",
+                "Info": "* \"Old Tutu\" - Armor DF 10\n* Finally[fdelay,60], a protective piece\n  of armor.",
+                "Drop": ""
+            },
+            "Cloudy Glasses": {
+                "Name": "Cloudy Glasses",
+                "Use": "* You equipped the glasses.",
+                "Info": "* \"Cloudy Glasses\" - Armor DF 6\n* Glasses marred with wear.\n* Increases INV by 9.",
+                "Drop": ""
+            },
+            "Temmie Armor": {
+                "Name": "Temmie Armor",
+                "Use": "* You donned the Temmie Armor.",
+                "Info": "* \"temy armor\" - Armor DF 20\n* The things you can do with\n  a college education![pause][/page]* Raises ATTACK when worn[fdelay,60].\n* Recovers HP every other turn[fdelay,60].\n* INV up slightly.",
+                "Drop": ""
+            },
+            "Stained Apron": {
+                "Name": "Stained Apron",
+                "Use": "* You equipped the apron.",
+                "Info": "* \"Stained Apron\" - Armor DF 11\n* Heals 1 HP every other\n  turn.",
+                "Drop": ""
+            },
+            "Cowboy Hat": {
+                "Name": "Cowboy Hat",
+                "Use": "* You equipped the Cowboy Hat.",
+                "Info": "* \"Cowboy Hat\" - Armor DF 12\n* This battle-worn hat makes you\n  want to grow a beard.",
+                "Drop": ""
+            },
+            "Heart Locket": {
+                "Name": "Heart Locket",
+                "Use": "* You equipped the locket.",
+                "Info": "* \"Heart Locket\" - Armor DF 15\n* It says \"Best Friends Forever.\"",
+                "Drop": ""
+            },
+            "The Locket": {
+                "Name": "The Locket",
+                "Use": "* You equipped the locket.",
+                "Info": "* Right where it belongs.",
+                "Drop": ""
+            }
+        }
+    }
+}

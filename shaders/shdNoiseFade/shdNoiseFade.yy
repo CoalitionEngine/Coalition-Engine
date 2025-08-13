@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdNoiseFade",
-  "parent": {
-    "name": "Extra Effects",
-    "path": "folders/Coalition Engine/Internal/Shaders/Extra Effects.yy",
+  "$GMShader":"",
+  "%Name":"shdNoiseFade",
+  "name":"shdNoiseFade",
+  "parent":{
+    "name":"Noise Fading",
+    "path":"folders/Coalition Engine/Effects/Optional/Noise Fading.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

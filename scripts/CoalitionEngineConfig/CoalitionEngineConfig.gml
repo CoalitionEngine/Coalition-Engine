@@ -2,21 +2,22 @@
 ///@title Enums and Macros
 #region Documentation text
 ///@text ## Engine Macros
-///These macros are for assiting you to code using this engine
+///These macros are for assisting you to code using this engine
 ///
 ///| Macro Name | Purpose |
 ///| ----------- | ----------- |
 ///| `__COALITION_ENGINE_VERSION` | The current version of the engine |
-///| `__COALITION_VERBOSE` | Show extended debug information in the coutput window |
+///| `__COALITION_VERBOSE` | Show extended debug information in the output window |
 ///| `__COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR` | Whether or not an error message will be displayed if you are not in the correct GM version |
+///| `__COALITION_SHOWCASE` | Whether the engine will compile the codes for the examples of the engine or not (You still need to manually remove the assets, but you don't have to delete the codes) |
 ///| `ALLOW_DEBUG` | Whether or not the player can access the debug console |
 ///| `DEBUG` | Whether or not the currrent build is a debug build or not (Disabling will lead to performance boost) |
 ///| `RELEASE` | Whether or not the currrent build is a release build or not (This is automatically set to !DEBUG) |
-///| `NOOB_MODE` | Whether or not the quick functions will be compiled |
-///| `COALITION_DELTA_TIME` | Whether to enable delta time lerping in this engine |
+///| `COALITION_DELTA_TIME` | Whether to enable delta time lerping in this engine (Functionality WIP) |
 ///| `COALITION_DATA` | The global struct of data stored in the engine |
 ///| `COALITION_SAVE_FILE` | The global save file of the engine |
 ///| `COALITION_EMPTY_FUNCTION` | A predefined empty function |
+///| `COALITION_ENABLE_GMLIVE` | Whether to enable GMlive in this engine (Only if you have it) |
 ///
 ///These macros are for retrieving player input, not that you may need to set them back to 0 after changing states to prevent "double input"
 ///## Input Macros
@@ -48,7 +49,6 @@
 ///| `clear_game_timesources` | This clears all created time sources in `time_source_game` |
 ///| `clear_global_timesources` | This clears all created time sources in `time_source_global` |
 ///| `clear_timesources` | This clears all created time sources, it is automatically called when the game ends |
-///| `COALITION_ENABLE_GMLIVE` | Whether to enable GMlive in this engine (Only if you have it) |
 ///| `live` | Iterated from the original live macro from GMLive to achieve better performance |
 ///| `forceinline` | Acts as gml_pragma("forceinline"), boost performance when compiled in YYC, most functions include this |
 ///| `aggressive_forceinline` | Apply forceinline in scripts that are larger, further boosting performance, but leads to larger file size |
@@ -64,9 +64,9 @@
 ///| `ITEM` | Item ID |
 ///| `ITEM_SCROLL` | Item scroll mode in battle |
 ///| `OVERWORLD` | Overworld Room |
-///| `BATTLE_STATE` | Battle state |
-///| `MENU_STATE` | Menu State |
-///| `SAVE_STATE` | Saving State |
+///| `BATTLE_STATE` | The state of the battle |
+///| `MENU_STATE` | The state of the battle menu |
+///| `SAVE_STATE` | Overworld saving State |
 #endregion
 #region Engine
 //Here are the macros for the engine
@@ -77,21 +77,11 @@
 #macro RELEASE !DEBUG
 #macro __COALITION_VERBOSE true
 #macro __COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR true
-//Whether to enable compiling quick functions
-#macro NOOB_MODE false
+#macro __COALITION_SHOWCASE true
 #macro COALITION_DELTA_TIME true
-#endregion
-#region Handy Macros
 //Handy GMLive macro for users who have GMlive
 #macro COALITION_ENABLE_GMLIVE false
-#macro live if !RELEASE && COALITION_ENABLE_GMLIVE\
-	if asset_get_index("obj_gmlive") != -1 {\
-	instance_check_create(obj_gmlive);\
-	if live_call() return live_result\
-}
-#macro forceinline gml_pragma("forceinline")
 //Applies a more aggressive forceinline to scripts
 //This will lead to better performance but larger file size
 #macro APPLY_AGGRESSIVE_FORCEINLINE true
-#macro aggressive_forceinline if APPLY_AGGRESSIVE_FORCEINLINE {forceinline}
 #endregion

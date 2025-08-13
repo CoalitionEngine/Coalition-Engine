@@ -22,7 +22,7 @@ function __Shop() constructor {
 	Background = {};
 	Shopkeeper = [];
 	Music = undefined;
-	FallbackRoom = rDebug;
+	FallbackRoom = rCoalitionDebug;
 	
 	static __default__sprite_struct = {
 			sprite_index : undefined,
@@ -79,10 +79,10 @@ function __Shop() constructor {
 	///@param {real} price The price of the item
 	///@param {string} desc The description of the item displayed in the shop (Requires manual line breaking)
 	///@return {Struct.__Shop}
-	static AddItem = function(item, name = global.ItemLibrary[| item].name, price, desc)
+	static AddItem = function(item, name = global.__CoalitionItemLibrary[| item].__GetName(), ShopPrice, desc)
 	{
 		forceinline;
-		array_push(BuyableItems, { name, price, desc, id: item });
+		array_push(BuyableItems, { name, ShopPrice, desc, id: item });
 		return Shop;
 	}
 	///@method AddDialog(question, answer)
@@ -104,12 +104,13 @@ function __Shop() constructor {
 	{
 		forceinline;
 		audio_stop_all();
-		if is_string(Music)
+		if (is_string(Music))
 		{
 			__MusicStream = audio_create_stream(Music);
 			__MusicID = audio_play(__MusicStream, false, true);
 		}
-		else if !is_undefined(Music) __MusicID = audio_play(Music, false, true);
+		else if (!is_undefined(Music))
+			__MusicID = audio_play(Music, false, true);
 		return Shop;
 	}
 	///@method AddShopkeeper(sprite, [index], [x], [y], [image_xscale], [image_yscale], [image_angle], [image_blend], [image_alpha])
@@ -133,8 +134,9 @@ function __Shop() constructor {
 			state : 0,
 			state_drawing_functions : [
 				///Default drawing function, you cannot use draw_self() as this is NOT an object
-				function() {
-					draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+				function(keeper) {
+					with (keeper)
+						draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 				}
 			]
 		});
@@ -160,7 +162,8 @@ function __Shop() constructor {
 	static ShopkeeperState = function(slot = 0, state = undefined)
 	{
 		forceinline;
-		if is_undefined(state) return Shopkeeper[slot].state;
+		if (is_undefined(state))
+			return Shopkeeper[slot].state;
 		else
 		{
 			Shopkeeper[slot].state = state;
@@ -175,7 +178,7 @@ function __Shop() constructor {
 	static SetBackground = function(sprite, index = 0)
 	{
 		forceinline;
-		with Background
+		with (Background)
 		{
 			sprite_index = sprite;
 			image_index = index;
@@ -245,7 +248,7 @@ function __Shop() constructor {
 			__state = SHOP_STATE.MENU;
 			__choice = [__choice[0], 0, 0, 0, 0];
 			__choice_displacement = 0;
-			if string_width(__TempText) != 0
+			if (string_width(__TempText) != 0)
 			{
 				SetText(__TempText);
 				__TempText = "";
@@ -253,75 +256,77 @@ function __Shop() constructor {
 		}
 		
 		//Dialog
-		if __in_dialog
+		if (__in_dialog)
 		{
 			//Skip text
-			if press_cancel __typist.skip_to_pause();
+			if (press_cancel)
+				__typist.skip_to_pause();
 			//End dialog
-			elif press_confirm && __typist.get_state() == 1
+			elif (press_confirm && __typist.get_state() == 1)
 			{
-				if __state != SHOP_STATE.LEAVING
+				if (__state != SHOP_STATE.LEAVING)
 				{
 					var i = 0;
-					repeat array_length(Shopkeeper) Shopkeeper[i++].state = 0;
+					repeat (array_length(Shopkeeper))
+						Shopkeeper[i++].state = 0;
 					__text.overwrite(Text);
 					__typist.reset();
 					__in_dialog = false;
 				}
-				elif oGlobal.fader_alpha == 0
+				elif (oGlobal.__fader_alpha == 0)
 				{
 					Fader_Fade(0, 1, 30);
 					invoke(function() {
 						//If player came from an overworld, go back, or else, go to fallback room
 						room_goto(variable_global_exists("__CurrentOverworldRoom") ? global.__CurrentOverworldRoom : FallbackRoom);
 					}, [], 30);
-					if variable_global_exists("__CurrentOverworldRoom")
+					if (variable_global_exists("__CurrentOverworldRoom"))
 						//Defer by 1 extra frame for overworld init
 						invoke(function() {
-							oOWController.OverworldSubRoom = global.__CurrentOverworldSubRoom;
+							oOWController.__OverworldSubRoom = global.__CurrentOverworldSubRoom;
 							oOWPlayer.x = global.__CurrentOverworldPosition.x;
 							oOWPlayer.y = global.__CurrentOverworldPosition.y;
 							oOWPlayer.dir = global.__CurrentOverworldDirection;
 							oOWPlayer.__ForceCollideless = true;
 						}, [], 31);
-					else invoke(Fader_Fade, [1, 0, 0], 31);
+					else
+						invoke(Fader_Fade, [1, 0, 0], 31);
 				}
 			}
 		}
-		elif __state == SHOP_STATE.MENU
+		elif (__state == SHOP_STATE.MENU)
 		{
 			//Movement
-			if input_vertical != 0
+			if (input_vertical != 0)
 			{
 				audio_play(snd_menu_switch);
 				__choice[0] = posmod(__choice[0] + input_vertical, 4);
 			}
 			//Confirm -> Change state
-			elif press_confirm
+			elif (press_confirm)
 			{
 				audio_play(snd_menu_confirm);
 				__state = __target_state[__choice[0]];
-				if __state == SHOP_STATE.SELL && Item_Count() == 0
+				if (__state == SHOP_STATE.SELL && Item_Count() == 0)
 				{
 					audio_play(snd_damage);
 					__state = SHOP_STATE.MENU;
 				}
-				elif __state == SHOP_STATE.LEAVING
-				{
+				elif (__state == SHOP_STATE.LEAVING)
 					StartDialog(__exit_text);
-				}
 			}
 		}
-		elif __state == SHOP_STATE.BUY
+		elif (__state == SHOP_STATE.BUY)
 		{
 			box_y_target = 80;
 			//Exit
-			if __choice[1] == -1
+			if (__choice[1] == -1)
 			{
 				box_y_target = 240;
-				if press_confirm __reset_state();
+				if (press_confirm)
+					__reset_state();
 				//Exit to first option or last option
-				if input_vertical != 0
+				if (input_vertical != 0)
 				{
 					audio_play(snd_menu_switch);
 					__choice[1] = sign(input_vertical) ? 0 : min(array_length(BuyableItems) - 1, 3);
@@ -330,41 +335,44 @@ function __Shop() constructor {
 			else
 			{
 				//Movement
-				if input_vertical != 0
+				if (input_vertical != 0)
 				{
 					audio_play(snd_menu_switch);
 					__choice[1] += input_vertical;
 					//Go to exit button
-					if __choice[1] == array_length(BuyableItems) __choice[1] = -1;
+					if (__choice[1] == array_length(BuyableItems))
+						__choice[1] = -1;
 				}
 				//Buy item -> Go to confirm buying state
-				elif press_confirm
+				elif (press_confirm)
 				{
 					audio_play(snd_menu_confirm);
 					__state = SHOP_STATE.CONFIRM_BUY;
 					//Reset typist and set tempoary display text
 					__typist.reset().skip();
-					if string_width(__TempText) == 0 __TempText = Text;
-					SetText(lexicon_text("Shop.ItemBuyText", BuyableItems[__choice[1]].price));
+					if (string_width(__TempText) == 0)
+						__TempText = Text;
+					SetText(lexicon_text("Shop.ItemBuyText", BuyableItems[__choice[1]].ShopPrice));
 				}
 			}
 			//Cancel
-			if press_cancel __reset_state();
+			if (press_cancel)	
+				__reset_state();
 		}
-		elif __state == SHOP_STATE.CONFIRM_BUY
+		elif (__state == SHOP_STATE.CONFIRM_BUY)
 		{
 			box_y_target = 80;
 			//Change choices
-			if input_vertical != 0
+			if (input_vertical != 0)
 			{
 				audio_play(snd_menu_switch);
 				__choice[4] ^= 1;
 			}
 			//Confirm choice
-			elif press_confirm
+			elif (press_confirm)
 			{
 				//No
-				if __choice[4] == 1
+				if (__choice[4] == 1)
 				{
 					__state = SHOP_STATE.BUY;
 					__choice[4] = 0;
@@ -377,21 +385,28 @@ function __Shop() constructor {
 					__state = SHOP_STATE.BUY;
 					var __item_bought = BuyableItems[__choice[1]];
 					//Sufficient money
-					if COALITION_DATA.Gold >= __item_bought.price
+					if (Player.Gold() >= __item_bought.ShopPrice)
 					{
-						Item_Set(__item_bought.id);
-						COALITION_DATA.Gold -= __item_bought.price;
-						SetText(__TempText);
+						//Full inevntory
+						if (Item_Count() == 8)
+							SetText(__ItemFullText);
+						else
+						{
+							Item_Set(__item_bought.id);
+							Player.Gold(Player.Gold() - __item_bought.ShopPrice);
+							SetText(__TempText);
+						}
 					}
 					else //If not
 					{
-						if string_width(__TempText) == 0 __TempText = Text;
-						SetText(InsufficientGText);
+						if (string_width(__TempText) == 0)
+							__TempText = Text;
+						SetText(__InsufficientGText);
 					}
 				}
 			}
 			//Go back
-			elif press_cancel
+			elif (press_cancel)
 			{
 				__state = SHOP_STATE.BUY;
 				__choice[4] = 0;
@@ -399,67 +414,72 @@ function __Shop() constructor {
 				SetText(__TempText);
 			}
 		}
-		elif __state == SHOP_STATE.SELL
+		elif (__state == SHOP_STATE.SELL)
 		{
 			//Exit
-			if __choice[2] == -1
+			if (__choice[2] == -1)
 			{
-				if press_confirm __reset_state();
+				if (press_confirm)
+					__reset_state();
 				//Exit to first option or last option
-				if input_vertical != 0
+				if (input_vertical != 0)
 				{
 					audio_play(snd_menu_switch);
 					__choice[2] = sign(input_vertical) ? 0 : min(Item_Count() - 1, 3);
 				}
 			}
 			//Move
-			else if input_vertical != 0
+			else if (input_vertical != 0)
 			{
 				audio_play(snd_menu_switch);
 				//Shift item list
 				__choice[2] += input_vertical;
-				if __choice[2] >= 4
+				if (__choice[2] >= 4)
 				{
-					if __choice[2] + __choice_displacement != Item_Count()
+					if (__choice[2] + __choice_displacement != Item_Count())
 					{
 						__choice[2] = 3;
 						__choice_displacement++;
 					}
-					else __choice[2] = -1;
+					else
+						__choice[2] = -1;
 				}
-				else if __choice[2] == -1 && __choice[2] + __choice_displacement != -1
+				else if (__choice[2] == -1 && __choice[2] + __choice_displacement != -1)
 				{
 					__choice[2] = 0;
 					__choice_displacement--;
 				}
-				else if __choice[2] == Item_Count() __choice[2] = -1;
+				else if (__choice[2] == Item_Count())
+					__choice[2] = -1;
 			}
 			//Sell the item -> Confirm sell
-			elif press_confirm
+			elif (press_confirm)
 			{
 				audio_play(snd_menu_confirm);
 				__state = SHOP_STATE.CONFIRM_SELL;
 				//Set tempoary text
 				__typist.reset().skip();
-				if string_width(__TempText) == 0 __TempText = Text;
-					SetText(lexicon_text("Shop.ItemSellText", global.item[__choice[1]].price));
+				if (string_width(__TempText) == 0)
+					__TempText = Text;
+				SetText(lexicon_text("Shop.ItemSellText", global.__CoalitionUserItems[__choice[1]].ShopPrice));
 			}
-			elif press_cancel __reset_state();
+			elif (press_cancel)	
+			__reset_state();
 		}
-		elif __state == SHOP_STATE.CONFIRM_SELL
+		elif (__state == SHOP_STATE.CONFIRM_SELL)
 		{
 			box_y_target = 80;
 			//Movement
-			if input_vertical != 0
+			if (input_vertical != 0)
 			{
 				audio_play(snd_menu_switch);
 				__choice[4] ^= 1;
 			}
 			//Confirm choice
-			elif press_confirm
+			elif (press_confirm)
 			{
 				//No
-				if __choice[4] == 1
+				if (__choice[4] == 1)
 				{
 					__state = SHOP_STATE.SELL;
 					__choice[4] = 0;
@@ -469,34 +489,38 @@ function __Shop() constructor {
 				else
 				{
 					var item = __choice_displacement + __choice[2];
-					COALITION_DATA.Gold += global.item[item].price;
+					Player.Gold(Player.Gold() + global.__CoalitionUserItems[item].ShopPrice);
 					Item_Remove(item);
 					//Prevent crash
-					if item == Item_Count() &&__choice_displacement > 0 __choice_displacement--;
+					if (item == Item_Count() &&__choice_displacement > 0)
+						__choice_displacement--;
 					//Change choice if needed
-					if __choice[2] >= Item_Count() __choice[2]--;
+					if (__choice[2] >= Item_Count())
+						__choice[2]--;
 					__state = SHOP_STATE.SELL;
 					__choice[4] = 0;
 					//Empty inventory
-					if Item_Count() == 0 __reset_state();
+					if (Item_Count() == 0)
+						__reset_state();
 				}
 			}
 			//Exit
-			elif press_cancel
+			elif (press_cancel)
 			{
 				__state = SHOP_STATE.SELL;
 				__choice[4] = 0;
 				SetText(__TempText);
 			}
 		}
-		elif __state == SHOP_STATE.TALK_CHOOSE
+		elif (__state == SHOP_STATE.TALK_CHOOSE)
 		{
 			//Exit
-			if __choice[3] == -1
+			if (__choice[3] == -1)
 			{
-				if press_confirm __reset_state();
+				if (press_confirm)
+					__reset_state();
 				//Exit to first option or last option
-				if input_vertical != 0
+				if (input_vertical != 0)
 				{
 					audio_play(snd_menu_switch);
 					__choice[3] = sign(input_vertical) ? 0 : min(array_length(TalkOptions) - 1, 3);
@@ -505,16 +529,19 @@ function __Shop() constructor {
 			else
 			{
 				//Movement
-				if input_vertical != 0
+				if (input_vertical != 0)
 				{
 					audio_play(snd_menu_switch);
 					__choice[3] += input_vertical;
 					//Go to exit
-					if __choice[3] == array_length(TalkOptions) __choice[3] = -1;
+					if (__choice[3] == array_length(TalkOptions))	
+						__choice[3] = -1;
 				}
-				elif press_confirm StartDialog(TalkDialog[__choice[3]]);
+				elif (press_confirm)	
+				StartDialog(TalkDialog[__choice[3]]);
 			}
-			if press_cancel __reset_state();
+			if (press_cancel)
+				__reset_state();
 		}
 		
 		//Info box y lerping
@@ -529,41 +556,43 @@ function __Shop() constructor {
 		static Base = Shop;
 		var ShopkeeperCount = array_length(Shopkeeper);
 		#region Background and Shopkeeper
-		with Background
+		with (Background)
 			draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 		var i = 0;
-		repeat ShopkeeperCount
+		repeat (ShopkeeperCount)
 		{
-			with Shopkeeper[i]
-				state_drawing_functions[state]();
+			with (Shopkeeper[i])
+				state_drawing_functions[state](self);
 			++i;
 		}
 		#endregion
 		#region Box
 		draw_sprite_ext(sprPixel, 0, 0, 240, 640, 240, 0, c_white, 1);
-		if !__in_dialog
+		if (!__in_dialog)
 		{
 			draw_sprite_ext(sprPixel, 0, 5, 245, 415, 230, 0, c_black, 1);
 			draw_sprite_ext(sprPixel, 0, 425, 245, 210, 230, 0, c_black, 1);
-			if ShopkeeperCount > 1
+			if (ShopkeeperCount > 1)
 			{
 				var i = 0;
-				repeat ShopkeeperCount
+				repeat (ShopkeeperCount)
 					draw_sprite_ext(sprPixel, 0, 420 / i++, 240, 5, 240, 0, c_white, 1);
 			}
 		}
-		else draw_sprite_ext(sprPixel, 0, 5, 245, 630, 230, 0, c_black, 1);
+		else
+			draw_sprite_ext(sprPixel, 0, 5, 245, 630, 230, 0, c_black, 1);
 		#endregion
 		#region Options
 		//Draw dialog
-		if __in_dialog __text.wrap(620).draw(20, 260, __typist);
-		else if __state == SHOP_STATE.MENU || __state == SHOP_STATE.BUY || __state == SHOP_STATE.CONFIRM_BUY
+		if (__in_dialog)
+			__text.wrap(620).draw(20, 260, __typist);
+		else if (__state == SHOP_STATE.MENU || __state == SHOP_STATE.BUY || __state == SHOP_STATE.CONFIRM_BUY)
 		{
 			var i = 0;
-			if __state == SHOP_STATE.MENU
+			if (__state == SHOP_STATE.MENU)
 			{
 				//Options
-				repeat array_length(__options)
+				repeat (array_length(__options))
 				{
 					draw_text(480, 260 + i * 40, __options[i]);
 					++i;
@@ -575,12 +604,11 @@ function __Shop() constructor {
 			else
 			{
 				//Buyable items
-				repeat min(4, array_length(BuyableItems))
+				repeat (min(4, array_length(BuyableItems)))
 				{
-					var item = global.ItemLibrary[| BuyableItems[i]];
-					var price = string(BuyableItems[i].price) + "G";
+					var ShopPrice = string(BuyableItems[i].ShopPrice) + "G";
 					draw_set_halign(fa_right);
-					draw_text_transformed(115, 260 + i * 40, price, min(1, 60 / string_width(price)), 1, 0);
+					draw_text_transformed(115, 260 + i * 40, ShopPrice, min(1, 60 / string_width(ShopPrice)), 1, 0);
 					draw_set_halign(fa_left);
 					draw_text_transformed(120, 260 + i * 40, "-", 1.5, 1, 0);
 					var CurItemName = BuyableItems[i].name;
@@ -591,7 +619,7 @@ function __Shop() constructor {
 				draw_text(60, 420, __LangExit);
 				__text.wrap(160).draw(460, 260, __typist);
 				//Choosing item
-				if __state == SHOP_STATE.BUY
+				if (__state == SHOP_STATE.BUY)
 				{
 					var SoulY = __choice[1] == -1 ? 436 : 276 + __choice[1] * 40;
 					draw_sprite_ext(sprSoul, 0, 40, SoulY, 1, 1, 0, c_red, 1);
@@ -604,7 +632,7 @@ function __Shop() constructor {
 				}
 			}
 			//Item Info
-			if __info_box_y != 240
+			if (__info_box_y != 240)
 			{
 				//Info Box
 				var InfoBoxY = min(__info_box_y + 5, 240),
@@ -612,7 +640,7 @@ function __Shop() constructor {
 				draw_sprite_ext(sprPixel, 0, 420, __info_box_y, 220, 240 - __info_box_y, 0, c_white, 1);
 				draw_sprite_ext(sprPixel, 0, 425, InfoBoxY, 210, InfoBoxScale, 0, c_black, 1);
 				//Info text and surface
-				if __choice[1] != -1
+				if (__choice[1] != -1)
 				{
 					surface_set_target(__info_surface);
 					draw_sprite_ext(sprPixel, 0, 0, 0, 210, 230, 0, c_black, 1);
@@ -622,25 +650,25 @@ function __Shop() constructor {
 				}
 			}
 		}
-		else if __state == SHOP_STATE.SELL || __state == SHOP_STATE.CONFIRM_SELL
+		else if (__state == SHOP_STATE.SELL || __state == SHOP_STATE.CONFIRM_SELL)
 		{
 			var i = 0, k = __choice_displacement, item_count = Item_Count();
 			//Inventory items
-			repeat min(4, item_count)
+			repeat (min(4, item_count))
 			{
-				var item = global.item[k];
-				var price = string(item.price) + "G";
+				var item = global.__CoalitionUserItems[k];
+				var ShopPrice = string(item.ShopPrice) + "G";
 				draw_set_halign(fa_right);
-				draw_text_transformed(115, 260 + i * 40, price, min(1, 60 / string_width(price)), 1, 0);
+				draw_text_transformed(115, 260 + i * 40, ShopPrice, min(1, 60 / string_width(ShopPrice)), 1, 0);
 				draw_set_halign(fa_left);
 				draw_text_transformed(120, 260 + i * 40, "-", 1.5, 1, 0);
-				draw_text_transformed(140, 260 + i * 40, item.name, min(1, 250 / string_width(item.name)), 1, 0);
+				draw_text_transformed(140, 260 + i * 40, item.Name, min(1, 250 / string_width(item.Name)), 1, 0);
 				++i;
 				++k;
 			}
 			draw_text(60, 420, __LangExit);
 			//Choosing item
-			if __state == SHOP_STATE.SELL
+			if (__state == SHOP_STATE.SELL)
 			{
 				var SoulY = __choice[2] == -1 ? 436 : 276 + __choice[2] * 40;
 				draw_sprite_ext(sprSoul, 0, 40, SoulY, 1, 1, 0, c_red, 1);
@@ -653,18 +681,18 @@ function __Shop() constructor {
 				draw_sprite_ext(sprSoul, 0, 450, 338 + (__choice[4] == 0 ? __str_height / 2 : __str_height * 1.5), 1, 1, 0, c_red, 1);
 			}
 		}
-		else if __state == SHOP_STATE.TALK_CHOOSE || __state == SHOP_STATE.TALKING
+		else if (__state == SHOP_STATE.TALK_CHOOSE || __state == SHOP_STATE.TALKING)
 		{
 			//Avalible talking dialog
 			var i = 0;
-			repeat min(4, array_length(TalkOptions))
+			repeat (min(4, array_length(TalkOptions)))
 			{
 				draw_text_transformed(60, 260 + i * 40, TalkOptions[i], min(1, 350 / string_width(TalkOptions[i])), 1, 0);
 				++i;
 			}
 			draw_text(60, 420, __LangExit);
 			//Choosing option
-			if __state == SHOP_STATE.TALK_CHOOSE
+			if (__state == SHOP_STATE.TALK_CHOOSE)
 			{
 				var SoulY = __choice[3] == -1 ? 436 : 276 + __choice[3] * 40;
 				draw_sprite_ext(sprSoul, 0, 40, SoulY, 1, 1, 0, c_red, 1);
@@ -672,7 +700,7 @@ function __Shop() constructor {
 		}
 		#endregion
 		#region Data
-		if !__in_dialog
+		if (!__in_dialog)
 		{
 			draw_text(460, 420, string(Player.Gold()) + "G");
 			draw_text(560, 420, string(Item_Count()) + "/8");
@@ -687,7 +715,8 @@ function __Shop() constructor {
 		delete Background;
 		delete Shopkeeper;
 		surface_free(__info_surface);
-		if !is_undefined(__MusicStream) audio_destroy_stream(__MusicStream);
+		if (!is_undefined(__MusicStream))
+			audio_destroy_stream(__MusicStream);
 		audio_stop_all();
 	}
 }

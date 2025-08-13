@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Calculation",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Special Scripts",
-    "path": "folders/Coalition Engine/Internal/Scripts/Special Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"Calculation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Calculation",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Coalition Engine/Global/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

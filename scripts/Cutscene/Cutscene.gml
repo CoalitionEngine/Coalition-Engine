@@ -2,18 +2,62 @@
 ///@title Cutscene
 ///@text These scripts are used for creating cutscenes in the overworld
 
+function __CutsceneData() constructor
+{
+	//Whether the overworld characters will automatically "stop moving" when they are at stasis
+	static CharAutoIndex = true;
+	//Whether the player can move during the cutscene
+	static CharCanMove = false;
+	//Whether you can move the camera during a cutscene
+	static Freecam = false;
+	//Reset values to default
+	static Reset = function() {
+		CharAutoIndex = true;
+		CharCanMove = false;
+		Freecam = false;
+	}
+}
+
+#region Get/Set cutscene data
+#macro __COALITION_CUTSCENE_GETSET if (is_undefined(argument0))\
+		return struct_get_from_hash(oOWController.__cutscene_data, hash);\
+	else struct_set_from_hash(oOWController.__cutscene_data, hash, argument0)
+///@desc Whether a cutscene is occuring
+function CutsceneIsActive() { return oOWController.__cutscene_activated; }
+///@desc Whether the overworld characters will automatically "stop moving" when they are at stasis
+///@param {bool} enabled
+function CutsceneCharacterAutoIndex() {
+	static hash = variable_get_hash("CharAutoIndex");
+	__COALITION_CUTSCENE_GETSET;
+}
+///@desc Whether you can move the camera during a cutscene
+///@param {bool} enabled
+function CutsceneFreecam() {
+	static hash = variable_get_hash("Freecam");
+	__COALITION_CUTSCENE_GETSET;
+}
+///@desc Whether player can move during a cutscene
+///@param {bool} enabled
+function CutsceneCharacterCanMove() {
+	static hash = variable_get_hash("CharCanMove");
+	__COALITION_CUTSCENE_GETSET;
+}
+#endregion
+
+
 ///@func CutsceneStart
 ///@desc This prompts a cutscene to begin
 function CutsceneStart()
 {
 	forceinline
-	if !oOWController.__cutscene_activated
+	if (!CutsceneIsActive())
 	{
+		ds_list_clear(oOWController.__cutscene_events);
 		oOWController.__cutscene_activated = true;
 		oOWController.__cutscene_time = 0;
-		oOWController.menu_disable = true;
-		oOWPlayer.moveable = false;
+		oOWController.__menu_disabled = true;
 		oOWPlayer.image_index = 0;
+		oOWPlayer.image_speed = 0;
 	}
 }
 ///@func CutsceneEvent(time, func. [duration])
@@ -45,27 +89,21 @@ function CutsceneMoveChar(char, dir, spd, interval = 12)
 		show_error($"{asset_get_name(char)} is not a child of oOWChars", false);
 	//Apply previous sprite
 	char.__last_sprite = char.sprite_index;
-	//Apply new direction (4 directional)
-	char.dir = floor(dir / 90) * 90;
+	//Apply new direction (4 directional due to array)
+	char.FacingDirection = floor(dir / 90) * 90;
 	//Apply displacement
 	var x_move = dcos(dir), y_move = -dsin(dir);
 	//Set last direction of char to current direction
-	char.__last_dir = char.image_flip == -1 ? 1 : (array_length(char.dir_sprite) == 3 && x_move > 0 ? -1 : 1);
-	with char
-		repeat spd
+	char.__last_horizontal_dir = char.SpriteFlipDirection == -1 ? 1 : (array_length(char.DirSprites) == 3 && x_move > 0 ? -1 : 1);
+	with (char)
+		repeat (spd)
 		{
-			if !CollideWithAnything(x + x_move, y) x += x_move;
-			if !CollideWithAnything(x, y + y_move) y += y_move;
+			if (!CollideWithAnything(x + x_move, y)) x += x_move;
+			if (!CollideWithAnything(x, y + y_move)) y += y_move;
 		}
-	//Apply sprite
-	var assign_sprite = -1;
-	if in_range(char.dir, 0, 235) && char.dir != 90
-		assign_sprite = char.dir_sprite[char.image_flip == -1 ? max(0, char.dir == 0) + 2 : 2];
-	if in_range(char.dir, 90, 315) && char.dir != 180
-		assign_sprite = char.dir_sprite[max(0, char.dir == 270)];
-	char.sprite_index = assign_sprite;
 	//Apply image index
-	if interval != 0 char.image_index += min(spd / interval, 1);
+	if (interval != 0)
+		char.image_index += min(spd / interval, 1);
 }
 ///@func CutsceneEnd
 ///@desc This prompts a cutscene to end
@@ -73,6 +111,7 @@ function CutsceneEnd()
 {
 	forceinline
 	oOWController.__cutscene_activated = false;
-	oOWController.menu_disable = false;
-	oOWPlayer.moveable = true;
+	oOWController.__menu_disabled = false;
+	oOWController.__cutscene_data.Reset();
+	oOWPlayer.Movable = true;
 }

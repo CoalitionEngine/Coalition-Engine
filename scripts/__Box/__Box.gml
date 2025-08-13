@@ -15,26 +15,10 @@ function __Box() constructor
 		forceinline
 		var i = 0, num = 0;
 		//This is so jank but it works
-		repeat array_length(global.__box[$ Box_ID])
-			if global.__box[$ Box_ID][i] num = ++i;
+		repeat (array_length(global.__CoalitionBox[$ Box_ID]))
+			if (global.__CoalitionBox[$ Box_ID][i])
+				num = ++i;
 		return num;
-	}
-	///@method InfoLoad()
-	///@desc Loads the Info of the Items of the Box
-	///@return {undefined}
-	static InfoLoad = function() {
-		forceinline
-		static __box = self;
-		with oOWController
-		{
-			var i = 0;
-			repeat __box.Count(Box_ID)
-			{
-				__box.Info(global.__box[$ Box_ID][i]);
-				box_name[i] = name;
-				++i;
-			}
-		}
 	}
 	///@method Info(item)
 	///@desc Gets the Infos of the item in the Box
@@ -42,22 +26,24 @@ function __Box() constructor
 	///@return {undefined}
 	static Info = function(item) {
 		forceinline
-		with oOWController
+		with (oOWController)
 		{
 			name = item.name;
-			var uses_left = item.item_uses_left;
-			if uses_left > 1 name += " x" + string(uses_left);
+			var uses_left = item.ItemUseCount;
+			if (uses_left > 1)
+				name += " x" + string(uses_left);
 		}
 	}
 	///@method Count(ID)
 	///@desc Gets the number of items in the Box
 	///@param {real} ID The ID of the Box
 	///@return {real}
-	static Count = function(ID) {
+	static ItemCount = function(ID) {
 		forceinline
 		var i = 0, num = 0;
-		repeat array_length(global.__box[$ ID])
-			if global.__box[$ ID][i++] num++;
+		repeat (array_length(global.__CoalitionBox[$ ID]))
+			if (global.__CoalitionBox[$ ID][i++])
+				num++;
 		return num;
 	}
 	///@method Shift(Box_ID)
@@ -67,12 +53,12 @@ function __Box() constructor
 	static Shift = function(Box_ID) {
 		forceinline
 		var i = 0;
-		repeat array_length(global.__box[$ Box_ID]) - 1
+		repeat (array_length(global.__CoalitionBox[$ Box_ID]) - 1)
 		{
-			if global.__box[$ Box_ID][i] == 0 && global.__box[$ Box_ID][i + 1] != 0
+			if (global.__CoalitionBox[$ Box_ID][i] == 0 && global.__CoalitionBox[$ Box_ID][i + 1] != 0)
 			{
-				array_delete(global.__box[$ Box_ID], i, 1);
-				array_push(global.__box[$ Box_ID], 0);
+				array_delete(global.__CoalitionBox[$ Box_ID], i, 1);
+				array_push(global.__CoalitionBox[$ Box_ID], 0);
 			}
 			++i;
 		}

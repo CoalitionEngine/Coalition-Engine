@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "__shdCleanJaggies",
-  "parent": {
-    "name": "(System)",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Clean Shapes/(System).yy",
+  "$GMShader":"",
+  "%Name":"__shdCleanJaggies",
+  "name":"__shdCleanJaggies",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Coalition Engine/Libraries/Clean Shapes/(System).yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

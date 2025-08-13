@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdCutScreen",
-  "parent": {
-    "name": "Extra Effects",
-    "path": "folders/Coalition Engine/Internal/Shaders/Extra Effects.yy",
+  "$GMShader":"",
+  "%Name":"shdCutScreen",
+  "name":"shdCutScreen",
+  "parent":{
+    "name":"Screen Splice",
+    "path":"folders/Coalition Engine/Effects/Required/Screen Splice.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

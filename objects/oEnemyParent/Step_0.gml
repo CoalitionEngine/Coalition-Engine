@@ -1,26 +1,49 @@
 ///@desc Turns, very trash, working on it
-function end_turn() { forceinline; __turn_has_ended = true; }
-//Dusting logic
-if ContainsDust
+//Struct step
+if (variable_instance_exists(id, "__Struct_Step") && is_method(__Struct_Step)) __Struct_Step();
+//Turn processing
+if (!__turn_has_ended)
 {
-	if !__died && __is_dying && __death_time >= 1 + attack_end_time {
-		var total_height = enemy_total_height;
-		with __dust
+	if (!__died && __state == BATTLE_STATE.IN_TURN && __enemy_in_battle)
+	{
+		if (array_length(__AttackFunctions) > __current_turn)
+			__AttackFunctions[__current_turn]();
+		else
 		{
-			if !surface_exists(__surface) __surface = surface_create(640, 480);
+			__current_turn--;
+			EndTurn();
+		}
+		//Timer
+		if (start)
+		{
+			time++;
+			if (variable_instance_exists(id, "__EnemyStruct"))
+				__EnemyStruct.time++;
+		}
+	}
+	all_turns_ended = false;
+}
+//Dusting logic
+if (ContainsDust && __enemy_total_height > 0 && __enemy_max_width > 0)
+{
+	if (!__died && __is_dying && __death_time >= 1 + __attack_end_time)
+	{
+		var total_height = __enemy_total_height;
+		with (__dust)
+		{
 			//Dust height adding
-			if height < total_height
-				height += total_height / other.dust_animation_duration * 6;
+			if (height < total_height)
+				height += total_height / other.DustAnimDuration * 6;
 			var i = 0;
 			//Only calculates 1/3 of the dust for randomization and less performance weight
-			repeat array_length(x) / 3
+			repeat (array_length(x) / 3)
 			{
-				if image_alpha[i] > 0 {
+				if (image_alpha[i] > 0) {
 					x[i] += lengthdir_x(speed[i], direction[i]);
 					y[i] += lengthdir_y(speed[i], direction[i]);
 					image_alpha[i] -= 1 / life[i];
 					image_angle[i] += rotate[i];
-					if !__being_drawn __being_drawn = true;
+					if (!__being_drawn) __being_drawn = true;
 				}
 				i += 3;
 			}
@@ -29,41 +52,133 @@ if ContainsDust
 }
 
 //Calculates the height and width of the enemy, then initalizes the dust particles (Will only run once, don't worry for lag)
-if enemy_total_height == 0 || enemy_max_width == 0
-{
-	var i = 0;
-	repeat(array_length(enemy_sprites))
-	{
-		enemy_max_width = max(sprite_get_width(enemy_sprites[i]) * enemy_sprite_scale[i][0],
-								enemy_max_width);
-		++i;
-	}
-	enemy_total_height = -array_last(enemy_sprite_pos)[1] + (sprite_get_height(array_last(enemy_sprites)) * 2 - sprite_get_yoffset(array_last(enemy_sprites))) * array_last(enemy_sprite_scale)[1];
-	damage_y = y - enemy_total_height - 20;
+if (__enemy_total_height == 0 || __enemy_max_width == 0)
+	__InitalizeDust();
+//Wiggle timer
+__wiggle_timer = WiggleEnabled ? __wiggle_timer + 1 : 0;
 
-	//Particles aren't used because if a lot of particles are created then the CPU will be abused
-	//And the dust amount is on average at least a couple hundred, so drawing in arrays are better
-	if ContainsDust {
-		var max_width = enemy_max_width, total_height = enemy_total_height, _x = x, _y = y;
-		with __dust
+//Dusting
+if (!__died && !__is_spared)
+{
+	//Damaging animation
+	if (__is_being_attacked)
+	{
+		if (CanDodge) // The movement for dodge
 		{
-			height = 0;
-			amount = total_height * max_width / 6;
-			speed = array_create_ext(amount, function() { return random_range(1, 3); });
-			direction = array_create_ext(amount, function() { return random_range(55, 125); });
-			life = array_create_ext(amount, function() { return irandom_range(60, 120); });
-			image_alpha = array_create(amount, 1);
-			image_angle = array_create_ext(amount, function() { return random(360); });
-			rotate = array_create_ext(amount, function() { return random_range(1, -1); });
-			i = 0;
-			repeat amount
+			if (!__attack_time++)
 			{
-				x[i] = random_range(-max_width, max_width) / 2 + _x;
-				y[i] = _y - total_height + (i * 6 / max_width);
-				i++;
+				DrawDamageText = true;
+				DamageTextColor = c_ltgray;
+				__damage = "MISS";
+				DodgeMethod();
+			}
+		}
+		else
+		{
+			//Only run damage event when the attacking animation is over
+			if (COALITION_DATA.AttackItem.__AttackAnimationLanded)
+			{
+				if (__attack_time++ == 0)
+				{
+					DamageEvent();
+					audio_play(snd_damage);
+					__HPBarHP = HP;
+					DamageTextColor = c_ltgray;
+					if (is_real(__damage))
+					{
+						HP -= __damage;
+						DamageTextColor = c_red;
+					}
+					DrawDamageText = true;
+					TweenFire("~oQuad", "$40", "__HPBarHP>", HP);
+					TweenFire("~", ["oQuad", "iQuad"], "#p", ">1", "$20", "DamageTextY>", "@-30");
+				}
+				//The is_real(damage) checks whether it's a solid hit
+				if (is_real(__damage))
+					x = (__attack_time < __attack_end_time) ? random_range(xstart - 3, xstart + 3) : xstart;
+			}
+		}
+		if (COALITION_DATA.AttackItem.__AttackAnimationEnded)
+		{
+			if (HP > 0) // Check if the enemy is going to die
+			{
+				if (__attack_time >= __attack_end_time)
+				{
+					oBattleController.HP[__enemy_slot] = __HPBarHP;
+					//Reset variables
+					__attack_time = 0;
+					__is_being_attacked = false;
+					DrawDamageText = false;
+				}
+			}
+			else
+			{
+				//If it's gonna die
+				__is_dying = true;
+				if (__death_time++ == 1 + __attack_end_time)
+				{
+					//Play sound and stop damage display
+					DrawDamageText = false;
+					audio_play(snd_vaporize);
+				}
+				else if (__death_time == 1 + __attack_end_time + DustAnimDuration + 60)
+				{
+					//Set enemy is throughly dead when dust is gone
+					__is_dying = false;
+					__died = true;
+					__is_being_attacked = false;
+					__enemy_in_battle = false;
+					COALITION_DATA.Kills++;
+					__CoalitionRemoveEnemy();
+					if (!instance_exists(oEnemyParent))
+						oBattleController.__end_battle();
+				}
 			}
 		}
 	}
+	//Sparing animation
+	else if (__is_being_spared)
+	{
+		if (__spareable)
+		{
+			//Default sparing function
+			if (!is_callable(SpareFunction))
+			{
+				WiggleEnabled = false;
+				//Add Reward
+				oBattleController.__Result.Gold += __gold_reward;
+				oBattleController.__Result.Exp += __exp_reward;
+				__is_spared = true;
+				audio_play(snd_vaporize);
+				TweenFire(id, "", 0, false, 0, 30, "image_alpha>", 0.5);
+			}
+			else SpareFunction();
+		}
+		//Check for any un-spared enemies, if yes then resume battle
+		var i = 0, continue_battle = false;
+		repeat (instance_number(oEnemyParent))
+		{
+			if (!instance_find(oEnemyParent, i).__is_spared)
+			{
+				continue_battle = true;
+				break;
+			}
+		}
+		if (!continue_battle)
+			oBattleController.__end_battle();
+		//Begins turn if it's set to be
+		else if (__spare_end_begin_turn && !__is_spared)
+			oBattleController.__dialog_start();
+		//End sparing
+		__is_being_spared = false;
+	}
 }
-//Wiggle timer
-__wiggle_timer = wiggle ? __wiggle_timer + 1 : 0;
+
+//If the enemy is spared
+if (__is_spared && image_alpha == 0.5)
+{
+	//Remove enemy
+	__enemy_in_battle = false;
+	if (array_equals(oBattleController.__enemies, [noone, noone, noone]))
+		__CoalitionRemoveEnemy(true);
+}

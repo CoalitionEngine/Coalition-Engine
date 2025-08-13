@@ -1,6 +1,5 @@
 ///@desc End room transition
-oOWPlayer.moveable = true;
-with oOWCollision
-	//Note: Collided is not strictly a boolean
-	if Collided != false
-		Collided = false;
+oOWPlayer.Movable = true;
+__menu_disabled = false;
+with (oOWCollision)
+	__Collided = __COALITION_COLLISION_STATE.NOT_COLLIDED;

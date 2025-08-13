@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "lexicon_entry_get_variations",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Language",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Lexicon/Language.yy",
+  "$GMScript":"v1",
+  "%Name":"lexicon_entry_get_variations",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"lexicon_entry_get_variations",
+  "parent":{
+    "name":"Language",
+    "path":"folders/Coalition Engine/Libraries/Lexicon/Language.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

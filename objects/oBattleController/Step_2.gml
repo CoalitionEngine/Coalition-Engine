@@ -1,39 +1,43 @@
 /// @description KR Drain & Game Over
-if global.kr_activation
+if (global.__CoalitionPlayerKREnabled)
 {
-	global.assign_inv = 2;
-	global.kr = clamp(global.kr, 0, max_kr);
-	if global.kr >= global.hp global.kr = global.hp - 1;
+	global.__CoalitionPlayerAssignInvincibility = 2;
+	global.__CoalitionPlayerKR = clamp(global.__CoalitionPlayerKR, 0, global.__CoalitionPlayerMaxKR);
+	if (global.__CoalitionPlayerKR >= global.HP)
+		global.__CoalitionPlayerKR = global.HP - 1;
 	
-	if global.kr
+	if (global.__CoalitionPlayerKR)
 	{
 		__kr_timer++;
-		if
-		(__kr_timer == 2 && global.kr >= 40) ||
-		(__kr_timer == 4 && global.kr >= 30) || 
-		(__kr_timer == 10 && global.kr >= 20) ||
-		(__kr_timer == 30 && global.kr >= 10) ||
-		__kr_timer == 60
+		if (
+		(__kr_timer == 2 && global.__CoalitionPlayerKR >= 40) ||
+		(__kr_timer == 4 && global.__CoalitionPlayerKR >= 30) || 
+		(__kr_timer == 10 && global.__CoalitionPlayerKR >= 20) ||
+		(__kr_timer == 30 && global.__CoalitionPlayerKR >= 10) ||
+		__kr_timer == 60)
 		{
 			__kr_timer = 0;
-			global.kr--;
-			global.hp--;
+			global.__CoalitionPlayerKR--;
+			global.HP--;
 		}
-		if global.hp <= 0 global.hp = 1;
+		if (global.HP <= 0)
+			global.HP = 1;
 	}
-	else __kr_timer = 0;
+	else
+		__kr_timer = 0;
 }
 else
 {
 	__kr_timer = 0;
-	global.kr = 0;
+	global.__CoalitionPlayerKR = 0;
 }
 
-if global.hp <= 0 && global.deadable
-	if !global.debug __gameover();
+if (global.HP <= 0 && global.CoalitionBattlePlayerCanDie)
+	if (!global.__CoalitionDebug)
+		__gameover();
 	else
 	{
-		global.hp = global.hp_max;
+		global.HP = global.MaxHP;
 		audio_play(snd_item_heal);
 	}
 

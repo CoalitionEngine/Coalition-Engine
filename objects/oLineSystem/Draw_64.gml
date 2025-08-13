@@ -2,18 +2,17 @@ var i = 0, Lines = LineSys.__Lines;
 gpu_push_state();
 gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
-repeat ds_list_size(Lines)
+repeat (ds_list_size(Lines))
 {
-	var curLine = Lines[| i];
-	with curLine
+	with (Lines[| i])
 	{
-		if gui
+		if (gui)
 		{
 			gpu_set_depth(depth);
-			if ds_list_size(DragLines) > 0
+			if (ds_list_size(DragLines) > 0)
 			{
 				var ii = 0;
-				repeat ds_list_size(DragLines)
+				repeat (ds_list_size(DragLines))
 				{
 					DragLines[| ii].Draw();
 					++ii;

@@ -17,26 +17,21 @@
 ///@param {real} duration The amount of time the bone exists before destroying itself (Default -1)
 ///@param {Constant.Color} Base_Color The color of the bone
 ///@return {Id.Instance<oBulletBone>} The created bone
-function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = false, mode = 0, angle = 90, rotate = 0, destroyable = true, duration = -1, base_col = base_bone_col) {
+function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = false, mode = 0, angle = 90, rotate = 0, destroyable = true, duration = -1, base_col = c_white) {
 	forceinline
-	var DEPTH = -10;
-	if instance_exists(oBoard)
+	with instance_create_depth(x, y, -10, oBulletBone, { hspeed : hspd, vspeed : vspd })
 	{
-		DEPTH = oBoard.depth;
-		if out DEPTH--;
-	}
-	with instance_create_depth(x, y, DEPTH, oBulletBone, { hspeed : hspd, vspeed : vspd })
-	{
-		target_board = BattleBoardList[TargetBoard];
+		__COALITION_INSTANCE_AUTO_DEPTH
+		target_board = COALITION_CURRENT_BOARD;
 		image_angle = angle;
 		
-		self.length = length;
-		self.rotate = rotate;
-		self.type = type;
-		self.duration = duration;
-		self.mode = mode;
-		self.destroyable = destroyable;
-		base_color = base_col;
+		Length = length;
+		RotateSpeed = rotate;
+		__type = type;
+		Duration = duration;
+		__stick_direction = mode;
+		AutoDestroy = destroyable;
+		__default_color = base_col;
 		return self;
 	}
 }
@@ -148,8 +143,8 @@ function Bullet_BoneFullH(y, spd, type = 0, out = false, rotate = 0, destroyable
 ///@returns {undefined} Creates two variables for both bones
 function Bullet_BoneGapH(x, y, vspd, gap, type = 0, out = false, destroyable = false, duration = -1) {
 	forceinline
-	left_bone = Bullet_BoneLeft(y, x - Board.GetLeftPos() - gap / 2, vspd, type, out,, destroyable, duration);
-	right_bone = Bullet_BoneRight(y, Board.GetRightPos()- gap / 2 - x, vspd, type, out,, destroyable, duration);
+	return [Bullet_BoneLeft(y, x - Board.GetLeftPos() - gap / 2, vspd, type, out,, destroyable, duration),
+			Bullet_BoneRight(y, Board.GetRightPos()- gap / 2 - x, vspd, type, out,, destroyable, duration)];
 }
 
 ///@func Bullet_BoneGapV(x, y, hspeed, gap, [type], [out], [destroyable], [duration])
@@ -165,8 +160,8 @@ function Bullet_BoneGapH(x, y, vspd, gap, type = 0, out = false, destroyable = f
 ///@return {undefined} Creates two variables for both bones
 function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = false, destroyable = false, duration = -1) {
 	forceinline
-	up_bone = Bullet_BoneTop(x, y - Board.GetUpPos() - gap / 2, hspd, type, out,, destroyable, duration);
-	down_bone = Bullet_BoneBottom(x, Board.GetDownPos()- gap / 2 - y, hspd, type, out,, destroyable, duration);
+	return [Bullet_BoneTop(x, y - Board.GetUpPos() - gap / 2, hspd, type, out,, destroyable, duration),
+			Bullet_BoneBottom(x, Board.GetDownPos()- gap / 2 - y, hspd, type, out,, destroyable, duration)];
 }
 
 ///@func Bullet_BoneWall(direction, height, delay, duration, [type], [move], [warning_sound], [creation_sound])
@@ -184,18 +179,19 @@ function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_
 	print("Coalition Engine: Usage of Bullet_Bonewall is discouraged due to inaccuracy, please use Bullet_CustomBoneWall");
 	forceinline
 	var DEPTH = instance_exists(oBoard) ? oBoard.depth + 1 : -10;
-	if warn_sound audio_play(snd_warning, true);
+	if (warn_sound)
+		audio_play(snd_warning, true);
 	dir %= 360;
-	with instance_create_depth(0, 0, DEPTH, oBulletBoneWall)
+	with (instance_create_depth(0, 0, DEPTH, oBulletBoneWall))
 	{
-		target_board = BattleBoardList[TargetBoard];
+		target_board = COALITION_CURRENT_BOARD;
 		id.dir = dir;
 		id.height = height;
 		time_warn = delay;
 		time_stay = duration;
 		time_move = move;
 		id.type = type;
-		sound_create = cre_sound;
+		__play_sound_at_create = cre_sound;
 		return self;
 	}
 }
@@ -212,31 +208,31 @@ function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_
 ///@param {bool} warn_sound Whether the warning sound plays (Default True)
 ///@param {bool} create_sound Whether the create sound plays (Default True)
 ///@param {function,string} ease The easing of the creation and destruction of the bonewall
-///@param {real} width The width of the bones, default full
+///@param {real} width The width of the bones (Default full)
 ///@param {Asset.GMObject} object The object to use as the wall (Default bones)
 ///@returns {Id.Instance<oBulletCustomBoneWall> The created custom bonewall
 function Bullet_CustomBoneWall(dir, height, distance, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true, ease = ["", ""], width = -1, obj = oBulletBone) {
 	forceinline
 	var DEPTH = instance_exists(oBoard) ? oBoard.depth + 1 : -10;
-	if warn_sound audio_play(snd_warning, true);
+	if (warn_sound)
+		audio_play(snd_warning, true);
 	dir %= 360;
-	var board = BattleBoardList[TargetBoard],
+	var board = COALITION_CURRENT_BOARD,
 		X = lengthdir_x(distance[0], dir) + board.x,
 		Y = lengthdir_y(distance[0], dir) + board.y;
-	with instance_create_depth(X, Y, DEPTH, oBulletCustomBoneWall)
+	with (instance_create_depth(X, Y, DEPTH, oBulletCustomBoneWall))
 	{
-		target_board = board;
 		image_angle = dir;
-		id.height = height;
-		time_warn = delay;
-		time_stay = duration;
-		time_move = move;
-		id.type = type;
-		sound_create = cre_sound;
-		id.ease = ease;
-		id.width = width;
-		id.distance = distance;
-		object = obj;
+		__height = height;
+		__time_warn = delay;
+		__time_stay = duration;
+		__time_move = move;
+		__type = type;
+		__play_sound_at_create = cre_sound;
+		__animation_ease = ease;
+		__width = width;
+		__distances = distance;
+		__object = obj;
 		return self;
 	}
 }
@@ -260,9 +256,9 @@ function Bullet_BoneWaveH(x, y, amount, func = sin, multiply, xdisplace, spd, yd
 	forceinline
 	var arr = array_create(amount * 2);
 	for (var i = 0; i < amount; ++i) {
-		Bullet_BoneGapH(x + func(i * multiply) * xdisplace, y + i * ydisplace, spd, gap, col, out, false, auto_dest ? -1 : abs((y + i * ydisplace) / speed));
-		arr[i * 2] = left_bone;
-		arr[i * 2 + 1] = right_bone;
+		var gap_array = Bullet_BoneGapH(x + func(i * multiply) * xdisplace, y + i * ydisplace, spd, gap, col, out, false, auto_dest ? abs((y + i * ydisplace) / spd) : -1);
+		arr[i * 2] = gap_array[0];
+		arr[i * 2 + 1] = gap_array[1];
 	}
 	return arr;
 }
@@ -286,9 +282,9 @@ function Bullet_BoneWaveV(x, y, amount, func = sin, multiply, ydisplace, spd, xd
 	forceinline
 	var arr = array_create(amount * 2);
 	for (var i = 0; i < amount; ++i) {
-		Bullet_BoneGapV(x + i * xdisplace, y + func(i * multiply) * ydisplace, spd, gap, col, out, false, auto_dest ? -1 : abs((x + i * xdisplace) / speed));
-		arr[i * 2] = up_bone;
-		arr[i * 2 + 1] = down_bone;
+		var gap_array = Bullet_BoneGapV(x + i * xdisplace, y + func(i * multiply) * ydisplace, spd, gap, col, out, false, auto_dest ? abs((x + i * xdisplace) / spd) : -1);
+		arr[i * 2] = gap_array[0];
+		arr[i * 2 + 1] = gap_array[1];
 	}
 	return arr;
 }
@@ -312,17 +308,21 @@ function Bullet_BoneWaveV(x, y, amount, func = sin, multiply, ydisplace, spd, xd
 ///@return {Id.Instance<o3DBone>} The created bone cube
 function Battle_BoneCube(x, y, angle_x, angle_y, angle_z, rot_x, rot_y, rot_z, scale_x, scale_y, scale_z, anim_time = 0, ease = "", out = false) {
 	forceinline
-	with instance_create_depth(x, y, out ? oBoard.depth - 1 : oBoard.depth, o3DBone)
+	with (instance_create_depth(x, y, 0, o3DBone))
 	{
-		angles = [angle_x, angle_y, angle_z];
-		angleAdd = [rot_x, rot_y, rot_z];
-		if anim_time
-			TweenFire(id, ease, 0, false, 0, anim_time, "scalex>", scale_x , "scaley>", scale_y, "scalez>", scale_z);
+		__COALITION_INSTANCE_AUTO_DEPTH
+		__angles = [angle_x, angle_y, angle_z];
+		__rotations = [rot_x, rot_y, rot_z];
+		if (anim_time > 0)
+			TweenFire(scale, ease, 0, false, 0, anim_time, "x>", scale_x , "y>", scale_y, "z>", scale_z);
 		else
 		{
-			scalex = scale_x;
-			scaley = scale_y;
-			scalez = scale_z;
+			with (scale)
+			{
+				x = scale_x;
+				y = scale_y;
+				z = scale_z;
+			}
 		}
 		return self;
 	}

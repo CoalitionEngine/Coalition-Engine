@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdExBlending",
-  "parent": {
-    "name": "Extra Effects",
-    "path": "folders/Coalition Engine/Internal/Shaders/Extra Effects.yy",
+  "$GMShader":"",
+  "%Name":"shdExBlending",
+  "name":"shdExBlending",
+  "parent":{
+    "name":"BlendExt",
+    "path":"folders/Coalition Engine/Effects/Optional/BlendExt.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

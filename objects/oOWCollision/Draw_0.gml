@@ -1,1 +1,1 @@
-show_hitbox(c_purple);
+CoalitionShowHitbox(c_purple);

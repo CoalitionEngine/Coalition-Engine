@@ -1,2 +1,2 @@
 draw_self();
-show_hitbox(c_green);
+CoalitionShowHitbox(c_green);

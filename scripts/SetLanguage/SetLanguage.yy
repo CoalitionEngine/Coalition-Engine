@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "SetLanguage",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Language",
-    "path": "folders/Coalition Engine/Internal/Scripts/Language.yy",
+  "$GMScript":"v1",
+  "%Name":"SetLanguage",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SetLanguage",
+  "parent":{
+    "name":"Localization",
+    "path":"folders/Coalition Engine/Localization.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

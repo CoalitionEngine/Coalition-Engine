@@ -1,6 +1,6 @@
-///@category Special Scripts
+///@category Useful Functions
 ///@title Drawing
-
+#region Basic Shapes
 ///@func draw_rectangle_width(x1, y1, x2, y2, [width], [color], [alpha], [rounding])
 ///@desc Draws a rectagle with given width and color
 ///@param {real} x1 The x coordinate of the top left coordinate of the rectangle
@@ -36,12 +36,16 @@ function draw_rectangle_width_background(x1, y1, x2, y2, width = 6, frame_color 
 ///@param {real} x The x position of the center
 ///@param {real} y The y position of the center
 function draw_circular_bar(x, y, value, max, colour, radius, transparency, width) {
-	if (value > 0) { // no point even running if there is nothing to display (also stops /0
+	// no point even running if there is nothing to display (also stops /0
+	if (value > 0)	
+	{
 		var i, len, tx, ty, val,
 			numberofsections = 60, // there is no draw_get_circle_precision() else I would use that here
 			sizeofsection = 360 / numberofsections;
 		val = (value / max) * numberofsections;
-		if (val > 1) { // HTML5 version doesnt like triangle with only 2 sides 
+		// HTML5 version doesnt like triangle with only 2 sides 
+		if (val > 1)
+		{
 			var piesurface = surface_create(radius * 2, radius * 2);
 			draw_set_colour(colour);
 			draw_set_alpha(transparency);
@@ -84,85 +88,156 @@ function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, 
 	static displace = 0, time = 0;
 	displace = move(time++ * rate) * intensity;
 	height += displace;
-	draw_surface_ext(oGlobal.GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
+	draw_surface_ext(oGlobal.__GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
 }
 ///@text ?> The same effect can be done using draw_rectangle_color(), however this will lead to batch breaks and impact performance.
+#endregion
+#region 3D shapes
+enum SHAPES {
+	CUBE = 0,
+	REGULAR_TETRAHEDRON = 1,
+	REGULAR_OCTAHEDRON = 2,
+	REGULAR_DODECAHEDRON = 3,
+	REGULAR_ICOSAHEDRON = 4
+}
+///@func Load3DNodesAndEdges()
+///@desc Loads the nodes and edges for drawing 3D objects
+function Load3DNodesAndEdges()
+{
+	aggressive_forceinline
+	global.Nodes =
+	[
+		//Cube
+		[
+			[-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1],
+			[1, -1, -1], [1, -1, 1], [1, 1, -1], [1, 1, 1]
+		],
+		//Teterhedron
+		[
+			[-2 * sqrt(2) / 3, 0, -1 / 3], [sqrt(2) / 3, sqrt(6) / 3, -1 / 3],
+			[sqrt(2) / 3, -sqrt(6) / 3, -1 / 3], [0, 0, 1]
+		],
+		//Octahedron
+		[
+			[0, 1, 0], [0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, -1, 0]
+		],
+		//Dodecahedron
+		[
+			[1, 1, 1], [1, 1, -1], [-1, 1, 1], [-1, 1, -1], [1 / Phi, Phi, 0], [-1 / Phi, Phi, 0],
+			[0, 1 / Phi, Phi], [0, 1 / Phi, -Phi], [Phi, 0, 1 / Phi], [-Phi, 0, 1 / Phi],
+			[Phi, 0, -1 / Phi], [-Phi, 0, -1 / Phi], [1, -1, 1], [1, -1, -1], [-1, -1, 1],
+			[-1, -1, -1], [0, -1 / Phi, Phi], [0, -1 / Phi, -Phi], [1 / Phi, -Phi, 0],
+			[-1 / Phi, -Phi, 0]
+		],
+		//Icosahedron
+		[
+			[0, 1, Phi], [0, -1, Phi], [0, 1, -Phi], [0, -1, -Phi], [1, Phi, 0], [-1, Phi, 0],
+			[1, -Phi, 0], [-1, -Phi, 0], [Phi, 0, 1], [-Phi, 0, 1], [Phi, 0, -1], [-Phi, 0, -1]
+		],
+		
+		
+	];
+	
+	global.Edges =
+	[
+		//Cube
+		[
+			[0, 1], [1, 3], [3, 2], [2, 0], [4, 5], [5, 7], [7, 6],
+			[6, 4], [0, 4], [1, 5], [2, 6], [3, 7]
+		],
+		//Teterhedron
+		[
+			[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [3, 2]
+		],
+		//Octahedron
+		[
+			[0, 1], [0, 2], [0, 3], [0, 4], [5, 1], [5, 2], [5, 3], [5, 4]
+		],
+		//Dodecahedron
+		[
+			[4, 5], [0, 4], [1, 4], [2, 5], [3, 5], [0, 6], [2, 6], [1, 7], [3, 7],
+			[6, 16], [7, 17], [0, 8], [1, 10], [2, 9], [3, 11], [8, 10], [9, 11], [8, 12],
+			[9, 14], [10, 13], [11, 15], [12, 16], [13, 17], [14, 16], [15, 17], [18, 19],
+			[12, 18], [13, 18], [14, 19], [15, 19]
+		],
+		//Icosahedron
+		[
+			[0, 1], [2, 3], [4, 5], [6, 7],  [4, 0], [4, 2], [4, 8], [4, 10],
+			[5, 0], [5, 2], [5, 9], [5, 11], [6, 1], [6, 3], [6, 8], [6, 10],
+			[7, 1], [7, 3], [7, 9], [7, 11], [0, 8], [0, 9], [1, 8], [1, 9],
+			[2, 10], [2, 11], [3, 10], [3, 11], [8, 10], [9, 11]
+		],
+		
+	]
+}
 
-///@constructor
-///@func SpriteNoiseSet([sprite])
-///Sets the noise sprite to use for a noise fade
-function SpriteNoiseSet(sprite = sprNoiseRect) constructor {
-	forceinline
-	NoiseSprite = sprite;
-	NoiseTexture = sprite_get_texture(sprite, 0);
-	Noiseuvs = texture_get_uvs(NoiseTexture);
-}
-///@func draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, [noise_sprite])
-///@desc Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite if the duration is reached)
-///@param {Asset.GMSprite} sprite The sprite to draw
-///@param {real} subimg The subimg of the sprite
-///@param {real} x The x position of the sprite to draw
-///@param {real} y The y position of the sprite to draw
-///@param {real} time The time of the noise fade (The value of this needs to change constantly)
-///@param {real} duration The total duration of the fade in
-///@param {Asset.GMSprite} noise_sprite The noise sprite to use (It has to be a sprite of a noise)
-function draw_noise_fade_sprite(sprite, subimg, x, y, time, duration, noise_sprite = sprNoiseRect) {
+///@func draw_cube_width(x, y, size, hor_angle, ver_angle, color, width, round)
+///@desc Draws a outline with given width of a cube
+///@param {real} x The x position of the cube
+///@param {real} y The y position of the cube
+///@param {real} size The size of the cube
+///@param {real} horizontal_angle The horizontal Angle of the cube
+///@param {real} vertical_angle The vertical Angle of the cube
+///@param {Constant.Color} color The color of the cube
+///@param {real} width The width of the outline of the cube
+///@param {bool} circle_on_edge Whether the corners of the cube are round
+function draw_cube_width(_draw_x, _draw_y, _size, _point_h, _point_v, _colour, _width, _edge_circ = true)
+{
 	aggressive_forceinline
-	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
-			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
-			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
-			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise");
-	if !variable_instance_exists(id, "__NoiseVars")
-		__NoiseVars = new SpriteNoiseSet(noise_sprite);
-	if time < duration {
-		var gettexture = sprite_get_texture(sprite, subimg),
-			texuvs = texture_get_uvs(gettexture),
-			NoiseFadeLevel = 1 - time / duration;
-		shader_set(shdNoiseFade);
-		texture_set_stage(Sampler, __NoiseVars.NoiseTexture);
-		shader_set_uniform_f(Level, NoiseFadeLevel);
-		shader_set_uniform_f(UV, __NoiseVars.Noiseuvs[0], __NoiseVars.Noiseuvs[1], texuvs[0], texuvs[1]);
-		shader_set_uniform_f(Rat, (__NoiseVars.Noiseuvs[2] - __NoiseVars.Noiseuvs[0]) / (texuvs[2] - texuvs[0]), (__NoiseVars.Noiseuvs[3] - __NoiseVars.Noiseuvs[1]) / (texuvs[3] - texuvs[1]));
-		draw_sprite_ext(sprite, subimg, x, y, 1, 1, 0, c_white, 1 - NoiseFadeLevel);
-		shader_reset();
+	//No you cant preset them in global.Nodes because it will live update and make it go crazy
+	var nodes =
+		[
+			[-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1],
+			[1, -1, -1], [1, -1, 1], [1, 1, -1], [1, 1, 1]
+		],
+		edges =
+		[
+			[0, 1], [1, 3], [3, 2], [2, 0], [4, 5], [5, 7], [7, 6],
+			[6, 4], [0, 4], [1, 5], [2, 6], [3, 7]
+		];
+
+	_point_h *= pi;
+	_point_v *= pi;
+
+	var sinX = sin(_point_h), cosX = cos(_point_h),
+		sinY = sin(_point_v), cosY = cos(_point_v),
+		i = 0;
+	repeat (8)
+	{
+		var node = nodes[i], _x = node[0], _y = node[1], _z = node[2];
+ 
+	    node[0] = _x * cosX - _z * sinX;
+	    node[2] = _z * cosX + _x * sinX;
+ 
+	    _z = node[2];
+ 
+	    node[1] = _y * cosY - _z * sinY;
+	    node[2] = _z * cosY + _y * sinY;
+	
+		nodes[i] = node;
+		++i;
+	};
+	
+	var prev_col = draw_get_color();
+	draw_set_colour(_colour);
+
+	i = 0;
+	repeat (12)
+	{
+		var edge = edges[i],
+			p1 = nodes[edge[0]], p2 = nodes[edge[1]],
+			x_start = _draw_x + p1[0] * _size, y_start = _draw_y + p1[1] * _size,
+			x_end = _draw_x + p2[0] * _size, y_end = _draw_y + p2[1] * _size;
+		draw_line_width(x_start, y_start, x_end, y_end, _width);
+		
+		if (_edge_circ)
+			draw_circle(x_start, y_start, _width / 2, false);
+		++i;
 	}
-	else draw_sprite(sprite, subimg, x, y);
+	draw_set_color(prev_col);
 }
-///@func draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rotation, color, time, duration, [noise_sprite])
-///@desc Draws a sprite with a noise fade in (Will automatically convert to normal draw_sprite_ext if the duration is reached)
-///@param {Asset.GMSprite} sprite The sprite to draw
-///@param {real} subimg The subimg of the sprite
-///@param {real} x The x position of the sprite to draw
-///@param {real} y The y position of the sprite to draw
-///@param {real} xscale The xscale of the sprite to draw
-///@param {real} yscale The yscale of the sprite to draw
-///@param {real} rot The rotation of the sprite to draw
-///@param {Constant.Color} col The color of the sprite to draw
-///@param {real} time The time of the noise fade (The value of this needs to change constantly)
-///@param {real} duration The total duration of the fade in
-///@param {Asset.GMSprite} noise_sprite The noise sprite to use (It has to be a sprite of a noise)
-function draw_noise_fade_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, time, duration, noise_sprite = sprNoiseRect) {
-	aggressive_forceinline
-	static UV = shader_get_uniform(shdNoiseFade, "mainuv"),
-			Rat = shader_get_uniform(shdNoiseFade, "mainrat"),
-			Level = shader_get_uniform(shdNoiseFade, "mainlev"),
-			Sampler = shader_get_sampler_index(shdNoiseFade, "mainnoise");
-	if !variable_instance_exists(id, "__NoiseVars")
-		__NoiseVars = new SpriteNoiseSet(noise_sprite);
-	if time < duration {
-		var NoiseFadeLevel = 1 - time / duration,
-			gettexture = sprite_get_texture(sprite, subimg),
-			texuvs = texture_get_uvs(gettexture);
-		shader_set(shdNoiseFade);
-		texture_set_stage(Sampler, __NoiseVars.NoiseTexture);
-		shader_set_uniform_f(Level, NoiseFadeLevel);
-		shader_set_uniform_f(UV, __NoiseVars.Noiseuvs[0], __NoiseVars.Noiseuvs[1], texuvs[0], texuvs[1]);
-		shader_set_uniform_f(Rat, (__NoiseVars.Noiseuvs[2] - __NoiseVars.Noiseuvs[0]) / (texuvs[2] - texuvs[0]), (__NoiseVars.Noiseuvs[3] - __NoiseVars.Noiseuvs[1]) / (texuvs[3] - texuvs[1]));
-		draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, 1 - NoiseFadeLevel);
-		shader_reset();
-	}
-	else draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, 1);
-}
+#endregion
+#region Color Inversion
 ///@func draw_invert_rect(x1, y1, x2, y2)
 ///@desc Draws an rectangle with the colors inverted inside of it
 ///@param {real} x1 The top left x position of the rectangle
@@ -211,7 +286,7 @@ function draw_invert_polygon(vertices) {
 	gpu_push_state();
 	gpu_set_blendmode_ext(bm_inv_dest_color, bm_zero);
 	var i = 1;
-	repeat array_length(vertices) - 2
+	repeat (array_length(vertices) - 2)
 	{
 		draw_triangle(vertices[0][0], vertices[0][1], vertices[i][0], vertices[i][1],
 			vertices[i + 1][0], vertices[i + 1][1], false);
@@ -219,26 +294,8 @@ function draw_invert_polygon(vertices) {
 	}
 	gpu_pop_state();
 }
-///@func __cut_screen(start_x, start_y, end_x, end_y, offset)
-///@desc (semi-internal) Splices the screen, similar to Edgetale run 3 final attack, returns the first value of the list
-///for animating the offset (you have to animate this and the one after it)
-///@param {real} line_start_x The starting x position of the line
-///@param {real} line_start_yThe starting y position of the line
-///@param {real} line_end_x The ending x position of the line
-///@param {real} line_end_y The ending y position of the line
-///@param {real} offset The displacement of the splice
-///@return {real} The ID of the list for animating
-function __cut_screen(line_start_x, line_start_y, line_end_x, line_end_y, offset) {
-	forceinline
-	var true_line_start = [line_start_x / 640, line_start_y / 480],
-		true_line_end = [line_end_x / 640, line_end_y / 480],
-		dir = point_direction(line_start_x, line_start_y, line_end_x, line_end_y);
-	//Add to list twice for the 2 halves of the splice
-	repeat 2
-		ds_list_add(global.sur_list, [surface_create(640, 480), offset, dir, true_line_start, true_line_end]);
-	return ds_list_size(global.sur_list) - 2;
-}
-
+#endregion
+#region Tiled Sprites
 ///@func draw_sprite_tiled_area(sprite, subimg, x, y, x1, y1, x2, y2)
 ///@desc Draws a sprite that fills the entire area like tiles
 ///@param {Asset.GMSprite} sprite The sprite to draw
@@ -306,14 +363,16 @@ function draw_sprite_tiled_area_ext(sprite, subimg, xx, yy, x1, y1, x2, y2, xsca
 		j = jj;
 	}
 }
-
+#endregion
+#region GPU control
 ///@func reset_gpu_state()
 ///@desc Resets the GPU state to default
 function reset_gpu_state() {
 	forceinline
-	gpu_set_state(global.DefaultGPUState);
+	gpu_set_state(global.__CoalitionDefaultGPUState);
 }
-
+#endregion
+#region Handy Functions
 ///@func draw_set_align([halign], [valign])
 ///@desc Sets the drawing alignment (Combination of draw_set_h/valign)
 ///@param {Constant.Halign} HAlign The horizontal alignment
@@ -324,3 +383,4 @@ function draw_set_align(halign = fa_left, valign = fa_top)
 	draw_set_halign(halign);
 	draw_set_valign(valign);
 }
+#endregion

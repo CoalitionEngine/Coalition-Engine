@@ -1,6 +1,5 @@
 ///@desc Normal layer
-switch room
+switch (room)
 {
-	case room_overworld:
-		break;
+	default: break;
 }

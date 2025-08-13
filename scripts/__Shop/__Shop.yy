@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__Shop",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Shop",
-    "path": "folders/Coalition Engine/Internal/(System)/Scripts/Shop.yy",
+  "$GMScript":"v1",
+  "%Name":"__Shop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__Shop",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Coalition Engine/Shop/(System).yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

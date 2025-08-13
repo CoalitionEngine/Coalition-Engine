@@ -3,17 +3,18 @@ clear_timesources;
 Camera.Init();
 depth = 50;
 //Set position
-x = global.__gameover_soul_x;
-y = global.__gameover_soul_y;
+x = global.__CoalitionGameOverSoulPosition.x;
+y = global.__CoalitionGameOverSoulPosition.y;
 //Soft reset palyer stats
-global.player_attack_boost = 0;
-global.player_def_boost = 0;
+global.__CoalitionPlayerAttackBoost = 0;
+global.__CoalitionPlayerDefenseBoost = 0;
+global.__CoalitionPlayerInvincibilityBoost = 0;
 image_speed = 0;
 image_blend = c_red;
 //Ensure all instances are destroyed
 instance_destroy(oBulletParents);
 instance_destroy(oPlatform);
-Fader_Fade(,0, 0);
+Fader_Fade(, 0, 0);
 draw_set_font(fnt_8bitwonder);
 draw_set_align(fa_center, fa_middle);
 
@@ -37,9 +38,9 @@ part_type_gravity(p, 0.12, 270);
 //Delay soul break
 alarm[0] = 40;
 //Set gameover texts
-gameover_text = string_concat("[pause]You cannot give\nup just yet...[pause][/page]", COALITION_DATA.name, "![delay,500]\nStay determined...");
+gameover_text = string_concat("[pause]You cannot give\nup just yet...[pause][/page]", Player.Name(), "![delay,500]\nStay determined...");
 gameover_text_voice = snd_txtAsgore;
-gameover_writer = scribble(gameover_text, "__Coalition_Gameover").page(0);
+gameover_writer = scribble(gameover_text, "__Coalition_Gameover").page(0).starting_format("fnt_dt_mono",c_white);
 
 gameover_typist = scribble_typist().in(0.25, 0).sound_per_char(gameover_text_voice, 1, 1," ^!.?,:/\\|*")
 

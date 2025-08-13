@@ -1,22 +1,22 @@
 if !__COALITION_VISUAL_MODE var board = target_board;
 
-if Axis.activate
+if (Axis.activate)
 	axis_step();
 
 //Sets minimal length due to nine-slices drawing
-length = max(14, length);
-image_xscale = length / 14;
+Length = max(14, Length);
+image_xscale = Length / 14;
 //Automatiacally sets the angle of the bone as the direction if needed
-if angle_to_direction
+if (AngleAsDirection)
 	image_angle = direction;
 //Rotation
-image_angle += rotate;
+image_angle += RotateSpeed;
 
 //Auto sticking to board edges if the bone is not in lening
-if !Len.activate
+if (!Len.activate)
 {
-	var half_len = length / 2;
-	switch mode
+	var half_len = Length / 2;
+	switch (__stick_direction)
 	{
 		case 0: break;
 		case 1: case "up": y = board.y - board.up + half_len;		break;
@@ -25,8 +25,9 @@ if !Len.activate
 		case 4: case "right":  x = board.x + board.right - half_len;break;
 	}
 }
-else len_step();
+else
+	len_step();
 //Auto destroy when turn ends or duration is met
-if (at_turn_end && length < 11) || (duration != -1 && __DurationTimer++ >= duration)
+if ((__at_turn_end && Length < 11) || (Duration != -1 && __DurationTimer++ >= Duration))
 	instance_destroy();
 

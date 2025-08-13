@@ -18,7 +18,8 @@ function tile_meeting(x_, y_, _layer) {
 
 	for(var _x = _x1; _x <= _x2; _x++)
 		for(var _y = _y1; _y <= _y2; _y++)
-			if (tile_get_index(tilemap_get(_tm, _x, _y))) return true;
+			if (tile_get_index(tilemap_get(_tm, _x, _y)))
+				return true;
 	return false;
 }
 
@@ -43,13 +44,15 @@ function tile_meeting_precise(_x, _y, _layer) {
 	for (var x_ = _x1; x_ <= _x2; x_++) {
 		for (var y_ = _y1; y_ <= _y2; y_++) {
 			var _tile = tile_get_index(tilemap_get(_tm, x_, y_));
-			if _tile {
-				if _tile == 1 return true;
+			if (_tile)	
+			{
+				if (_tile == 1)
+					return true;
 				
 				_checker.x = x_ * tile_width;
 				_checker.y = y_ * tile_height;
 				
-				if place_meeting(x_, y_, _checker)
+				if (place_meeting(x_, y_, _checker))
 				{
 					_checker.x = _cx;
 					_checker.y = _cy;

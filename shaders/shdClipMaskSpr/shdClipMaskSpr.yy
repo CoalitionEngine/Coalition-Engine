@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdClipMaskSpr",
-  "parent": {
-    "name": "Engine Essential",
-    "path": "folders/Coalition Engine/Internal/Shaders/Engine Essential.yy",
+  "$GMShader":"",
+  "%Name":"shdClipMaskSpr",
+  "name":"shdClipMaskSpr",
+  "parent":{
+    "name":"Masking",
+    "path":"folders/Coalition Engine/Effects/Required/Masking.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

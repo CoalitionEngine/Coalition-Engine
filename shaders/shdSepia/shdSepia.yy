@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shdSepia",
-  "parent": {
-    "name": "Extra Effects",
-    "path": "folders/Coalition Engine/Internal/Shaders/Extra Effects.yy",
+  "$GMShader":"",
+  "%Name":"shdSepia",
+  "name":"shdSepia",
+  "parent":{
+    "name":"Extra Effects",
+    "path":"folders/Coalition Engine/Effects/Optional/Extra Effects.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

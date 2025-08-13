@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Drawing",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Special Scripts",
-    "path": "folders/Coalition Engine/Internal/Scripts/Special Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"Drawing",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Drawing",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Coalition Engine/Global/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

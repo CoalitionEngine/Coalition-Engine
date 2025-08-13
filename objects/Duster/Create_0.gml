@@ -35,26 +35,6 @@ part_type_direction(partDust, 35, 70, 0.1, 8);
 part_type_alpha2(partDust, 1, 0);
 part_type_life(partDust, 80, 140);
 
-//	 DISABLED
-// Pattern array
-// In a 2D array, stores the value of each pixel of the pattern
-//pattern = [];
-
-//var _spr = sPattern;
-//var _w = sprite_get_width(_spr);
-//var _h = sprite_get_height(_spr);
-
-//for (var _x = 0; _x < _w; _x++) {
-//	for (var _y = 0; _y < _h; _y++) {
-//		var _col = sprite_getpixel(_spr, 0, _x, _y);
-		
-//		pattern[_x, _y] = _col[0] / 255;
-//	}
-//}
-
-//patternW = _w;
-//patternH = _h;
-
 // Alpha array
 // In a 2D array, stores the alpha of each pixel of the sprite
 alpha = [];
@@ -66,7 +46,6 @@ var _h = sprite_height;
 for (var _x = 0; _x < _w; _x++) {
 	for (var _y = 0; _y < _h; _y++) {
 		var _col = sprite_getpixel(_spr, 0, _x, _y);
-		
 		alpha[_x, _y] = _col[3];
 	}
 }

@@ -1,0 +1,24 @@
+## What is this?
+Coalition Visual Editor (CVE) is a visual based tool that aims to assist users
+to create their own game, as some users may not be as experienced to create
+games, this tool is to assist users to create basic attacks and simple overworld by utilizing
+ImGui, an easy to use Graphical User Interface (GUI).
+
+## How to use it
+The usage of the editor should be very straight forward as it is designed to be
+visual based, however there are generally two types of users that would use
+this tool, ones that would like a visual representation of their ideas before
+actually coding them, and the ones who does not have sufficient coding knowledge.
+
+The users who have sufficient coding knowledge would be capable on converting
+the visual representation into actual code. Even for users that are not capable on
+achieving this, there is a built-in export system that allows users to export the
+codes required to achieve the visual representation into an external .txt file,
+allowing users to paste the codes to the respective objects.
+
+Users may also save/load .json files created by the CVE to more efficiently
+visualize their ideas, however it is not possible to import actual GML code into CVE,
+but the created .json files only.
+
+## Notes
+Please be advised that this tool was not well built and may be poor in performance.

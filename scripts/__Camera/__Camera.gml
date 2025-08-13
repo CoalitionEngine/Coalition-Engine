@@ -1,4 +1,4 @@
-///@category Global Functions
+///@category Useful Functions
 ///@title Camera
 ///@text These are the functions to control the camera properties.
 ///
@@ -18,8 +18,9 @@ function __Camera() constructor
 	static Init = function()
 	{
 		aggressive_forceinline
-		if !variable_instance_exists(oGlobal, "MainCamera") oGlobal.MainCamera = {};
-		with oGlobal.MainCamera
+		if (!variable_instance_exists(oGlobal, "__MainCamera"))
+			oGlobal.__MainCamera = {};
+		with (oGlobal.__MainCamera)
 		{
 			x = 0;
 			y = 0;
@@ -57,11 +58,11 @@ function __Camera() constructor
 	static Shake = function(amount, decrease = 1)
 	{
 		forceinline
-		with oGlobal.MainCamera
+		with (oGlobal.__MainCamera)
 		{
-			shake_i = ceil(amount);
-			decrease_i = ceil(decrease);
-			if enable_z
+			shake_i = amount;
+			decrease_i = decrease;
+			if (enable_z)
 			{
 				camAngleXShake = amount / 2;
 				camAngleYShake = -amount / 2;
@@ -79,30 +80,16 @@ function __Camera() constructor
 	static Scale = function(sx, sy = sx, duration = 0, ease = "")
 	{
 		forceinline
-		with oGlobal.MainCamera
+		with (oGlobal.__MainCamera)
 		{
-			if duration == 0 scale = new Vector2(sx, sy);
+			if (duration == 0)
+				scale = new Vector2(sx, sy);
 			else
-			TweenFire(scale, ease, "$", duration, "x>", sx, "y>", sy);
+				TweenFire(scale, ease, 0, false, 0, duration, "x>", sx, "y>", sy);
 		}
 		return self;
 	}
 	///@method SetPos(x, y)
-	///@desc Sets the X and Y position of the Camera
-	///@param {real} x The x position
-	///@param {real} y The y position
-	///@return {Struct.__Camera}
-	static SetPos = function(_x, _y)
-	{
-		forceinline
-		with oGlobal.MainCamera
-		{
-			x = _x;
-			y = _y;
-		}
-		return self;
-	}
-	///@method MoveTo(x, y, duration, [delay], [ease])
 	///@desc Moves the camera to the given coordinates
 	///@param {real} x The x position
 	///@param {real} y The y position
@@ -110,11 +97,25 @@ function __Camera() constructor
 	///@param {real} delay The anim delay of the movement
 	///@param {function,string} ease The easing of the animation
 	///@return {Struct.__Camera}
-	static MoveTo = function(x, y, duration, delay = 0, ease = "")
+	static SetPos = function(_x, _y, duration = 0, delay = 0, ease = "")
 	{
 		forceinline
-		with oGlobal.MainCamera TweenFire(self, ease, 0, 0, delay, duration, "x>", x, "y>", y);
+		forceinline
+		with (oGlobal.__MainCamera)
+		{
+			if (duration == 0)
+			{
+				x = _x;
+				y = _y;
+			}
+			else
+				TweenFire(self, ease, 0, 0, delay, duration, "x>", _x, "y>", _y);
+		}
 		return self;
+	}
+	static MoveTo = function(x, y, duration, delay = 0, ease = "")
+	{
+		__CoalitionEngineError(true, "Coalition Engine: Camera.MoveTo has been replaced by Camera.SetPos");
 	}
 	///@method RotateTo([start], target, duration, [ease], [delay])
 	///@desc Rotates the camera
@@ -124,11 +125,23 @@ function __Camera() constructor
 	///@param {function,string} Easing The ease of the rotation
 	///@param {real} delay The delay of the animation
 	///@return {Struct.__Camera}
-	static RotateTo = function(start = oGlobal.MainCamera.angle, target, duration, ease = "", delay = 0)
+	static RotateTo = function(start = oGlobal.__MainCamera.angle, target, duration, ease = "", delay = 0)
 	{
 		forceinline
-		if duration == 0 oGlobal.MainCamera.angle = target;
-		else TweenFire(oGlobal.MainCamera, ease, 0, 0, delay, duration, "angle", start, target);
+		if (duration == 0)
+			oGlobal.__MainCamera.angle = target;
+		else
+			TweenFire(oGlobal.__MainCamera, ease, 0, 0, delay, duration, "angle", start, target);
+		return self;
+	}
+	///@method Target(instance)
+	///@desc Sets the target of the camera to the specified instance
+	///@param {ID.instance,Asset.GMObject} instance	The instance to set the target as
+	///@return {Struct.__Camera}
+	static Target = function(instance)
+	{
+		forceinline
+		oGlobal.__MainCamera.target = instance;
 		return self;
 	}
 	///@method ViewX()
@@ -171,23 +184,24 @@ function __Camera() constructor
 	static SetAspect = function(width, height)
 	{
 		forceinline
-		with oGlobal.MainCamera
+		with (oGlobal.__MainCamera)
 		{
 			view_width = width;
 			view_height = height;
 		}
+		return self;
 	}
 	///@method GetScale([val])
 	///@desc Gets the scale of the camera
 	///@param {real,string} value none/`0` -> [x position, y position] `1`/`"x"` -> x position `2`/`"y"` -> y position
-	///@return {Array<Real>,Real}
+	///@return {Real,Struct}
 	static GetScale = function(val = 0)
 	{
-		switch val
+		switch (val)
 		{
-			case 0: return oGlobal.MainCamera.scale;
-			case 1: case "x": return oGlobal.MainCamera.scale.x;
-			case 2: case "y": return oGlobal.MainCamera.scale.y;
+			case 0: return oGlobal.__MainCamera.scale;
+			case 1: case "x": return oGlobal.__MainCamera.scale.x;
+			case 2: case "y": return oGlobal.__MainCamera.scale.y;
 		}
 	}
 	///@method GetAspect([val])
@@ -196,12 +210,12 @@ function __Camera() constructor
 	///@return {Array<Real>,Real}
 	static GetAspect = function(val = 0)
 	{
-		switch val
+		switch (val)
 		{
-			case 0: case "width":	case "w": return oGlobal.MainCamera.view_width;
-			case 1: case "height":  case "h": return oGlobal.MainCamera.view_height;
+			case 0: case "width":	case "w": return oGlobal.__MainCamera.view_width;
+			case 1: case "height":  case "h": return oGlobal.__MainCamera.view_height;
 			case 2: case "ratio":	case "r":
-				return oGlobal.MainCamera.view_width / oGlobal.MainCamera.view_height;
+				return oGlobal.__MainCamera.view_width / oGlobal.__MainCamera.view_height;
 		}
 	}
 	///Gets the position of the camera
@@ -211,10 +225,10 @@ function __Camera() constructor
 	///@return {Array<Real>,Real}
 	static GetPos = function(val = 0)
 	{
-		switch val
+		switch (val)
 		{
-			case 0: case "x": return oGlobal.MainCamera.x;
-			case 1: case "y": return oGlobal.MainCamera.y;
+			case 0: case "x": return oGlobal.__MainCamera.x;
+			case 1: case "y": return oGlobal.__MainCamera.y;
 		}
 	}
 	///@method GetAngle()
@@ -223,7 +237,7 @@ function __Camera() constructor
 	static GetAngle = function()
 	{
 		forceinline
-		return oGlobal.MainCamera.angle;
+		return oGlobal.__MainCamera.angle;
 	}
 }
 ///@text

@@ -27,6 +27,22 @@ function __scribble_initialize()
             __scribble_trace("Verbose mode is off, set SCRIBBLE_VERBOSE to <true> to see more information");
         }
         
+        if (not shader_is_compiled(__shd_scribble))
+        {
+            __scribble_error("Shader failed to compile. Please check your version of GameMaker is compatible\nPlease report this error if it persists");
+        }
+        
+        if (not font_exists(asset_get_index("scribble_fallback_font")))
+        {
+            __scribble_error("Fallback font was not found. This may indicate that unused assets have been stripped from the project\nPlease untick \"Automatically remove unused assets when compiling\" in Game Options");
+        }
+        
+        var _fontInfo = font_get_info(asset_get_index("scribble_fallback_font"));
+        if (_fontInfo[$ "sdfEnabled"] == undefined)
+        {
+            __scribble_error("Versions of GameMaker without SDF font support are not supported (versions pre-2023.1, including LTS 2022)");
+        }
+        
         try
         {
             time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
@@ -38,7 +54,7 @@ function __scribble_initialize()
         catch(_error)
         {
             __scribble_trace(_error);
-            __scribble_error("Versions earlier than GameMaker 2022 LTS are not supported");
+            __scribble_error("Versions earlier than GameMaker 2023.1 are not supported");
         }
         
         __useHandleParse = false;
@@ -54,13 +70,44 @@ function __scribble_initialize()
             __scribble_trace("handle_parse() not available");
         }
         
+        __gmMightRemoveUnusedAssets = true;
+        __gmVersionMajor = 0;
+        __gmVersionMinor = 0;
+        __gmVersionPatch = 0;
+        __gmVersionBuild = 0;
+        
+        try
+        {
+            var _workString = GM_runtime_version;
+            var _pos = string_pos(".", _workString);
+            __gmVersionMajor = real(string_copy(_workString, 1, _pos-1));
+            _workString = string_delete(_workString, 1, _pos);
+            var _pos = string_pos(".", _workString);
+            __gmVersionMinor = real(string_copy(_workString, 1, _pos-1));
+            _workString = string_delete(_workString, 1, _pos);
+            var _pos = string_pos(".", _workString);
+            __gmVersionPatch = real(string_copy(_workString, 1, _pos-1));
+            __gmVersionBuild = real(string_delete(_workString, 1, _pos));
+        }
+        catch(_error)
+        {
+            __scribble_trace("Warning! Failed to obtain runtime version");
+        }
+        
+        __gmMightRemoveUnusedAssets = (__gmVersionMajor >= 2025) || ((__gmVersionMajor == 2024) && ((__gmVersionMinor >= 1100) || (__gmVersionMinor == 11)));
+        
         //Initialize colours on boot before they need to be used
         __scribble_config_colours();
         
-        __defaultPreprocessorFunc = SCRIBBLE_NO_PREPROCESS;
+        __defaultPreprocessorFunc = __scribble_no_preprocessing;
         
         //Main lookup for fonts
         __font_data_map = ds_map_create();
+        
+        //Other caching maps
+        __sprite_texture_index_map    = ds_map_create();
+        __sprite_texture_material_map = ds_map_create();
+        __material_map                = ds_map_create();
         
         //Multi-use buffers
         __buffer_a = buffer_create(1024, buffer_grow, 1);
@@ -99,10 +146,14 @@ function __scribble_initialize()
             
             __ecache_dict:       {},
             __ecache_array:      [],
+            __ecache_weak_array: [],
             __ecache_name_array: [],
             
             __gc_vbuff_refs: [],
             __gc_vbuff_ids:  [],
+            
+            __gc_grid_refs: [],
+            __gc_grid_ids:  [],
         };
         
         //
@@ -114,7 +165,8 @@ function __scribble_initialize()
         __krutidev_matra_lookup_map = __scribble_krutidev_matra_lookup_map_initialize();
         
         //External sound reference storage
-        __external_sound_map = ds_map_create();
+        __external_sprite_map = ds_map_create();
+        __external_sound_map  = ds_map_create();
         
         //Lookup for user-defined macros
         __macros_map = ds_map_create();
@@ -176,8 +228,13 @@ function __scribble_initialize()
         __effects_slash_map[? "/SLANT"  ] = 10;
     }
     
+    if (GM_build_type == "run")
+    {
+        global._scribble_debug = _system;
+    }
+    
     scribble_anim_reset();
-    if (SCRIBBLE_LOAD_FONTS_ON_BOOT) __scribble_font_add_all_from_project();
+    if (SCRIBBLE_LOAD_FONTS_ON_BOOT) __scribble_font_add_all_from_bundle();
     
     return _system;
 }

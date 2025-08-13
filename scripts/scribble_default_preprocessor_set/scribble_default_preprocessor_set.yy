@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scribble_default_preprocessor_set",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Miscellaneous",
-    "path": "folders/Coalition Engine/Internal/(System)/Addons/Scribble/Miscellaneous.yy",
+  "$GMScript":"v1",
+  "%Name":"scribble_default_preprocessor_set",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scribble_default_preprocessor_set",
+  "parent":{
+    "name":"Miscellaneous",
+    "path":"folders/Coalition Engine/Libraries/Scribble/Miscellaneous.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "OverworldDialog",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Overworld",
-    "path": "folders/Coalition Engine/Internal/Scripts/Overworld.yy",
+  "$GMScript":"v1",
+  "%Name":"OverworldDialog",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"OverworldDialog",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Coalition Engine/Overworld/Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

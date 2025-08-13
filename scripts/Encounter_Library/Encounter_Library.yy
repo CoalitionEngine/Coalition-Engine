@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Encounter_Library",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Scripts",
-    "path": "folders/Coalition Engine/External/Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"Encounter_Library",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Encounter_Library",
+  "parent":{
+    "name":"Battle",
+    "path":"folders/Coalition Engine/Battle.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
