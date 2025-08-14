@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_slice",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.55059,
+  "exportDir":"",
   "name":"snd_slice",
   "parent":{
     "name":"Attack",

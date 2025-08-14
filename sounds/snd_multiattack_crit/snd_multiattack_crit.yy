@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_multiattack_crit",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":1.3162812,
+  "exportDir":"",
   "name":"snd_multiattack_crit",
   "parent":{
     "name":"Attack",

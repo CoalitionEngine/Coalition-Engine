@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_bonewall",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.508583,
+  "exportDir":"",
   "name":"snd_bonewall",
   "parent":{
     "name":"Sounds",

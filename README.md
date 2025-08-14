@@ -11,16 +11,16 @@ This is what you can make your Undertale Fangame ideas come true.
 
 ## Version List
 
-The minimum GameMaker client version required is 2023.11.
+The minimum GameMaker client version required is 2024.13.1.
 
 This is the version of external libraries that are packaged with this engine.
 
 > [!IMPORTANT]
 > You should not remove libraries without '()' from the engine as they are essential for the engine to run.
 
-| Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX | (Kawase) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :--: |
-| 9.3.1 | 7.0.1 | 1.1.1 | 3.0.5 | 4.0.1 | 1.0.3 | 2.0.1 |
+| Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 9.5.0 | 10.1.0 | 1.1.1 | 3.0.8 | 4.0.1 | 1.0.3 |
 
 ## Branch Purposes:
 

@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_harddamage",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":1.72263,
+  "exportDir":"",
   "name":"snd_harddamage",
   "parent":{
     "name":"Attack",

@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_notebook_spin",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":1.2727438,
+  "exportDir":"",
   "name":"snd_notebook_spin",
   "parent":{
     "name":"Attack",

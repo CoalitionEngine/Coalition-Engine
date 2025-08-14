@@ -1,5 +1,5 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v1",
   "%Name":"snd_frypan_hit",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,6 +10,7 @@
   "compression":0,
   "conversionMode":0,
   "duration":1.3482087,
+  "exportDir":"",
   "name":"snd_frypan_hit",
   "parent":{
     "name":"Attack",
