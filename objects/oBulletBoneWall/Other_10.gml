@@ -46,7 +46,7 @@ if (_dir == DIR.UP || _dir == DIR.DOWN)
 		var collision = true;
 		if (type == 1 || type == 2)
 			collision = (type == 1 ? Soul.IsMoving() : !Soul.IsMoving());
-		if (collision) Soul.Hurt(damage);
+		if (collision) Soul.Hurt(__damage);
 	}
 	// Hitbox
 	if (global.__CoalitionShowHitbox)
@@ -70,7 +70,7 @@ else if (_dir == DIR.LEFT || _dir == DIR.RIGHT)
 		var collision = true;
 		if (type == 1  || type == 2)
 			collision = (type == 1 ? Soul.IsMoving() : !Soul.IsMoving());
-		if (collision) Soul.Hurt(damage);
+		if (collision) Soul.Hurt(__damage);
 	}
 	// Hitbox
 	if (global.__CoalitionShowHitbox)

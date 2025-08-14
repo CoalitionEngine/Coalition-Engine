@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.503583,
+  "duration":0.5035828,
   "name":"snd_bone",
   "parent":{
     "name":"Sounds",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__tomeSystemFunctions",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__tomeSystemFunctions",
+  "parent":{
+    "name":"_system",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Tome/_system.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

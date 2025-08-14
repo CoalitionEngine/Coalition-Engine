@@ -1,5 +1,8 @@
 Update Logs
 
+v1.0.2 (TK)
+Patch to fix resource load failure
+
 v1.0.1 (TK)
 
 Fixed:

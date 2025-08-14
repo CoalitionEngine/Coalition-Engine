@@ -11,13 +11,13 @@ To Do List.txt
 
 # This prevents pushing of internal Tome assets
 github_token.txt
-scripts/__tome*
-scripts/tome*
-datafiles/Tome*
-objects/__tome*
+scripts/__tome*/*.gml
+scripts/tome*/*.gml
+datafiles/Tome*/*.gml
+objects/__tome*/*.gml
+Tome/
 
 # Private Coalition Visual Assets
-**/*CoalVis*
+**/*CoalVis*/*.gml
 
-**/ImGui*
-shaders/shdImGui/
+**/ImGui*/*.gml
