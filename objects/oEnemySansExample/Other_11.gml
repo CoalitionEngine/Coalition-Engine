@@ -70,6 +70,7 @@ SetAttack(2, function() {
 SetAttack(0, function() {
 	if (time == 0)
 	{
+		Bullet_CustomBoneWall(DIR.DOWN, 50, [90, 70], 60, 60);
 		Board.SetSize(70, 70, 70, 70, 0);
 		with (Bullet_BoneBottom(250, 70, 4).Axis)
 		{

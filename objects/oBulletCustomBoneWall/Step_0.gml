@@ -46,10 +46,10 @@ else if (__state == 1)
 			Y = y + lengthdir_y(i, image_angle + 90);
 		with (Bullet_Bone(X, Y, __height, 0, 0, __type,,, image_angle,, false, __time_stay + __time_move * 2 + __time_warn, c_white))
 		{
-			TweenFire(self, EaseIn, 0, 0, 0, __time_move,
+			TweenFire(self, EaseIn, 0, 0, 0, other.__time_move,
 			"x>", x - lengthdir_x(InitDistance - Displace, image_angle),
 			"y>", y - lengthdir_y(InitDistance - Displace, image_angle));
-			TweenFire(self, EaseOut, 0, 0, __time_stay, __time_move,
+			TweenFire(self, EaseOut, 0, 0, other.__time_stay, other.__time_move,
 			"x>", x + lengthdir_x(Displace, image_angle),
 			"y>", y + lengthdir_y(Displace, image_angle));
 		}
