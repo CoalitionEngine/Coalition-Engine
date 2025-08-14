@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_alert",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.086689,
-  "exportDir":"",
   "name":"snd_alert",
   "parent":{
     "name":"Sounds",

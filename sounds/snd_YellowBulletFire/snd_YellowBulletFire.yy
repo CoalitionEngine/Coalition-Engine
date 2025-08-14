@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_YellowBulletFire",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.087075,
-  "exportDir":"",
   "name":"snd_YellowBulletFire",
   "parent":{
     "name":"Sounds",

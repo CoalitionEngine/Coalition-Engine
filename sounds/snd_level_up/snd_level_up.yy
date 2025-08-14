@@ -1,16 +1,15 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_level_up",
   "audioGroupId":{
-    "name":"audgrpbattle",
-    "path":"audiogroups/audgrpbattle",
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
   "duration":0.988605,
-  "exportDir":"",
   "name":"snd_level_up",
   "parent":{
     "name":"Sounds",

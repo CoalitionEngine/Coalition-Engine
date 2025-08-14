@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_phone_call",
   "audioGroupId":{
     "name":"audgrpoverworld",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.991746,
-  "exportDir":"",
   "name":"snd_phone_call",
   "parent":{
     "name":"Sounds",

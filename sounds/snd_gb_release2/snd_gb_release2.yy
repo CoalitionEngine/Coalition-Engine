@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_gb_release2",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":2.407619,
-  "exportDir":"",
   "name":"snd_gb_release2",
   "parent":{
     "name":"Sounds",

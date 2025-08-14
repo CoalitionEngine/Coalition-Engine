@@ -24,8 +24,8 @@
   },
   "spriteNoExport":true,
   "textureGroupId":{
-    "name":"texoverworld",
-    "path":"texturegroups/texoverworld",
+    "name":"Default",
+    "path":"texturegroups/Default",
   },
   "tileAnimationFrames":[],
   "tileAnimationSpeed":0.0,

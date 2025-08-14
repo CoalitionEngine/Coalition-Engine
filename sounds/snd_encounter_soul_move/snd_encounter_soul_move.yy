@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_encounter_soul_move",
   "audioGroupId":{
     "name":"audiogroup_default",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.33378685,
-  "exportDir":"",
   "name":"snd_encounter_soul_move",
   "parent":{
     "name":"Sounds",

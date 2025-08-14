@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_save",
   "audioGroupId":{
     "name":"audgrpoverworld",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.565986,
-  "exportDir":"",
   "name":"snd_save",
   "parent":{
     "name":"Sounds",

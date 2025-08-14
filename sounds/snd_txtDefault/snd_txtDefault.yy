@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_txtDefault",
   "audioGroupId":{
     "name":"audiogroup_default",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":0.060476,
-  "exportDir":"",
   "name":"snd_txtDefault",
   "parent":{
     "name":"Text Voices",

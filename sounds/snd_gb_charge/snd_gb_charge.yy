@@ -1,5 +1,5 @@
 {
-  "$GMSound":"v1",
+  "$GMSound":"",
   "%Name":"snd_gb_charge",
   "audioGroupId":{
     "name":"audgrpbattle",
@@ -10,7 +10,6 @@
   "compression":0,
   "conversionMode":0,
   "duration":1.057959,
-  "exportDir":"",
   "name":"snd_gb_charge",
   "parent":{
     "name":"Sounds",
