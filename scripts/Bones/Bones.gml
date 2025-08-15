@@ -174,7 +174,7 @@ function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = false, destroyable = f
 ///@param {real} move The speed the bone wall moves In and Out of the board (Default 5)
 ///@param {bool} warn_sound Whether the warning sound plays (Default True)
 ///@param {bool} create_sound Whether the create sound plays (Default True)
-///@return {Id.Instance<oBulletBoneWall>} The created bonewall
+///@return {Id.Instance<oBulletCustomBoneWall>} The created bonewall
 function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true) {
 	print("Coalition Engine: Usage of Bullet_Bonewall is discouraged due to inaccuracy, please use Bullet_CustomBoneWall");
 	forceinline

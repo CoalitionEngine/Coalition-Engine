@@ -82,15 +82,6 @@ function __RenderBullets() {
 				event_user(0);
 	}
 	//Draws bone walls
-	if (instance_exists(oBulletBoneWall))
-	{
-		with (oBulletBoneWall)
-			if (depth == BoardDepth)
-			{
-				event_user(0);
-				__bullet_rendered = true;
-			}
-	}
 	if (instance_exists(oBulletCustomBoneWall))
 	{
 		with (oBulletCustomBoneWall)
