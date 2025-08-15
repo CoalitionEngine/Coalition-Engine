@@ -62,7 +62,7 @@ function __RenderBullets() {
 			{
 				var _color = __default_color,
 				_angle = image_angle + Axis.angle + Len.angle_extra;
-				switch (type)
+				switch (__type)
 				{
 					case 1: _color = c_aqua;	break;
 					case 2: _color = c_orange;	break;

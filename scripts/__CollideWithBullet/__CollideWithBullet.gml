@@ -31,12 +31,12 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 			{
 				if (image_alpha < 0.5)
 					return false;
-				if (is_val(type, 1, 2))
+				if (is_val(__type, 1, 2))
 				{
-					if ((type == 1 ? Soul.IsMoving() : !Soul.IsMoving()))
+					if ((__type == 1 ? Soul.IsMoving() : !Soul.IsMoving()))
 						Soul.Hurt(Damage);
 				}
-				else if (type == 0)
+				else if (__type == 0)
 					Soul.Hurt(Damage);
 			}
 		}

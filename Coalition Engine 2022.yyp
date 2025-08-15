@@ -267,7 +267,6 @@
     {"id":{"name":"oBoard","path":"objects/oBoard/oBoard.yy",},},
     {"id":{"name":"oBoardCover","path":"objects/oBoardCover/oBoardCover.yy",},},
     {"id":{"name":"oBulletBone","path":"objects/oBulletBone/oBulletBone.yy",},},
-    {"id":{"name":"oBulletBoneWall","path":"objects/oBulletBoneWall/oBulletBoneWall.yy",},},
     {"id":{"name":"oBulletCustomBoneWall","path":"objects/oBulletCustomBoneWall/oBulletCustomBoneWall.yy",},},
     {"id":{"name":"oBulletParents","path":"objects/oBulletParents/oBulletParents.yy",},},
     {"id":{"name":"oCoalitionDebug","path":"objects/oCoalitionDebug/oCoalitionDebug.yy",},},

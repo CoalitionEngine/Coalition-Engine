@@ -177,7 +177,6 @@
     {"name":"oBoard","order":1,"path":"objects/oBoard/oBoard.yy",},
     {"name":"oBoardCover","order":2,"path":"objects/oBoardCover/oBoardCover.yy",},
     {"name":"oBulletBone","order":1,"path":"objects/oBulletBone/oBulletBone.yy",},
-    {"name":"oBulletBoneWall","order":2,"path":"objects/oBulletBoneWall/oBulletBoneWall.yy",},
     {"name":"oBulletCustomBoneWall","order":3,"path":"objects/oBulletCustomBoneWall/oBulletCustomBoneWall.yy",},
     {"name":"oBulletParents","order":4,"path":"objects/oBulletParents/oBulletParents.yy",},
     {"name":"oCoalitionDebug","order":1,"path":"objects/oCoalitionDebug/oCoalitionDebug.yy",},

@@ -178,22 +178,15 @@ function Bullet_BoneGapV(x, y, hspd, gap, type = 0, out = false, destroyable = f
 function Bullet_BoneWall(dir, height, delay, duration, type = 0, move = 5, warn_sound = true, cre_sound = true) {
 	print("Coalition Engine: Usage of Bullet_Bonewall is discouraged due to inaccuracy, please use Bullet_CustomBoneWall");
 	forceinline
-	var DEPTH = instance_exists(oBoard) ? oBoard.depth + 1 : -10;
-	if (warn_sound)
-		audio_play(snd_warning, true);
-	dir %= 360;
-	with (instance_create_depth(0, 0, DEPTH, oBulletBoneWall))
+	var init_dist;
+	switch (dir)
 	{
-		target_board = COALITION_CURRENT_BOARD;
-		id.dir = dir;
-		id.height = height;
-		time_warn = delay;
-		time_stay = duration;
-		time_move = move;
-		id.type = type;
-		__play_sound_at_create = cre_sound;
-		return self;
+		case DIR.RIGHT: init_dist = Board.GetRight(); break;
+		case DIR.UP: init_dist = Board.GetUp(); break;
+		case DIR.LEFT: init_dist = Board.GetLeft(); break;
+		case DIR.DOWN: init_dist = Board.GetDown(); break;
 	}
+	return Bullet_CustomBoneWall(dir, height, [init_dist + height / 2, init_dist], delay, duration, type, move, warn_sound, cre_sound);
 }
 
 ///@func Bullet_CustomBoneWall(direction, height, distance, delay, duration, [type], [move], [warning_sound], [creation_sound])

@@ -1,5 +1,11 @@
 Update Logs
 
+v1.0.4 (TK)
+Patched:
+- Debug audio not getting total duration
+- Colored bones do not have proper rendering
+- `Bullet_BoneWall` now acts as an easy call for `Bullet_CustomBoneWall`
+
 v1.0.3 (TK)
 Patch to fix crash on `oCustomBoneWall`
 

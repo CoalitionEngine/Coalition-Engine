@@ -121,7 +121,7 @@ function SubOptionAction(index)
 				}
 				else
 					Audio = audio_play(asset_get_index(curAudio));
-				AudioLength = audio_sound_length(__Audio);
+				AudioLength = audio_sound_length(Audio);
 				AudioLengthMin = string(AudioLength div 60);
 				AudioLengthSec = string(round(AudioLength mod 60));
 				if (AudioLengthSec < 10)
