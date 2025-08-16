@@ -1,5 +1,11 @@
 Update Logs
 
+v1.0.5 (TK)
+Patched:
+- Sprites were not assigned to their texture groups
+- Colored attacks did not have proper collision
+- Bones did not have proper collision
+
 v1.0.4 (TK)
 Patched:
 - Debug audio not getting total duration
