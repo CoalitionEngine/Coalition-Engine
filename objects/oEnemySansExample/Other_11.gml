@@ -70,6 +70,11 @@ SetAttack(2, function() {
 SetAttack(0, function() {
 	if (time == 0)
 	{
+		with CreateNormalLine(320, -20, 0,, 3)
+		{
+			duration = 50
+			vspeed = 2;
+		}
 		Bullet_BoneWall(DIR.DOWN, 50, 60, 60);
 		Board.SetSize(70, 70, 70, 70, 0);
 		Bullet_Bone(385, 320, 70, 0, 0, 2);

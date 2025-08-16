@@ -50,12 +50,10 @@ function CreateVectorLine(x1, y1, x2, y2, image_blend = c_white, thickness = 5, 
 function DisposeLine(line)
 {
 	forceinline
-	static LineSystemLines = oLineSystem.LineSys.__Lines;
-	var line_id = ds_list_find_index(LineSystemLines, line);
+	var line_id = ds_list_find_index(oLineSystem.LineSys.__Lines, line);
 	line.Dispose();
 	if (line_id != -1)
-		ds_list_delete(LineSystemLines, line_id);
-	delete line;
+		ds_list_delete(oLineSystem.LineSys.__Lines, line_id);
 }
 ///@function DisposeAllLines()
 ///@desc Disposes all lines created by the line system
@@ -63,9 +61,8 @@ function DisposeLine(line)
 function DisposeAllLines()
 {
 	forceinline
-	static LineSystemLines = oLineSystem.LineSys.__Lines;
-	repeat (ds_list_size(LineSystemLines))
-		DisposeLine(LineSystemLines[| 0]);
+	repeat (ds_list_size(oLineSystem.LineSys.__Lines))
+		DisposeLine(oLineSystem.LineSys.__Lines[| 0]);
 }
 #endregion
 #region Internal Line Logic

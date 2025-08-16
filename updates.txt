@@ -1,8 +1,13 @@
 Update Logs
 
+v1.0.7 (TK)
+Patched:
+- Line disposing error, again.
+
 v1.0.6 (TK)
 Patched:
 - Colored attacks can be dodged via holding towards a wall
+- Line disposing error
 
 v1.0.5 (TK)
 Patched:
