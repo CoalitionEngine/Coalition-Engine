@@ -51,19 +51,11 @@ function DisposeLine(line)
 {
 	forceinline
 	static LineSystemLines = oLineSystem.LineSys.__Lines;
-	var line_id, i = 0;
-	repeat (ds_list_size(LineSystemLines))
-	{
-		if (LineSystemLines[| i] == line)
-		{
-			line_id = i;
-			break;
-		}
-		++i;
-	}
+	var line_id = ds_list_find_index(LineSystemLines, line);
 	line.Dispose();
+	if (line_id != -1)
+		ds_list_delete(LineSystemLines, line_id);
 	delete line;
-	ds_list_delete(LineSystemLines, line_id);
 }
 ///@function DisposeAllLines()
 ///@desc Disposes all lines created by the line system

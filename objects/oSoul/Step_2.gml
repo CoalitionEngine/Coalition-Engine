@@ -1,5 +1,3 @@
-//Checks bullet collision
-__CoalitionCollideWithBullet();
 if (Battle.State() == BATTLE_STATE.IN_TURN)
 {
 	var move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
@@ -85,6 +83,8 @@ if (Battle.State() == BATTLE_STATE.IN_TURN)
 		var cx = x, cy = y;
 		x = lengthdir_x(_dist, _dir) + board_x;
 		y = lengthdir_y(_dist, _dir) + board_y;
+		//Checks bullet collision
+		__CoalitionCollideWithBullet();
 		exit;
 	}
 	//Vertex board detection
@@ -172,4 +172,6 @@ if (Battle.State() == BATTLE_STATE.IN_TURN)
 		}
 		++i;
 	}
-}	
+}
+//Checks bullet collision
+__CoalitionCollideWithBullet();

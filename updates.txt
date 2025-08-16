@@ -1,5 +1,9 @@
 Update Logs
 
+v1.0.6 (TK)
+Patched:
+- Colored attacks can be dodged via holding towards a wall
+
 v1.0.5 (TK)
 Patched:
 - Sprites were not assigned to their texture groups

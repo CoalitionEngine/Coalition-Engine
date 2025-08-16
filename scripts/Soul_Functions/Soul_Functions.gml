@@ -65,8 +65,8 @@ function __Soul() constructor
 		}
 		var target_soul = COALITION_CURRENT_SOUL;
 		return (input_based ? (CHECK_MOVING) :
-		(abs(target_soul.x - target_soul.xprevious) > 0) ||
-		abs(target_soul.y - target_soul.yprevious) > 0);
+		(abs(target_soul.x - target_soul.xprevious) > global.__CoalitionPlayerSpeed / 5) ||
+		abs(target_soul.y - target_soul.yprevious) > global.__CoalitionPlayerSpeed / 5);
 	}
 	///@method Hurt([damage], [kr])
 	///@desc Deals damage to the soul

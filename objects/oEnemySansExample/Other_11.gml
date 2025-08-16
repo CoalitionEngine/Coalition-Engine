@@ -72,6 +72,7 @@ SetAttack(0, function() {
 	{
 		Bullet_BoneWall(DIR.DOWN, 50, 60, 60);
 		Board.SetSize(70, 70, 70, 70, 0);
+		Bullet_Bone(385, 320, 70, 0, 0, 2);
 		with (Bullet_BoneBottom(250, 70, 4, 2).Axis)
 		{
 			activate = true;
