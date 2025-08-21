@@ -17,6 +17,9 @@ YellowCollidable = true;
 YellowDestroyable = true;
 //Internal check for whether the bullet is rendered in __RenderBullets
 __bullet_rendered = false;
+__LenExists = false;
+__AxisExists = false;
+array_push(__BulletList, self);
 if (__COALITION_VISUAL_MODE)
 {
 	__associate_visual_creation_script = [instance_create_depth];

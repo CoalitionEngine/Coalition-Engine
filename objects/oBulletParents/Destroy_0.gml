@@ -1,0 +1,1 @@
+array_delete(__BulletList, array_get_index(__BulletList, self), 1);

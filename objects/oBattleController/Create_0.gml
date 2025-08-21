@@ -5,12 +5,13 @@ scribble_font_bake_outline_8dir_2px("fnt_dmg", "fnt_dmg_outlined", c_black, true
 Fader_Fade(1, 0, 20);
 draw_set_align();
 #region Initalize global battle variables
-globalvar BattleBoardList, BattleSoulList, TargetBoard, TargetSoul, VertexBoardList;
+globalvar BattleBoardList, BattleSoulList, TargetBoard, TargetSoul, VertexBoardList, __BulletList;
 TargetBoard = 0;
 TargetSoul = 0;
 BattleBoardList = [];
 VertexBoardList = [];
 BattleSoulList = [];
+__BulletList = [];
 instance_create_depth(320, 320, 0, oBoard);
 instance_create_depth(48, 454, 0, oSoul);
 Camera.Init();

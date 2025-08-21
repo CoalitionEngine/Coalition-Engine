@@ -14,15 +14,12 @@ function Battle_Masking_Start(spr = false) {
 	if (!surface_exists(__surf)) __surf = surface_create(640, 480);
 	surface_set_target(__surf);
 	draw_clear_alpha(c_black, 0);
-	var i = 0;
-	repeat (instance_number(oVertexBoard))
-		draw_surface(instance_find(oVertexBoard, i++).__clip_surf, 0, 0);
-	i = 0;
-	repeat (instance_number(oBoard))
+	with (oVertexBoard)
+		__DrawBackground(c_white);
+	with (oBoard)
 	{
-		var curBoard = instance_find(oBoard, i++);
-		if (!curBoard.VertexMode)
-			draw_surface(curBoard.__surface, 0, 0);
+		if (!VertexMode)
+			draw_surface(__surface, 0, 0);
 	}
 	surface_reset_target();
 	//Masking shader

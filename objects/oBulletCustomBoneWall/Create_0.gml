@@ -1,7 +1,4 @@
 event_inherited();
-RenderCheck = function() {
-	return __active && __time_warn == 0 && oBoard.VertexMode;
-}
 //Whether the bonewall is active or not, it not, it is at the warning state
 __active = false;
 //Internal timer of bonewall

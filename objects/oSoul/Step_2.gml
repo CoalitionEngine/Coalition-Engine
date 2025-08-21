@@ -1,4 +1,4 @@
-if (Battle.State() == BATTLE_STATE.IN_TURN)
+if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 {
 	var move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
 		x_offset = sprite_width / 2,

@@ -1,7 +1,8 @@
 ///@desc Auto destroy
-var view_x = Camera.GetPos("x"), view_y = Camera.GetPos("y"),
-	view_w = Camera.ViewWidth(), view_h = Camera.ViewHeight(),
-	_hspeed = sign(x - xprevious), _vspeed = sign(y - yprevious);
+with (oGlobal.__MainCamera)
+	var view_x = x, view_y = y,
+		view_w = view_width, view_h = view_height;
+var _hspeed = x - xprevious, _vspeed = y - yprevious;
 
 if (_hspeed < 0 && bbox_left + 16 < view_x
 	|| _hspeed > 0 && bbox_right - 16 > view_x + view_w

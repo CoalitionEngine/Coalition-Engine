@@ -19,6 +19,8 @@ function __RenderBullets() {
 	gpu_set_blendmode(bm_subtract);
 	with (oBoard)
 		__DrawBackground(c_black);
+	with (oVertexBoard)
+		__DrawBackground(c_black);
 	gpu_pop_state();
 	//Draw cover board masks
 	with (oBoardCover)
@@ -87,12 +89,8 @@ function __RenderBullets() {
 		with (oBulletCustomBoneWall)
 		{
 			__bullet_rendered = true;
-			if (__active && __time_warn > 0 && !oBoard.VertexMode)
-			{
-				Battle_Masking_Start();
+			if (__active && __time_warn > 0)
 				event_user(0);
-				Battle_Masking_End();
-			}
 		}
 	}
 

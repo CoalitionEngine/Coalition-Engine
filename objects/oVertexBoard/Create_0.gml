@@ -12,8 +12,6 @@ BackgroundColor = c_black;
 __vertices = [];
 //Masking surfaces
 __mask_surf = -1;
-__clip_surf = -1;
-__clip_surf_texture = -1;
 ///Converts the vertex board back to a normal board
 function ConvertToBox(X = x, Y = y, Left, Right, Up, Down, angle = image_angle) {
 	if (!oBoard.VertexMode)
@@ -216,4 +214,18 @@ function __UpdateEars() {
 	//Stores the size of the indice list to prevent
 	//calling ds_list_size() per frame
 	__triangulated_indice_count = ds_list_size(__triangulated_indices);
+}
+function __DrawBackground(bg_col = BackgroundColor)
+{
+	var i = 0;
+	//Draws the shape using triangle list primitives
+	draw_primitive_begin(pr_trianglelist);
+	repeat (__triangulated_indice_count)
+	{
+		for (var j = 0, triangle = __triangulated_indices[| i++]; j < 3; j++) {
+			var Result = __poly_vertices[| triangle[j]].Rotated(image_angle);
+			draw_vertex_color(Result.x, Result.y, bg_col, 1);
+		}
+	}
+	draw_primitive_end();
 }

@@ -4,6 +4,8 @@ var input_horizontal = PRESS_HORIZONTAL,
 	input_cancel = PRESS_CANCEL;
 with (oBoard)
 	__DrawBackground();
+with (oVertexBoard)
+	__DrawBackground();
 draw_set_font(__DefaultFontAsset);
 draw_set_color(c_white);
 //Renders spared enemies

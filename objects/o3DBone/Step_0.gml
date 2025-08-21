@@ -31,5 +31,5 @@ repeat (n)
 	i++;
 }
 
-if (Battle.State() == BATTLE_STATE.MENU)
+if (oBattleController.__battle_state == BATTLE_STATE.MENU)
 	instance_destroy();

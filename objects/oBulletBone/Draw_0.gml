@@ -10,7 +10,8 @@ if (depth < oBoard.depth)
 	var _color_outline = _color;
 	//Using image_index in case you are using several indexes for several types of bones
 	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, 1, _angle, _color, image_alpha);
-	draw_sprite_ext(sprite_index, image_index + 1, x, y, image_xscale, 1, _angle, _color_outline, image_alpha);
+	if (OutlineEnabled)
+		draw_sprite_ext(sprite_index, image_index + 1, x, y, image_xscale, 1, _angle, _color_outline, image_alpha);
 }
 
 if (global.__CoalitionShowHitbox)

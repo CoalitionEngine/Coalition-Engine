@@ -236,7 +236,7 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 		var __tex = sprite_get_texture(texture, image_index),
 			__thick_x = lengthdir_x(thickness / 2, image_angle - 90),
 			__thick_y = lengthdir_y(thickness / 2, image_angle - 90),
-			__length = max(point_distance(0, 0, x, y), point_distance(x, y, Camera.ViewWidth(), Camera.ViewHeight())),
+			__length = max(point_distance(0, 0, x, y), point_distance(x, y, oGlobal.__MainCamera.view_width, oGlobal.__MainCamera.view_height)),
 			__length_x = lengthdir_x(__length, image_angle),
 			__length_y = lengthdir_y(__length, image_angle),
 			color_array = is_array(image_blend),
@@ -287,8 +287,8 @@ function NormalLine(x, y, image_angle, image_index, image_blend, image_alpha, de
 		draw_primitive_end();
 		//Mirror properties
 		var __follow_cam = mirror.follow_camera,
-			mirror_width = __follow_cam ? Camera.ViewWidth() : 640,
-			mirror_height = __follow_cam ? Camera.ViewHeight() : 480;
+			mirror_width = __follow_cam ? oGlobal.__MainCamera.view_width : 640,
+			mirror_height = __follow_cam ? oGlobal.__MainCamera.view_height : 480;
 		if (mirror.horizontal)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);
@@ -433,8 +433,8 @@ function VectorLine(x1, y1, x2, y2, image_index, image_blend, image_alpha, depth
 		draw_primitive_end();
 		//Mirror properties
 		var __follow_cam = mirror.follow_camera,
-			mirror_width = __follow_cam ? Camera.ViewWidth() : 640,
-			mirror_height = __follow_cam ? Camera.ViewHeight() : 480;
+			mirror_width = __follow_cam ? oGlobal.__MainCamera.view_width : 640,
+			mirror_height = __follow_cam ? oGlobal.__MainCamera.view_height : 480;
 		if (mirror.horizontal)
 		{
 			draw_primitive_begin_texture(pr_trianglestrip, __tex);

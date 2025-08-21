@@ -60,7 +60,7 @@ function ConvertToVertex() {
 	}
 	VertexMode = true;
 	var board = instance_create_depth(x, y, depth, oVertexBoard);
-	array_copy(board.__vertices, 0, __vertices, 0, array_length(__vertices));
+	array_copy(board.__vertices, 0, __vertices, 0, 8);
 	board.__UpdateEars();
 	return board;
 }
@@ -90,6 +90,6 @@ function __DrawCoverBoard()
 }
 function __DrawBackground(bg_color = BackgroundColor) {
 	forceinline
-	if (VertexMode) return;
-	draw_sprite_ext(sprPixel, 0, __bg_x, __bg_y, __bg_w, __bg_h, image_angle, bg_color, image_alpha);
+	if (!VertexMode)
+		draw_sprite_ext(sprPixel, 0, __bg_x, __bg_y, __bg_w, __bg_h, image_angle, bg_color, image_alpha);
 }

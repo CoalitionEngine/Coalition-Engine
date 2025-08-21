@@ -10,36 +10,58 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	//Default function for place_meeting cases for bullets that damages player when touched
 	DefaultPlaceMeetingFunction =
 	function(bullet) {
+		static __SoulDist = 8 * sqrt(2);
+		if (!collision_rectangle(x - __SoulDist, y - __SoulDist, x + __SoulDist, y + __SoulDist, bullet, false, true))
+			return false;
 		bullet = instance_place(x, y, bullet);
+		__COALITION_BULLET_ACCOUNT_ANGLE
 		var collision = bullet != noone;
 		if (collision)
 			with (bullet)
 				if (image_alpha < 0.5)
-					return false;
+					collision = false;
 				else
 					Soul.Hurt(Damage);
+		__COALITION_BULLET_UNACCOUNT_ANGLE
 		return collision;
 	},
 	//Default function for place_meeting cases for bullets that has different colors
 	DefaultColorPlaceMeetingFunction =
 	function(bullet) {
+		static __SoulDist = 8 * sqrt(2);
+		if (!collision_rectangle(x - __SoulDist, y - __SoulDist, x + __SoulDist, y + __SoulDist, bullet, false, true))
+			return false;
 		bullet = instance_place(x, y, bullet);
+		__COALITION_BULLET_ACCOUNT_ANGLE
 		var collision = bullet != noone;
 		if (collision)
 		{
 			with (bullet)
 			{
 				if (image_alpha < 0.5)
-					return false;
-				if (is_val(__type, 1, 2))
-				{
-					if ((__type == 1 ? Soul.IsMoving() : !Soul.IsMoving()))
-						Soul.Hurt(Damage);
-				}
-				else if (__type == 0)
-					Soul.Hurt(Damage);
+					collision = false;
+				else
+					switch (__type)
+					{
+						case 0:
+							Soul.Hurt(Damage);
+							break;
+						case 1:
+							if (Soul.IsMoving())
+								Soul.Hurt(Damage);
+								else
+									collision = false;
+							break;
+						case 2:
+							if (!Soul.IsMoving())
+								Soul.Hurt(Damage);
+								else
+									collision = false;
+							break;
+					}
 			}
 		}
+		__COALITION_BULLET_UNACCOUNT_ANGLE
 		return collision;
 	},
 	
@@ -59,13 +81,24 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 				{
 					if (__state == 4 && __beam_alpha >= 0.5)
 					{
-						if (is_val(__type, 1, 2))
+						switch (__type)
 						{
-							if ((__type == 1 ? Soul.IsMoving() : !Soul.IsMoving()))
+							case 0:
 								Soul.Hurt(Damage);
+								break;
+							case 1:
+								if (Soul.IsMoving())
+									Soul.Hurt(Damage);
+								else
+									collision = false;
+								break;
+							case 2:
+								if (!Soul.IsMoving())
+									Soul.Hurt(Damage);
+								else
+									collision = false;
+								break;
 						}
-						else if (__type == 0)
-							Soul.Hurt(Damage);
 					}
 				}
 			}
@@ -74,23 +107,15 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 		//oBulletParents
 		DefaultColorPlaceMeetingFunction,
 	];
-	//Account for extra angle
-	with (oBulletParents)
-	{
-		if (variable_instance_exists(id, "Axis"))
-			image_angle += Axis.angle;
-		if (variable_instance_exists(id, "Len"))
-			image_angle += Len.angle_extra;
-	}
 	var i = 0;
 	repeat (instance_number(oBulletParents))
 	{
-		var curBul = instance_find(oBulletParents, i).object_index;
+		var curBul = __BulletList[i++];
 		if (curBul.Hurtable)
 		{
-			if (array_contains(CheckCollisions, curBul))
+			if (array_contains(CheckCollisions, curBul.object_index))
 			{
-				if (CheckFunctions[array_get_index(CheckCollisions, curBul)](curBul))
+				if (CheckFunctions[array_get_index(CheckCollisions, curBul.object_index)](curBul))
 				{
 					if (curBul.DestroyOnHit)
 						instance_destroy();
@@ -105,14 +130,21 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 				break;
 			}
 		}
-		++i;
-	}
-	//Remove the extra angle
-	with (oBulletParents)
-	{
-		if (variable_instance_exists(id, "Axis"))
-			image_angle -= Axis.angle;
-		if (variable_instance_exists(id, "Len"))
-			image_angle -= Len.angle_extra;
 	}
 }
+
+#macro __COALITION_BULLET_ACCOUNT_ANGLE with (bullet)\
+		{\
+			if (__AxisExists)\
+				image_angle += Axis.angle;\
+			if (__LenExists)\
+				image_angle += Len.angle_extra;\
+		}
+
+#macro __COALITION_BULLET_UNACCOUNT_ANGLE with (bullet)\
+		{\
+			if (__AxisExists)\
+				image_angle -= Axis.angle;\
+			if (__LenExists)\
+				image_angle -= Len.angle_extra;\
+		}

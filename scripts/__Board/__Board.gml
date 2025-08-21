@@ -185,28 +185,10 @@ function BoardMaskAll()
 {
 	forceinline
 	static pix_tex = sprite_get_texture(sprPixel, 0);
-	var i = 0;
 	//Masking of normal boards
 	with (oBoard)
 		__DrawBackground();
-	var k = 0;
 	//Masking of vertex boards
-	repeat (instance_number(oVertexBoard))
-	{
-		with (instance_find(oVertexBoard, k))
-		{
-			draw_set_color(BackgroundColor);
-			draw_primitive_begin(pr_trianglelist);
-			repeat (__triangulated_indice_count)
-			{
-				for (var j = 0, triangle = __triangulated_indices[| i++]; j < 3; j++)
-				{
-					var Result = __poly_vertices[| triangle[j]].Rotated(image_angle);
-					draw_vertex(Result.x, Result.y);
-				}
-			}
-			draw_primitive_end();
-		}
-		++k;
-	}
+	with (oVertexBoard)
+		__DrawBackground();
 }

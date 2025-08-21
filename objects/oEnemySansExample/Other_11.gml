@@ -77,7 +77,7 @@ SetAttack(0, function() {
 		}
 		Bullet_BoneWall(DIR.DOWN, 50, 60, 60);
 		Board.SetSize(70, 70, 70, 70, 0);
-		Bullet_Bone(385, 320, 70, 0, 0, 2);
+		Bullet_Bone(320, 320, 370, 0, 0, 1,,, 45, 3);
 		with (Bullet_BoneBottom(250, 70, 4, 2).Axis)
 		{
 			activate = true;
@@ -87,8 +87,12 @@ SetAttack(0, function() {
 			activate = true;
 		}
 		MakePlatform(320, 300, 4, 0, 30);
+		with (oBoard.ConvertToVertex())
+		{
+			InsertPolygonPoint(0, 320, 200);
+		}
 	}
-	if (time == 900)
+	if (time == 9000)
 		EndTurn();
 });
 PreAttackFunction(3, function() {

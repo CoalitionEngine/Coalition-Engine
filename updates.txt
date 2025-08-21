@@ -1,5 +1,11 @@
 Update Logs
 
+v1.0.8 (TK)
+- Optimized bullet collision code
+- Optimized bones logic and rendering
+- Fixed bug where Frisk can be stuck in a wall if direction changes perpendicularly
+- Optimized vertex board rendering
+
 v1.0.7 (TK)
 Patched:
 - Line disposing error, again.

@@ -44,7 +44,7 @@ if (STATE == BATTLE_STATE.IN_TURN)
 	//Disable green shields when not in turn
 	if (__SoulMode == SOUL_MODE.GREEN)
 	{
-		if (Battle.State() == BATTLE_STATE.IN_TURN)
+		if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 			instance_deactivate_object(oGreenShield);
 		else
 			instance_activate_object(oGreenShield);
@@ -187,7 +187,7 @@ if (STATE == BATTLE_STATE.IN_TURN)
 	//Check if the soul is allowed to go outside the screen
 	if (!CanBeOffscreen)
 	{
-		var camX = Camera.GetPos("x"), camY = Camera.GetPos("y");
+		var camX = oGlobal.__MainCamera.x, camY = oGlobal.__MainCamera.y;
 		x = clamp(x, camX + x_offset, camX + 640 - x_offset);
 		y = clamp(y, camY + y_offset, camY + 480 - y_offset);
 	}

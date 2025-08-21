@@ -13,6 +13,7 @@
 function len_load()
 {
 	forceinline
+	__LenExists = true;
 	Len = {};
 	with (Len)
 	{
@@ -101,6 +102,7 @@ function len_step()
 function axis_load()
 {
 	forceinline
+	__AxisExists = true;
 	Axis = {};
 	with (Axis)
 	{
