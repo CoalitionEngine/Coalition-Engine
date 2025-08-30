@@ -1,5 +1,11 @@
 Update Logs
 
+v1.0.9 (TK)
+- Patched green soul shield not displaying as intended
+- Optimized bullet collision
+- Optimized and fixed green soul arrow creation
+- Fixed `string_to_array` function
+
 v1.0.8 (TK)
 - Optimized bullet collision code
 - Optimized bones logic and rendering

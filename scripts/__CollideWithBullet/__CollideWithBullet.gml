@@ -5,7 +5,7 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	static CheckCollisions =
 	[
 		//Parent always goes last
-		oBulletBone, oGreenArr, oGB, oBulletParents
+		oGreenArr, oGB, oBulletParents
 	], size = array_length(CheckCollisions),
 	//Default function for place_meeting cases for bullets that damages player when touched
 	DefaultPlaceMeetingFunction =
@@ -67,8 +67,6 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	
 	CheckFunctions =
 	[
-		//oBulletBone
-		DefaultColorPlaceMeetingFunction,
 		//oGreenArr
 		DefaultPlaceMeetingFunction,
 		//oGB
@@ -118,7 +116,7 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 				if (CheckFunctions[array_get_index(CheckCollisions, curBul.object_index)](curBul))
 				{
 					if (curBul.DestroyOnHit)
-						instance_destroy();
+						instance_destroy(curBul);
 					break;
 				}
 			}
@@ -126,7 +124,7 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 			else if (DefaultColorPlaceMeetingFunction(curBul))
 			{
 				if (curBul.DestroyOnHit)
-					instance_destroy();
+					instance_destroy(curBul);
 				break;
 			}
 		}

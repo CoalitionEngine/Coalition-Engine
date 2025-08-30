@@ -75,22 +75,15 @@ SetAttack(0, function() {
 			duration = 50
 			vspeed = 2;
 		}
-		Bullet_BoneWall(DIR.DOWN, 50, 60, 60);
-		Board.SetSize(70, 70, 70, 70, 0);
-		Bullet_Bone(320, 320, 370, 0, 0, 1,,, 45, 3);
-		with (Bullet_BoneBottom(250, 70, 4, 2).Axis)
-		{
-			activate = true;
-		}
-		with (Bullet_BoneTop(390, 70, -4).Axis)
-		{
-			activate = true;
-		}
-		MakePlatform(320, 300, 4, 0, 30);
-		with (oBoard.ConvertToVertex())
-		{
-			InsertPolygonPoint(0, 320, 200);
-		}
+		Board.SetSize(42, 42, 42, 42, 0);
+		Board.SetPos(320, 240, 0);
+		Shield.Add(c_blue, c_white, [ord("D"), ord("W"), ord("A"), ord("S")]);
+		Soul.SetMode(SOUL_MODE.GREEN);
+		CreateArrows(120, 30, 6, [
+			"$1", "", "$2", "", "$3", "", "$0", "",
+			"", "", "", "", "", "", "", "",
+			"", "", "", "", "", "", "", "",
+		]);
 	}
 	if (time == 9000)
 		EndTurn();

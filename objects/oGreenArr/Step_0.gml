@@ -9,7 +9,7 @@ __DistanceToTarget -= Speed;
 //Yellow or Diagonal Yellow
 if (__ArrowMode == 1 || __ArrowMode == 3)
 {
-	switch RotateEasing
+	switch (RotateEasing)
 	{
 		case "": case EaseLinear:
 			//Sets the arrow to only rotate if it is 81 pixels away from the soul

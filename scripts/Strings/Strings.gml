@@ -8,9 +8,12 @@
 function string_to_array(str)
 {
 	forceinline
-	var i = 1, len = string_length(str), arr = array_create(len, "");
+	var i = 0, len = string_length(str), arr = array_create(len, "");
 	repeat (len)
-		arr[i] = string_copy(str, i++, 1);
+	{
+		arr[i] = string_copy(str, i + 1, 1);
+		++i;
+	}
 	return arr;
 }
 ///@func array_to_string(array)

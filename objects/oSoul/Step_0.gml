@@ -45,9 +45,9 @@ if (STATE == BATTLE_STATE.IN_TURN)
 	if (__SoulMode == SOUL_MODE.GREEN)
 	{
 		if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
-			instance_deactivate_object(oGreenShield);
-		else
 			instance_activate_object(oGreenShield);
+		else
+			instance_deactivate_object(oGreenShield);
 	}
 	//Soul movement logic
 	switch (__SoulMode)

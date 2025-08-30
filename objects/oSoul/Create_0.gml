@@ -88,7 +88,7 @@ with __GreenShieldData
 	//The amount of shields
 	Amount = 0;
 	//Whether the shields automatically block arrows
-	Auto = true;
+	Auto = false;
 	//Whether to reset image_angle to 0 when turn ends
 	ResetAngleOnTurnEnd = false;
 	//List of shields
