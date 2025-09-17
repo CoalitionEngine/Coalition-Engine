@@ -1,4 +1,5 @@
-///@desc Turns, very trash, working on it
+//Variable safeguard
+__CoalitionEngineError(Dialog.DefaultFont == "" || !is_string(Dialog.DefaultFont), $"{nameof(this)} has an incorrect Dialog.DefaultFont, it should be the name of the font as a string.");
 //Struct step
 if (variable_instance_exists(id, "__Struct_Step") && is_method(__Struct_Step)) __Struct_Step();
 //Turn processing

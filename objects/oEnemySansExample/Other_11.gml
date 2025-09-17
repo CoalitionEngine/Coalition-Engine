@@ -107,4 +107,3 @@ SetAttack(3, function() {
 SetAttack(4, function() {
 	
 });
-BeginAtTurn = true;

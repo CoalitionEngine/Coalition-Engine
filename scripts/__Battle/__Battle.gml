@@ -59,6 +59,7 @@ function __Battle() constructor
 				text = "* " + text;
 			__text_writer = scribble(text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
 		}
+		return self;
 	}
 	///@method SetBoardTarget(target)
 	///@desc Sets the target board globally
@@ -67,6 +68,7 @@ function __Battle() constructor
 	{
 		forceinline
 		TargetBoard = target;
+		return self;
 	}
 	///@method SetSoulTarget(target)
 	///@desc Sets the target soul globally
@@ -75,6 +77,7 @@ function __Battle() constructor
 	{
 		forceinline
 		TargetSoul = target;
+		return self;
 	}
 	///@method EnemyDialog(enemy, turn, text)
 	///@desc This sets the dialog of the enemy
@@ -83,7 +86,7 @@ function __Battle() constructor
 	///@param {string} text The text of the dialog
 	static EnemyDialog = function(enemy, turn, text) {
 		forceinline
-		with (__enemies)
+		with (enemy)
 		{
 			if (!is_array(text))
 				__dialog_text[turn] = text;
@@ -91,6 +94,17 @@ function __Battle() constructor
 				__dialog_text = text;
 			ParseDialog(__dialog_text[oBattleController.__battle_turn]);
 		}
+		return self;
+	}
+	///@method SetButtonActivateTurn(button, activate)
+	///@desc Sets whether the button will activate a turn
+	///@param {real} button The button to set (0-> Fight; 1-> Act; etc.)
+	///@param {bool} activate Whether the button will activate the turn or not
+	static SetButtonActivateTurn = function(button, activate) {
+		forceinline;
+		if ((oBattleController.__button_choice_activate_turn & quick_pow(2, button)) != activate)
+			oBattleController.__button_choice_activate_turn ^= quick_pow(2, button);
+		return self;
 	}
 }
 ///@text > You can use imported images for changing button sprites as well

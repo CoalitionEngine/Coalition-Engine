@@ -384,10 +384,10 @@ function __begin_turn() {
 	//If it is an act, check whether the act chosen activates the turn
 	((__button_choice_activate_turn & 2) && (__action_trigger_turn & quick_pow(2, __menu_choices[1]))))
 	{
-		if (__last_choice == 1)
+		if (__last_choice != 0)
 		{
 			__battle_state = BATTLE_STATE.DIALOG;
-			oEnemyParent.__state = 1;
+			oEnemyParent.__state = BATTLE_STATE.DIALOG;
 			__last_choice = 0;
 			__battle_turn++;
 			with (oEnemyParent)
@@ -644,7 +644,7 @@ function __DrawUI(override_color = undefined) {
 		{
 			if (ShowPredictHP)
 			{
-				__hp_predict += (global.__CoalitionUserItems[coord].Heal - __hp_predict) * RefillSpeed;
+				__hp_predict += (global.__CoalitionUserItems[other.__menu_choices[2]].Heal - __hp_predict) * RefillSpeed;
 				draw_sprite_ext(sprPixel, 0, hp_x + _hp, y, min(__HP + __hp_predict, __MaxHP) * bar_multiplier - _hp, 20, 0, predict_col, abs(dsin(global.timer * 2) * .5) + .2);
 			}
 		}

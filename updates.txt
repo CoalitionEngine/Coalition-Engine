@@ -1,5 +1,12 @@
 Update Logs
 
+v1.0.10 (TK)
+- Patched bug where missing all multi-bar attacks will lead to the fight confirmation state
+- Patched bug where using an item will skip dialog trigger if ITEM can trigger a turn
+- Patched bug where `Battle` functions are not fluent interface
+- Added variable safeguard for enemy dialog preset
+- Added `Battle.SetButtonActivateTurn` to toggle whether the buttons will activate the turn
+
 v1.0.9 (TK)
 - Patched green soul shield not displaying as intended
 - Optimized bullet collision

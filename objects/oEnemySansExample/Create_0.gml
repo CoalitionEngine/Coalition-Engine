@@ -12,6 +12,10 @@ with Enemy
 	SetHPStats(other, 600, 400);
 	SetReward(other, 100, 100);
 }
+Dialog.DefaultFont = "fnt_sans";
+Dialog.DefaultSound = snd_txtSans;
+
+Battle.EnemyDialog(this, 0, "Turn 0.").EnemyDialog(this, 1, "Turn 1.").SetButtonActivateTurn(2, true);
 //__spareable = true;
 Dialog.DefaultFont = "fnt_sans";
 Dialog.DefaultSound = snd_txtSans;

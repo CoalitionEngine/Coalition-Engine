@@ -334,6 +334,7 @@ if (__battle_state == BATTLE_STATE.MENU)
 							_target_state = 3;
 							__battle_state = 0;
 							__menu_text_typist.reset();
+							struct_set_from_hash(global.__input_functions, global.__press_con_hash, false);
 						}
 					}
 					//Set bar as miss if distance is exceeded
