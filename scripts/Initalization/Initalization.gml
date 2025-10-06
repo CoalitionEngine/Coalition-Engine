@@ -51,6 +51,7 @@ function Initialize()
 	InitalizeItem();
 	InitalizeCell();
 	COALITION_DATA.AttackItem = global.__Coalition_Equipments.__equipment_list[$ "Burnt Pan"];
+	COALITION_DATA.DefenseItem = global.__Coalition_Equipments.__equipment_list[$ "Stained Apron"];
 	ConvertItemNameToStat();
 }
 
