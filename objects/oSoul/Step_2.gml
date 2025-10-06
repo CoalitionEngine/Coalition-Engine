@@ -45,7 +45,7 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 				{
 					case DIR.RIGHT: TR.x += 2; BR.x += 2; break;
 					case DIR.UP: TL.y -= 2; TR.y -= 2; break;
-					case DIR.LEFT: TL.x -= 2; TL.x -= 2; break;
+					case DIR.LEFT: TL.x -= 2; BL.x -= 2; break;
 					case DIR.DOWN: BL.y += 2; BR.y += 2; break;
 				}
 				var board_vertices =

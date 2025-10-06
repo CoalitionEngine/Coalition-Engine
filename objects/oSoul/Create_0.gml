@@ -251,7 +251,7 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 		__on_platform = true;
 		while (position_meeting(x + __platform_check[1], y + __platform_check[3], oPlatform))
 		{
-			//Since the platform movement shuold be perpendicular to the soul, x/y are swapped for minor optimization
+			//Since the platform movement should be perpendicular to the soul, x/y are swapped for minor optimization
 			x -= lengthdir_y(0.1, _angle);
 			y -= lengthdir_x(0.1, _angle);
 		}

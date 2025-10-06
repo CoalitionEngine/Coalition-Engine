@@ -37,14 +37,42 @@ function __ResetBoostStats() {
 ///@desc Player data, to call these functions, simply use `Player.XXX()`
 function __Player() constructor
 {
+	__PlayerAttackFormula = __DefaultAttackFormula;
+	__PlayerDefenseFormula = __DefaultDefenseFormula;
+	///@method __DefaultAttackFormula()
+	///@desc The default formula for player attack calculation
+	static __DefaultAttackFormula = function() { return LV() * 2 - 2; }
+	///@method __DefaultDefenseFormula()
+	///@desc The default formula for player defense calculation
+	static __DefaultDefenseFormula = function() { return floor(LV() / 5); }
+	///@method SetAttackFormula(formula)
+	///@desc Sets the formula for player attack calculation
+	///@param {function} formula The function of the formula (Default Undertale's formula)
+	///@return {Struct.__Player}
+	static SetAttackFormula = function(formula = __DefaultAttackFormula)
+	{
+		forceinline
+		__PlayerAttackFormula = formula;
+		return self;
+	}
+	///@method SetDefenseFormula(formula)
+	///@desc Sets the formula for player defense calculation
+	///@param {function} formula The function of the formula (Default Undertale's formula)
+	///@return {Struct.__Player}
+	static SetDefenseFormula = function(formula = __DefaultDefenseFormula)
+	{
+		forceinline
+		__PlayerDefenseFormula = formula;
+		return self;
+	}
 	///@method SetBaseStats()
 	///@desc Sets the base ATK and DEF of the player
 	///@return {Struct.__Player}
 	static SetBaseStats = function()
 	{
 		forceinline
-		global.__CoalitionPlayerBaseAttack = LV() * 2 - 2;
-		global.__CoalitionPlayerBaseDefense = floor(LV() / 5);
+		global.__CoalitionPlayerBaseAttack = __PlayerAttackFormula();
+		global.__CoalitionPlayerBaseDefense = __PlayerDefenseFormula();
 		return self;
 	}
 	///@method GetLvBaseExp()
