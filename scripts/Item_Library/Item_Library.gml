@@ -20,11 +20,11 @@ function ItemLibrarySetStruct(item = undefined, ID, param)
 		while (curUseText != $"Missing text entry: \"{base_txt}.{ID}.Use.{i}\"")
 		{
 			array_push(UseTexts, curUseText);
-			curUseText = lexicon_text($"Items.{ID}.Use.{++i}");
+			curUseText = lexicon_text($"{base_txt}.{ID}.Use.{++i}");
 		}
 		DropText = lexicon_text($"{base_txt}.{ID}.Drop");
 		BattleDescription = lexicon_text($"{base_txt}.{ID}.BattleDesc");
-		StatBoostText = lexicon_text($"{base_txt}.{ID}.Stats");
+		StatBoostText = is_instanceof(param, Equipment) ? "" : lexicon_text($"{base_txt}.{ID}.Stats");
 		if (!struct_exists(self, "ConsumeFunction"))
 			ConsumeFunction = COALITION_EMPTY_FUNCTION;
 		if (!struct_exists(self, "ItemUseCount"))

@@ -99,15 +99,17 @@ if (__menu_opened) // If menu is open
 		if (input_confirm)
 		{
 			__menu_state = MENU_MODE.ITEM_DONE;
-			healing_text = "";
+			var item_use_text = ["", global.__CoalitionUserItems[__menu_choices[MENU_MODE.ITEM]].Description, global.__CoalitionUserItems[__menu_choices[MENU_MODE.ITEM]].DropText];
 			if (__menu_choices[MENU_MODE.ITEM_INTERACTING] == 0) // USE
+			{
 				Item_Use(global.__CoalitionUserItems[__menu_choices[MENU_MODE.ITEM]]);
+				item_use_text[0] = healing_text;
+			}
 			elif (__menu_choices[MENU_MODE.ITEM_INTERACTING] == 2) // DROP
 			{
 				Item_Remove(__menu_choices[MENU_MODE.ITEM]);
 				audio_play(snd_menu_confirm);
 			}
-			var item_use_text = [healing_text, global.__CoalitionUserItems[__menu_choices[MENU_MODE.ITEM]].Description, global.__CoalitionUserItems[__menu_choices[MENU_MODE.ITEM]].DropText];
 			var itemActText = item_use_text[__menu_choices[MENU_MODE.ITEM_INTERACTING]];
 			if (string_width(itemActText) > 0)
 				Overworld_CreateDialog(itemActText, "fnt_dt_mono", snd_txtTyper, !menu_at_top);

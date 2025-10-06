@@ -78,7 +78,7 @@ if (__battle_state == BATTLE_STATE.MENU)
 					draw_text(xx, yy, "* " + global.__CoalitionUserItems[i + _coord].__GetName());
 				}
 				// Heal text and Page
-				if (UI.ShowPredictHP)
+				if (UI.ShowPredictHP && !struct_exists(global.__Coalition_Equipments.__equipment_list, global.__CoalitionUserItems[coord]))
 					draw_text_color(128, 341, string_concat("(+", global.__CoalitionUserItems[coord].Heal, ")"), c_lime, c_lime, c_lime, c_lime, 1);
 				draw_text(384, 341, __LangItemPageText[c_div]);
 				break;

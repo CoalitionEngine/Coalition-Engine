@@ -1,6 +1,6 @@
 #region Engine
 __empty_function = function() { };
-#macro __COALITION_ENGINE_VERSION "v1.0.11"
+#macro __COALITION_ENGINE_VERSION "v1.0.12"
 #macro __COALITION_INSTANCE_AUTO_DEPTH if (instance_exists(oBoard))\
 	{\
 		depth = oBoard.depth;\

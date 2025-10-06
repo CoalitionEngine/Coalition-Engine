@@ -23,8 +23,6 @@ enum EQUIPMENT_TYPE {
 function Equipment() constructor {
 	static __InitializeTexts = function(key) {
 		name = lexicon_text($"Equipments.{key}.Name");
-		UseTexts = lexicon_text($"Equipments.{key}.Use");
-		desc = lexicon_text($"Equipments.{key}.Info");
 		DropText = lexicon_text($"Equipments.{key}.Drop");
 	}
 	id = -1;

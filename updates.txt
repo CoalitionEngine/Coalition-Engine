@@ -1,5 +1,8 @@
 Update Logs
 
+v1.0.12 (TK)
+- Fixed bug where you cannot swap weapons via items
+
 v1.0.11 (TK)
 - Fixed typo in platform collision comment
 - Fixed platform movement bug when moving to the left

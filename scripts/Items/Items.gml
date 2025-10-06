@@ -43,6 +43,7 @@ function InitalizeItem() {
 	Item_Set(ITEM.STEAK, 2);
 	Item_Set(ITEM.SEATEA, 3);
 	Item_Set(ITEM.LHERO, 4);
+	Item_Set(ITEM.STICK, 5);
 }
 
 ///@func Item_Create(item)
@@ -59,9 +60,9 @@ function Item_Create(item)
 ///@param {real} item The item to use
 function Item_Use(item) {
 	forceinline
-	var UseTexts = item.UseTexts[item.__item_used_count++];
 	var hp_text = "";
-	var item_is_equipment = is_instanceof(item, Equipment);
+	var item_is_equipment = struct_exists(global.__Coalition_Equipments.__equipment_list, item);
+	var UseTexts = item.UseTexts[item.__item_used_count++];
 	//Execute item effect
 	with (item)
 	{

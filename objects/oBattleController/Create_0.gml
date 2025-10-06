@@ -642,7 +642,7 @@ function __DrawUI(override_color = undefined) {
 		var predict_col = override_color ?? c_lime;
 		with (UI)
 		{
-			if (ShowPredictHP)
+			if (ShowPredictHP && !struct_exists(global.__Coalition_Equipments.__equipment_list, global.__CoalitionUserItems[other.__menu_choices[2]]))
 			{
 				__hp_predict += (global.__CoalitionUserItems[other.__menu_choices[2]].Heal - __hp_predict) * RefillSpeed;
 				draw_sprite_ext(sprPixel, 0, hp_x + _hp, y, min(__HP + __hp_predict, __MaxHP) * bar_multiplier - _hp, 20, 0, predict_col, abs(dsin(global.timer * 2) * .5) + .2);
