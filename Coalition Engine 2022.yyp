@@ -193,7 +193,7 @@
     {"$GMIncludedFile":"","%Name":"codeTheme.css","CopyToMask":-1,"filePath":"datafiles/Tome/assets","name":"codeTheme.css","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customTheme.css","CopyToMask":-1,"filePath":"datafiles/Tome/assets","name":"customTheme.css","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"docsicon.png","CopyToMask":-1,"filePath":"datafiles/Tome/assets","name":"docsicon.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"config.js","CopyToMask":3035426170322551022,"filePath":"datafiles/Tome","name":"config.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"config.js","CopyToMask":-1,"filePath":"datafiles/Tome","name":"config.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"index.html","CopyToMask":-1,"filePath":"datafiles/Tome","name":"index.html","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
