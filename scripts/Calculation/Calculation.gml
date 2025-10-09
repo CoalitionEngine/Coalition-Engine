@@ -213,3 +213,8 @@ function struct_equals(struct_a, struct_b)
 	}
 	return true;
 }
+
+function distance_to_line(source_x, source_y, start_x, start_y, end_x, end_y)
+{
+	return abs((end_y - start_y) * source_x - (end_x - start_x) * source_y + end_x * start_y - end_y * start_x) / point_distance(start_x, start_y, end_x, end_y);
+}

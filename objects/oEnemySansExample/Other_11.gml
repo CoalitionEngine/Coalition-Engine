@@ -70,23 +70,21 @@ SetAttack(2, function() {
 SetAttack(0, function() {
 	if (time == 0)
 	{
-		with CreateNormalLine(320, -20, 0,, 3)
+		Board.SetSize(70, 70, 70, 70, 0);
+		for (var i = 0; i < 4; ++i)
 		{
-			duration = 50
-			vspeed = 2;
+			var p = MakePlatform(320 + lengthdir_x(50, i * 90), 320 + lengthdir_y(50, i * 90), 0, 0, 50, false, i * 90 + 90);
+			//TweenFire(p, "io", TWEEN_MODE_PATROL, false, 0, 30, "x>", "@+30");
 		}
-		Board.SetSize(42, 42, 42, 42, 0);
-		Board.SetPos(320, 240, 0);
-		Shield.Add(c_blue, c_white, [ord("D"), ord("W"), ord("A"), ord("S")]);
-		Soul.SetMode(SOUL_MODE.GREEN);
-		CreateArrows(120, 30, 6, [
-			"$1", "", "$2", "", "$3", "", "$0", "",
-			"", "", "", "", "", "", "", "",
-			"", "", "", "", "", "", "", "",
-		]);
 	}
-	if (time == 9000)
-		EndTurn();
+	if (keyboard_check_pressed(ord("W")))
+		Soul.Slam(DIR.UP);
+	if (keyboard_check_pressed(ord("A")))
+		Soul.Slam(DIR.LEFT);
+	if (keyboard_check_pressed(ord("S")))
+		Soul.Slam(DIR.DOWN);
+	if (keyboard_check_pressed(ord("D")))
+		Soul.Slam(DIR.RIGHT);
 });
 PreAttackFunction(3, function() {
 	Board.SetSize(, 160, 320, 320, 0);

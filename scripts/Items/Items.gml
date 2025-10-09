@@ -2,7 +2,7 @@
 ///@title Items
 ///@text These are the functions that are related to items in the game.
 
-function InitalizeItem() {
+function InitializeItem() {
 	forceinline;
 	#region Set basic item info
 	ItemLibrarySetStruct(ITEM.PIE, "Pie", {

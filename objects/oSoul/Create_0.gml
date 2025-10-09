@@ -49,8 +49,6 @@ __on_ground = false;
 __on_ceil = false;
 //Whether the soul is on a platform
 __on_platform = false;
-//Platform position checking
-__platform_check = [];
 //Self explanatory
 __being_slammed = false;
 #endregion
@@ -157,10 +155,11 @@ function BasicMovement(hor = true, ver = true) {
 ///@params {bool} checks [Right, Up, left, Down][Ground, Ceiling]
 function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_ground, left_ceil, down_ground, down_ceil)
 {
-	__on_ground = false;
-	__on_ceil = false;
-	__on_platform = false;
-	var _angle = image_angle, check_board = instance_exists(oBoard),
+	var __on_ground = false,
+		__on_ceil = false,
+		__on_platform = false,
+		_angle = image_angle,
+		check_board = instance_exists(oBoard),
 		move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
 		x_offset = sprite_width / 2,
 		y_offset = sprite_height / 2;
@@ -174,10 +173,8 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 		__fall_gravity = 0.125;
 	else if (__fall_speed <= -2)
 		__fall_gravity = 0.05;
-
+	//Apply gravity to speed
 	__fall_speed += __fall_gravity;
-	//Re-initalize platform checking
-	__platform_check = array_create(4, 0);
 	//Input and collision check of different directions of soul
 	//Down
 	if (_angle == 0)
@@ -187,10 +184,6 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 			__on_ground = down_ground;
 			__on_ceil = down_ceil;
 		}
-
-		__platform_check[2] = y_offset + 1;
-		__platform_check[3] = y_offset;
-
 		jump_input = struct_get_from_hash(__input_functions, global.__up_hash);
 		move_input = __h_spd * move_spd;
 	}
@@ -202,11 +195,6 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 			__on_ground = up_ground;
 			__on_ceil = up_ceil;
 		}
-
-		__platform_check[2] = -10;
-		__platform_check[3] = -y_offset;
-				
-
 		jump_input = struct_get_from_hash(__input_functions, global.__down_hash);
 		move_input = __h_spd * -move_spd;
 	}
@@ -218,10 +206,6 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 			__on_ground = right_ground;
 			__on_ceil = right_ceil;
 		}
-
-		__platform_check[0] = x_offset + 1;
-		__platform_check[1] = -x_offset;
-
 		jump_input = struct_get_from_hash(__input_functions, global.__left_hash);
 		move_input = __v_spd * -move_spd;
 	}
@@ -233,62 +217,73 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 			__on_ground = left_ground;
 			__on_ceil = left_ceil;
 		}
-
-		__platform_check[0] = -10;
-		__platform_check[1] = x_offset;
-
 		jump_input = struct_get_from_hash(__input_functions, global.__right_hash);
 		move_input = __v_spd * move_spd;
 	}
-		
 	//Platform checking
-	var RelativePositionX = x + __platform_check[0],
-		RelativePositionY = y + __platform_check[2],
-		RespecitvePlatform = instance_position(RelativePositionX, RelativePositionY, oPlatform);
-	//If the soul is on a platform, stop it's falling	
-	if (position_meeting(RelativePositionX, RelativePositionY, oPlatform) && __fall_speed >= 0)
-	{
-		__on_platform = true;
-		while (position_meeting(x + __platform_check[1], y + __platform_check[3], oPlatform))
+	var RespectivePlatform = noone;
+	with (oPlatform)
+		if (__CollideCheck(other))
 		{
-			//Since the platform movement should be perpendicular to the soul, x/y are swapped for minor optimization
-			x -= lengthdir_y(0.1, _angle);
-			y -= lengthdir_x(0.1, _angle);
+			__on_platform = true;
+			RespectivePlatform = self;
+			break;
 		}
-	}
 	//If the platform is sticky, carry the soul
-	with (RespecitvePlatform)
+	if (RespectivePlatform != noone)
 	{
-		if (sticky)
+		with (RespectivePlatform)
 		{
-			other.x += x - xprevious;
-			other.y += y - yprevious;
+			if (sticky)
+			{
+				other.x += x - xprevious;
+				other.y += y - yprevious;
+			}
 		}
 	}
-	//Slamming
+	///@method TriggerSlam
+	static TriggerSlam = function()
+	{
+		__being_slammed = false;
+		Camera.Shake(global.__CoalitionBattlePlayerSlamCamShake);
+		if (global.CoalitionSlamDamage > 0)
+			global.HP = max(1, global.HP - global.CoalitionSlamDamage);
+		audio_play(snd_impact, true);
+	}
 	if (__on_ground || __on_platform || (__fall_speed < 0 && __on_ceil))
 	{
+		//Slamming
 		if (__being_slammed)
-		{
-			__being_slammed = false;
-			Camera.Shake(global.__CoalitionBattlePlayerSlamCamShake);
-			if (global.CoalitionSlamDamage > 0)
-				global.HP = max(1, global.HP - global.CoalitionSlamDamage);
-			audio_play(snd_impact, true);
-		}
+			TriggerSlam();
 		__fall_speed = (__on_ground || __on_platform) && jump_input ? -3 : 0;
 	}
 	else if (!jump_input && __fall_speed < -0.5)
 		__fall_speed = -0.5;
-	//Rotate the movement by the soul's angle
-	__move_x = lengthdir_x(move_input, _angle) - lengthdir_y(__fall_speed, _angle);
-	__move_y = lengthdir_y(move_input, _angle) + lengthdir_x(__fall_speed, _angle);
-	image_angle = _angle;
 	//Finalize movement
 	if (Movable)
 	{
-		x += __move_x;
-		y += __move_y;
+		//Apply relative vertical movement
+		var _fall_x = -lengthdir_y(__fall_speed, _angle), _fall_y = lengthdir_x(__fall_speed, _angle);
+		repeat (10)
+		{
+			x += _fall_x / 10;
+			y += _fall_y / 10;
+			with (oPlatform)
+				if (__CollideCheck(other))
+				{
+					__on_platform = true;
+					break;
+				}
+			if (__on_platform)
+			{
+				if (__being_slammed)
+					TriggerSlam();
+				break;
+			}
+		}
+		//Apply relative horizontal movement
+		x += lengthdir_x(move_input, _angle);
+		y += lengthdir_y(move_input, _angle);
 	}
 }
 #endregion	

@@ -48,9 +48,8 @@ function Initialize()
 	
 	//Finally, initalize the data when everything is set up
 	__CoalitionInitalize();
-	InitalizeItem();
-	InitalizeCell();
-	COALITION_DATA.AttackItem = global.__Coalition_Equipments.__equipment_list[$ "Burnt Pan"];
+	InitializeItem();
+	InitializeCell();
 	ConvertItemNameToStat();
 }
 

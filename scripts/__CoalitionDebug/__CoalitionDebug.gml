@@ -151,7 +151,7 @@ function __CoalitionEngineError(check, text)
 function __CoalitionGMVersion() {
 	forceinline
 	static _version = undefined;
-	if _version != undefined return _version;
+	if (_version != undefined) return _version;
 	
 	var _pos = 1, _version_str = GM_runtime_version, _number_str = undefined;
 	_version = {

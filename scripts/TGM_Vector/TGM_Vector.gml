@@ -60,7 +60,7 @@ function Vector2(_x=0, _y=_x) constructor {
 	/// @desc Returns the vector rotated by the amount supplied in degrees.
 	static Rotated = function(_angle) {
 		gml_pragma("forceinline");
-		var _sin = dsin(_angle), _cos = dcos(_angle);
+		var _sin = -dsin(_angle), _cos = dcos(_angle);
 		return new Vector2(
 			x*_cos - y*_sin,
 			x*_sin + y*_cos

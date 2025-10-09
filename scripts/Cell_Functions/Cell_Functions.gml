@@ -1,4 +1,4 @@
-function InitalizeCell() {
+function InitializeCell() {
 	forceinline;
 	//Safety check
 	Cell_LibrarySet("OWBox", "this text should not appear");

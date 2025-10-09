@@ -4,7 +4,7 @@ ItemLibrary = ds_list_create();
 ///@desc Sets the information of an item in the global item library
 ///@param {real} item The index of the item (i.e. ITEM.PIE)
 ///@param {string} ID	The ID of the item in the localization files
-///@param {struct} param The struct of item data (See ItemLibraryInit() in Items for more information)
+///@param {struct} param The struct of item data (See InitializeItem() in Items for more information)
 function ItemLibrarySetStruct(item = undefined, ID, param)
 {
 	forceinline
