@@ -5,7 +5,7 @@ ItemLibrary = ds_list_create();
 ///@param {real} item The index of the item (i.e. ITEM.PIE)
 ///@param {string} ID	The ID of the item in the localization files
 ///@param {struct} param The struct of item data (See InitializeItem() in Items for more information)
-function ItemLibrarySetStruct(item = undefined, ID, param)
+function ItemLibrarySetStruct(item, ID, param)
 {
 	forceinline
 	with (param)
@@ -48,10 +48,7 @@ function ItemLibrarySetStruct(item = undefined, ID, param)
 		//Register effect as expired
 		function EffectExpire() { __item_effect_expired = true; }
 	}
-	if (!is_undefined(item))
-		global.__CoalitionItemLibrary[| item] = param;
-	else
-		ds_list_add(global.__CoalitionItemLibrary, param);
+	global.__CoalitionItemLibrary[| item] = param;
 }
 
 ///@text This function is called by `ItemLibrarySet()`, so it is better to just call this directly.

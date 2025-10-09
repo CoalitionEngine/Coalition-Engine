@@ -74,7 +74,7 @@ SetAttack(0, function() {
 		for (var i = 0; i < 4; ++i)
 		{
 			var p = MakePlatform(320 + lengthdir_x(50, i * 90), 320 + lengthdir_y(50, i * 90), 0, 0, 50, false, i * 90 + 90);
-			//TweenFire(p, "io", TWEEN_MODE_PATROL, false, 0, 30, "x>", "@+30");
+			TweenFire(p, "io", TWEEN_MODE_PATROL, false, 0, 30, "x>", "@+30");
 		}
 	}
 	if (keyboard_check_pressed(ord("W")))

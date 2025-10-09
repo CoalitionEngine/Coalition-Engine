@@ -1,5 +1,8 @@
 Update Logs
 
+v1.0.14 (TK)
+- Deserialized platform collision code for optimization
+
 v1.0.13 (TK)
 - Fixed script typos
 - Removed leftover codes/assets

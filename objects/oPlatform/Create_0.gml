@@ -19,21 +19,24 @@ function __CollideCheck(soul)
 	//Not colliding if the angle difference is too high
 		abs(angle_difference(soul.image_angle, image_angle)) > 75)
 		return false;
-	var SoulPoint = new Vector2(soul.x, soul.y),
-		Left = new Vector2(x, y), Delta = new Vector2(-length / 2, -4);
-	//Get the tip of the soul
-	SoulPoint = SoulPoint.Add(new Vector2(0, 8).Rotated(soul.image_angle));
-	//Get top left position of platform with rotation
-	Left = Left.Add(Delta.Rotated(image_angle));
-	//Get top right position of platform with rotation
-	var Right = Left.Add(new Vector2(length, 0).Rotated(image_angle));
-	//Gets the projection vector of soul to platform
-	var PlatV = Right.Subtract(Left),
-		SoulV = SoulPoint.Subtract(Left),
-		Proj = PlatV.Scale(SoulV.Dot(PlatV) / PlatV.SqrMagnitude());
-	//Not colliding if soul is outside of horizontal bounds of platform
-	if (Proj.Dot(PlatV) < 0 || Proj.Magnitude() > PlatV.Magnitude())
+	var //Tip of the soul
+		soul_x = soul.x + 8 * dsin(soul.image_angle), soul_y = soul.y + 8 * dcos(soul.image_angle),
+		//Top left corner of the platform
+		left_x = x + lengthdir_x(-length / 2, image_angle) + lengthdir_y(-4, -image_angle),
+		left_y = y + lengthdir_x(-4, image_angle) - lengthdir_y(-length / 2, -image_angle),
+		//Rotated length vector of the platform
+		plat_delta_x = lengthdir_x(length, image_angle), plat_delta_y = lengthdir_y(length, image_angle),
+		//Top right corner of the platform
+		right_x = left_x + plat_delta_x, right_y = left_y + plat_delta_y,
+		//Displacement vector between soul and left side of platform
+		soul_delta_x = soul_x - left_x, soul_delta_y = soul_y - left_y,
+		//Scalar projection of the soul to platform
+		proj_scale = (soul_delta_x * plat_delta_x + soul_delta_y * plat_delta_y) / (length * length),
+		//Projection vector of soul to platform
+		proj_x = proj_scale * plat_delta_x, proj_y = proj_scale * plat_delta_y;
+	//Not colliding if soul is outside of horizontal bounds of platform (Left side OR Right side)
+	if (proj_x * plat_delta_x + proj_y * plat_delta_y < 0 || point_distance(0, 0, proj_x, proj_y) > point_distance(0, 0, plat_delta_x, plat_delta_y))
 		return false;
 	//If the nearest point of soul to platform is close enough, it is colliding
-	return Proj.Add(Left).Subtract(SoulPoint).Magnitude() < 2;
+	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < 2;
 }
