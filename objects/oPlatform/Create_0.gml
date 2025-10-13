@@ -19,7 +19,7 @@ function __CollideCheck(soul)
 		//Get normal angle
 		_norm_ang = image_angle + 90,
 		//Get delta angle from norm
-		_delta_ang = _norm_ang - darctan(_dy / _dx),
+		_delta_ang = _norm_ang - darctan2(_dy, _dx),
 		//Get delta along normal
 		_norm_delta_x = _dx * dcos(_delta_ang),
 		_norm_delta_y = _dy * -dsin(_delta_ang),
