@@ -109,6 +109,7 @@ if (__menu_opened) // If menu is open
 			{
 				Item_Remove(__menu_choices[MENU_MODE.ITEM]);
 				audio_play(snd_menu_confirm);
+				Overworld_CreateDialog(item_use_text[2], "fnt_dt_mono", snd_txtTyper, !menu_at_top);
 			}
 			var itemActText = item_use_text[__menu_choices[MENU_MODE.ITEM_INTERACTING]];
 			if (string_width(itemActText) > 0)

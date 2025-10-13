@@ -21,9 +21,12 @@ enum EQUIPMENT_TYPE {
 	WEAPON, ARMOR
 }
 function Equipment() constructor {
-	static __InitializeTexts = function(key) {
-		name = lexicon_text($"Equipments.{key}.Name");
-		DropText = lexicon_text($"Equipments.{key}.Drop");
+	///@method __InitializeDropText(key)
+	///@desc Updates the drop text for equipment if no custom text is placed
+	///@param {string} key The key of the item in the localization file
+	static __InitializeDropText = function(key) {
+		if (string_width(DropText) == 0)
+			DropText = $"* You threw away the {Name}.";
 	}
 	id = -1;
 	Type = EQUIPMENT_TYPE.ARMOR;
@@ -62,5 +65,5 @@ function Equipment() constructor {
 		ConvertItemNameToStat();
 	}
 	//Override ToString function for ease of access
-	function toString() { return name; }
+	function toString() { return Name; }
 }

@@ -487,7 +487,7 @@
     {"id":{"name":"GreenSoulFunctions","path":"scripts/GreenSoulFunctions/GreenSoulFunctions.yy",},},
     {"id":{"name":"ImGui_Misc","path":"scripts/ImGui_Misc/ImGui_Misc.yy",},},
     {"id":{"name":"ImGui","path":"scripts/ImGui/ImGui.yy",},},
-    {"id":{"name":"Initalization","path":"scripts/Initalization/Initalization.yy",},},
+    {"id":{"name":"Initialization","path":"scripts/Initialization/Initialization.yy",},},
     {"id":{"name":"InputBindingFind","path":"scripts/InputBindingFind/InputBindingFind.yy",},},
     {"id":{"name":"InputBindingFindCollisions","path":"scripts/InputBindingFindCollisions/InputBindingFindCollisions.yy",},},
     {"id":{"name":"InputBindingGet","path":"scripts/InputBindingGet/InputBindingGet.yy",},},

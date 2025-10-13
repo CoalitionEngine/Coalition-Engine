@@ -80,7 +80,6 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 		_dist = point_distance(board_x, board_y, r_x, r_y);
 		_dir = point_direction(board_x, board_y, r_x, r_y) + board_angle;
 		//Clamps the soul inside the rectangle board
-		var cx = x, cy = y;
 		x = lengthdir_x(_dist, _dir) + board_x;
 		y = lengthdir_y(_dist, _dir) + board_y;
 		//Checks bullet collision

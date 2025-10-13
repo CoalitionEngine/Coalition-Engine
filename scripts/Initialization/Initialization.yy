@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Initalization",
+  "%Name":"Initialization",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Initalization",
+  "name":"Initialization",
   "parent":{
     "name":"Initialize",
     "path":"folders/Coalition Engine/Initialize.yy",

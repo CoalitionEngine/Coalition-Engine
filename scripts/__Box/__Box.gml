@@ -34,7 +34,7 @@ function __Box() constructor
 				name += " x" + string(uses_left);
 		}
 	}
-	///@method Count(ID)
+	///@method ItemCount(ID)
 	///@desc Gets the number of items in the Box
 	///@param {real} ID The ID of the Box
 	///@return {real}

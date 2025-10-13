@@ -14,9 +14,19 @@ len_load();
 
 function __CollideCheck(soul)
 {
-	//Not colliding if soul is not falling
-	if (soul.__fall_speed < 0 ||
-	//Not colliding if the angle difference is too high
+	//Get delta
+	var _dx = x - xprevious, _dy = y - yprevious,
+		//Get normal angle
+		_norm_ang = image_angle + 90,
+		//Get delta angle from norm
+		_delta_ang = _norm_ang - darctan(_dy / _dx),
+		//Get delta along normal
+		_norm_delta_x = _dx * dcos(_delta_ang),
+		_norm_delta_y = _dy * -dsin(_delta_ang),
+		_norm_delta = sqrt(_norm_delta_x * _norm_delta_x + _norm_delta_y * _norm_delta_y);
+	//Not colliding if soul is not relatively falling
+	if ((soul.__fall_speed < 0 && -soul.__fall_speed > _norm_delta) ||
+		//Not colliding if the angle difference is too high
 		abs(angle_difference(soul.image_angle, image_angle)) > 75)
 		return false;
 	var //Tip of the soul
@@ -38,5 +48,5 @@ function __CollideCheck(soul)
 	if (proj_x * plat_delta_x + proj_y * plat_delta_y < 0 || point_distance(0, 0, proj_x, proj_y) > point_distance(0, 0, plat_delta_x, plat_delta_y))
 		return false;
 	//If the nearest point of soul to platform is close enough, it is colliding
-	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < 2;
+	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < _norm_delta + 1;
 }

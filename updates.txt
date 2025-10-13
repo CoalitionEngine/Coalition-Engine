@@ -1,5 +1,12 @@
 Update Logs
 
+v1.0.15 (TK)
+- Fixed bug where dropping items do not have a throw text
+- Fixed typo in documentation
+- Fixed typo for "Initialization"
+- Fixed `ItemLibrarySet` causes a crash
+- Fixed bug where platform collisions break when soul is jumping at the same direction of the platform movement
+
 v1.0.14 (TK)
 - Deserialized platform collision code for optimization
 

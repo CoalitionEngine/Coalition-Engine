@@ -74,7 +74,7 @@ function ItemLibrarySetStruct(item, ID, param)
 function ItemLibrarySet(item, Name, Heal, ConsumeFunction = COALITION_EMPTY_FUNCTION, uses = 1, ShopPrice = 0)
 {
 	forceinline
-	ItemLibrarySetStruct(item, {
+	ItemLibrarySetStruct(item, Name, {
 		item, Name, Heal, ConsumeFunction, ShopPrice,
 		ItemUseCount: uses,
 	});

@@ -205,13 +205,13 @@ function RegisterWeapon(ItemID, Name, Value, BarCount = 1, AttackAnimation = und
 	global.__Coalition_Equipments.__equipment_list[$ Name] = new Equipment();
 	with (global.__Coalition_Equipments.__equipment_list[$ Name])
 	{
-		__InitializeTexts(Name);
 		id = ItemID;
 		self.Type = EQUIPMENT_TYPE.WEAPON;
 		self.BarCount = BarCount;
 		self.__AttackAnimation = AttackAnimation ?? global.__Coalition_Equipments.__default_attack_animation;
 		Attack = Value;
 		ItemLibrarySetStruct(ItemID, Name, self);
+		__InitializeDropText(Name);
 	}
 }
 ///@func RegisterArmor(ItemID, Name, Value, [Consumable], [Heal], [ConsumeEvent])
@@ -226,7 +226,6 @@ function RegisterArmor(ItemID, Name, Value, Consumable = false, Heal = 0, Consum
 	global.__Coalition_Equipments.__equipment_list[$ Name] = new Equipment();
 	with (global.__Coalition_Equipments.__equipment_list[$ Name])
 	{
-		__InitializeTexts(Name);
 		id = ItemID;
 		self.Type = EQUIPMENT_TYPE.ARMOR;
 		self.Consumable = Consumable;
@@ -234,6 +233,7 @@ function RegisterArmor(ItemID, Name, Value, Consumable = false, Heal = 0, Consum
 		self.Heal = Heal;
 		Defense = Value;
 		ItemLibrarySetStruct(ItemID, Name, self);
+		__InitializeDropText(Name);
 	}
 }
 ///@func Equipment_SetAttackBoost(EquipmentID, boost)
