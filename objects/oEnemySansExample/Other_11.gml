@@ -78,13 +78,13 @@ SetAttack(0, function() {
 		}
 	}
 	if (keyboard_check_pressed(ord("W")))
-		Soul.Slam(DIR.UP);
+		Soul.Slam(DIR.UP, 40);
 	if (keyboard_check_pressed(ord("A")))
-		Soul.Slam(DIR.LEFT);
+		Soul.Slam(DIR.LEFT, 40);
 	if (keyboard_check_pressed(ord("S")))
-		Soul.Slam(DIR.DOWN);
+		Soul.Slam(DIR.DOWN, 40);
 	if (keyboard_check_pressed(ord("D")))
-		Soul.Slam(DIR.RIGHT);
+		Soul.Slam(DIR.RIGHT, 40);
 });
 PreAttackFunction(3, function() {
 	Board.SetSize(, 160, 320, 320, 0);

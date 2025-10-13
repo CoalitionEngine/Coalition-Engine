@@ -1,5 +1,9 @@
 Update Logs
 
+v1.0.16 (TK)
+- Fixed static platforms causes a crash
+- Slightly enhanced platform's collision with high speed soul
+
 v1.0.15 (TK)
 - Fixed bug where dropping items do not have a throw text
 - Fixed typo in documentation

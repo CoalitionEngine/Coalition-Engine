@@ -263,11 +263,12 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 	if (Movable)
 	{
 		//Apply relative vertical movement
-		var _fall_x = -lengthdir_y(__fall_speed, _angle), _fall_y = lengthdir_x(__fall_speed, _angle);
-		repeat (10)
+		var _fall_x = -lengthdir_y(__fall_speed, _angle), _fall_y = lengthdir_x(__fall_speed, _angle),
+			step_count = max(10, __fall_speed / 2);
+		repeat (step_count)
 		{
-			x += _fall_x / 10;
-			y += _fall_y / 10;
+			x += _fall_x / step_count;
+			y += _fall_y / step_count;
 			with (oPlatform)
 				if (__CollideCheck(other))
 				{
