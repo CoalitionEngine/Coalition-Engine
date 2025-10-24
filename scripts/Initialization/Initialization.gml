@@ -72,7 +72,7 @@ function __CoalitionInitalize()
 	#region Data save/loading
 	//Save file (Free to edit)
 	COALITION_SAVE_FILE = {};
-	static Item_Preset = array_create(8, 0), Cell_Preset = [],
+	static Item_Preset = [], Cell_Preset = [],
 		Box_Preset = {}  //Insert the items manually
 		Box_Preset[$ 0] = array_create(10, 0);	// OW Box
 		Box_Preset[$ 1] = array_create(10, 0);	// Dimensional Box A

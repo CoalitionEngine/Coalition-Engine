@@ -1,5 +1,9 @@
 Update Logs
 
+v1.0.17 (Panthervention)
+- Fixed `Item_Set` causing a crash when the assigned `pos` is higher than current `Item_Count`.
+- Changed `Item_Preset` in `Initialization` and `Item_Count` behavior to support dynamic inventory size (it was a thing all along...).
+
 v1.0.16 (TK)
 - Fixed static platforms causes a crash
 - Slightly enhanced platform's collision with high speed soul

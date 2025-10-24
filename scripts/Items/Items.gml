@@ -130,11 +130,7 @@ function Item_Use(item) {
 ///@return {real} The amount of valid items in the current global item array
 function Item_Count() {
 	forceinline
-	var i = 0, count = 0;
-	repeat (array_length(global.__CoalitionUserItems))
-		if (global.__CoalitionUserItems[i++] != 0)
-			count++;
-	return count;
+	return array_length(global.__CoalitionUserItems);
 }
 
 ///@func Item_Set(item, [position])
@@ -143,6 +139,12 @@ function Item_Count() {
 ///@param {real} Position The item position to set (Default last)
 function Item_Set(item, pos = Item_Count()) {
 	forceinline
+	
+	if (pos < 0) return;
+	
+	if (pos > Item_Count())
+		pos = Item_Count();
+		
 	if (is_numeric(item))
 		global.__CoalitionUserItems[pos] = Item_Create(item);
 	else if (is_string(item))
