@@ -1,7 +1,7 @@
 //Loads texture group
 texturegroup_load("texbattle");
 //Pre-bake outline font for damage
-scribble_font_bake_outline_8dir_2px("fnt_dmg", "fnt_dmg_outlined", c_black, true);
+scribble_font_bake_outline_and_shadow("fnt_dmg", "fnt_dmg_outlined", 0, 0, SCRIBBLE_OUTLINE.EIGHT_DIR_THICK, 0, false);
 Fader_Fade(1, 0, 20);
 draw_set_align();
 #region Initalize global battle variables
@@ -154,11 +154,10 @@ with (COALITION_DATA.AttackItem)
 #endregion
 #region Menu Dialog Funtions
 //The text to display at the menu
-__menu_text = "Just a basic test that's\n  long enough for a functional\n  typist test.[delay,3000][/page]* This is a test if the\n  page function is functional[delay,3000]![/page]* Another test if this is\n  functional and good to go!"
-//The default menu text...duh
-__default_menu_text = __menu_text;
+__menu_text = "* Just a basic test that's\n  long enough for a functional\n  typist test.[delay,3000][/page]* This is a test if the\n  page function is functional[delay,3000]![/page]* Another test if this is\n  functional and good to go!"
 //Whether the current menu dialog contains an asterisk
 __has_asterisk = true;
+__text_writer = scribble(__menu_text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
 __menu_text_typist = scribble_typist().in(0.5, 0).sound_per_char(snd_txtTyper, 1, 1, " ^!.?,:/\\|*");
 
 Battle.SetMenuDialog(__menu_text);

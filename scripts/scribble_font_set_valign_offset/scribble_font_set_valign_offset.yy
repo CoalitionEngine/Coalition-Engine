@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scribble_font_set_valign_offset",
   "parent":{
-    "name":"Fonts",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Fonts.yy",
+    "name":"Font Modification",
+    "path":"folders/Coalition Engine/Libraries/Scribble/Font Modification.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

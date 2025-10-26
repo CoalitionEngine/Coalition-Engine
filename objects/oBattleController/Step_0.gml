@@ -201,8 +201,8 @@ if (__battle_state == BATTLE_STATE.MENU)
 				//if not then simply concat the string
 				var tex = __enemies[__target_option].__ActTexts[choice];
 				tex = is_method(tex) ? tex() : tex;
-				__text_writer = scribble("* " + tex, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
-				__menu_state = -1;
+				__text_writer.overwrite("* " + tex);
+				__menu_state = MENU_STATE.UNDEFINED;
 				if (is_callable(__enemies[__target_option].__ActFunctions[choice]))
 					__enemies[__target_option].__ActFunctions[choice]();
 				__last_choice = 1;

@@ -8,4 +8,4 @@ delete Button;
 delete UI;
 texturegroup_unload("texbattle");
 audio_group_unload(audgrpbattle);
-scribble_flush_everything();
+scribble_font_delete("fnt_dmg_outlined");

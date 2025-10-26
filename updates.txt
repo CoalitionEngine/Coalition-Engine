@@ -1,5 +1,11 @@
 Update Logs
 
+v.1.0.18 (TK)
+- Bumped Scribble to 9.6.6.1
+- Fixed memory leak caused by Scribble
+- Removed `oBattleController.__default_menu_text` due to redundancy
+- Optimized menu text overwriting
+
 v1.0.17 (Panthervention)
 - Fixed `Item_Set` causing a crash when the assigned `pos` is higher than current `Item_Count`.
 - Changed `Item_Preset` in `Initialization` and `Item_Count` behavior to support dynamic inventory size (it was a thing all along...).

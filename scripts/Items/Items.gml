@@ -99,12 +99,9 @@ function Item_Use(item) {
 		if (!item.ItemUseCount || item_is_equipment)
 			Item_Remove(__menu_choices[2]);
 		//Reset menu
-		__default_menu_text = __menu_text;
 		__menu_choices[2] = 0;
 		__menu_text_typist.reset();
-		__menu_text = UseTexts + hp_text + stat_text;
-		__text_writer = scribble(__menu_text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
-		__menu_text = __default_menu_text;
+		__text_writer = scribble(UseTexts + hp_text + stat_text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
 		__menu_state = -1;
 	}
 	//If is in overworld
@@ -154,6 +151,7 @@ function Item_Set(item, pos = Item_Count()) {
 		{
 			if (global.__CoalitionItemLibrary[| i].id == item)
 				global.__CoalitionUserItems[pos] = Item_Create(i);
+			++i;
 		}
 	}
 	if (instance_exists(oBattleController))

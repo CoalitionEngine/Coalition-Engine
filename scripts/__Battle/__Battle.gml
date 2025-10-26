@@ -57,7 +57,7 @@ function __Battle() constructor
 			__menu_text = text;
 			if (!no_asterisk)
 				text = "* " + text;
-			__text_writer = scribble(text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).wrap(546, 110).page(0);
+			__text_writer.overwrite(__menu_text);
 		}
 		return self;
 	}
