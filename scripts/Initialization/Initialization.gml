@@ -43,7 +43,7 @@ function Initialize()
 	global.CoalitionMovementNormalized = false;
 	global.__CoalitionCellLibrary = ds_list_create();
 	global.__CoalitionItemLibrary = ds_list_create();
-	EquipmentInit();
+	InitializeEquipment();
 	global.CoalitionItemHealClearKR = false;
 	
 	//Finally, initalize the data when everything is set up

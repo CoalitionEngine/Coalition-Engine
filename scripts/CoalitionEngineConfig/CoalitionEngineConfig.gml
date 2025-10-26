@@ -85,3 +85,18 @@
 //This will lead to better performance but larger file size
 #macro APPLY_AGGRESSIVE_FORCEINLINE true
 #endregion
+#region Battle menu states
+enum MENU_STATE
+{
+	UNDEFINED = -1,
+	BUTTON_SELECTION = 0,
+	FIGHT = 1,
+	ACT = 2,
+	ITEM = 3,
+	MERCY = 4,
+	FIGHT_AIM = 5,
+	ACT_SELECT = 6,
+	MERCY_END = 7,
+	FLEE = 8
+}
+#endregion

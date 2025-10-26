@@ -1,5 +1,11 @@
 Update Logs
 
+v1.1.0 (TK)
+- Fixed bug where there can be infinite items
+- Added `Battle.DefineMenuState` and `Battle.StateGetButton` for custom menu states
+- Removed `ItemMenuCustomStepMethod` and `ItemMenuCustomDrawMethod`
+- Moved some functions to the configuration folder because they are meant to be
+
 v.1.0.18 (TK)
 - Bumped Scribble to 9.6.6.1
 - Fixed memory leak caused by Scribble

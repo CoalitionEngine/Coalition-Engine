@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Item_Library",
   "parent":{
-    "name":"Items",
-    "path":"folders/Coalition Engine/Player Data/Items.yy",
+    "name":"Configuration",
+    "path":"folders/Coalition Engine/Configuration.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

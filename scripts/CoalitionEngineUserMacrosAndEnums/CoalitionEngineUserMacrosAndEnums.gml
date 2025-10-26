@@ -131,19 +131,6 @@ enum BATTLE_STATE
 	IN_TURN = 2,
 	RESULT = 3
 }
-enum MENU_STATE
-{
-	UNDEFINED = -1,
-	BUTTON_SELECTION = 0,
-	FIGHT = 1,
-	ACT = 2,
-	ITEM = 3,
-	MERCY = 4,
-	FIGHT_AIM = 5,
-	ACT_SELECT = 6,
-	MERCY_END = 7,
-	FLEE = 8
-}
 enum SAVE_STATE
 {
 	NOT_SAVING = 0,

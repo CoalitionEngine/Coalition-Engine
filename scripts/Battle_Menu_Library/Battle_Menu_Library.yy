@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Encounter_Library",
+  "%Name":"Battle_Menu_Library",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Encounter_Library",
+  "name":"Battle_Menu_Library",
   "parent":{
     "name":"Configuration",
     "path":"folders/Coalition Engine/Configuration.yy",

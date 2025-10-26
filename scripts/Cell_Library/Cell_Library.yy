@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"Cell_Functions",
+  "%Name":"Cell_Library",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Cell_Functions",
+  "name":"Cell_Library",
   "parent":{
-    "name":"Cell",
-    "path":"folders/Coalition Engine/Player Data/Cell.yy",
+    "name":"Configuration",
+    "path":"folders/Coalition Engine/Configuration.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

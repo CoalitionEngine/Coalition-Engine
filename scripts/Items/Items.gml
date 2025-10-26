@@ -2,50 +2,6 @@
 ///@title Items
 ///@text These are the functions that are related to items in the game.
 
-function InitializeItem() {
-	forceinline;
-	#region Set basic item info
-	ItemLibrarySetStruct(ITEM.PIE, "Pie", {
-		Heal : global.MaxHP,
-		ItemUseCount: 2
-	});
-	ItemLibrarySetStruct(ITEM.INOODLES, "INoodles", {
-		Heal : 90,
-	});
-	ItemLibrarySetStruct(ITEM.STEAK, "Steak", {
-		Heal : 60,
-	});
-	ItemLibrarySetStruct(ITEM.SNOWP, "SnowmanPiece", {
-		Heal : 45,
-	});
-	ItemLibrarySetStruct(ITEM.LHERO, "LHero", {
-		Heal : 40,
-		ConsumeFunction : function() { global.__CoalitionPlayerAttackBoost += 4; }
-	});
-	ItemLibrarySetStruct(ITEM.SEATEA, "SeaTea", {
-		Heal : 10,
-		ConsumeFunction : function() {
-			__speed_boost = global.__CoalitionPlayerSpeed;
-			global.__CoalitionPlayerSpeed *= 2;
-			__turns_passed = 0;
-		},
-		EffectAtTurnEnd : function() {
-			if (++__turns_passed == 4)
-				EffectExpire();
-		},
-		EffectRemove: function() {
-			global.__CoalitionPlayerSpeed -= __speed_boost;
-		}
-	});
-	#endregion
-	Item_Set(ITEM.PIE, 0);
-	Item_Set(ITEM.INOODLES, 1);
-	Item_Set(ITEM.STEAK, 2);
-	Item_Set(ITEM.SEATEA, 3);
-	Item_Set(ITEM.LHERO, 4);
-	Item_Set(ITEM.STICK, 5);
-}
-
 ///@func Item_Create(item)
 ///@desc Creates an item and returns the struct of the item
 ///@param {real} item The item to create
@@ -137,10 +93,9 @@ function Item_Count() {
 function Item_Set(item, pos = Item_Count()) {
 	forceinline
 	
-	if (pos < 0) return;
-	
-	if (pos > Item_Count())
-		pos = Item_Count();
+	//Check item index
+	__CoalitionEngineError(pos != clamp(pos, 0, 7), "Item index is not within bounds, please ensure it is in [0, 7]");
+	__CoalitionEngineError(pos > Item_Count(), $"Item index is not within bounds, please ensure it is less than or equal to {Item_Count()}");
 		
 	if (is_numeric(item))
 		global.__CoalitionUserItems[pos] = Item_Create(item);
@@ -175,4 +130,86 @@ function Item_Remove(pos) {
 function Item_SlotToId(item) {
 	forceinline
 	return global.__CoalitionUserItems[item];
+}
+
+ItemLibrary = ds_list_create();
+
+///@func ItemLibrarySetStruct(item, parameters)
+///@desc Sets the information of an item in the global item library
+///@param {real} item The index of the item (i.e. ITEM.PIE)
+///@param {string} ID	The ID of the item in the localization files
+///@param {struct} param The struct of item data (See InitializeItem() in Items for more information)
+function ItemLibrarySetStruct(item, ID, param)
+{
+	forceinline
+	with (param)
+	{
+		id = ID;
+		var base_txt = is_instanceof(param, Equipment) ? "Equipments" : "Items";
+		Name = lexicon_text($"{base_txt}.{ID}.Name");
+		Description = lexicon_text($"{base_txt}.{ID}.Desc");
+		var i = 0;
+		UseTexts = [];
+		var curUseText = lexicon_text($"{base_txt}.{ID}.Use.{i}");
+		while (curUseText != $"Missing text entry: \"{base_txt}.{ID}.Use.{i}\"")
+		{
+			array_push(UseTexts, curUseText);
+			curUseText = lexicon_text($"{base_txt}.{ID}.Use.{++i}");
+		}
+		DropText = lexicon_text($"{base_txt}.{ID}.Drop");
+		BattleDescription = lexicon_text($"{base_txt}.{ID}.BattleDesc");
+		StatBoostText = is_instanceof(param, Equipment) ? "" : lexicon_text($"{base_txt}.{ID}.Stats");
+		if (!struct_exists(self, "ConsumeFunction"))
+			ConsumeFunction = COALITION_EMPTY_FUNCTION;
+		if (!struct_exists(self, "ItemUseCount"))
+			ItemUseCount = 1;
+		if (!struct_exists(self, "ShopPrice"))
+			ShopPrice = 0;
+		if (!struct_exists(self, "EffectDuringTurn"))
+			EffectDuringTurn = undefined;
+		if (!struct_exists(self, "EffectAtTurnEnd"))
+			EffectAtTurnEnd = undefined;
+		if (!struct_exists(self, "EffectRemove"))
+			EffectRemove = undefined;
+		//Private init used count
+		__item_used_count = 0;
+		//Private init item removal when effect ends
+		__item_effect_expired = false;
+		//Get name for stacked items
+		function __GetName() {
+			return ItemUseCount > 1 ? string_concat(Name, " x", ItemUseCount) : Name;
+		}
+		//Register effect as expired
+		function EffectExpire() { __item_effect_expired = true; }
+	}
+	global.__CoalitionItemLibrary[| item] = param;
+}
+
+///@text This function is called by `ItemLibrarySet()`, so it is better to just call this directly.
+///
+///Here is an example of this function
+///```gml
+///ItemLibrarySetStruct(ITEM.PIE, "Pie", {
+///	Heal : global.MaxHP,
+///	ItemUseCount: 2
+///});
+///```
+///
+///?>`UseTexts` can be an array of texts, but it must have the same amount of items as the times the item can be used, being `ItemUseCount`.
+
+///@func ItemLibrarySet(item, name, heal, description, throw_text, UseTexts, [effect], [battle_description], [stats_text], [uses])
+///@desc Sets the information of an item in the global item library
+///@param {real} item The item to set
+///@param {string} Name The name of the item
+///@param {real} Heal The amount of hp to heal by the item
+///@param {function} ConsumeFunction The effect to apply when the item is used
+///@param {real} uses The amount of times the item can be used (Default 1, duh)
+///@param {real} price The price in the shop (Default 0)
+function ItemLibrarySet(item, Name, Heal, ConsumeFunction = COALITION_EMPTY_FUNCTION, uses = 1, ShopPrice = 0)
+{
+	forceinline
+	ItemLibrarySetStruct(item, Name, {
+		item, Name, Heal, ConsumeFunction, ShopPrice,
+		ItemUseCount: uses,
+	});
 }

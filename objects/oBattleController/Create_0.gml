@@ -2,6 +2,7 @@
 texturegroup_load("texbattle");
 //Pre-bake outline font for damage
 scribble_font_bake_outline_and_shadow("fnt_dmg", "fnt_dmg_outlined", 0, 0, SCRIBBLE_OUTLINE.EIGHT_DIR_THICK, 0, false);
+InitializeBattleStates();
 Fader_Fade(1, 0, 20);
 draw_set_align();
 #region Initalize global battle variables
@@ -26,8 +27,6 @@ __battle_state = 0;
 __battle_turn = 0;
 //The button chosen by the player
 __menu_button_choice = 0;
-//The array of choices chosen by the player in each button
-__menu_choices = array_create(4, 0);
 //Whether the button will activate a turn when chosen (Bitwise variable)
 __button_choice_activate_turn = 1 + 2 + 8;
 //Whether the ACT will trigger a turn (Bitwise variable)
@@ -173,17 +172,6 @@ with (Button)
 	Sprites			= [sprButtonFight, sprButtonAct, sprButtonItem, sprButtonMercy];
 	Position		= [87, 453, 240, 453, 400, 453, 555, 453];
 	TargetState		= [MENU_STATE.FIGHT, MENU_STATE.ACT, MENU_STATE.ITEM, MENU_STATE.MERCY];
-	/*
-		User defined states and logic
-		i.e.
-		ExtraStateProcess = function() {
-			if (Battle.MenuState() == MENU_STATE.CUSTOM_STATE)
-			{
-				Process logic
-			}
-		}
-	*/
-	ExtraStateProcess = method(self, COALITION_EMPTY_FUNCTION);
 	var DefaultButtonAmount = array_length(Sprites);
 	Alpha			= array_create(DefaultButtonAmount, 0.25);
 	OverrideAlpha	= array_create(DefaultButtonAmount, 1);
@@ -249,6 +237,8 @@ Button.Update = function(duration = global.CoalitionBattleLerpSpeed == 1 ? 1 : 3
 		}
 	}
 };
+//The array of choices chosen by the player in each button
+__menu_choices = array_create(DefaultButtonAmount, 0);
 #endregion
 #region UI Functions
 if (ALLOW_DEBUG)
@@ -298,10 +288,6 @@ UI = {
 };
 //The type for the item type
 ItemMenuScrollType = ITEM_SCROLL.DEFAULT;
-//The custom logic of item scrolling
-ItemMenuCustomStepMethod = method(self, COALITION_EMPTY_FUNCTION);
-//The custom logic of item drawing
-ItemMenuCustomDrawMethod = method(self, COALITION_EMPTY_FUNCTION);
 //Internal item drawing data
 __item_lerp_x = array_create(8, 0);
 __item_lerp_y = array_create(8, 0);

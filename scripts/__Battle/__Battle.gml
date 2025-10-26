@@ -7,6 +7,34 @@
 ///@desc Battle data
 function __Battle() constructor
 {
+	__defined_states = {};
+	///@method DefineMenuState(state, step, draw)
+	///@desc Defines a state for the battle menu
+	///@param {real} state The state to define (Preferably COALITION_BATTLE_CUSTOM_STATE)
+	///@param {Function} step The function for step logic (Default empty function)
+	///@param {Function} draw The function for draw logic (Default empty function)
+	static DefineMenuState = function(state, Step = COALITION_EMPTY_FUNCTION, Draw = COALITION_EMPTY_FUNCTION)
+	{
+		forceinline
+		__defined_states[$ state] = {Step, Draw};
+		return Battle;
+	}
+	///@method StateGetButton(state)
+	///@desc Gets the button that leads to the defined state
+	///@param {real} state The state to check
+	///@returns {real,undefined} The index of the button that leads to the state (undefined if the state is not linked)
+	static StateGetButton = function(state)
+	{
+		var i = 0;
+		repeat (array_length(oBattleController.Button.TargetState))
+		{
+			if (oBattleController.Button.TargetState[i] == state)
+				return i;
+			else
+				i++;
+		}
+		return undefined;
+	}
 	///@method Turn([turn])
 	///@desc Gets/Sets the turn of the battle
 	///@param {real} turn The turn to set it to
