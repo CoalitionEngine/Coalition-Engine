@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Encounter_Library",
   "parent":{
-    "name":"Configuration",
-    "path":"folders/Coalition Engine/Configuration.yy",
+    "name":"Configuration - Edit These!",
+    "path":"folders/Coalition Engine/Configuration - Edit These!.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

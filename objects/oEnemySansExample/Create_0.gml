@@ -5,7 +5,7 @@ with Enemy
 {
 	SetName(other, "Sans");
 	SetAct(other, 0, "Check", "funny skeleton man[delay,1000] 1 ATK 1 DEF");
-	SetAct(other, 1, "sans 1", "sans 1 text");
+	SetAct(other, 1, "sans 1", "sans 1 text", function() { Battle.SetMenuDialog("* New text",, false) }, false);
 	SetAct(other, 2, "sans2", "sans2twxt");
 	SetAct(other, 3, "sans3", "sans3text");
 	SetAct(other, 4, "sans4", "sans4text");

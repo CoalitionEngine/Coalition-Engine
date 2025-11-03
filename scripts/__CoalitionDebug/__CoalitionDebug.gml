@@ -189,10 +189,10 @@ function __CoalitionCheckCompatibilty()
 	if (!__COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR)
 		exit;
 	static version = __CoalitionGMVersion();
-	if (version.major >= 2024 && version.minor > 13)
-		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is designed for Game Maker versions 2024.13+, you are in {GM_runtime_version}, there may exist unwanted behaviour.");
-	else if (version.major < 2024 && version.minor < 13)
-		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is incompatible for Game Maker versions earlier than 2023.11, you are in {GM_runtime_version}");
+	if (version.major >= 2024 && version.minor > 14)
+		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is designed for Game Maker versions 2024.14, you are in {GM_runtime_version}, there may exist unwanted behaviour.");
+	else if (version.major < 2024 && version.minor < 14)
+		print($"Coalition Engine {__COALITION_ENGINE_VERSION} is incompatible for Game Maker versions earlier than 2024.14, you are in {GM_runtime_version}");
 }
 ///An overhaul of the bult-in game_restart function as it is not really that good
 function __game_restart() {

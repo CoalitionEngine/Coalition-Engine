@@ -1,5 +1,9 @@
 Update Logs
 
+v1.2.0 (TK)
+- Updated Game Maker to 2024.14
+- Added an optional argument in `Battle.SetMenuDialog` to set whether the new text should be applied immediately or will be applied in the next iteration
+
 v1.1.0 (TK)
 - Fixed bug where there can be infinite items
 - Added `Battle.DefineMenuState` and `Battle.StateGetButton` for custom menu states

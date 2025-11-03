@@ -36,7 +36,7 @@
     {"name":"Sounds","order":2,"path":"folders/Coalition Engine/Battle/UI/Sounds.yy",},
     {"name":"Sprites","order":1,"path":"folders/Coalition Engine/Battle/UI/Sprites.yy",},
     {"name":"Fight","order":2,"path":"folders/Coalition Engine/Battle/UI/Sprites/Fight.yy",},
-    {"name":"Configuration","order":5,"path":"folders/Coalition Engine/Configuration.yy",},
+    {"name":"Configuration - Edit These!","order":5,"path":"folders/Coalition Engine/Configuration - Edit These!.yy",},
     {"name":"Effects","order":6,"path":"folders/Coalition Engine/Effects.yy",},
     {"name":"Optional","order":1,"path":"folders/Coalition Engine/Effects/Optional.yy",},
     {"name":"BlendExt","order":3,"path":"folders/Coalition Engine/Effects/Optional/BlendExt.yy",},

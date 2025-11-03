@@ -1,5 +1,5 @@
 {
-  "$GMNotes":"",
+  "$GMNotes":"v1",
   "%Name":"Coalition Visual Editor Notes",
   "name":"Coalition Visual Editor Notes",
   "parent":{

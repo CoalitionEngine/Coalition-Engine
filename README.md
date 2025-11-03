@@ -25,4 +25,4 @@ This is the version of external libraries that are packaged with this engine.
 
 | Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 9.5.0 | 10.1.0 | 1.1.1 | 3.0.8 | 4.0.1 | 1.0.3 |
+| 9.6.6.1 | 10.1.0 | 1.1.1 | 3.0.8 | 4.0.1 | 1.0.3 |

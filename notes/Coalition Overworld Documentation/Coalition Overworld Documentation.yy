@@ -1,5 +1,5 @@
 {
-  "$GMNotes":"",
+  "$GMNotes":"v1",
   "%Name":"Coalition Overworld Documentation",
   "name":"Coalition Overworld Documentation",
   "parent":{

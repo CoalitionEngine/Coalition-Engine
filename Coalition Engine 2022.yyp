@@ -2,9 +2,9 @@
   "$GMProject":"v1",
   "%Name":"Coalition Engine 2022",
   "AudioGroups":[
-    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
-    {"$GMAudioGroup":"","%Name":"audgrpbattle","name":"audgrpbattle","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
-    {"$GMAudioGroup":"","%Name":"audgrpoverworld","name":"audgrpoverworld","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMAudioGroup":"v1","%Name":"audgrpbattle","exportDir":"","name":"audgrpbattle","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMAudioGroup":"v1","%Name":"audgrpoverworld","exportDir":"","name":"audgrpoverworld","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
   "configs":{
     "children":[],
@@ -53,7 +53,7 @@
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/Coalition Engine/Battle/UI/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Button","folderPath":"folders/Coalition Engine/Battle/UI/Sprites/Button.yy","name":"Button","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Fight","folderPath":"folders/Coalition Engine/Battle/UI/Sprites/Fight.yy","name":"Fight","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Configuration","folderPath":"folders/Coalition Engine/Configuration.yy","name":"Configuration","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Configuration - Edit These!","folderPath":"folders/Coalition Engine/Configuration - Edit These!.yy","name":"Configuration - Edit These!","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Effects","folderPath":"folders/Coalition Engine/Effects.yy","name":"Effects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Optional","folderPath":"folders/Coalition Engine/Effects/Optional.yy","name":"Optional","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"BlendExt","folderPath":"folders/Coalition Engine/Effects/Optional/BlendExt.yy","name":"BlendExt","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -198,7 +198,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.13.1.193",
+    "IDEVersion":"2024.14.0.207",
   },
   "name":"Coalition Engine 2022",
   "resources":[

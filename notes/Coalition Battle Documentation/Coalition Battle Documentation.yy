@@ -1,5 +1,5 @@
 {
-  "$GMNotes":"",
+  "$GMNotes":"v1",
   "%Name":"Coalition Battle Documentation",
   "name":"Coalition Battle Documentation",
   "parent":{

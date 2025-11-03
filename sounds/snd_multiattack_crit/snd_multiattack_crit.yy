@@ -1,15 +1,17 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v2",
   "%Name":"snd_multiattack_crit",
   "audioGroupId":{
     "name":"audgrpbattle",
     "path":"audiogroups/audgrpbattle",
   },
   "bitDepth":1,
-  "bitRate":128,
+  "channelFormat":0,
   "compression":0,
+  "compressionQuality":4,
   "conversionMode":0,
   "duration":1.3162812,
+  "exportDir":"",
   "name":"snd_multiattack_crit",
   "parent":{
     "name":"Attack",
@@ -20,6 +22,5 @@
   "resourceVersion":"2.0",
   "sampleRate":44100,
   "soundFile":"snd_multiattack_crit.wav",
-  "type":0,
   "volume":1.0,
 }

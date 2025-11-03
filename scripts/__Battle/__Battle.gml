@@ -78,14 +78,16 @@ function __Battle() constructor
 	///@desc Sets the menu dialog of the battle
 	///@param {string} text The Menu text
 	///@param {bool} no_asterisk Whether there is an asterisk in front of the dialog (Default false)
-	static SetMenuDialog = function(text, no_asterisk = false) {
+	///@param {bool} immediate Whether the menu dialog is applied instantly or will apply in the next iteration (Default true)
+	static SetMenuDialog = function(text, no_asterisk = false, immediate = true) {
 		forceinline
 		with (oBattleController)
 		{
 			__menu_text = text;
 			if (!no_asterisk)
 				text = "* " + text;
-			__text_writer.overwrite(__menu_text);
+			if (immediate)
+				__text_writer.overwrite(__menu_text);
 		}
 		return self;
 	}

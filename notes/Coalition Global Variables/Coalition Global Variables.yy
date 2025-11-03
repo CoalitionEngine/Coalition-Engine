@@ -1,5 +1,5 @@
 {
-  "$GMNotes":"",
+  "$GMNotes":"v1",
   "%Name":"Coalition Global Variables",
   "name":"Coalition Global Variables",
   "parent":{

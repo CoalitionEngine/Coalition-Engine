@@ -70,6 +70,7 @@ SetAttack(2, function() {
 SetAttack(0, function() {
 	if (time == 0)
 	{
+		Bullet_Bone(320, 320, 70, 0, 0,,,,, 2);
 		Board.SetSize(70, 70, 70, 70, 0);
 		for (var i = 0; i < 4; ++i)
 		{
