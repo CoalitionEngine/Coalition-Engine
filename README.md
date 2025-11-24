@@ -28,4 +28,4 @@ No Input plug-ins are imported, if you wish to import them, remember to import t
 
 | Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 9.6.6.1 | 10.2.2 | 1.1.1 | 4.0.2 | 4.0.1 | 1.0.3 |
+| 9.6.6.1 | 10.2.2 | 1.1.1 | 4.0.3 | 4.0.1 | 1.0.3 |
