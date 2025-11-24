@@ -30,7 +30,7 @@ if (__battle_state == BATTLE_STATE.MENU)
 		//Begin turn if the dialog ended
 		if (__menu_state == MENU_STATE.UNDEFINED && __menu_text_typist.get_state() == 1 && input_confirm)
 		{
-			struct_set_from_hash(global.__input_functions, global.__press_con_hash, false);
+			struct_set_from_hash(global.__input_functions, __press_con_hash, false);
 			Battle.SetMenuDialog(__menu_text, !__has_asterisk);
 			__begin_turn();
 		}
@@ -64,67 +64,25 @@ else if (__battle_state == BATTLE_STATE.RESULT)
 #region Debug
 DrawDebugUI();
 #endregion
-
-#region Buttons
-if (!is_struct(Button)) exit;
-with (Button)
-{
-	var _button_spr =	Sprites,
-		_button_pos =	Position,
-		_button_alpha = Alpha,
-		_button_scale = Scale,
-		_button_color = Color,
-		_button_angle = Angle;
-}
-var i = 0, n = array_length(_button_spr);
-
-if (Button.BackgroundCover)
-{
-	shader_set(shdBlackMask); //Prevent background covers the buttons
-	repeat (n) // Button initialize
-	{
-		// Check if the button is chosen
-		var select = (__menu_button_choice == i) && __menu_state >= 0;
-		// Draw the button by array order
-		draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], merge_color(c_white, c_black, .5 - _button_alpha[i] / 2)	, 1);
-	}
-	shader_reset();
-}
-repeat (n)
-{
-	var select = (__menu_button_choice == i) && __menu_state >= 0;
-	draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], _button_color[i], 1);
-
-	// Animation - Color updating in real-time because yes
-	if (__menu_state < 0) // If the menu state is over
-	{
-		var final_alpha = min(Button.AlphaTarget[1], Button.OverrideAlpha[i]);
-		_button_scale[i] += (Button.ScaleTarget[0] - _button_scale[i]) / 6;
-		_button_alpha[i] += (final_alpha - _button_alpha[i]) / 6;
-	}
-	++i;
-}
-//Draws a rectangle to cover the button in the board if needed
-if (Button.BeneathBoard)
-{
-	Battle_Masking_Start();
-	draw_sprite_ext(sprPixel, 0, 23, 432, 617, 48, 0, c_black, 1);
-	Battle_Masking_End();
-}
-#endregion
-
-#region UI (Name - Lv - Hp - Kr)
+#region Render
+//Order of drawing needs to be changed if only either is beneath while the other is not
+if (!UI.BeneathBoard || Button.BeneathBoard)
+	Button.Draw();
 __DrawUI();
-#endregion
-//Draws a rectangle to cover the hp bar in the board if needed
 if (UI.BeneathBoard)
 {
 	Battle_Masking_Start();
 	__DrawUI(c_black);
 	Battle_Masking_End();
+	with (oBoard)
+		if (!VertexMode)
+			draw_surface(__frame_surf, 0, 0);
 }
+if (UI.BeneathBoard && !Button.BeneathBoard)
+	Button.Draw();
 //Renders the bullets on screen
 __RenderBullets();
+#endregion
 //Debug timer
 if (global.__CoalitionDebug && __battle_state == BATTLE_STATE.IN_TURN)
 {

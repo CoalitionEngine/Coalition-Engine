@@ -352,7 +352,7 @@ function __Shop() constructor {
 					__typist.reset().skip();
 					if (string_width(__TempText) == 0)
 						__TempText = Text;
-					SetText(lexicon_text("Shop.ItemBuyText", BuyableItems[__choice[1]].ShopPrice));
+					SetText(Lexicon("Shop.ItemBuyText", BuyableItems[__choice[1]].ShopPrice).Get());
 				}
 			}
 			//Cancel
@@ -461,7 +461,7 @@ function __Shop() constructor {
 				__typist.reset().skip();
 				if (string_width(__TempText) == 0)
 					__TempText = Text;
-				SetText(lexicon_text("Shop.ItemSellText", global.__CoalitionUserItems[__choice[1]].ShopPrice));
+				SetText(Lexicon("Shop.ItemSellText", global.__CoalitionUserItems[__choice[1]].ShopPrice).Get());
 			}
 			elif (press_cancel)	
 			__reset_state();
@@ -644,7 +644,7 @@ function __Shop() constructor {
 				{
 					surface_set_target(__info_surface);
 					draw_sprite_ext(sprPixel, 0, 0, 0, 210, 230, 0, c_black, 1);
-					scribble(BuyableItems[__choice[1]].Description).starting_format("fnt_dt_sans", c_white).wrap(200, 235).draw(10, 10);
+					scribble(BuyableItems[__choice[1]].desc).starting_format("fnt_dt_sans", c_white).wrap(200, 235).draw(10, 10);
 					surface_reset_target();
 					draw_surface_part(__info_surface, 0, 0, 210, InfoBoxScale, 425, InfoBoxY);
 				}

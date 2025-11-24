@@ -10,7 +10,7 @@ if ((!CutsceneIsActive() || (CutsceneIsActive() && !CutsceneFreecam())) && !(ALL
 #endregion
 #region Menu lerping
 var menu_at_top = oOWPlayer.y < Camera.ViewY() + Camera.GetAspect("h") / 2 + 10,
-	lerp_speed = global.CoalitionUILerpSpeed;
+	lerp_speed = COALITION_UI_LERP_SPEED;
 if (COALITION_DELTA_TIME)
 	lerp_speed *= game_get_speed(gamespeed_fps) / 10;
 //Lerps the position of the menu UI before every logic
@@ -276,7 +276,7 @@ if (__dialog_exists)
 		//Executes the event of the option
 		if (Overworld_DialogAtOption())
 			__option_events[__option]();
-		struct_set_from_hash(__input_functions, global.__press_con_hash, false);
+		struct_set_from_hash(__input_functions, __press_con_hash, false);
 	}
 }
 #endregion

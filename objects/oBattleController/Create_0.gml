@@ -1,7 +1,5 @@
 //Loads texture group
 texturegroup_load("texbattle");
-//Pre-bake outline font for damage
-scribble_font_bake_outline_and_shadow("fnt_dmg", "fnt_dmg_outlined", 0, 0, SCRIBBLE_OUTLINE.EIGHT_DIR_THICK, 0, false);
 InitializeBattleStates();
 Fader_Fade(1, 0, 20);
 draw_set_align();
@@ -192,7 +190,7 @@ with (Button)
 	BeneathBoard = false;
 }
 //Button update logic
-Button.Update = function(duration = global.CoalitionBattleLerpSpeed == 1 ? 1 : 30) {
+Button.Update = function(duration = COALITION_BATTLE_LERP_SPEED == 1 ? 1 : 30) {
 	static UpdateData = function(i, duration, __menu_state)
 	{
 		if (Item_Count() == 0)
@@ -237,6 +235,61 @@ Button.Update = function(duration = global.CoalitionBattleLerpSpeed == 1 ? 1 : 3
 		}
 	}
 };
+Button.Draw = function() {
+	with (Button)
+	{
+		var _button_spr =	Sprites,
+			_button_pos =	Position,
+			_button_alpha = Alpha,
+			_button_scale = Scale,
+			_button_color = Color,
+			_button_angle = Angle;
+	}
+	var i = 0, n = array_length(_button_spr);
+
+	if (Button.BackgroundCover)
+	{
+		shader_set(shdBlackMask); //Prevent background covers the buttons
+		repeat (n) // Button initialize
+		{
+			// Check if the button is chosen
+			var select = (__menu_button_choice == i) && __menu_state >= 0;
+			// Draw the button by array order
+			draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], merge_color(c_white, c_black, .5 - _button_alpha[i] / 2), 1);
+			++i;
+		}
+		shader_reset();
+	}
+	repeat (n)
+	{
+		var select = (__menu_button_choice == i) && __menu_state >= 0;
+		draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], _button_color[i], 1);
+
+		// Animation - Color updating in real-time because yes
+		if (__menu_state < 0) // If the menu state is over
+		{
+			var final_alpha = min(Button.AlphaTarget[1], Button.OverrideAlpha[i]);
+			_button_scale[i] += (Button.ScaleTarget[0] - _button_scale[i]) / 6;
+			_button_alpha[i] += (final_alpha - _button_alpha[i]) / 6;
+		}
+		++i;
+	}
+	//Draws a rectangle to cover the button in the board if needed
+	if (Button.BeneathBoard)
+	{
+		Battle_Masking_Start();
+		i = 0;
+		repeat (n)
+		{
+			draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], c_black, 1);
+			++i;
+		}
+		Battle_Masking_End();
+		with (oBoard)
+			if (!VertexMode)
+				draw_surface(__frame_surf, 0, 0);
+	}
+}
 //The array of choices chosen by the player in each button
 __menu_choices = array_create(DefaultButtonAmount, 0);
 #endregion
@@ -433,13 +486,13 @@ function __end_battle() {
 	__battle_state = BATTLE_STATE.RESULT;
 	if (!global.__BossFight)
 	{
-		__battle_end_text = lexicon_text("Battle.Win", __Result.Exp, __Result.Gold);
+		__battle_end_text = Lexicon("Battle.Win", __Result.Exp, __Result.Gold).Get();
 		if (Player.LV() < 20 && Player.Exp() + __Result.Exp >= Player.GetExpNext())
 		{
 			Player.LV(Player.LV() + 1);
 			if (Player.HP() == Player.HPMax())
 				Player.HPMax(Player.LV() == 20 ? 99 : Player.LV() * 4 + 16);
-			__battle_end_text += lexicon_text("Battle.LoveInc");
+			__battle_end_text += Lexicon("Battle.LoveInc").Get();
 			audio_play(snd_level_up);
 		}
 		__battle_end_text_writer = scribble("* " + __battle_end_text, "__Coalition_Battle").starting_format(__DefaultFontNoBracket, c_white).page(0);
@@ -627,7 +680,7 @@ function __DrawUI(override_color = undefined) {
 		var predict_col = override_color ?? c_lime;
 		with (UI)
 		{
-			if (ShowPredictHP && !struct_exists(global.__Coalition_Equipments.__equipment_list, global.__CoalitionUserItems[other.__menu_choices[2]]))
+			if (ShowPredictHP && !is_instanceof(global.__CoalitionUserItems[other.__menu_choices[2]], Equipment))
 			{
 				__hp_predict += (global.__CoalitionUserItems[other.__menu_choices[2]].Heal - __hp_predict) * RefillSpeed;
 				draw_sprite_ext(sprPixel, 0, hp_x + _hp, y, min(__HP + __hp_predict, __MaxHP) * bar_multiplier - _hp, 20, 0, predict_col, abs(dsin(global.timer * 2) * .5) + .2);

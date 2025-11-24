@@ -11,6 +11,8 @@ with Enemy
 	SetAct(other, 4, "sans4", "sans4text");
 	SetHPStats(other, 600, 400);
 	SetReward(other, 100, 100);
+	SetDefense(other, 1090000000);
+	SetSpareable(other, false)
 }
 Dialog.DefaultFont = "fnt_sans";
 Dialog.DefaultSound = snd_txtSans;
@@ -52,7 +54,7 @@ event_user(1);
 
 
 //global.CoalitionUILerpSpeed = 1;
-//global.CoalitionBattleLerpSpeed = 1;
+//COALITION_BATTLE_LERP_SPEED = 1;
 //global.HP = 30;
 
 //Shader = AddShaderEffect(shdSine, true);

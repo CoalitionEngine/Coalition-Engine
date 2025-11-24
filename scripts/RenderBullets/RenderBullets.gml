@@ -5,12 +5,12 @@
 ///@desc Render all bullets that are the depth of the board on screen (bullets that only show inside the board)
 function __RenderBullets() {
 	forceinline
-	static __mask_surf = surface_create(640, 480);
+	static __mask_surf = surface_create(640, 480, surface_r8unorm);
 	//If no objects that are required to render exists, don't render anything
 	if (!instance_exists(oBulletParents) && !instance_exists(oPlatform))
 		exit;
 	//Creates a surface for the drawing region for the bullets
-	if (!surface_exists(__mask_surf)) __mask_surf = surface_create(640, 480);
+	if (!surface_exists(__mask_surf)) __mask_surf = surface_create(640, 480, surface_r8unorm);
 	surface_set_target(__mask_surf);
 	//Fills the entire view
 	draw_clear(c_white);
@@ -48,7 +48,7 @@ function __RenderBullets() {
 	gpu_set_stencil_pass(stencilop_keep);
 	gpu_set_stencil_func(cmpfunc_notequal);
 	//Begin masking
-	Battle_Masking_Start(true);
+	Battle_Masking_Start();
 	gpu_set_zwriteenable(true);
 	gpu_set_ztestenable(true);
 	var BoardDepth = oBoard.depth;

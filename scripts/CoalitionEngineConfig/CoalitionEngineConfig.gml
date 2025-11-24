@@ -18,6 +18,10 @@
 ///| `COALITION_SAVE_FILE` | The global save file of the engine |
 ///| `COALITION_EMPTY_FUNCTION` | A predefined empty function |
 ///| `COALITION_ENABLE_GMLIVE` | Whether to enable GMlive in this engine (Only if you have it) |
+///| `COALITION_UI_LERP_SPEED` | The lerp speed of the animation of the UI |
+///| `COALITION_BATTLE_LERP_SPEED` | The lerp speed of the animation in battle |
+///| `COALITION_MOVEMENT_NORMALIZED` | Whether moving diagonally will move faster than moving horizontally or vertically |
+///| `COALITION_ITEM_HEAL_CLEAR_KR` | Whether KR will be set to 0 when an item is consumed |
 ///
 ///These macros are for retrieving player input, not that you may need to set them back to 0 after changing states to prevent "double input"
 ///## Input Macros
@@ -71,16 +75,33 @@
 #region Engine
 //Here are the macros for the engine
 #macro ALLOW_DEBUG  true
+
 //This automatically set DEBUG into false when you build the game
 //#macro DEBUG !game_is_standalone()
+
 #macro DEBUG true
+
 #macro RELEASE !DEBUG
+
 #macro __COALITION_VERBOSE true
+
 #macro __COALITION_ENGINE_FORCE_DISPLAY_COMPATIBILITY_ERROR true
+
 #macro __COALITION_SHOWCASE true
+
 #macro COALITION_DELTA_TIME true
+
 //Handy GMLive macro for users who have GMlive
 #macro COALITION_ENABLE_GMLIVE false
+
+#macro COALITION_UI_LERP_SPEED 1/12
+
+#macro COALITION_BATTLE_LERP_SPEED 1/3
+
+#macro COALITION_MOVEMENT_NORMALIZED true
+
+#macro COALITION_ITEM_HEAL_CLEAR_KR false
+
 //Applies a more aggressive forceinline to scripts
 //This will lead to better performance but larger file size
 #macro APPLY_AGGRESSIVE_FORCEINLINE true

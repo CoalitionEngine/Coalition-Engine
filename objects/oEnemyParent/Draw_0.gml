@@ -98,7 +98,10 @@ if (!__died)
 		//Draws the damage text
 		if (__is_being_attacked && DrawDamageText)
 		{
-			scribble(string_concat("[fnt_dmg_outlined][fa_center][fa_middle]", __damage)).blend(DamageTextColor, 1).outline(c_black).draw(xstart, DamageTextY);
+			var curDamage = scribble(string_concat("[fnt_dmg][fa_center][fa_middle]", __damage));
+			for (var i = 0; i < 4; ++i)
+				curDamage.blend(c_black, 1).draw(xstart + lengthdir_x(7, i * 90 + 45), DamageTextY + lengthdir_y(7, i * 90 + 45));
+			curDamage.blend(DamageTextColor, 1).draw(xstart, DamageTextY);
 			// Bar retract speed thing idk
 			if (is_real(__damage))
 			{

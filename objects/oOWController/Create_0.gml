@@ -82,7 +82,7 @@ function __ExitMenu()
 	__menu_choices = array_create(8, 0);
 	audio_play(snd_menu_cancel);
 	//Overrides menu input as false to prevent incorrect detection
-	struct_set_from_hash(__input_functions, global.__press_menu_hash, false);
+	struct_set_from_hash(__input_functions, __press_menu_hash, false);
 }
 #endregion
 #region Box properties
@@ -157,7 +157,7 @@ function ExitSave() {
 	__menu_disabled = false;
 	oOWPlayer.Movable = true;
 	oOWCollision.__Collided = false;
-	struct_set_from_hash(__input_functions, global.__press_con_hash, false);
+	struct_set_from_hash(__input_functions, __press_con_hash, false);
 	draw_set_align();
 }
 ///Sets the camera to the player

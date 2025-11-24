@@ -49,8 +49,8 @@ with (__input_functions)
 	down = InputCheck(INPUT_VERB.DOWN);
 	left = InputCheck(INPUT_VERB.LEFT);
 	right = InputCheck(INPUT_VERB.RIGHT);
-	horizontal = global.CoalitionMovementNormalized ? (right - left) : InputX(INPUT_CLUSTER.NAVIGATION);
-	vertical = global.CoalitionMovementNormalized ? (up - down) : InputY(INPUT_CLUSTER.NAVIGATION);
+	horizontal = COALITION_MOVEMENT_NORMALIZED ? (right - left) : InputX(INPUT_CLUSTER.NAVIGATION);
+	vertical = COALITION_MOVEMENT_NORMALIZED ? (up - down) : InputY(INPUT_CLUSTER.NAVIGATION);
 	press_hor = InputOpposingPressed(INPUT_VERB.LEFT, INPUT_VERB.RIGHT);
 	press_ver = InputOpposingPressed(INPUT_VERB.UP, INPUT_VERB.DOWN);
 	press_con = InputPressed(INPUT_VERB.CONFIRM);

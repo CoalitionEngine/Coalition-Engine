@@ -17,7 +17,7 @@ function Item_Create(item)
 function Item_Use(item) {
 	forceinline
 	var hp_text = "";
-	var item_is_equipment = struct_exists(global.__Coalition_Equipments.__equipment_list, item);
+	var item_is_equipment = is_instanceof(item, Equipment);
 	var UseTexts = item.UseTexts[item.__item_used_count++];
 	//Execute item effect
 	with (item)
@@ -32,22 +32,22 @@ function Item_Use(item) {
 		item.ItemUseCount--;
 		audio_play(snd_item_heal);
 		//Set kr value
-		if (global.CoalitionItemHealClearKR)
+		if (COALITION_ITEM_HEAL_CLEAR_KR)
 			global.__CoalitionPlayerKR = 0;
 		//Update hp
 		var heal = item.Heal + COALITION_DATA.DefenseItem.HealBoost;
 		Player.Heal(heal);
 		//Healing text
-		hp_text = global.HP >= global.MaxHP ?
-		lexicon_text("Battle.MaxHeal") :
-		lexicon_text($"Items.{item.Name}.HealText", heal);
+		hp_text = (global.HP >= global.MaxHP ?
+		Lexicon("Battle.MaxHeal") :
+		Lexicon($"Items.{item.Name}.HealText", heal)).Get();
 	}
 	//If is in battle
 	if (instance_exists(oBattleController))
 	{
 		var stat_text = "";
 		if (string_width(item.StatBoostText) != 0)	
-			stat_text = "[delay, 333]\n* " + item.StatBoostText;
+			stat_text = "[delay, 333]\n* " + item.StatBoostText.Get();
 		//Store a copy of the item to the effect processing array if needed
 		if (is_callable(item.EffectDuringTurn) || is_callable(item.EffectAtTurnEnd))
 			array_push(__item_process_list, item);
@@ -146,19 +146,19 @@ function ItemLibrarySetStruct(item, ID, param)
 	{
 		id = ID;
 		var base_txt = is_instanceof(param, Equipment) ? "Equipments" : "Items";
-		Name = lexicon_text($"{base_txt}.{ID}.Name");
-		Description = lexicon_text($"{base_txt}.{ID}.Desc");
+		Name = Lexicon($"{base_txt}.{ID}.Name").Get();
+		Description = Lexicon($"{base_txt}.{ID}.Desc").Get();
 		var i = 0;
 		UseTexts = [];
-		var curUseText = lexicon_text($"{base_txt}.{ID}.Use.{i}");
-		while (curUseText != $"Missing text entry: \"{base_txt}.{ID}.Use.{i}\"")
+		var curUseText = Lexicon($"{base_txt}.{ID}.Use.{i}");
+		while (curUseText.toString() != $"{base_txt}.{ID}.Use.{i}")
 		{
-			array_push(UseTexts, curUseText);
-			curUseText = lexicon_text($"{base_txt}.{ID}.Use.{++i}");
+			array_push(UseTexts, curUseText.Get());
+			curUseText = Lexicon($"{base_txt}.{ID}.Use.{++i}");
 		}
-		DropText = lexicon_text($"{base_txt}.{ID}.Drop");
-		BattleDescription = lexicon_text($"{base_txt}.{ID}.BattleDesc");
-		StatBoostText = is_instanceof(param, Equipment) ? "" : lexicon_text($"{base_txt}.{ID}.Stats");
+		DropText = Lexicon($"{base_txt}.{ID}.Drop").Get();
+		BattleDescription = Lexicon($"{base_txt}.{ID}.BattleDesc").Get();
+		StatBoostText = is_instanceof(param, Equipment) ? "" : Lexicon($"{base_txt}.{ID}.Stats").Get();
 		if (!struct_exists(self, "ConsumeFunction"))
 			ConsumeFunction = COALITION_EMPTY_FUNCTION;
 		if (!struct_exists(self, "ItemUseCount"))

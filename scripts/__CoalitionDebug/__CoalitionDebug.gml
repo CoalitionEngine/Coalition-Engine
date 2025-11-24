@@ -29,9 +29,9 @@ function CoalitionShowHitbox(col = c_white, alp = 0.4)
 		}
 		//Get the unmodified mask data
 		var __hitbox_struct = struct_get_from_hash(__HitboxData, __hash),
-			_b1 = struct_get_from_hash(__hitbox_struct, global.__left_hash) * image_xscale,
+			_b1 = struct_get_from_hash(__hitbox_struct, __left_hash) * image_xscale,
 			_b2 = struct_get_from_hash(__hitbox_struct, __hash_top) * image_yscale,
-			_b3 = struct_get_from_hash(__hitbox_struct, global.__right_hash) * image_xscale,
+			_b3 = struct_get_from_hash(__hitbox_struct, __right_hash) * image_xscale,
 			_b4 = struct_get_from_hash(__hitbox_struct, __hash_bottom) * image_yscale,
 
 			_xoff = struct_get_from_hash(__hitbox_struct, __hash_xoff),

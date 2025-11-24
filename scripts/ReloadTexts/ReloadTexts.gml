@@ -8,49 +8,49 @@ function ReloadTexts() {
 	//Shop texts
 	if (room == room_shop)
 	{
-		__InsufficientGText = lexicon_text("Shop.InsufficientGText");
-		__ItemFullText = lexicon_text("Shop.ItemFullText");
-		__LangBuy = lexicon_text("Shop.Buy");
-		__LangSell = lexicon_text("Shop.Sell");
-		__LangTalk = lexicon_text("Shop.Talk");
-		__LangExit = lexicon_text("Shop.Exit");
-		__LangNo = lexicon_text("No");
-		__LangYes = lexicon_text("Yes");
+		__InsufficientGText = Lexicon("Shop.InsufficientGText").Get();
+		__ItemFullText = Lexicon("Shop.ItemFullText").Get();
+		__LangBuy = Lexicon("Shop.Buy").Get();
+		__LangSell = Lexicon("Shop.Sell").Get();
+		__LangTalk = Lexicon("Shop.Talk").Get();
+		__LangExit = Lexicon("Shop.Exit").Get();
+		__LangNo = Lexicon("No").Get();
+		__LangYes = Lexicon("Yes").Get();
 	}
 	//Battle texts
 	elif (instance_exists(oBattleController))
 	{
-		__DefaultFontNoBracket = lexicon_text("Font");
+		__DefaultFontNoBracket = Lexicon("Font").Get();
 		__DefaultFont = "[" + __DefaultFontNoBracket + "]";
 		__DefaultFontAsset = asset_get_index(__DefaultFontNoBracket);
-		__LangItemPageText = [lexicon_text("Battle.ItemPage", "1"), lexicon_text("Battle.ItemPage", "2")];
-		__LangSpareText = lexicon_text("Battle.Spare");
-		__LangFleeText = lexicon_text("Battle.Flee");
+		__LangItemPageText = [Lexicon("Battle.ItemPage", "1"), Lexicon("Battle.ItemPage", "2")];
+		__LangSpareText = Lexicon("Battle.Spare").Get();
+		__LangFleeText = Lexicon("Battle.Flee").Get();
 	}
 	//Overworld texts
 	elif (instance_exists(oOWController))
 	{
-		__LangItemText = lexicon_text("Overworld.Item");
-		__LangStatText = lexicon_text("Overworld.Stat");
-		__LangCellText = lexicon_text("Overworld.Cell");
-		__LangUseText = lexicon_text("Overworld.Use");
-		__LangInfoText = lexicon_text("Overworld.Info");
-		__LangDropText = lexicon_text("Overworld.Drop");
+		__LangItemText = Lexicon("Overworld.Item").Get();
+		__LangStatText = Lexicon("Overworld.Stat").Get();
+		__LangCellText = Lexicon("Overworld.Cell").Get();
+		__LangUseText = Lexicon("Overworld.Use").Get();
+		__LangInfoText = Lexicon("Overworld.Info").Get();
+		__LangDropText = Lexicon("Overworld.Drop").Get();
 	}
 	//Intro screen texts
 	elif (instance_exists(oIntro))
 	{
-		__LangInstructionLabel= lexicon_text("Intro.Instruction.Label");
-		__LangInstructionText = lexicon_text("Intro.Instruction.Text");
-		__LangConfirmName = lexicon_text("Intro.ConfirmName");
-		__LangBeginGame = lexicon_text("Intro.Begin Game");
-		__LangSettings = lexicon_text("Intro.Settings");
-		__LangQuit = lexicon_text("Intro.Quit");
-		__LangBackspace = lexicon_text("Intro.Backspace");
-		__LangDone = lexicon_text("Intro.Done");
-		__LangNo = lexicon_text("No");
-		__LangYes = lexicon_text("Yes");
-		__LangGoBack = lexicon_text("Intro.Go Back");
+		__LangInstructionLabel= Lexicon("Intro.Instruction.Label").Get();
+		__LangInstructionText = Lexicon("Intro.Instruction.Text").Get();
+		__LangConfirmName = Lexicon("Intro.ConfirmName").Get();
+		__LangBeginGame = Lexicon("Intro.Begin Game").Get();
+		__LangSettings = Lexicon("Intro.Settings").Get();
+		__LangQuit = Lexicon("Intro.Quit").Get();
+		__LangBackspace = Lexicon("Intro.Backspace").Get();
+		__LangDone = Lexicon("Intro.Done").Get();
+		__LangNo = Lexicon("No").Get();
+		__LangYes = Lexicon("Yes").Get();
+		__LangGoBack = Lexicon("Intro.Go Back").Get();
 	}
 }
 ///@text

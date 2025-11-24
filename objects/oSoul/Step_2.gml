@@ -37,17 +37,11 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 				displace_x = lengthdir_x(x_offset + board.FrameThickness / 2, _angle - 90),
 				displace_y = lengthdir_y(y_offset + board.FrameThickness / 2, _angle - 90),
 				//Store board vertices into vectors for checking (Rotated board is a parallelogram)
+				
 				TL = new Vector2(-board.left, -board.up).Rotated(board_angle),
 				TR = new Vector2(board.right, -board.up).Rotated(board_angle),
 				BL = new Vector2(-board.left, board.down).Rotated(board_angle),
 				BR = new Vector2(board.right, board.down).Rotated(board_angle);
-				switch (MoveDirection)
-				{
-					case DIR.RIGHT: TR.x += 2; BR.x += 2; break;
-					case DIR.UP: TL.y -= 2; TR.y -= 2; break;
-					case DIR.LEFT: TL.x -= 2; BL.x -= 2; break;
-					case DIR.DOWN: BL.y += 2; BR.y += 2; break;
-				}
 				var board_vertices =
 				[
 					board_x + TL.x, board_y + TL.y,
@@ -56,17 +50,8 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 					board_x + BL.x, board_y + BL.y,
 				];
 			__BlueSoulProcess(
-				!point_in_parallelogram(r_x + displace_x, r_y, board_vertices),
-				!point_in_parallelogram(r_x - displace_x, r_y, board_vertices),
-				
-				!point_in_parallelogram(r_x, r_y + displace_y, board_vertices),
-				!point_in_parallelogram(r_x, r_y - displace_y, board_vertices),
-				
-				!point_in_parallelogram(r_x + displace_x, r_y, board_vertices),
-				!point_in_parallelogram(r_x - displace_x, r_y, board_vertices),
-				
-				!point_in_parallelogram(r_x, r_y + displace_y, board_vertices),
-				!point_in_parallelogram(r_x, r_y - displace_y, board_vertices)
+				!point_in_parallelogram(r_x + displace_x, r_y + displace_y, board_vertices),
+				!point_in_parallelogram(r_x - displace_x, r_y - displace_y, board_vertices)
 				);
 		}
 		

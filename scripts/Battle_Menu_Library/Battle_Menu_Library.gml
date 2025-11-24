@@ -29,8 +29,8 @@ function InitializeBattleStates() {
 		//Soul lerping
 		with (oSoul)
 		{
-			x = decay(x, 72, global.CoalitionBattleLerpSpeed);
-			y = decay(y, 288 + floor(other.__menu_choices[index]) * 32, global.CoalitionBattleLerpSpeed);
+			x = decay(x, 72, COALITION_BATTLE_LERP_SPEED);
+			y = decay(y, 288 + floor(other.__menu_choices[index]) * 32, COALITION_BATTLE_LERP_SPEED);
 		}
 	},
 	function() {
@@ -257,7 +257,7 @@ function InitializeBattleStates() {
 							_target_state = 3;
 							__battle_state = BATTLE_STATE.MENU;
 							__menu_text_typist.reset();
-							struct_set_from_hash(global.__input_functions, global.__press_con_hash, false);
+							struct_set_from_hash(global.__input_functions, __press_con_hash, false);
 						}
 					}
 					//Set bar as miss if distance is exceeded
@@ -338,8 +338,8 @@ function InitializeBattleStates() {
 		//Soul lerping
 		with (oSoul)
 		{
-			x = decay(x, 72, global.CoalitionBattleLerpSpeed);
-			y = decay(y, 288 + floor(other.__menu_choices[index]) * 32, global.CoalitionBattleLerpSpeed);
+			x = decay(x, 72, COALITION_BATTLE_LERP_SPEED);
+			y = decay(y, 288 + floor(other.__menu_choices[index]) * 32, COALITION_BATTLE_LERP_SPEED);
 		}
 	},
 	function() {
@@ -362,7 +362,7 @@ function InitializeBattleStates() {
 		var index = Battle.StateGetButton(MENU_STATE.ACT),
 			//Get valid act options
 			len = min(6, array_length(__enemies[__target_option].__ActNames)),
-			lerp_speed = global.CoalitionBattleLerpSpeed,
+			lerp_speed = COALITION_BATTLE_LERP_SPEED,
 			choice = __menu_choices[index];
 		//Change selection
 		if (PRESS_HORIZONTAL != 0 || PRESS_VERTICAL != 0)
@@ -421,7 +421,7 @@ function InitializeBattleStates() {
 	Battle.DefineMenuState(MENU_STATE.ITEM, function() {
 		var index = Battle.StateGetButton(MENU_STATE.ITEM),
 			choice = __menu_choices[index], len = Item_Count(),
-			lerp_speed = global.CoalitionBattleLerpSpeed,
+			lerp_speed = COALITION_BATTLE_LERP_SPEED,
 			input_horizontal = PRESS_HORIZONTAL,
 			input_vertical = PRESS_VERTICAL;
 		switch (ItemMenuScrollType)
@@ -460,7 +460,7 @@ function InitializeBattleStates() {
 						__item_lerp_color_amount_target[i] = 0.5;
 					else
 						__item_lerp_color_amount_target[i] = 16 / 255;
-					__item_lerp_color_amount[i] = decay(__item_lerp_color_amount[i], __item_lerp_color_amount_target[i], global.CoalitionUILerpSpeed);
+					__item_lerp_color_amount[i] = decay(__item_lerp_color_amount[i], __item_lerp_color_amount_target[i], COALITION_UI_LERP_SPEED);
 				}
 				break;
 
@@ -497,15 +497,15 @@ function InitializeBattleStates() {
 				for (var i = 0, n = min(4, __item_count - _coord); i < n; ++i) {
 					var xx = (64 + ((i % 2) * 256)) + 32,
 						yy = 272 + (floor(i / 2) * 32);
-					draw_text(xx, yy, "* " + global.__CoalitionUserItems[i + _coord].__GetName());
+					draw_text(xx, yy, string_concat("* ", global.__CoalitionUserItems[i + _coord].__GetName()));
 				}
 				// Heal text and Page
-				if (UI.ShowPredictHP && !struct_exists(global.__Coalition_Equipments.__equipment_list, global.__CoalitionUserItems[coord]))
+				if (UI.ShowPredictHP && !is_instanceof(global.__CoalitionUserItems[coord], Equipment))
 					draw_text_color(128, 341, string_concat("(+", global.__CoalitionUserItems[coord].Heal, ")"), c_lime, c_lime, c_lime, c_lime, 1);
 				draw_text(384, 341, __LangItemPageText[c_div]);
 				break;
 			case ITEM_SCROLL.VERTICAL:
-				Battle_Masking_Start(true);
+				Battle_Masking_Start();
 				draw_set_font(__DefaultFontAsset);
 				for (var i = 0; i < __item_count; ++i)
 				{	
@@ -547,8 +547,8 @@ function InitializeBattleStates() {
 		//Soul lerping
 		with (oSoul)
 		{
-			x = decay(x, 72, global.CoalitionBattleLerpSpeed);
-			y = decay(y, 288 + floor(coord) * 32, global.CoalitionBattleLerpSpeed);
+			x = decay(x, 72, COALITION_BATTLE_LERP_SPEED);
+			y = decay(y, 288 + floor(coord) * 32, COALITION_BATTLE_LERP_SPEED);
 		}
 	},
 	function() {

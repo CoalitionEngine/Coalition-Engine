@@ -1,6 +1,5 @@
 __Coalition_Equipments = new __Equipment_Library();
 function __Equipment_Library() constructor {
-	static __equipment_list = {};
 	static __default_attack_animation = function(target_x) {
 		if (GetAttackAnimationTimer() == 0)
 		{
@@ -20,7 +19,7 @@ function __Equipment_Library() constructor {
 enum EQUIPMENT_TYPE {
 	WEAPON, ARMOR
 }
-function Equipment() constructor {
+function Equipment(type = EQUIPMENT_TYPE.ARMOR) constructor {
 	///@method __InitializeDropText(key)
 	///@desc Updates the drop text for equipment if no custom text is placed
 	///@param {string} key The key of the item in the localization file
@@ -29,7 +28,7 @@ function Equipment() constructor {
 			DropText = $"* You threw away the {Name}.";
 	}
 	id = -1;
-	Type = EQUIPMENT_TYPE.ARMOR;
+	Type = type;
 	Attack = 0;
 	Defense = 0;
 	BarCount = 1;

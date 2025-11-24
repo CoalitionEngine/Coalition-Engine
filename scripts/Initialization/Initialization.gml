@@ -10,18 +10,14 @@ function Initialize()
 	static LangLoaded = false;
 	if (!LangLoaded)
 	{
-		lexicon_index_definitions("Locale/definitions.json"); 
-		//lexicon_language_set(lexicon_get_os_locale()); //Autoset
-		lexicon_index_fallback_language_set("English");
+		LexiconIndexDeclareFromFile("./Locale/english.json", "English");
+		LexiconIndexDeclareFromFile("./Locale/schinese.json", "SimpZH");
+		LexiconGlobalFallbackSet("English");
 		LangLoaded = true;
 	}
 	SetLanguage(LANGUAGE.ENGLISH);
 	
 	randomize();
-	
-	//Some users may not want a lerp animation to be played, you may set this to 1
-	global.CoalitionUILerpSpeed = 1/12;
-	global.CoalitionBattleLerpSpeed = 1/3;
 	
 	//Forces all text to be skippable or not
 	global.__CoalitionDialogEnableTextSkipping = true;
@@ -78,12 +74,29 @@ function __CoalitionInitalize()
 		Box_Preset[$ 1] = array_create(10, 0);	// Dimensional Box A
 		Box_Preset[$ 2] = array_create(10, 0);	// Dimensional Box B
 	static __hash_name_list = ["Name", "Max HP", "HP", "LV", "Gold", "EXP", "Wep", "Arm", "Kills", "Box", "Item", "Cell"];
-	static __hash_values = [];
+	static __hash_values = undefined;
 	static __default_save_file_vales = ["Chara", 99, 99, 20, 0, 0, "Stick", "Bandage", 0, Box_Preset, Item_Preset, Cell_Preset];
-	var i = 0;
-	repeat (array_length(__hash_name_list))
+	static __equipment_list = undefined;
+	//Initialize equipment list
+	if (is_undefined(__equipment_list))
 	{
-		__hash_values[i] = variable_get_hash(__hash_name_list[i]);
+		__equipment_list = {};
+		array_foreach(ds_list_to_array(global.__CoalitionItemLibrary), function(_element, _index) {
+			if (is_instanceof(_element, Equipment))
+				__CoalitionInitalize.__equipment_list[$ _element.Name] = _element;
+		});
+	}
+	//Initialize hashed values for quick lookup
+	if (is_undefined(__hash_values))
+	{
+		__hash_values = array_create(array_length(__hash_name_list));
+		array_foreach(__hash_name_list, function(_element, _index) {
+			__CoalitionInitalize.__hash_values[_index] = variable_get_hash(_element);
+		});
+	}
+	var i = 0;
+	repeat (array_length(__hash_values))
+	{
 		struct_set_from_hash(COALITION_SAVE_FILE, __hash_values[i], __default_save_file_vales[i]);
 		++i;
 	}
@@ -103,8 +116,8 @@ function __CoalitionInitalize()
 		LV =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[3]);
 		Gold =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[4]);
 		Exp =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[5]);
-		AttackItem =	global.__Coalition_Equipments.__equipment_list[$ struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[6]) ?? "Stick"];
-		DefenseItem =	global.__Coalition_Equipments.__equipment_list[$ struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[7]) ?? "Bandage"];
+		AttackItem =	__equipment_list[$ struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[6])] ?? "Stick";
+		DefenseItem =	__equipment_list[$ struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[7])] ?? "Bandage";
 		Kills =			struct_get_from_hash(COALITION_SAVE_FILE, __hash_values[8]);
 	}
 	#endregion

@@ -68,15 +68,12 @@ SetAttack(2, function() {
 	if time == 120 EndTurn();
 });
 SetAttack(0, function() {
+	oBoard.image_angle += 5;
 	if (time == 0)
 	{
-		Bullet_Bone(320, 320, 70, 0, 0,,,,, 2);
-		Board.SetSize(70, 70, 70, 70, 0);
-		for (var i = 0; i < 4; ++i)
-		{
-			var p = MakePlatform(320 + lengthdir_x(50, i * 90), 320 + lengthdir_y(50, i * 90), 0, 0, 50, false, i * 90 + 90);
-			TweenFire(p, "io", TWEEN_MODE_PATROL, false, 0, 30, "x>", "@+30");
-		}
+		Board.SetSize(90, 90, 90, 90, 0);
+		//oBattleController.Button.BeneathBoard = true;
+		//oBattleController.UI.BeneathBoard = true;
 	}
 	if (keyboard_check_pressed(ord("W")))
 		Soul.Slam(DIR.UP, 40);

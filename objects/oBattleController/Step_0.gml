@@ -1,4 +1,4 @@
-var lerp_speed = global.CoalitionBattleLerpSpeed,
+var lerp_speed = COALITION_BATTLE_LERP_SPEED,
 	_button_len = array_length(Button.Sprites);
 #region Errors
 if (__COALITION_VERBOSE)

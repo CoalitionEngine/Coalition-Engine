@@ -11,11 +11,9 @@
 ///@param {real} [BarCount]				 The amount of bars that will appear in the battle aiming UI (Default 1)
 ///@param {function} [AttackAnimation]	 The attack animation during battle (Default just a slash)
 function RegisterWeapon(ItemID, Name, Value, BarCount = 1, AttackAnimation = undefined) {
-	global.__Coalition_Equipments.__equipment_list[$ Name] = new Equipment();
-	with (global.__Coalition_Equipments.__equipment_list[$ Name])
+	with (new Equipment(EQUIPMENT_TYPE.WEAPON))
 	{
 		id = ItemID;
-		self.Type = EQUIPMENT_TYPE.WEAPON;
 		self.BarCount = BarCount;
 		self.__AttackAnimation = AttackAnimation ?? global.__Coalition_Equipments.__default_attack_animation;
 		Attack = Value;
@@ -32,11 +30,9 @@ function RegisterWeapon(ItemID, Name, Value, BarCount = 1, AttackAnimation = und
 ///@param {real} [Heal]					 The amount of HP to heal (Default 0)
 ///@param {function} [ConsumeEvent]		 The event to occur once consumed (Default none)
 function RegisterArmor(ItemID, Name, Value, Consumable = false, Heal = 0, ConsumeEvent = COALITION_EMPTY_FUNCTION) {
-	global.__Coalition_Equipments.__equipment_list[$ Name] = new Equipment();
-	with (global.__Coalition_Equipments.__equipment_list[$ Name])
+	with (new Equipment(EQUIPMENT_TYPE.ARMOR))
 	{
 		id = ItemID;
-		self.Type = EQUIPMENT_TYPE.ARMOR;
 		self.Consumable = Consumable;
 		self.ConsumeEvent = ConsumeEvent;
 		self.Heal = Heal;

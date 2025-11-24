@@ -1,5 +1,16 @@
 Update Logs
 
+v1.3.0 (TK)
+- Bumped Input to v10.2.2
+- Bumped Lexicon to v4.0.2
+- Updated README.md
+- Merged the global item and equipment struct
+- Removed outline baking for damage font to save memory
+- Converted `global.CoalitionUILerpSpeed`,`global.CoalitionBattleLerpSpeed`, `global.CoalitionMovementNormalized`, and `global.CoalitionItemHealClearKR` into macros, you can edit them in `CoalitionEngineConfig`
+- Fixed bug where the board frame was beneath the UI when Button/UI was set to be beneath the board
+- Removed `shdClipMask` due to redundancy, and by extension, `Battle_Masking_Start` no longer has an argument
+- Fixed infinite loop when `Button.BackgroundCover` is true
+
 v1.2.0 (TK)
 - Updated Game Maker to 2024.14
 - Added an optional argument in `Battle.SetMenuDialog` to set whether the new text should be applied immediately or will be applied in the next iteration

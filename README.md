@@ -16,13 +16,16 @@
 
 ## Version List
 
-The minimum GameMaker client version required is 2024.13.1.
+The minimum GameMaker client version required is 2024.14.1.
 
 This is the version of external libraries that are packaged with this engine.
 
 > [!IMPORTANT]
-> You should not remove libraries without '()' from the engine as they are essential for the engine to run.
+Note that if you remove any of them, the engine will likely cease to function.
+
+> [!NOTE]
+No Input plug-ins are imported, if you wish to import them, remember to import them outside of the Coalition Engine folder to prevent the plug-ins to be overwritten when clean installing.
 
 | Scribble | Input | Clean Shapes | Lexicon | TurboGML | TweenGMX |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 9.6.6.1 | 10.1.0 | 1.1.1 | 3.0.8 | 4.0.1 | 1.0.3 |
+| 9.6.6.1 | 10.2.2 | 1.1.1 | 4.0.2 | 4.0.1 | 1.0.3 |

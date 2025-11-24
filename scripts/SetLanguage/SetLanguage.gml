@@ -7,6 +7,6 @@
 function SetLanguage(lang_id) {
 	forceinline
 	global.Language = lang_id;
-	lexicon_locale_set(lexicon_languages_get_array()[lang_id][1]);
+	LexiconLanguageSet(LexiconLanguageGetAll()[lang_id]);
 	ReloadTexts();
 }

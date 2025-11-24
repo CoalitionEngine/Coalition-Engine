@@ -8,6 +8,6 @@ surface_reset_target();
 draw_surface(__enemy_draw_surface, 0, 0);
 
 //Don't delete, this prevents the enemy to be drawn inside the board
-Battle_Masking_Start(true);
+Battle_Masking_Start();
 draw_surface_ext(__enemy_draw_surface, 0, 0, 1, 1, 0, c_black, 1);
 Battle_Masking_End();

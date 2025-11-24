@@ -2,10 +2,9 @@
 /// @title Battle Masking Functions
 /// @text Below are the functions you'll use to mask things inside the board
 
-/// @func Battle_Masking_Start([spr])
+/// @func Battle_Masking_Start()
 /// @desc Begins the drawing of board masking
-/// @param {bool} sprite Whether a sprite used for masking
-function Battle_Masking_Start(spr = false) {
+function Battle_Masking_Start() {
 	aggressive_forceinline
 	static __surf = surface_create(640, 480);
 	if (oGlobal.__MainCamera.enable_z)
@@ -23,11 +22,10 @@ function Battle_Masking_Start(spr = false) {
 	}
 	surface_reset_target();
 	//Masking shader
-	var shader = spr ? shdClipMaskSpr : shdClipMask;
-	shader_set(shader);
-	var u_mask = shader_get_sampler_index(shader, "u_mask");
+	shader_set(shdClipMaskSpr);
+	var u_mask = shader_get_sampler_index(shdClipMaskSpr, "u_mask");
 	texture_set_stage(u_mask, surface_get_texture(__surf));
-	var u_rect = shader_get_uniform(shader, "u_rect"),
+	var u_rect = shader_get_uniform(shdClipMaskSpr, "u_rect"),
 		window_width = 640, window_height = 480;
 	shader_set_uniform_f(u_rect, 0, 0, window_width, window_height);
 }

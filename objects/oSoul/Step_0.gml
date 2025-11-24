@@ -149,7 +149,7 @@ if (STATE == BATTLE_STATE.IN_TURN)
 			{
 				if (keyboard_check_pressed(vk_space) && AllowVertical)
 				{
-					Mode ^= true;
+					Mode = Mode == 1 ? 0 : 1;
 					soul.x = __target_x;
 					soul.y = __target_y;
 					ForceAlpha = 1;

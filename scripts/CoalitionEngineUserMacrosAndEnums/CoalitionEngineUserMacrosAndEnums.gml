@@ -10,16 +10,16 @@
 #macro COALITION_CURRENT_SOUL BattleSoulList[TargetSoul]
 #region Input
 //Here are the macros for handy input code
-#macro CHECK_HORIZONTAL struct_get_from_hash(__input_functions, global.__horizontal_hash)
-#macro CHECK_VERTICAL  struct_get_from_hash(__input_functions, global.__vertical_hash)
-#macro PRESS_HORIZONTAL struct_get_from_hash(__input_functions, global.__press_hor_hash)
-#macro PRESS_VERTICAL struct_get_from_hash(__input_functions, global.__press_ver_hash)
-#macro PRESS_CONFIRM struct_get_from_hash(__input_functions, global.__press_con_hash)
-#macro HOLD_CONFIRM struct_get_from_hash(__input_functions, global.__check_con_hash)
-#macro PRESS_CANCEL struct_get_from_hash(__input_functions, global.__press_can_hash)
-#macro HOLD_CANCEL struct_get_from_hash(__input_functions, global.__check_can_hash)
-#macro PRESS_MENU struct_get_from_hash(__input_functions, global.__press_menu_hash)
-#macro CHECK_MOVING struct_get_from_hash(__input_functions, global.__moving_hash)
+#macro CHECK_HORIZONTAL struct_get_from_hash(__input_functions, __horizontal_hash)
+#macro CHECK_VERTICAL  struct_get_from_hash(__input_functions, __vertical_hash)
+#macro PRESS_HORIZONTAL struct_get_from_hash(__input_functions, __press_hor_hash)
+#macro PRESS_VERTICAL struct_get_from_hash(__input_functions, __press_ver_hash)
+#macro PRESS_CONFIRM struct_get_from_hash(__input_functions, __press_con_hash)
+#macro HOLD_CONFIRM struct_get_from_hash(__input_functions, __check_con_hash)
+#macro PRESS_CANCEL struct_get_from_hash(__input_functions, __press_can_hash)
+#macro HOLD_CANCEL struct_get_from_hash(__input_functions, __check_can_hash)
+#macro PRESS_MENU struct_get_from_hash(__input_functions, __press_menu_hash)
+#macro CHECK_MOVING struct_get_from_hash(__input_functions, __moving_hash)
 #endregion
 #region Syntatic sugars
 //Here are the macros for simplifing code, for instance the ins_dest can act as a instance_destroy

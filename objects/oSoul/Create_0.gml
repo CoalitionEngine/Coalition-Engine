@@ -153,11 +153,9 @@ function BasicMovement(hor = true, ver = true) {
 ///Processes blue soul falling
 ///@desc Parameters should all be booleans that represent whether the soul is colliding with the right ground, etc.
 ///@params {bool} checks [Right, Up, left, Down][Ground, Ceiling]
-function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_ground, left_ceil, down_ground, down_ceil)
+function __BlueSoulProcess(__on_ground, __on_ceil)
 {
-	var __on_ground = false,
-		__on_ceil = false,
-		__on_platform = false,
+	var __on_platform = false,
 		_angle = image_angle,
 		check_board = instance_exists(oBoard),
 		move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
@@ -179,45 +177,25 @@ function __BlueSoulProcess(right_ground, right_ceil, up_ground, up_ceil, left_gr
 	//Down
 	if (_angle == 0)
 	{
-		if (check_board)
-		{
-			__on_ground = down_ground;
-			__on_ceil = down_ceil;
-		}
-		jump_input = struct_get_from_hash(__input_functions, global.__up_hash);
+		jump_input = struct_get_from_hash(__input_functions, __up_hash);
 		move_input = __h_spd * move_spd;
 	}
 	//Up
 	else if (_angle == 180)
 	{
-		if (check_board)
-		{
-			__on_ground = up_ground;
-			__on_ceil = up_ceil;
-		}
-		jump_input = struct_get_from_hash(__input_functions, global.__down_hash);
+		jump_input = struct_get_from_hash(__input_functions, __down_hash);
 		move_input = __h_spd * -move_spd;
 	}
 	//Right
 	else if (_angle == 90)
 	{
-		if (check_board)
-		{
-			__on_ground = right_ground;
-			__on_ceil = right_ceil;
-		}
-		jump_input = struct_get_from_hash(__input_functions, global.__left_hash);
+		jump_input = struct_get_from_hash(__input_functions, __left_hash);
 		move_input = __v_spd * -move_spd;
 	}
 	//Left
 	else if (_angle == 270)
 	{
-		if (check_board)
-		{
-			__on_ground = left_ground;
-			__on_ceil = left_ceil;
-		}
-		jump_input = struct_get_from_hash(__input_functions, global.__right_hash);
+		jump_input = struct_get_from_hash(__input_functions, __right_hash);
 		move_input = __v_spd * move_spd;
 	}
 	//Platform checking
