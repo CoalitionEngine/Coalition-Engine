@@ -506,7 +506,7 @@ function __dialog_start() {
 	forceinline;
 	with (oEnemyParent)
 	{
-		__current_turn= __turn_determined ? __current_turn : DetermineTurn();
+		__current_turn = __turn_determined ? __current_turn : DetermineTurn();
 		if (array_length(__PreAttackFunctions) > __current_turn)
 			__PreAttackFunctions[max(0, __current_turn)]();
 		__state = 1;

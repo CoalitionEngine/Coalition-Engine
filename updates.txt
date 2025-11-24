@@ -1,5 +1,10 @@
 Update Logs
 
+v1.3.1 (TK)
+- Fixed bug where game can crash post-battle
+- Fixed vertical movement is opposite of direction
+- Bumped Lexicon to v4.0.3 (Before its release, how??)
+
 v1.3.0 (TK)
 - Bumped Input to v10.2.2
 - Bumped Lexicon to v4.0.2

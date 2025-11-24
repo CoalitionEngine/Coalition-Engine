@@ -12,7 +12,7 @@ with Enemy
 	SetHPStats(other, 600, 400);
 	SetReward(other, 100, 100);
 	SetDefense(other, 1090000000);
-	SetSpareable(other, false)
+	SetSpareable(other, true)
 }
 Dialog.DefaultFont = "fnt_sans";
 Dialog.DefaultSound = snd_txtSans;

@@ -185,7 +185,7 @@ __died = false;
 
 //Spare
 //Whether the enemy can be spared
-__spareable = true;
+__spareable = false;
 //Interal check for whether the enemy is being spared
 __is_being_spared = false;
 //Whether if failing to spare the enemy will trigger the next turn
@@ -330,18 +330,22 @@ function __EnemyDrawFunction()
 function __CoalitionRemoveEnemy(is_spared = false)
 {
 	forceinline
-	instance_destroy();
 	if (instance_exists(oBattleController))
+	{
+		var surf = surface_create(640, 480);
+		surface_copy(surf, 0, 0, __enemy_draw_surface);
+		var enemy_slot = x / 160 - 1;
 		with (oBattleController)
 		{
 			//Add Reward
 			__Result.Gold += other.__gold_reward;
 			__Result.Exp += other.__exp_reward;
-			var enemy_slot = other.x / 160 - 1;
 			__enemies[enemy_slot] = noone;
 			if (is_spared)
-				array_push(__spared_enemies_surfaces, other.__enemy_draw_surface);
+				array_push(__spared_enemies_surfaces, surf);
 		}
+	}
+	instance_destroy();
 }
 function __InitalizeDust()
 {

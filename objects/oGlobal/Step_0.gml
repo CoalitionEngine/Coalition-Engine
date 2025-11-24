@@ -50,7 +50,7 @@ with (__input_functions)
 	left = InputCheck(INPUT_VERB.LEFT);
 	right = InputCheck(INPUT_VERB.RIGHT);
 	horizontal = COALITION_MOVEMENT_NORMALIZED ? (right - left) : InputX(INPUT_CLUSTER.NAVIGATION);
-	vertical = COALITION_MOVEMENT_NORMALIZED ? (up - down) : InputY(INPUT_CLUSTER.NAVIGATION);
+	vertical = COALITION_MOVEMENT_NORMALIZED ? (down - up) : InputY(INPUT_CLUSTER.NAVIGATION);
 	press_hor = InputOpposingPressed(INPUT_VERB.LEFT, INPUT_VERB.RIGHT);
 	press_ver = InputOpposingPressed(INPUT_VERB.UP, INPUT_VERB.DOWN);
 	press_con = InputPressed(INPUT_VERB.CONFIRM);

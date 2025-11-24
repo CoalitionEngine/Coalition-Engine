@@ -7,7 +7,7 @@ Due to our dependency on public libraries, the supported platforms are the platf
 
 ### Which Game Maker version should I use to use this engine?
 
-It is best to use Game Maker 2024.13+ versions as v1.0.0 was developed in it.
+It is best to use Game Maker 2024.14+ versions.
 
 ### What is different between Coalition Engine and other existing engines?
 
