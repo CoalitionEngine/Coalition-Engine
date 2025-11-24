@@ -1,0 +1,10 @@
+# Global variables
+
+There are some global variables in this engine for you to further modify the behaviour of the game, here
+are the list of global variables and their purpose.
+
+| Name | Type | Purpose |
+| --- | --- | --- |
+| `EncounterID` | `Real` | Sets the current encounter |
+| `CoalitionSlamDamage` | `Real` | The amount of damage a slam deals to the player during battle |
+| `timer` | `real` | Frames elapsed since game was initalized |
