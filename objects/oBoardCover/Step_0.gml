@@ -98,8 +98,8 @@ while (instance_place(x + check_x, y + check_y, oSoul) != noone)
 		var target_dir = point_direction(x_prev, y_prev, x, y);
 		if (target_dir % 45 > 40)
 		{
-			x += global.__CoalitionPlayerSpeed * dcos(target_dir);
-			y += global.__CoalitionPlayerSpeed * -dsin(target_dir);
+			x += lengthdir_x(global.__CoalitionPlayerSpeed, target_dir);
+			y += lengthdir_y(global.__CoalitionPlayerSpeed, target_dir);
 		}
 	}
 	if (--max_iterations < 0)
@@ -120,7 +120,6 @@ __bg_h = up + down;
 
 surface_set_target(__surface);
 draw_clear_alpha(c_white, 0);
-draw_clear_alpha(c_black, 0);
 //There has to be a way to handle this better
 var displace_x = abs(lengthdir_x(FrameThickness, image_angle) + lengthdir_y(FrameThickness, -image_angle)),
 	displace_y = lengthdir_x(FrameThickness, image_angle) - lengthdir_y(FrameThickness, -image_angle - 90);
@@ -129,3 +128,6 @@ draw_sprite_ext(sprPixel, 0, __bg_x + displace_x, __bg_y + displace_y, __bg_w + 
 for (var i = 0; i < 4; ++i)
 	draw_sprite_ext(sprPixel, 0, _frame_x[i] + displace_x, _frame_y[i] + displace_y, i < 2 ? left + right + FrameThickness * 2 : FrameThickness, i >= 2 ? up + down + FrameThickness * 2 : FrameThickness, image_angle, image_blend, image_alpha);
 surface_reset_target();
+
+__true_x = x + lengthdir_x((right - left) / 2, image_angle);
+__true_y = y + lengthdir_y((up - down) / 2, image_angle);

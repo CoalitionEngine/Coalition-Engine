@@ -32,7 +32,8 @@ else
 	global.__CoalitionPlayerKR = 0;
 }
 
-if (global.HP <= 0 && global.CoalitionBattlePlayerCanDie)
+if (global.HP <= 0 && PlayerCanDie)
+{
 	if (!global.__CoalitionDebug)
 		__gameover();
 	else
@@ -40,4 +41,36 @@ if (global.HP <= 0 && global.CoalitionBattlePlayerCanDie)
 		global.HP = global.MaxHP;
 		audio_play(snd_item_heal);
 	}
+}
+// Bake masking surface
+//Creates a surface for the drawing region for the bullets
+if (!surface_exists(__mask_surf)) __mask_surf = surface_create(640, 480, surface_r8unorm);
+surface_set_target(__mask_surf);
+//Fills the entire view
+draw_clear(c_white);
+//Cuts out the board
+gpu_push_state();
+gpu_set_blendmode(bm_subtract);
+with (oBoard)
+	__DrawBackground(c_black);
+with (oVertexBoard)
+	__DrawBackground(c_black);
+gpu_pop_state();
+//Draw cover board masks
+with (oBoardCover)
+	draw_sprite_ext(sprPixelBig, 0, __true_x, __true_y, (right + left) / 2, (down +  up) / 2, image_angle, c_black, 1);
+//End masking creation
+surface_reset_target();
 
+// Bake board background surf
+if (!surface_exists(__board_bg_surf)) __board_bg_surf = surface_create(640, 480);
+surface_set_target(__board_bg_surf);
+draw_clear_alpha(c_black, 0);
+with (oVertexBoard)
+	__DrawBackground(c_white);
+with (oBoard)
+{
+	if (!VertexMode && surface_exists(__surface))
+		draw_surface(__surface, 0, 0);
+}
+surface_reset_target();

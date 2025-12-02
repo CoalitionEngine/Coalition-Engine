@@ -26,9 +26,9 @@ with (__Border)
 
 #region Effects
 shader_enable_corner_id(true);
-__GradientSurf = surface_create(640, 480);
+__GradientSurf = surface_create(1, 480);
 global.__CoalitionCutscreenSurfaceList = ds_list_create();
-__CutScreenSurface = surface_create(640, 480);
+__CutScreenSurface = -1;
 __CutLineStart = shader_get_uniform(shdCutScreen, "u_lineStart");
 __CutLineEnd = shader_get_uniform(shdCutScreen, "u_lineEnd");
 __CutSide = shader_get_uniform(shdCutScreen, "u_side");

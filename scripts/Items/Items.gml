@@ -47,7 +47,7 @@ function Item_Use(item) {
 	{
 		var stat_text = "";
 		if (string_width(item.StatBoostText) != 0)	
-			stat_text = "[delay, 333]\n* " + item.StatBoostText.Get();
+			stat_text = "[delay, 333]\n* " + item.StatBoostText;
 		//Store a copy of the item to the effect processing array if needed
 		if (is_callable(item.EffectDuringTurn) || is_callable(item.EffectAtTurnEnd))
 			array_push(__item_process_list, item);

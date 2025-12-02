@@ -8,6 +8,58 @@
 function __Battle() constructor
 {
 	__defined_states = {};
+	__defined_buttons = {};
+	///@method DefineButton(button)
+	///@desc Defines a button for the battle menu
+	///@param {real} button The button to define
+	///@param {real} state The state the battle will go to when the button is selected
+	///@param {Assets.GMSprite} sprite The sprite of the button
+	///@param {real} x The x coordinate of the button
+	///@param {real} y The y coordinate of the button
+	///@param {real} soul_x The x coordinate of the soul relative to the button
+	///@param {real} soul_y The y coordinate of the soul relative to the button
+	///@param {Array<Real>} Scales The scales of the button ([Unselected scale, Selected scale])
+	///@param {Array<Real>} Alphas The alphas of the button ([Unselected alpha, Selected alpha])
+	///@param {Array<Real>} Colors The colors of the button ([Unselected color, Selected color])
+	///@param {function} EnableCondition The condition of the availability of the button (Default always true)
+	///@param {function} Step The processing logic of the button (Default empty function)
+	///@param {function} Draw The drawing logic of the button (Default empty function)
+	static DefineButton = function(button, state, sprite, x, y, soul_x, soul_y, Scales, Alphas, Colors, EnableCondition = function() { return true; }, Step = COALITION_EMPTY_FUNCTION, Draw = COALITION_EMPTY_FUNCTION)
+	{
+		forceinline
+		__defined_buttons[$ button] = {
+			id: button, state,
+			sprite_index: sprite,
+			x, y, soul_x, soul_y,
+			image_angle: 0,
+			image_xscale: 1, image_yscale: 1,
+			image_alpha: 1,
+			Scales, Alphas, Colors,
+			EnableCondition,
+			Step, Draw,
+			image_blend: Colors[0],
+			OverrideAlpha: false,
+			__ColorLerpScale: 0,
+			__ColorLerpTimer: 0,
+			BeneathBoard: false
+		};
+		return Battle;
+	}
+	///@method Button(index, button)
+	///@desc Sets the index of the button or Get the button from index
+	///@param {real} index The index to set the button to
+	///@param {real} button The button to set (Set to empty for reading)
+	///@returns The button struct
+	static Button = function(index, button = undefined) {
+		forceinline
+		if (!is_undefined(button))
+		{
+			oBattleController.Button[index] = button;
+			return Battle;
+		}
+		else
+			return __defined_buttons[$ oBattleController.Button[index]];
+	}
 	///@method DefineMenuState(state, step, draw)
 	///@desc Defines a state for the battle menu
 	///@param {real} state The state to define (Preferably COALITION_BATTLE_CUSTOM_STATE)
@@ -26,9 +78,9 @@ function __Battle() constructor
 	static StateGetButton = function(state)
 	{
 		var i = 0;
-		repeat (array_length(oBattleController.Button.TargetState))
+		repeat (array_length(oBattleController.Button))
 		{
-			if (oBattleController.Button.TargetState[i] == state)
+			if (__defined_buttons[$ oBattleController.Button[i]].state == state)
 				return i;
 			else
 				i++;
@@ -132,8 +184,8 @@ function __Battle() constructor
 	///@param {bool} activate Whether the button will activate the turn or not
 	static SetButtonActivateTurn = function(button, activate) {
 		forceinline;
-		if ((oBattleController.__button_choice_activate_turn & quick_pow(2, button)) != activate)
-			oBattleController.__button_choice_activate_turn ^= quick_pow(2, button);
+		if ((oBattleController.__button_choice_activate_turn & (1 << button)) != activate)
+			oBattleController.__button_choice_activate_turn ^= (1 << button);
 		return self;
 	}
 }

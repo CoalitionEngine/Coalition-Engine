@@ -1,9 +1,10 @@
+///Define your battle states here
 function InitializeBattleStates() {
 	forceinline;
 	//Define battle menu states
-	Battle.DefineMenuState(MENU_STATE.FIGHT, function() {
+	Battle.DefineMenuState(BATTLE_MENU_STATE.FIGHT, function() {
 		//Change selection
-		var len = instance_number(oEnemyParent), index = Battle.StateGetButton(MENU_STATE.FIGHT);
+		var len = instance_number(oEnemyParent), index = Battle.StateGetButton(BATTLE_MENU_STATE.FIGHT);
 		if (len > 1 && PRESS_VERTICAL != 0)
 		{
 			__menu_choices[index] = posmod(__menu_choices[index] + PRESS_VERTICAL, len);
@@ -13,14 +14,14 @@ function InitializeBattleStates() {
 		if (PRESS_CANCEL)
 		{
 			__menu_choices[index] = 0;
-			__menu_state = MENU_STATE.BUTTON_SELECTION;
+			__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 		}
 		//Confirm state
 		if (PRESS_CONFIRM)
 		{
 			audio_play(snd_menu_confirm);
 			Target.__MinimalAttackWaitTime = 60;
-			__menu_state = MENU_STATE.FIGHT_AIM; // Fight Aiming
+			__menu_state = BATTLE_MENU_STATE.FIGHT_AIM; // Fight Aiming
 			__ResetFightAim();
 			//Sets all bullets to be not collidable to the soul
 			if (instance_exists(oBulletParents))
@@ -61,8 +62,8 @@ function InitializeBattleStates() {
 			i++;
 		}
 	});
-	Battle.DefineMenuState(MENU_STATE.FIGHT_AIM,, function() {
-		var index = Battle.StateGetButton(MENU_STATE.FIGHT);
+	Battle.DefineMenuState(BATTLE_MENU_STATE.FIGHT_AIM,, function() {
+		var index = Battle.StateGetButton(BATTLE_MENU_STATE.FIGHT);
 		#region Declare local variables instead of per struct call for optimization
 		with (Target)
 		{
@@ -103,7 +104,7 @@ function InitializeBattleStates() {
 					//Reset menu state if there are no input pressed
 					if ((_target_time[0] >= 575 && !COALITION_DATA.AttackItem.__AttackAnimationEnded) || COALITION_DATA.AttackItem.__AttackAnimationEnded)
 					{
-						__menu_state = MENU_STATE.BUTTON_SELECTION;
+						__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 						_target_state = 3;
 						__battle_state = BATTLE_STATE.MENU;
 						__menu_text_typist.reset();
@@ -253,11 +254,11 @@ function InitializeBattleStates() {
 						}
 						else //Bars are all misses, return to menu
 						{
-							__menu_state = MENU_STATE.BUTTON_SELECTION;
+							__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 							_target_state = 3;
 							__battle_state = BATTLE_STATE.MENU;
 							__menu_text_typist.reset();
-							struct_set_from_hash(global.__input_functions, __press_con_hash, false);
+							struct_set_from_hash(__input_functions, __press_con_hash, false);
 						}
 					}
 					//Set bar as miss if distance is exceeded
@@ -277,7 +278,7 @@ function InitializeBattleStates() {
 							k++;
 					if (k == global.__CoalitionAttackBarCount)
 					{
-						__menu_state = MENU_STATE.BUTTON_SELECTION;
+						__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 						_target_state = 3;
 						__battle_state = BATTLE_STATE.MENU;
 					}
@@ -315,8 +316,8 @@ function InitializeBattleStates() {
 		__Aim.color = _aim_color;
 		#endregion
 	});
-	Battle.DefineMenuState(MENU_STATE.ACT, function() {
-		var len = instance_number(oEnemyParent), index = Battle.StateGetButton(MENU_STATE.FIGHT);
+	Battle.DefineMenuState(BATTLE_MENU_STATE.ACT, function() {
+		var len = instance_number(oEnemyParent), index = Battle.StateGetButton(BATTLE_MENU_STATE.FIGHT);
 		//Change selection
 		if (len > 1 && PRESS_VERTICAL != 0)
 		{
@@ -327,13 +328,13 @@ function InitializeBattleStates() {
 		if (PRESS_CANCEL)
 		{
 			__menu_choices[index] = 0;
-			__menu_state = MENU_STATE.BUTTON_SELECTION;
+			__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 		}
 		//Confirm state
 		if (PRESS_CONFIRM)
 		{
 			audio_play(snd_menu_confirm);
-			__menu_state = MENU_STATE.ACT_SELECT; // Act Selection
+			__menu_state = BATTLE_MENU_STATE.ACT_SELECT; // Act Selection
 		}
 		//Soul lerping
 		with (oSoul)
@@ -358,8 +359,8 @@ function InitializeBattleStates() {
 			i++;
 		}
 	});
-	Battle.DefineMenuState(MENU_STATE.ACT_SELECT, function() {
-		var index = Battle.StateGetButton(MENU_STATE.ACT),
+	Battle.DefineMenuState(BATTLE_MENU_STATE.ACT_SELECT, function() {
+		var index = Battle.StateGetButton(BATTLE_MENU_STATE.ACT),
 			//Get valid act options
 			len = min(6, array_length(__enemies[__target_option].__ActNames)),
 			lerp_speed = COALITION_BATTLE_LERP_SPEED,
@@ -387,7 +388,7 @@ function InitializeBattleStates() {
 			var tex = __enemies[__target_option].__ActTexts[choice];
 			tex = is_method(tex) ? tex() : tex;
 			__text_writer.overwrite("* " + tex);
-			__menu_state = MENU_STATE.UNDEFINED;
+			__menu_state = BATTLE_MENU_STATE.UNDEFINED;
 			if (is_callable(__enemies[__target_option].__ActFunctions[choice]))
 				__enemies[__target_option].__ActFunctions[choice]();
 			__last_choice = index;
@@ -398,7 +399,7 @@ function InitializeBattleStates() {
 			choice = 0;
 			// Reset back to Act
 			__menu_choices[1] = 0;
-			__menu_state = MENU_STATE.ACT;
+			__menu_state = BATTLE_MENU_STATE.ACT;
 		}
 	},
 	function() {
@@ -418,8 +419,8 @@ function InitializeBattleStates() {
 		}
 		draw_text_color(96, 272, enemy_check_texts, c_white, c_white, c_white, c_white, 1);
 	});
-	Battle.DefineMenuState(MENU_STATE.ITEM, function() {
-		var index = Battle.StateGetButton(MENU_STATE.ITEM),
+	Battle.DefineMenuState(BATTLE_MENU_STATE.ITEM, function() {
+		var index = Battle.StateGetButton(BATTLE_MENU_STATE.ITEM),
 			choice = __menu_choices[index], len = Item_Count(),
 			lerp_speed = COALITION_BATTLE_LERP_SPEED,
 			input_horizontal = PRESS_HORIZONTAL,
@@ -483,11 +484,11 @@ function InitializeBattleStates() {
 			choice = 0;
 			// Reset back to button choice
 			__menu_choices[index] = 0;
-			__menu_state = MENU_STATE.BUTTON_SELECTION;
+			__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 		}
 	},
 	function() {
-		var index = Battle.StateGetButton(MENU_STATE.ITEM),
+		var index = Battle.StateGetButton(BATTLE_MENU_STATE.ITEM),
 			coord = __menu_choices[index], c_div = coord div 4,
 			_coord = c_div * 4;
 		switch (ItemMenuScrollType)
@@ -521,8 +522,8 @@ function InitializeBattleStates() {
 				break;
 		}
 	});
-	Battle.DefineMenuState(MENU_STATE.MERCY, function() {
-		var index = Battle.StateGetButton(MENU_STATE.MERCY),
+	Battle.DefineMenuState(BATTLE_MENU_STATE.MERCY, function() {
+		var index = Battle.StateGetButton(BATTLE_MENU_STATE.MERCY),
 			coord = __menu_choices[index],
 			len = 1 + real(FleeEnabled);
 		//Change selection
@@ -536,13 +537,13 @@ function InitializeBattleStates() {
 		if (PRESS_CANCEL)
 		{
 			__menu_choices[index] = 0;
-			__menu_state = MENU_STATE.BUTTON_SELECTION;
+			__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 		}
 		//Confirm state
 		if (PRESS_CONFIRM)
 		{
 			audio_play(snd_menu_confirm);
-			__menu_state = __menu_choices[index] == 0 ? MENU_STATE.MERCY_END : MENU_STATE.FLEE; // Spare or Flee
+			__menu_state = __menu_choices[index] == 0 ? BATTLE_MENU_STATE.MERCY_END : BATTLE_MENU_STATE.FLEE; // Spare or Flee
 		}
 		//Soul lerping
 		with (oSoul)
@@ -570,11 +571,11 @@ function InitializeBattleStates() {
 			SpareText += "\n" + __LangFleeText;
 		draw_text_color(96, 272, SpareText, spare_col, spare_col, spare_col, spare_col, 1);
 	});
-	Battle.DefineMenuState(MENU_STATE.MERCY_END, function() {
+	Battle.DefineMenuState(BATTLE_MENU_STATE.MERCY_END, function() {
 		//Activate turn if needed
 		__begin_spare(oBattleController.__button_choice_activate_turn & 8);
 	});
-	Battle.DefineMenuState(MENU_STATE.FLEE, function() {
+	Battle.DefineMenuState(BATTLE_MENU_STATE.FLEE, function() {
 		if (__FleeState == 0)
 		{
 			with (oSoul)
@@ -601,4 +602,75 @@ function InitializeBattleStates() {
 		if (__FleeState == 2 && oGlobal.__fader_alpha == 1)
 			__ExitFight();
 	});
+}
+///Define your battle buttons here
+function InitializeBattleButtons() {
+	#region Default Functions
+	function DefaultButtonStep(duration = COALITION_BATTLE_LERP_SPEED == 1 ? 1 : 30) {
+		var __battle_state = Battle.State(), __menu_state = Battle.MenuState(), __menu_button_choice = oBattleController.__menu_button_choice;
+		if (__battle_state != BATTLE_STATE.MENU)
+		{
+			if (__ColorLerpTimer > 0)
+				__ColorLerpTimer--;
+			image_xscale += (Scales[0] - image_xscale) / 6;
+			image_yscale += (Scales[0] - image_yscale) / 6;
+			if (!OverrideAlpha)
+				image_alpha += (Alphas[0] - image_alpha) / 6;
+		}
+		else
+		{
+			if (id == __menu_button_choice)
+			{
+				if (__ColorLerpTimer < duration)
+					__ColorLerpTimer++;
+				image_xscale += (Scales[1] - image_xscale) / 6;
+				image_yscale += (Scales[1] - image_yscale) / 6;
+				if (!OverrideAlpha)
+					image_alpha += (Alphas[1] - image_alpha) / 6;
+			}
+			else
+			{
+				if (__ColorLerpTimer > 0)
+					__ColorLerpTimer--;
+				image_xscale += (Scales[0] - image_xscale) / 6;
+				image_yscale += (Scales[0] - image_yscale) / 6;
+				if (!OverrideAlpha)
+					image_alpha += (Alphas[0] - image_alpha) / 6;
+			}
+		}
+		__ColorLerpScale = EaseOutQuad(__ColorLerpTimer, 0, 1, duration);
+		image_blend = merge_color(Colors[0], EnableCondition() ? Colors[__menu_state == state || id == __menu_button_choice] : c_ltgray, __ColorLerpScale);
+		image_blend = merge_color(c_black, image_blend, image_alpha);
+	}
+	function DefaultButtonDraw() {
+		image_index = (oBattleController.__menu_button_choice == id) && Battle.MenuState() >= 0;
+		draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+
+		// Animation - Color updating in real-time because yes
+		if (Battle.MenuState() == BATTLE_MENU_STATE.UNDEFINED) // If the menu state is over
+		{
+			image_xscale += (Scales[0] - image_xscale) / 6;
+			image_yscale += (Scales[0] - image_yscale) / 6;
+			if (!OverrideAlpha)
+				image_alpha += (Alphas[0] - image_alpha) / 6;
+		}
+	}
+	#endregion
+	Battle
+	.DefineButton(BATTLE_BUTTONS.FIGHT, BATTLE_MENU_STATE.FIGHT, sprButtonFight,
+					87, 453, -38, 0, [1, 1.2], [0.25, 1], [make_color_rgb(242, 101, 34), c_yellow],,
+					DefaultButtonStep, DefaultButtonDraw)
+	.Button(0, BATTLE_BUTTONS.FIGHT)
+	.DefineButton(BATTLE_BUTTONS.ACT, BATTLE_MENU_STATE.ACT, sprButtonAct,
+					240, 453, -38, 0, [1, 1.2], [0.25, 1], [make_color_rgb(242, 101, 34), c_yellow],,
+					DefaultButtonStep, DefaultButtonDraw)
+	.Button(1, BATTLE_BUTTONS.ACT)
+	.DefineButton(BATTLE_BUTTONS.ITEM, BATTLE_MENU_STATE.ITEM, sprButtonItem,
+					400, 453, -38, 0, [1, 1.2], [0.25, 1], [make_color_rgb(242, 101, 34), c_yellow], function() { return Item_Count() != 0 },
+					DefaultButtonStep, DefaultButtonDraw)
+	.Button(2, BATTLE_BUTTONS.ITEM)
+	.DefineButton(BATTLE_BUTTONS.MERCY, BATTLE_MENU_STATE.MERCY, sprButtonMercy,
+					555, 453, -38, 0, [1, 1.2], [0.25, 1], [make_color_rgb(242, 101, 34), c_yellow],,
+					DefaultButtonStep, DefaultButtonDraw)
+	.Button(3, BATTLE_BUTTONS.MERCY);
 }

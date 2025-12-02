@@ -83,7 +83,7 @@ function __Camera() constructor
 		with (oGlobal.__MainCamera)
 		{
 			if (duration == 0)
-				scale = new Vector2(sx, sy);
+				scale.Set(sx, sy);
 			else
 				TweenFire(scale, ease, 0, false, 0, duration, "x>", sx, "y>", sy);
 		}
@@ -111,10 +111,6 @@ function __Camera() constructor
 				TweenFire(self, ease, 0, 0, delay, duration, "x>", _x, "y>", _y);
 		}
 		return self;
-	}
-	static MoveTo = function(x, y, duration, delay = 0, ease = "")
-	{
-		__CoalitionEngineError(true, "Coalition Engine: Camera.MoveTo has been replaced by Camera.SetPos");
 	}
 	///@method RotateTo([start], target, duration, [ease], [delay])
 	///@desc Rotates the camera

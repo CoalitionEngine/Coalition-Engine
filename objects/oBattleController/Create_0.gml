@@ -3,6 +3,8 @@ texturegroup_load("texbattle");
 InitializeBattleStates();
 Fader_Fade(1, 0, 20);
 draw_set_align();
+__mask_surf = -1;
+__board_bg_surf = -1;
 #region Initalize global battle variables
 globalvar BattleBoardList, BattleSoulList, TargetBoard, TargetSoul, VertexBoardList, __BulletList;
 TargetBoard = 0;
@@ -163,135 +165,9 @@ Battle.SetMenuDialog(__menu_text);
 __kr_timer = 0;
 #endregion
 #region Button Functions
-//The button data struct
-Button = {};
-with (Button)
-{
-	Sprites			= [sprButtonFight, sprButtonAct, sprButtonItem, sprButtonMercy];
-	Position		= [87, 453, 240, 453, 400, 453, 555, 453];
-	TargetState		= [MENU_STATE.FIGHT, MENU_STATE.ACT, MENU_STATE.ITEM, MENU_STATE.MERCY];
-	var DefaultButtonAmount = array_length(Sprites);
-	Alpha			= array_create(DefaultButtonAmount, 0.25);
-	OverrideAlpha	= array_create(DefaultButtonAmount, 1);
-	Scale			= array_create(DefaultButtonAmount, 1);
-	DefaultColor	= make_color_rgb(242, 101, 34);
-	Color			= array_create(DefaultButtonAmount, DefaultColor); //rgb
-	Angle			= array_create(DefaultButtonAmount, 0);
-	AlphaTarget		= [0.25, 1];
-	ScaleTarget		= [1, 1.2];
-	ColorTarget		= array_create(DefaultButtonAmount, [DefaultColor, c_yellow]);
-	BackgroundCover = false;
-	ColorLerpScale	= array_create(DefaultButtonAmount, 0);
-	ResetTimer		= function() {
-		ColorLerpTimer = array_create(array_length(Sprites), 0);
-	}
-	ResetTimer();
-	//Whether the board will mask the buttons
-	BeneathBoard = false;
-}
-//Button update logic
-Button.Update = function(duration = COALITION_BATTLE_LERP_SPEED == 1 ? 1 : 30) {
-	static UpdateData = function(i, duration, __menu_state)
-	{
-		if (Item_Count() == 0)
-			ColorTarget[2] = array_create(2, c_ltgray);
-		ColorLerpScale[i] = EaseOutQuad(ColorLerpTimer[i], 0, 1, duration);
-		Color[i] = merge_color(ColorTarget[i][0], ColorTarget[i][__menu_state >= 0], ColorLerpScale[i]);
-		Color[i] = merge_color(c_black, Color[i], Alpha[i]);
-	}
-	var i = 0, __battle_state = self.__battle_state, __menu_state = self.__menu_state, __menu_button_choice = self.__menu_button_choice;
-	with (Button)
-	{
-		repeat (array_length(Sprites))
-		{
-			if (__battle_state != BATTLE_STATE.MENU)
-			{
-				if (ColorLerpTimer[i] > 0)
-					ColorLerpTimer[i]--;
-				Scale[i] += (ScaleTarget[0] - Scale[i]) / 6;
-				Alpha[i] += (AlphaTarget[0] - Alpha[i]) / 6;
-			}
-			else
-			{
-				if (i == __menu_button_choice)
-				{
-					if (ColorLerpTimer[i] < duration)
-						ColorLerpTimer[i]++;
-					Scale[i] += (ScaleTarget[1] - Scale[i]) / 6;
-					Alpha[i] += (AlphaTarget[1] - Alpha[i]) / 6;
-				}
-				else
-				{
-					if (ColorLerpTimer[i] > 0)
-						ColorLerpTimer[i]--;
-					Scale[i] += (ScaleTarget[0] - Scale[i]) / 6;
-					Alpha[i] += (AlphaTarget[0] - Alpha[i]) / 6;
-				}
-			}
-			if (OverrideAlpha[i] != 1)
-				Alpha[i] = OverrideAlpha[i];
-			UpdateData(i, duration, __menu_state);
-			++i;
-		}
-	}
-};
-Button.Draw = function() {
-	with (Button)
-	{
-		var _button_spr =	Sprites,
-			_button_pos =	Position,
-			_button_alpha = Alpha,
-			_button_scale = Scale,
-			_button_color = Color,
-			_button_angle = Angle;
-	}
-	var i = 0, n = array_length(_button_spr);
-
-	if (Button.BackgroundCover)
-	{
-		shader_set(shdBlackMask); //Prevent background covers the buttons
-		repeat (n) // Button initialize
-		{
-			// Check if the button is chosen
-			var select = (__menu_button_choice == i) && __menu_state >= 0;
-			// Draw the button by array order
-			draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], merge_color(c_white, c_black, .5 - _button_alpha[i] / 2), 1);
-			++i;
-		}
-		shader_reset();
-	}
-	repeat (n)
-	{
-		var select = (__menu_button_choice == i) && __menu_state >= 0;
-		draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], _button_color[i], 1);
-
-		// Animation - Color updating in real-time because yes
-		if (__menu_state < 0) // If the menu state is over
-		{
-			var final_alpha = min(Button.AlphaTarget[1], Button.OverrideAlpha[i]);
-			_button_scale[i] += (Button.ScaleTarget[0] - _button_scale[i]) / 6;
-			_button_alpha[i] += (final_alpha - _button_alpha[i]) / 6;
-		}
-		++i;
-	}
-	//Draws a rectangle to cover the button in the board if needed
-	if (Button.BeneathBoard)
-	{
-		Battle_Masking_Start();
-		i = 0;
-		repeat (n)
-		{
-			draw_sprite_ext(_button_spr[i], select, _button_pos[i * 2], _button_pos[i * 2 + 1], _button_scale[i], _button_scale[i], _button_angle[i], c_black, 1);
-			++i;
-		}
-		Battle_Masking_End();
-		with (oBoard)
-			if (!VertexMode)
-				draw_surface(__frame_surf, 0, 0);
-	}
-}
+InitializeBattleButtons();
 //The array of choices chosen by the player in each button
-__menu_choices = array_create(DefaultButtonAmount, 0);
+__menu_choices = array_create(array_length(Button), 0);
 #endregion
 #region UI Functions
 if (ALLOW_DEBUG)
@@ -374,6 +250,7 @@ __Result = {
 #endregion
 #region Effects in battle
 __item_process_list = [];
+PlayerCanDie = true;
 #endregion
 #region Internal Functions
 ///Calculates the damage inflicting to the enemy
@@ -418,9 +295,9 @@ function __CalculateMenuDamage(distance_to_center, enemy_under_attack, crit_amou
 function __begin_turn() {
 	aggressive_forceinline;
 	//If the choice is not an act, check whether it triggers the turn
-	if (__last_choice != 1 ? bool(__button_choice_activate_turn & quick_pow(2, __last_choice)) :
+	if (__last_choice != 1 ? bool(__button_choice_activate_turn & (1 << __last_choice)) :
 	//If it is an act, check whether the act chosen activates the turn
-	((__button_choice_activate_turn & 2) && (__action_trigger_turn & quick_pow(2, __menu_choices[1]))))
+	((__button_choice_activate_turn & 2) && (__action_trigger_turn & (1 << __menu_choices[1]))))
 	{
 		if (__last_choice != 0)
 		{
@@ -468,7 +345,7 @@ function __begin_spare(activate_turn) {
 	oEnemyParent.__spare_end_begin_turn = activate_turn;
 	if (!activate_turn)
 	{
-		__menu_state = MENU_STATE.BUTTON_SELECTION;
+		__menu_state = BATTLE_MENU_STATE.BUTTON_SELECTION;
 		__battle_state = BATTLE_STATE.MENU;
 	}
 }
@@ -675,7 +552,7 @@ function __DrawUI(override_color = undefined) {
 		}
 	}
 	//Healing Prediction
-	if (__menu_state == MENU_STATE.ITEM)
+	if (__menu_state == BATTLE_MENU_STATE.ITEM)
 	{
 		var predict_col = override_color ?? c_lime;
 		with (UI)

@@ -10,9 +10,15 @@ down = 65;
 left = 283;
 right = 283;
 
+__diagonal = 0;
+__true_x = x;
+__true_y = y;
+
 __frame_x = array_create(4, 0);
 __frame_y = array_create(4, 0);
 __frame_surf = -1;
+__cur_surf_width = 0;
+__cur_surf_height = 0;
 
 __bg_x = 0;
 __bg_y = 0;
@@ -71,20 +77,24 @@ function __DrawCoverBoard()
 	forceinline
 	if (instance_exists(oBoardCover))
 	{
+		var bg_x = __bg_x, bg_y = __bg_y, bg_w = __bg_w, bg_h = __bg_h;
 		gpu_push_state();
-		var i = 0;
-		repeat (instance_number(oBoardCover))
+		with (oBoardCover)
 		{
-			var BoardCoverID = instance_find(oBoardCover, i);
-			if (surface_exists(BoardCoverID.__surface))
-				draw_surface_part(BoardCoverID.__surface, __bg_x, __bg_y, __bg_w + 10, __bg_h,
-									x - lengthdir_x(__bg_w / 2, image_angle) - abs(lengthdir_x(BoardCoverID.FrameThickness, BoardCoverID.image_angle) - lengthdir_y(BoardCoverID.FrameThickness, BoardCoverID.image_angle)),
-									y - lengthdir_x(__bg_h / 2, image_angle));
-			++i;
+			var _surf = __surface, _frame = FrameThickness, _angle = image_angle;
+			if (surface_exists(_surf))
+				draw_surface_part(_surf, bg_x, bg_y, bg_w + _frame * 2, bg_h,
+									x - lengthdir_x(bg_w / 2, _angle) - abs(lengthdir_x(_frame, _angle) - lengthdir_y(_frame, _angle)),
+									y - lengthdir_x(bg_h / 2, _angle));
 		}
+		//Pull out to prevent multiple calls
 		gpu_set_blendmode(bm_subtract);
 		with (oBoardCover)
-			draw_sprite_ext(sprPixelBig, 0, x + lengthdir_x((right - left) / 2, image_angle), y + lengthdir_x((down - up) / 2, image_angle), (right + left) / 2, (down +  up) / 2, image_angle, c_white, 1);
+		{
+			var _left = left, _right = right, _up = up, _down = down;
+			_angle = image_angle;
+			draw_sprite_ext(sprPixelBig, 0, x + lengthdir_x((_right - _left) / 2, _angle), y + lengthdir_x((_down - _up) / 2, _angle), (_right + _left) / 2, (_down + _up) / 2, _angle, c_white, 1);
+		}
 		gpu_pop_state();
 	}
 }

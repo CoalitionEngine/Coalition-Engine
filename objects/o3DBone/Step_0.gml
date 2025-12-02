@@ -5,13 +5,13 @@ __update_vert();
 var i = 0, out_cnt = 0, n = array_length(__edge_list);
 repeat (n)
 {
-	var _prop = __edge_list[i],
-		x1 = __vert_list_draw[_prop[0]].x,
-		y1 = __vert_list_draw[_prop[0]].y,
-		z1 = __vert_list_draw[_prop[0]].z,
-		x2 = __vert_list_draw[_prop[1]].x,
-		y2 = __vert_list_draw[_prop[1]].y,
-		z2 = __vert_list_draw[_prop[1]].z;
+	var _prop = __edge_list[i], _vert_list = __vert_list_draw,
+		x1 = _vert_list[_prop[0]].x,
+		y1 = _vert_list[_prop[0]].y,
+		z1 = _vert_list[_prop[0]].z,
+		x2 = _vert_list[_prop[1]].x,
+		y2 = _vert_list[_prop[1]].y,
+		z2 = _vert_list[_prop[1]].z;
 	var _bone = _prop[2];
 	if (instance_exists(_bone))
 	{

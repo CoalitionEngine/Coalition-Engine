@@ -39,3 +39,33 @@ alarm[0] = 1;
 // x1 x2 x3 x4
 // y1 y2 y3 y4
 __warning_box_positions = ds_grid_create(4, 2);
+
+function __Draw()
+{
+	if (__state == 2)
+		exit;
+	var WarnIsSwapped = (__WarnTimer % 10) < 5,
+		WarnColor = WarnSwapColor && __time_warn ? WarnColors[WarnIsSwapped] : WarnColors[0],
+		WarnAlpha = WarnSwapColor && __time_warn ? WarnAlphas[WarnIsSwapped] : WarnAlphas[0],
+		WarnPositions = __warning_box_positions;
+	//Warning line
+	for (var i = 0; i < 4; ++i) {
+		draw_line_color(
+			WarnPositions[# i, 0], WarnPositions[# i, 1],
+			WarnPositions[# (i + 1) % 4, 0], WarnPositions[# (i + 1) % 4, 1],
+			WarnColor, WarnColor);
+	}
+	//Fill area, triangle is ever so slightly faster than primitives on average, thus higher quality
+	draw_set_alpha(WarnAlpha);
+	draw_triangle_color(
+		WarnPositions[# 0, 0], WarnPositions[# 0, 1],
+		WarnPositions[# 1, 0], WarnPositions[# 1, 1],
+		WarnPositions[# 2, 0], WarnPositions[# 2, 1],
+		WarnColor, WarnColor, WarnColor, false);
+	draw_triangle_color(
+		WarnPositions[# 2, 0], WarnPositions[# 2, 1],
+		WarnPositions[# 3, 0], WarnPositions[# 3, 1],
+		WarnPositions[# 0, 0], WarnPositions[# 0, 1],
+		WarnColor, WarnColor, WarnColor, false);
+	draw_set_alpha(1);
+}

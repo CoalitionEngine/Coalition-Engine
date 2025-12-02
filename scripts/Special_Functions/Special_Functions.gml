@@ -137,10 +137,10 @@ function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 		
 		We then can substitute the found x coordinate into either of the equations to find the y value.
 	*/
-	var LineSlope = (EndY - StartY) / (EndX - StartX);
-	var ProjSlope = -1 / LineSlope; // Perpendicular lines
-	var X = (LineSlope * StartX - ProjSlope * pointX + pointY - StartY) / (LineSlope - ProjSlope)
-	var Y = ProjSlope * (X - pointX) + pointY;
+	var LineSlope = (EndY - StartY) / (EndX - StartX),
+		ProjSlope = -1 / LineSlope, // Perpendicular lines
+		X = (LineSlope * StartX - ProjSlope * pointX + pointY - StartY) / (LineSlope - ProjSlope),
+		Y = ProjSlope * (X - pointX) + pointY;
 	return new Vector2(X, Y);
 }
 #endregion

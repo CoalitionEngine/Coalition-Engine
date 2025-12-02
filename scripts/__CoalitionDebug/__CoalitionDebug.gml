@@ -12,27 +12,34 @@ function CoalitionShowHitbox(col = c_white, alp = 0.4)
 	static __HitboxData = {};
 	if (global.__CoalitionShowHitbox)
 	{
-		var sprite_name = sprite_get_name(sprite_index);
+		#region Define local
+		var _sprite = sprite_index,
+			_xscale = image_xscale,
+			_yscale = image_yscale,
+			_angle = image_angle,
+			_cam = view_camera[0];
+		#endregion
+		var sprite_name = sprite_get_name(_sprite);
 		var __hash = variable_get_hash(sprite_name);
 		static __hash_top = variable_get_hash("top"), __hash_bottom = variable_get_hash("bottom"),
 				__hash_xoff = variable_get_hash("x_off"), __hash_yoff = variable_get_hash("y_off");
 		if (is_undefined(struct_get_from_hash(__HitboxData, __hash)))
 		{
 			struct_set_from_hash(__HitboxData, __hash, {
-				left: sprite_get_bbox_left(sprite_index),
-				right: sprite_get_bbox_right(sprite_index),
-				top: sprite_get_bbox_top(sprite_index),
-				bottom: sprite_get_bbox_bottom(sprite_index),
-				x_off: sprite_get_xoffset(sprite_index),
-				y_off: sprite_get_yoffset(sprite_index)
+				left: sprite_get_bbox_left(_sprite),
+				right: sprite_get_bbox_right(_sprite),
+				top: sprite_get_bbox_top(_sprite),
+				bottom: sprite_get_bbox_bottom(_sprite),
+				x_off: sprite_get_xoffset(_sprite),
+				y_off: sprite_get_yoffset(_sprite)
 			});
 		}
 		//Get the unmodified mask data
 		var __hitbox_struct = struct_get_from_hash(__HitboxData, __hash),
-			_b1 = struct_get_from_hash(__hitbox_struct, __left_hash) * image_xscale,
-			_b2 = struct_get_from_hash(__hitbox_struct, __hash_top) * image_yscale,
-			_b3 = struct_get_from_hash(__hitbox_struct, __right_hash) * image_xscale,
-			_b4 = struct_get_from_hash(__hitbox_struct, __hash_bottom) * image_yscale,
+			_b1 = struct_get_from_hash(__hitbox_struct, __left_hash) * _xscale,
+			_b2 = struct_get_from_hash(__hitbox_struct, __hash_top) * _yscale,
+			_b3 = struct_get_from_hash(__hitbox_struct, __right_hash) * _xscale,
+			_b4 = struct_get_from_hash(__hitbox_struct, __hash_bottom) * _yscale,
 
 			_xoff = struct_get_from_hash(__hitbox_struct, __hash_xoff),
 			_yoff = struct_get_from_hash(__hitbox_struct, __hash_yoff),
@@ -48,22 +55,22 @@ function CoalitionShowHitbox(col = c_white, alp = 0.4)
 			_dir4 = point_direction(_xoff, _yoff, _b1, _b4),
 
 			//Now modify the vectors using the current position and image angle
-			_x1 = x + lengthdir_x(_dis1, image_angle + _dir1),
-			_y1 = y + lengthdir_y(_dis1, image_angle + _dir1),
-			_x2 = x + lengthdir_x(_dis2, image_angle + _dir2),
-			_y2 = y + lengthdir_y(_dis2, image_angle + _dir2),
-			_x3 = x + lengthdir_x(_dis3, image_angle + _dir3),
-			_y3 = y + lengthdir_y(_dis3, image_angle + _dir3),
-			_x4 = x + lengthdir_x(_dis4, image_angle + _dir4),
-			_y4 = y + lengthdir_y(_dis4, image_angle + _dir4),
+			_x1 = x + lengthdir_x(_dis1, _angle + _dir1),
+			_y1 = y + lengthdir_y(_dis1, _angle + _dir1),
+			_x2 = x + lengthdir_x(_dis2, _angle + _dir2),
+			_y2 = y + lengthdir_y(_dis2, _angle + _dir2),
+			_x3 = x + lengthdir_x(_dis3, _angle + _dir3),
+			_y3 = y + lengthdir_y(_dis3, _angle + _dir3),
+			_x4 = x + lengthdir_x(_dis4, _angle + _dir4),
+			_y4 = y + lengthdir_y(_dis4, _angle + _dir4),
 			
 			//Camera coordinates
-			_cam_x = camera_get_view_x(view_camera[0]),
-			_cam_y = camera_get_view_y(view_camera[0]);
+			_cam_x = camera_get_view_x(_cam),
+			_cam_y = camera_get_view_y(_cam);
 
 		//Draw the mask box
 		draw_primitive_begin(pr_trianglefan);
-		var cam_sx = 640 / camera_get_view_width(view_camera[0]), cam_sy = 480 / camera_get_view_height(view_camera[0]);
+		var cam_sx = 640 / camera_get_view_width(_cam), cam_sy = 480 / camera_get_view_height(_cam);
 		draw_vertex_color((_x1 - _cam_x) * cam_sx, (_y1 - _cam_y) * cam_sy, col, alp);
 		draw_vertex_color((_x2 - _cam_x) * cam_sx, (_y2 - _cam_y) * cam_sy, col, alp);
 		draw_vertex_color((_x3 - _cam_x) * cam_sx, (_y3 - _cam_y) * cam_sy, col, alp);
@@ -264,3 +271,5 @@ function __clamp_point_in_rectangle(px, py, x1, y1, x2, y2) {
     return (clamp(px, x1, x2) == px) && (clamp(py, y1, y2) == py)
 }
 #macro point_in_rectangle __clamp_point_in_rectangle
+
+#macro string_lower string_lower_buffer

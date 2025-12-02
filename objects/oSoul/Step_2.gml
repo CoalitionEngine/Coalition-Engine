@@ -1,4 +1,4 @@
-if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
+if (Battle.State() == BATTLE_STATE.IN_TURN)
 {
 	var move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
 		x_offset = sprite_width / 2,
@@ -21,41 +21,9 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 	//If the board is NOT being a polygon board, don't run collision logic, only run blue soul logic
 	if (!oBoard.VertexMode)
 	{
-		if (__SoulMode == SOUL_MODE.BLUE)
-		{
-			//Reassign the input checking for blue soul because the diagonal movement does not apply to it
-			__h_spd = InputOpposing(INPUT_VERB.LEFT, INPUT_VERB.RIGHT);
-			__v_spd = InputOpposing(INPUT_VERB.UP, INPUT_VERB.DOWN);
-			MoveDirection %= 360;
-			image_angle = (MoveDirection + 90) % 360;
-
-			var _angle = image_angle,
-				_dist = point_distance(board_x, board_y, x, y),
-				_dir = point_direction(board_x, board_y, x, y) - board_dir,
-				r_x = lengthdir_x(_dist, _dir) + board_x,
-				r_y = lengthdir_y(_dist, _dir) + board_y,
-				displace_x = lengthdir_x(x_offset + board.FrameThickness / 2, _angle - 90),
-				displace_y = lengthdir_y(y_offset + board.FrameThickness / 2, _angle - 90),
-				//Store board vertices into vectors for checking (Rotated board is a parallelogram)
-				
-				TL = new Vector2(-board.left, -board.up).Rotated(board_angle),
-				TR = new Vector2(board.right, -board.up).Rotated(board_angle),
-				BL = new Vector2(-board.left, board.down).Rotated(board_angle),
-				BR = new Vector2(board.right, board.down).Rotated(board_angle);
-				var board_vertices =
-				[
-					board_x + TL.x, board_y + TL.y,
-					board_x + TR.x, board_y + TR.y,
-					board_x + BR.x, board_y + BR.y,
-					board_x + BL.x, board_y + BL.y,
-				];
-			__BlueSoulProcess(
-				!point_in_parallelogram(r_x + displace_x, r_y + displace_y, board_vertices),
-				!point_in_parallelogram(r_x - displace_x, r_y - displace_y, board_vertices)
-				);
-		}
-		
-	
+		//Soul movement logic
+		if (struct_exists(Soul.__defined_modes, __SoulMode) && Soul.__defined_modes[$ __SoulMode].EndStep)
+			Soul.__defined_modes[$ __SoulMode].Step(self);
 		//Collision check of the Main Board
 		var _dist = point_distance(board_x, board_y, x, y),
 			_dir = point_direction(board_x, board_y, x, y) - board_angle,
@@ -86,14 +54,14 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 			var PtInd = __PointInside;
 			with (VertexBoardList[j++])
 			{
-				var k = 0;
+				var k = 0, _poly_vert = __poly_vertices;
 				repeat (__triangulated_indice_count)
 				{
 					var triIndice = __triangulated_indices[| k++];
 					if (point_in_triangle(X + lengthdir_x(Margin, i * PreDir), Y + lengthdir_y(Margin, i * PreDir),
-						__poly_vertices[| triIndice[0]].x, __poly_vertices[| triIndice[0]].y,
-						__poly_vertices[| triIndice[1]].x, __poly_vertices[| triIndice[1]].y,
-						__poly_vertices[| triIndice[2]].x, __poly_vertices[| triIndice[2]].y))
+						_poly_vert[| triIndice[0]].x, _poly_vert[| triIndice[0]].y,
+						_poly_vert[| triIndice[1]].x, _poly_vert[| triIndice[1]].y,
+						_poly_vert[| triIndice[2]].x, _poly_vert[| triIndice[2]].y))
 					{
 						PtInd[i] = true;
 						break;
@@ -105,25 +73,10 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 	}
 	__PointInside = PtInd;
 	
-	#region Blue soul detection
-	if (__SoulMode == SOUL_MODE.BLUE)
-	{
-		__BlueSoulProcess(
-			!__PointInside[0],
-			!__PointInside[PreciseCollision ? 4 : 2],
-			
-			!__PointInside[PreciseCollision ? 2 : 1],
-			!__PointInside[PreciseCollision ? 6 : 3],
-			
-			!__PointInside[PreciseCollision ? 4 : 2],
-			!__PointInside[0],
-			
-			!__PointInside[PreciseCollision ? 6 : 3],
-			!__PointInside[PreciseCollision ? 2 : 1]
-		);
-	}
-	#endregion
-	
+	//Soul movement logic
+	if (struct_exists(Soul.__defined_modes, __SoulMode) && Soul.__defined_modes[$ __SoulMode].EndStep)
+		Soul.__defined_modes[$ __SoulMode].Step();
+	//Re-calculate the collision points
 	i = 0;
 	repeat (PreciseCollision ? 8 : 4)
 	{
@@ -132,15 +85,15 @@ if (oBattleController.__battle_state == BATTLE_STATE.IN_TURN)
 			var NearestPos = new Vector2(x, y), MinDist = -1, j = 0;
 			repeat (n)
 			{
-				var CurBoard = VertexBoardList[j++], k = 0, kmax = ds_list_size(CurBoard.__poly_vertices);
+				var CurBoard = VertexBoardList[j++], k = 0, _poly_vert = CurBoard.__poly_vertices, kmax = ds_list_size(_poly_vert);
 				repeat (kmax)
 				{
 					var PointX = x + lengthdir_x(Margin, i * PreDir),
 						PointY = y + lengthdir_y(Margin, i * PreDir),
 						nexInd = posmod(k + 1, kmax),
 						Pos = nearestPointOnEdge(PointX, PointY,
-								CurBoard.__poly_vertices[| k].x, CurBoard.__poly_vertices[| k].y,
-								CurBoard.__poly_vertices[| nexInd].x, CurBoard.__poly_vertices[| nexInd].y);
+								_poly_vert[| k].x, _poly_vert[| k].y,
+								_poly_vert[| nexInd].x, _poly_vert[| nexInd].y);
 					var Dist = point_distance(PointX, PointY, Pos.x, Pos.y);
 					if (Dist < MinDist || MinDist == -1)
 					{

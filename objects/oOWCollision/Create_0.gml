@@ -14,7 +14,7 @@ Name = "Unnamed collision";
 ///Checks for the confirm input
 function CheckConfirm() {
 	forceinline;
-	return oOWController.__menu_state == MENU_MODE.IDLE && !oOWPlayer.__ForceCollideless && PRESS_CONFIRM;
+	return oOWController.__menu_state == OVERWORLD_MENU_STATE.IDLE && !oOWPlayer.__ForceCollideless && PRESS_CONFIRM;
 }
 ///Checks whether the player is colliding
 function CheckCollide() {

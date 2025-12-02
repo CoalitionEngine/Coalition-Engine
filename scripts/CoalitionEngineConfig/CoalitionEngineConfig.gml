@@ -69,12 +69,12 @@
 ///| `ITEM_SCROLL` | Item scroll mode in battle |
 ///| `OVERWORLD` | Overworld Room |
 ///| `BATTLE_STATE` | The state of the battle |
-///| `MENU_STATE` | The state of the battle menu |
+///| `BATTLE_MENU_STATE` | The state of the battle menu |
 ///| `SAVE_STATE` | Overworld saving State |
 #endregion
 #region Engine
 //Here are the macros for the engine
-#macro ALLOW_DEBUG  true
+#macro ALLOW_DEBUG true
 
 //This automatically set DEBUG into false when you build the game
 //#macro DEBUG !game_is_standalone()
@@ -107,7 +107,7 @@
 #macro APPLY_AGGRESSIVE_FORCEINLINE true
 #endregion
 #region Battle menu states
-enum MENU_STATE
+enum BATTLE_MENU_STATE
 {
 	UNDEFINED = -1,
 	BUTTON_SELECTION = 0,

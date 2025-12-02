@@ -1,6 +1,7 @@
 //Load texture
 texturegroup_load("texoverworld");
 Fader_Fade(1, 0, 15);
+InitializeOverworldStates();
 event_perform(ev_room_start, 0);
 
 //The sprite of the entire room background
@@ -35,32 +36,23 @@ __dialog_option_amount = 0;
 __dialog_option_text_height = "1";
 #endregion
 #region Menu properties
-enum MENU_MODE
-{
-	IDLE,
-	ITEM,
-	STAT,
-	CELL,
-	ITEM_INTERACTING,
-	ITEM_DONE,
-	CELL_DONE,
-	BOX_MODE,
-}
 //Whether the menu UI is disabled
 __menu_disabled = false;
 //Whether the menu UI is being displayed
 __menu_opened = false;
 //The current menu sstate
-__menu_state = MENU_MODE.IDLE;
-// Works respectively based on enum MENU_MODE
+__menu_state = OVERWORLD_MENU_STATE.IDLE;
+// Works respectively based on enum OVERWORLD_MENU_STATE
 __menu_choices = array_create(8, 0);
 //Menu UI position
 __menu_ui_x = -640;
 __menu_ui_y = array_create(4, -480);
 //The soul position in the menu
 __menu_soul_pos = new Vector2(-606, 211);
+__menu_soul_pos_target = new Vector2(-606, 211);
 //The alpha of the soul in menu
 __menu_soul_alpha = 1;
+__menu_soul_alpha_target = 1;
 __menu_label_texts = [__LangItemText, __LangStatText, __LangCellText];
 //The color for the item texts
 __menu_label_colors =
@@ -77,12 +69,18 @@ function __ExitMenu()
 {
 	forceinline;
 	__menu_opened = false;
-	__menu_state = MENU_MODE.IDLE;
+	__menu_state = OVERWORLD_MENU_STATE.IDLE;
 	oOWPlayer.Movable = true;
 	__menu_choices = array_create(8, 0);
 	audio_play(snd_menu_cancel);
 	//Overrides menu input as false to prevent incorrect detection
 	struct_set_from_hash(__input_functions, __press_menu_hash, false);
+}
+///@desc Returns whether the dialog box should be at the top of the screen
+function __MenuAtTop()
+{
+	forceinline
+	return oOWPlayer.y < Camera.ViewY() + Camera.ViewHeight() / 2 + 10;
 }
 #endregion
 #region Box properties
@@ -91,8 +89,6 @@ enum BOX_STATE
 	INVENTORY,
 	BOX,
 }
-//Whether the palyer is using a box
-__is_using_box = false;
 //The current box state
 __box_state = BOX_STATE.INVENTORY;
 //THe choices for the left and right side of the box menu
@@ -102,24 +98,7 @@ __box_id = 0;
 #endregion
 #region Saving properties
 //The current state of saving
-__save_state = 0;
-//Function executed when saved using a save point
-SaveFunction = function() {
-	var name_list = static_get(__CoalitionInitalize).__hash_name_list,
-		default_variables = [
-		Player.Name(), global.MaxHP, global.HP, Player.LV(),
-		Player.Gold(), Player.Exp(), COALITION_DATA.AttackItem,
-		COALITION_DATA.DefenseItem, COALITION_DATA.Kills, global.__CoalitionBox,
-		global.__CoalitionUserItems, global.__CoalitionUserCells
-	];
-	var i = 0;
-	repeat (array_length(name_list))
-	{
-		struct_set_from_hash(COALITION_SAVE_FILE, variable_get_hash(name_list[i]), default_variables[i]);
-		++i;
-	}
-	SaveData("Data.dat", COALITION_SAVE_FILE);
-};
+__save_state = SAVE_STATE.NOT_SAVING;
 //The current choice for saving
 __save_choice = 0;
 //Save input buffer

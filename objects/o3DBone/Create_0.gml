@@ -20,20 +20,20 @@ function __update_vert()
 	var X, Y, Z, XX, YY, ZZ, i = 0;
 	repeat (array_length(__vert_list))
 	{
-		var _prop = __vert_list[i];
+		var _prop = __vert_list[i], _angles = __angles;
 		X = _prop.x * scale.x;
 		Y = _prop.y * scale.y;
 		Z = _prop.z * scale.z;
-		YY = lengthdir_x(Y, __angles[0]) + lengthdir_y(Z, __angles[0]);
-		ZZ = -lengthdir_y(Y, __angles[0]) + lengthdir_x(Z, __angles[0]);
+		YY = lengthdir_x(Y, _angles[0]) + lengthdir_y(Z, _angles[0]);
+		ZZ = -lengthdir_y(Y, _angles[0]) + lengthdir_x(Z, _angles[0]);
 		Y = YY;
 		Z = ZZ;
-		ZZ = lengthdir_x(Z, __angles[1]) + lengthdir_y(X, __angles[1]);
-		XX = -lengthdir_y(Z, __angles[1]) + lengthdir_x(X, __angles[1]);
+		ZZ = lengthdir_x(Z, _angles[1]) + lengthdir_y(X, _angles[1]);
+		XX = -lengthdir_y(Z, _angles[1]) + lengthdir_x(X, _angles[1]);
 		Z = ZZ;
 		X = XX;
-		XX = lengthdir_x(X, __angles[2]) + lengthdir_y(Y, __angles[2]);
-		YY = -lengthdir_y(X, __angles[2]) + lengthdir_x(Y, __angles[2]);
+		XX = lengthdir_x(X, _angles[2]) + lengthdir_y(Y, _angles[2]);
+		YY = -lengthdir_y(X, _angles[2]) + lengthdir_x(Y, _angles[2]);
 		X = XX;
 		Y = YY;
 		__add_vert(X, Y, Z, __vert_list_draw);
@@ -55,12 +55,12 @@ if (!variable_instance_exists(id, "shape"))
 	shape = SHAPES.CUBE;
 
 //Automatically adds the edges and nodes/vertexes of the bone based on the loaded 3d shapes
-var i = 0, n = array_length(global.Nodes[shape]);
+var i = 0, _nodes = global.Nodes[shape], n = array_length(nodes);
 repeat (n)
 {
-	script_execute_ext(__add_edge, global.Edges[shape][i]);
+	script_execute_ext(__add_edge, _nodes[i]);
 	if (i < n)
-		script_execute_ext(__add_vert, global.Nodes[shape][i]);
+		script_execute_ext(__add_vert, _nodes[i]);
 	++i;
 }
 

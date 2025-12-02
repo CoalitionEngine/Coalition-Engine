@@ -11,7 +11,7 @@ if (global.timer == 1)
 {
 	surface_set_target(__GradientSurf);
 	shader_set(shdGradient);
-	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, c_white, 1);
+	draw_sprite_ext(sprPixel, 0, 0, 0, 1, 480, 0, c_white, 1);
 	shader_reset();
 	surface_reset_target();
 	shader_enable_corner_id(false);

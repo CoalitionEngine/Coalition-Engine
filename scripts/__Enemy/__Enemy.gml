@@ -93,7 +93,7 @@ function __Enemy() constructor {
 			__ActFunctions[act] = func;
 			if (trigger)
 			{
-				act = quick_pow(2, act);
+				act = 1 << act;
 				with (oBattleController)
 				{
 					//Clear bit

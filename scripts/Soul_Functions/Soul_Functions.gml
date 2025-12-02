@@ -7,6 +7,7 @@
 ///@desc Soul data
 function __Soul() constructor
 {
+	__defined_modes = {};
 	///@method SetPos(target_x, target_y, [duration], [easing], [delay])
 	///@desc Sets the position of the soul, can choose to animate the position
 	///@param {real} target_x The target X position
@@ -33,19 +34,8 @@ function __Soul() constructor
 			ExtraAngle = 0;
 			image_angle = 0;
 			var curBle = Blend;
-			switch (soul_mode)
-			{
-				case SOUL_MODE.RED:			Blend = c_red;		break;
-				case SOUL_MODE.BLUE:		Blend = c_blue;		break;
-				case SOUL_MODE.ORANGE:		Blend = c_orange;	break;
-				case SOUL_MODE.YELLOW:
-					Blend = c_yellow;
-					ExtraAngle = 180;
-					break;
-				case SOUL_MODE.GREEN:		Blend = c_lime;		break;
-				case SOUL_MODE.PURPLE:		Blend = c_purple;	break;
-				case SOUL_MODE.CYAN:		Blend = c_aqua;		break;
-			}
+			Soul.__defined_modes[$ soul_mode].OnChange();
+			Blend = Soul.__defined_modes[$ soul_mode].Blend;
 			TweenEasyBlend(curBle, Blend, 0, 15, "");
 			__SoulMode = soul_mode;
 			alarm[0] = effect;
@@ -112,5 +102,17 @@ function __Soul() constructor
 			__fall_speed = move;
 			__being_slammed = true;
 		}
+	}
+	///@method DefineSoulMode(mode, [Step], [Draw])
+	///@desc Defines a mode of the soul
+	///@param {real} mode The mode of the soul to define (Usually SOUL_MODE.XXX)
+	///@param {Constant.Color} Blend The blend of the soul
+	///@param {function} Step The processing logic of the soul
+	///@param {function} Draw The drawing logic of the soul (Aside from drwaing the soul itself)
+	///@param {bool} EndStep Whether the processing logic should be done in the End Step event (Default false)
+	///@param {function} OnChange The function to execute when the soul is changed to this mode (Default nothing)
+	static DefineSoulMode = function(mode, Blend, Step = COALITION_EMPTY_FUNCTION, Draw = COALITION_EMPTY_FUNCTION, EndStep = false, OnChange = COALITION_EMPTY_FUNCTION) {
+		forceinline;
+		__defined_modes[$ mode] = {Step, Draw, EndStep, Blend, OnChange};
 	}
 }

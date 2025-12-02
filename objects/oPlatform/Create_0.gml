@@ -21,9 +21,9 @@ function __CollideCheck(soul)
 		//Get delta angle from norm
 		_delta_ang = _norm_ang - darctan2(_dy, _dx),
 		//Get delta along normal
-		_norm_delta_x = _dx * dcos(_delta_ang),
-		_norm_delta_y = _dy * -dsin(_delta_ang),
-		_norm_delta = sqrt(_norm_delta_x * _norm_delta_x + _norm_delta_y * _norm_delta_y);
+		_norm_delta_x = lengthdir_x(_dx, _delta_ang),
+		_norm_delta_y = lengthdir_y(_dy, _delta_ang),
+		_norm_delta = point_distance(0, 0, _norm_delta_x, _norm_delta_y);
 	//Not colliding if soul is not relatively falling
 	if ((soul.__fall_speed < 0 && -soul.__fall_speed > _norm_delta) ||
 		//Not colliding if the angle difference is too high
@@ -49,4 +49,43 @@ function __CollideCheck(soul)
 		return false;
 	//If the nearest point of soul to platform is close enough, it is colliding
 	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < _norm_delta + 1;
+}
+
+function __InAnyBoard()
+{
+	var _x = x, _y = y, _xscale = image_xscale / 2;
+	with (oBoard)
+	{
+		if (point_distance(__true_x, __true_y, _x, _y) <= __diagonal + _xscale	)
+			return true;
+	}
+	with (oVertexBoard)
+	{
+		if (point_distance(__centroid_x, __centroid_y, _x, _y) <= __furthest_dist + _xscale)
+			return true;
+	}
+	return false;
+}
+
+function __Draw()
+{
+	forceinline
+	var _sprite = sprite_index, _xscale = image_xscale,
+		_angle = image_angle, _alpha = image_alpha,
+		_x = x, _y = y;
+	draw_sprite_ext(_sprite, 0, _x, _y, _xscale, 1, _angle, c_white, _alpha);
+	draw_sprite_ext(_sprite, 1, _x, _y, _xscale, 1, _angle, sticky ? c_lime : c_fuchsia, _alpha);
+
+	//Effect drawing (For the one said in Step)
+	if (__effect)
+	{
+		var _xscale = __effect_xscale,
+			_yscale = __effect_yscale,
+			_alpha = __effect_alpha,
+			_ex = __effect_x, _ey = __effect_y;
+		draw_sprite_ext(_sprite, 0, _ex, _ey, _xscale, _yscale, _angle, c_white, _alpha);
+		draw_sprite_ext(_sprite, 1, _ex, _ey, _xscale, _yscale, _angle, sticky ? c_lime : c_fuchsia, _alpha);
+	}
+
+	CoalitionShowHitbox(c_lime);
 }

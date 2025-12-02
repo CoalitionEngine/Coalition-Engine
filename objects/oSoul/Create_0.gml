@@ -1,6 +1,7 @@
 //Adds the soul to the global soul list
 array_push(BattleSoulList, id);
 __SoulListID = array_length(BattleSoulList) - 1;
+InitializeSoulModes();
 if (instance_exists(oBoard))
 	depth = oBoard.depth - oBattleController.depth - 1;
 image_speed = 0;
@@ -15,7 +16,7 @@ global.__CoalitionPlayerInvincibilityFrames = 0;
 //The amount of invincibility frames the player will receive when being damaged
 global.__CoalitionPlayerAssignInvincibility = 60;
 //Whether the soul can die
-global.CoalitionBattlePlayerCanDie = true;
+oBattleController.PlayerCanDie = true;
 //Set soul effect
 __SoulEffectSystem = part_system_create();
 part_system_depth(__SoulEffectSystem, depth);
@@ -112,6 +113,9 @@ with PurpleSoulData
 	//The lerping speed for the transition alpha
 	AlphaLerpSpeed = 0.08;
 	//The x/y target when lines change
+	//The displacement of the soul from the center of the line
+	__line_x = 0;
+	__line_y = 0;
 	__target_x = 320;
 	__target_y = 320;
 	//The speed of the lerping for purple soul
@@ -127,6 +131,66 @@ with PurpleSoulData
 		HLineAmount = h_amount;
 		VLineAmount = v_amount;
 	}
+	///Gets the x coordinate of a horizontal line
+	///@param {real} line The index of the line (Top is 0)
+	///@param {bool} side False for left side, True for right side
+	function GetHorLineX(line, side) {
+		var board = BattleBoardList[TargetSoul],
+			board_x = board.__true_x,
+			board_y = board.__true_y,
+			board_angle = board.image_angle,
+			board_width =	board.right + board.left - 30,
+			board_height =	board.up + board.down - 30,
+			_first_line_x = board_x - lengthdir_x(board_width / 2, board_angle) + lengthdir_y(board_height / 2, board_angle),
+			_h_line_count = HLineAmount,
+			_delta_x = lengthdir_x(board_height / (_h_line_count - 1), board_angle - 90),
+		return _first_line_x + line * _delta_x + (side ? lengthdir_x(board_width, board_angle) : 0);
+	}
+	///Gets the y coordinate of a horizontal line
+	///@param {real} line The index of the line (Top is 0)
+	///@param {bool} side False for left side, True for right side
+	function GetHorLineY(line, side) {
+		var board = BattleBoardList[TargetSoul],
+			board_x = board.__true_x,
+			board_y = board.__true_y,
+			board_angle = board.image_angle,
+			board_width =	board.right + board.left - 30,
+			board_height =	board.up + board.down - 30,
+			_first_line_y = board_y - lengthdir_x(board_height / 2, board_angle) - lengthdir_y(board_width / 2, board_angle),
+			_h_line_count = HLineAmount,
+			_delta_y = lengthdir_y(board_height / (_h_line_count - 1), board_angle - 90);
+		return _first_line_y + line * _delta_y + (side ? lengthdir_y(board_width, board_angle) : 0);
+	}
+	///Gets the x coordinate of a vertical line
+	///@param {real} line The index of the line (Top is 0)
+	///@param {bool} side False for up side, True for down side
+	function GetVerLineX(line, side) {
+		var board = BattleBoardList[TargetSoul],
+			board_x = board.__true_x,
+			board_y = board.__true_y,
+			board_angle = board.image_angle,
+			board_width =	board.right + board.left - 30,
+			board_height =	board.up + board.down - 30,
+			_first_line_x = board_x - lengthdir_x(board_width / 2, board_angle) + lengthdir_y(board_height / 2, board_angle),
+			_v_line_count = VLineAmount,
+			_delta_x = lengthdir_x(board_width / (_v_line_count - 1), board_angle),
+		return _first_line_x + line * _delta_x + (side ? lengthdir_x(board_width, board_angle) : 0);
+	}
+	///Gets the y coordinate of a vertical line
+	///@param {real} line The index of the line (Top is 0)
+	///@param {bool} side False for up side, True for down side
+	function GetVerLineY(line, side) {
+		var board = BattleBoardList[TargetSoul],
+			board_x = board.__true_x,
+			board_y = board.__true_y,
+			board_angle = board.image_angle,
+			board_width =	board.right + board.left - 30,
+			board_height =	board.up + board.down - 30,
+			_first_line_y = board_y - lengthdir_x(board_height / 2, board_angle) - lengthdir_y(board_width / 2, board_angle),
+			_v_line_count = VLineAmount,
+			_delta_y = lengthdir_y(board_width / (_v_line_count - 1), board_angle);
+		return _first_line_y + line * _delta_y + (side ? lengthdir_y(board_width, board_angle) : 0);
+	}
 }
 #endregion
 //Polygon board collision
@@ -134,24 +198,8 @@ with PurpleSoulData
 PreciseCollision = true;
 __PointInside = array_create(PreciseCollision ? 8 : 4, false);
 #region Functions
-///@param {bool} Horizontal	Enable horzontal movement (Default true)
-///@param {bool} Vertical	Enable vertical movement (Default true)
-function BasicMovement(hor = true, ver = true) {
-	var move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),
-		_angle = image_angle;
-	__move_x = __h_spd * move_spd;
-	__move_y = __v_spd * move_spd;
-	if (Movable)
-	{
-		var fin_dir = dcos(_angle);
-		if (hor)
-			x += __move_x * fin_dir;
-		if (ver)
-			y += __move_y * fin_dir;
-	}
-}
 ///Processes blue soul falling
-///@desc Parameters should all be booleans that represent whether the soul is colliding with the right ground, etc.
+///Parameters should all be booleans that represent whether the soul is colliding with the right ground, etc.
 ///@params {bool} checks [Right, Up, left, Down][Ground, Ceiling]
 function __BlueSoulProcess(__on_ground, __on_ceil)
 {

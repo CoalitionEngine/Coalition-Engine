@@ -17,7 +17,7 @@ function InitializeEquipment() {
 			var time = GetAttackAnimationTimer();
 			if (time == 0)
 			{
-				struct_set_from_hash(global.__input_functions, __press_con_hash, false);
+				struct_set_from_hash(__input_functions, __press_con_hash, false);
 				punches = 0;
 				ds_list_clear(punch_list);
 			}

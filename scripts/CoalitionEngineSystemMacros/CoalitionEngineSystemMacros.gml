@@ -1,6 +1,6 @@
 #region Engine
 __empty_function = function() { };
-#macro __COALITION_ENGINE_VERSION "v1.3.1"
+#macro __COALITION_ENGINE_VERSION "v1.4.0"
 #macro __COALITION_INSTANCE_AUTO_DEPTH if (instance_exists(oBoard))\
 	{\
 		depth = oBoard.depth;\
@@ -8,7 +8,7 @@ __empty_function = function() { };
 	}
 #endregion
 #region Input
-//Hashes for the input functions
+//Hashes for the input functions, use macros for compiler optimization
 #macro __up_hash variable_get_hash("up")
 #macro __down_hash variable_get_hash("down")
 #macro __left_hash variable_get_hash("left")

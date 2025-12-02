@@ -1,5 +1,25 @@
 Update Logs
 
+v1.4.0 (TK)
+- Fixed bug where consuming items with stat boost will crash the game
+- Fixed some formatting
+- Removed `Camera.MoveTo`
+- Optimized gradient surface
+- Removed unused variables
+- Optimized bitwise operations
+- Added 4 bitwise functions for users who would like to touch on bitwise operations
+- Changed default drawing function of bullet from User Event 0 to `__Draw` (Default to the Draw Event)
+- `global.CoalitionBattlePlayerCanDie` has been moved to `oBattleController.PlayerCanDie`
+- Removed ImGUI_GM leftover files
+- Renamed `MENU_MODE` TO `OVERWORLD_MENU_STATE` for clarity
+- Renamed `MENU_STATE` TO `BATTLE_MENU_STATE` for clarity
+- Added `Overworld.DefineMenuState` and `Overworld.DefineSaveState` for custom menu states in overworld (Similar to custom battle UI)
+- `oOWController.SaveFunction` is now obsolete and is replaced by `Overworld.DefineSaveFunction`
+- Added `Soul.DefineSoulMode` for users to define their own souls
+- Purple soul is now fully implemented with board rotation support
+- You can now assign a sprite as the board
+- Changed button logic
+
 v1.3.1 (TK)
 - Fixed bug where game can crash post-battle
 - Fixed vertical movement is opposite of direction

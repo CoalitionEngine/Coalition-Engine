@@ -10,6 +10,11 @@ image_blend = c_white;
 BackgroundColor = c_black;
 
 __vertices = [];
+//Coordinates for centroid
+__centroid_x = 0;
+__centroid_y = 0;
+//Furthest vertex distance from centroid
+__furthest_dist = 0;
 //Masking surfaces
 __mask_surf = -1;
 ///Converts the vertex board back to a normal board
@@ -73,8 +78,8 @@ function __UpdateEars() {
 	//Initalize Vertices for triangulation
 	repeat (array_length(__vertices) / 2)
 	{
-		ds_list_add(__poly_vertices, new Vector2(__vertices[i * 2], __vertices[i * 2 + 1]));
-		++i;
+		ds_list_add(__poly_vertices, new Vector2(__vertices[i], __vertices[i + 1]));
+		i += 2;
 	}
 	ds_list_add(__poly_vertices, new Vector2(__vertices[0], __vertices[1]));
 	ds_list_clear(__triangulated_indices); //Clear existing triangulation.
@@ -214,17 +219,39 @@ function __UpdateEars() {
 	//Stores the size of the indice list to prevent
 	//calling ds_list_size() per frame
 	__triangulated_indice_count = ds_list_size(__triangulated_indices);
+	
+	//Get centroid
+	var i = 0, _vertices = __vertices, n = array_length(_vertices) / 2, _cen_x = 0, _cen_y = 0;
+	repeat (n)
+	{
+		_cen_x += _vertices[i];
+		_cen_y += _vertices[i + 1];
+		i += 2;
+	}
+	_cen_x /= n;
+	_cen_y /= n;
+	__centroid_x = _cen_x;
+	__centroid_y = _cen_y;
+	//Get max vertex distance from centroid
+	i = 0;
+	repeat (n)
+	{
+		__furthest_dist = max(__furthest_dist, point_distance(__centroid_x, __centroid_y, _vertices[i], _vertices[i + 1]));
+		i += 2;
+	}
 }
 function __DrawBackground(bg_col = BackgroundColor)
 {
-	var i = 0;
+	forceinline
+	var i = 0, _indices = __triangulated_indices, _vertices = __poly_vertices, _angle = image_angle;
 	//Draws the shape using triangle list primitives
 	draw_primitive_begin(pr_trianglelist);
 	repeat (__triangulated_indice_count)
 	{
-		for (var j = 0, triangle = __triangulated_indices[| i++]; j < 3; j++) {
-			var Result = __poly_vertices[| triangle[j]].Rotated(image_angle);
-			draw_vertex_color(Result.x, Result.y, bg_col, 1);
+		for (var j = 0, triangle = _indices[| i++]; j < 3; j++) {
+			var _coord = _vertices[| triangle[j]],
+				_cx = _coord.x, _cy = _coord.y;
+			draw_vertex_color(lengthdir_x(_cx, _angle) + lengthdir_y(_cy, _angle), lengthdir_x(_cy, _angle) - lengthdir_y(_cx, _angle), bg_col, 1);
 		}
 	}
 	draw_primitive_end();

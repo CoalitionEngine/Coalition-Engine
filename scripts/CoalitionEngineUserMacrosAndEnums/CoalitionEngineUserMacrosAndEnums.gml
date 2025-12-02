@@ -48,7 +48,6 @@ time_source_start(time_source_create(time_source_global, 1, time_source_units_fr
 #endregion
 
 //Soul
-//guys trust me im working on it
 enum SOUL_MODE
 {
 	RED = 1,
@@ -57,8 +56,6 @@ enum SOUL_MODE
 	YELLOW = 4,
 	GREEN = 5,
 	PURPLE = 6,
-	CYAN = 7,
-	FREEBLUE = 8,
 }
 
 //Direction for the ones who can't memorize directions
@@ -131,10 +128,28 @@ enum BATTLE_STATE
 	IN_TURN = 2,
 	RESULT = 3
 }
+enum BATTLE_BUTTONS
+{
+	FIGHT,
+	ACT,
+	ITEM,
+	MERCY
+}
 enum SAVE_STATE
 {
 	NOT_SAVING = 0,
 	DISPLAY_DIALOG = 1,
 	CHOOSING = 2,
 	FINISHED = 3
+}
+enum OVERWORLD_MENU_STATE
+{
+	IDLE,
+	ITEM,
+	STAT,
+	CELL,
+	ITEM_INTERACTING,
+	ITEM_DONE,
+	CELL_DONE,
+	BOX_MODE,
 }

@@ -34,10 +34,10 @@ function InitializeItem() {
 		}
 	});
 	#endregion
-	Item_Set(ITEM.PIE);
-	Item_Set(ITEM.INOODLES);
-	Item_Set(ITEM.STEAK);
-	Item_Set(ITEM.SEATEA);
-	Item_Set(ITEM.LHERO);
-	Item_Set(ITEM.STICK);
+	Item_Set(ITEM.PIE, 0);
+	Item_Set(ITEM.INOODLES, 1);
+	Item_Set(ITEM.STEAK, 2);
+	Item_Set(ITEM.SEATEA, 3);
+	Item_Set(ITEM.LHERO, 4);
+	Item_Set(ITEM.STICK, 5);
 }

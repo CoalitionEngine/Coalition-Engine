@@ -88,7 +88,7 @@ function draw_gradient_ext(x = 0, y = 480, width = 640, height = 40, angle = 0, 
 	static displace = 0, time = 0;
 	displace = move(time++ * rate) * intensity;
 	height += displace;
-	draw_surface_ext(oGlobal.__GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width / 640, height / 480, angle, color, 1);
+	draw_surface_ext(oGlobal.__GradientSurf, x - lengthdir_x(height / 2, angle - 90), y - lengthdir_y(height / 2 ,angle - 90), width, height / 480, angle, color, 1);
 }
 ///@text ?> The same effect can be done using draw_rectangle_color(), however this will lead to batch breaks and impact performance.
 #endregion

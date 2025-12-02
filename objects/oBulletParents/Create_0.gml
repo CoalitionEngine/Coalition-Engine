@@ -20,6 +20,9 @@ __bullet_rendered = false;
 __LenExists = false;
 __AxisExists = false;
 array_push(__BulletList, self);
+
+__Draw = function() { event_perform(ev_draw, ev_draw_normal); };
+
 if (__COALITION_VISUAL_MODE)
 {
 	__associate_visual_creation_script = [instance_create_depth];

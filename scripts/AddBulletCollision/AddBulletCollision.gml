@@ -23,6 +23,7 @@ function AddBulletCollision(bullet, func = "")
 		}
 		array_insert(CollList, static_script.size - 1, FinPushFunc);
 		static_script.size++;
+		static_set(__CollideWithBullet, static_script);
 	}
 }
 ///@text For advanced users, this function is directly linked to CollideWithBullet.

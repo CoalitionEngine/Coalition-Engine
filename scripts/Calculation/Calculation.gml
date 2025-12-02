@@ -116,7 +116,47 @@ function array_multiply(arr, num)
 		arr[i++] *= num;
 	return arr;
 }
-
+#region Bitwise helper functions
+///@func set_bit(bit, index)
+///@desc Sets the value of the specified index of the bit to 1
+///@param {real} bit The bit to edit
+///@param {real} index The index to change
+///@returm {real}
+function set_bit(bit, index)
+{
+	forceinline
+	return bit | (1 << index);
+}
+///@func clear_bit(bit, index)
+///@desc Sets the value of the specified index of the bit to 0
+///@param {real} bit The bit to edit
+///@param {real} index The index to change
+///@returm {real}
+function clear_bit(bit, index)
+{
+	forceinline
+	return bit & ~(1 << index);
+}
+///@func toggle_bit(bit, index)
+///@desc Toggles the value of the specified index of the bit
+///@param {real} bit The bit to edit
+///@param {real} index The index to change
+///@returm {real}
+function toggle_bit(bit, index)
+{
+	forceinline
+	return bit ^ (1 << index);
+}
+///@func read_bit(bit, index)
+///@desc Reads the value of the specified index of the bit
+///@param {real} bit The bit to edit
+///@param {real} index The index to change
+///@returm {real}
+function read_bit(bit, index)
+{
+	forceinline
+	return (bit >> index) & 1;
+}
 ///@func is_bit(value, bit)
 ///@desc Check whether the value contains the bit
 ///@param {real} Value The value to check from
@@ -146,6 +186,7 @@ function quick_pow(x, n)
 	}
 	return ret;
 }
+#endregion
 ///@func struct_equals(struct_a, struct_b)
 ///@desc Checks whether two structs are equal (Does not support static variables)
 ///@param {struct} a The index of the first struct
@@ -216,5 +257,6 @@ function struct_equals(struct_a, struct_b)
 
 function distance_to_line(source_x, source_y, start_x, start_y, end_x, end_y)
 {
+	forceinline
 	return abs((end_y - start_y) * source_x - (end_x - start_x) * source_y + end_x * start_y - end_y * start_x) / point_distance(start_x, start_y, end_x, end_y);
 }

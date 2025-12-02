@@ -19,7 +19,7 @@ with (Blaster)
 	image_alpha = 1;
 	//The sprite of the blaster
 	sprite_index = sprGB;
-	function __auto_destroy(inst)
+	function __auto_destroy()
 	{
 		var view_x = Camera.ViewX(),
 			view_y = Camera.ViewY(),
@@ -32,7 +32,7 @@ with (Blaster)
 									x + half_spr_width * image_xscale, y + half_spr_height * image_yscale,
 									view_x, view_y, view_x + Camera.ViewWidth(), view_y + Camera.ViewHeight())
 				&& ((x < -spr_width) || (x > room_width + spr_width) || (y > room_height + spr_height) || (y < -spr_height)))
-			instance_destroy(inst);
+			instance_destroy();
 	}
 }
 //The sprite of the beam

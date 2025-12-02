@@ -4,20 +4,17 @@ if (Axis.activate)
 	axis_step();
 
 //Sets minimal length due to nine-slices drawing
-Length = Length < 14 ? 14 : Length;
-image_xscale = Length / 14;
-//Automatiacally sets the angle of the bone as the direction if needed
-if (AngleAsDirection)
-	image_angle = direction;
-//Rotation
-image_angle += RotateSpeed;
+var _length = Length;
+if (_length < 14)
+	_length = 14;
+image_xscale = _length / 14;
 
 //Auto sticking to board edges if the bone is not in lening
 if (!Len.activate)
 {
 	if (__stick_direction > 0)
 	{
-		var half_len = Length / 2;
+		var half_len = _length / 2;
 		switch (__stick_direction)
 		{
 			case 1: case "up": y = board.y - board.up + half_len;		break;
@@ -29,6 +26,14 @@ if (!Len.activate)
 }
 else
 	len_step();
+
+//Automatiacally sets the angle of the bone as the direction if needed
+if (AngleAsDirection)
+	image_angle = direction;
+//Rotation
+image_angle += RotateSpeed + Axis.angle + Len.angle_extra;
+
+Length = _length;
 //Auto destroy when turn ends or duration is met
 if ((__at_turn_end && Length < 11) || (Duration != -1 && __DurationTimer++ >= Duration))
 	instance_destroy();

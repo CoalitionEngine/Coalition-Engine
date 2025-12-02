@@ -3,10 +3,8 @@ if (Len.activate)
 if (Axis.activate)	
 	axis_step();
 image_xscale = length / 4;
-//Set angle
-var angle = round(image_angle % 360 / 90);
 //Set direction of auto destroy
-switch (angle)
+switch (round(image_angle % 360 / 90))
 {
 	case 0: DestroyDirection = DIR.DOWN;	break;
 	case 1: DestroyDirection = DIR.RIGHT; break;

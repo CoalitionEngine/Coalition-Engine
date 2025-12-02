@@ -68,12 +68,21 @@ SetAttack(2, function() {
 	if time == 120 EndTurn();
 });
 SetAttack(0, function() {
-	oBoard.image_angle += 5;
 	if (time == 0)
 	{
-		Board.SetSize(90, 90, 90, 90, 0);
+		Soul.SetMode(SOUL_MODE.PURPLE);
+		Board.SetSize(70, 70, 120, 120, 0);
+		oBoard.image_angle = 20;
+		Battle.Button(0).y = 100;
+		Battle.Button(0).OverrideAlpha = true;
+		Battle.Button(0).image_alpha = 1;
+		//oBoard.ConvertToVertex();
+		//oVertexBoard.InsertPolygonPoint(1, 320, 100);
 		//oBattleController.Button.BeneathBoard = true;
 		//oBattleController.UI.BeneathBoard = true;
+		//for (var i = 0; i < 64 * 48; ++i) {
+		//	Bullet_Bone((i % 64) * 10, (i div 64) * 10, 25, 0, 0,,,, point_direction((i % 64) * 10, (i div 64) * 10, 320, 320));
+		//}
 	}
 	if (keyboard_check_pressed(ord("W")))
 		Soul.Slam(DIR.UP, 40);

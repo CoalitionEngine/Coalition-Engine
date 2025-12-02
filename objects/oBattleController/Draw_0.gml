@@ -9,13 +9,13 @@ with (oVertexBoard)
 draw_set_font(__DefaultFontAsset);
 draw_set_color(c_white);
 //Renders spared enemies
-var i = 0;
-repeat (array_length(__spared_enemies_surfaces))
-	draw_surface(__spared_enemies_surfaces[i++], 0, 0);
+var i = 0, _spared_surf = __spared_enemies_surfaces;
+repeat (array_length(_spared_surf))
+	draw_surface(_spared_surf[i++], 0, 0);
 // Text Functions
 if (__battle_state == BATTLE_STATE.MENU)
 {
-	if (__menu_state == MENU_STATE.BUTTON_SELECTION || __menu_state == MENU_STATE.UNDEFINED)
+	if (__menu_state == BATTLE_MENU_STATE.BUTTON_SELECTION || __menu_state == BATTLE_MENU_STATE.UNDEFINED)
 	{
 		//Initalize menu text typer
 		__text_writer.draw(52, 272, __menu_text_typist);
@@ -28,9 +28,9 @@ if (__battle_state == BATTLE_STATE.MENU)
 		if (__menu_text_typist.get_state() == 1 && __text_writer.get_page() < (__text_writer.get_page_count() - 1))
 			__text_writer.page(__text_writer.get_page() + 1);
 		//Begin turn if the dialog ended
-		if (__menu_state == MENU_STATE.UNDEFINED && __menu_text_typist.get_state() == 1 && input_confirm)
+		if (__menu_state == BATTLE_MENU_STATE.UNDEFINED && __menu_text_typist.get_state() == 1 && input_confirm)
 		{
-			struct_set_from_hash(global.__input_functions, __press_con_hash, false);
+			struct_set_from_hash(__input_functions, __press_con_hash, false);
 			Battle.SetMenuDialog(__menu_text, !__has_asterisk);
 			__begin_turn();
 		}
@@ -66,8 +66,20 @@ DrawDebugUI();
 #endregion
 #region Render
 //Order of drawing needs to be changed if only either is beneath while the other is not
-if (!UI.BeneathBoard || Button.BeneathBoard)
-	Button.Draw();
+struct_foreach(Battle.__defined_buttons, function(_name, _value) {
+	if (oBattleController.UI.BeneathBoard || _value.BeneathBoard)
+		_value.Draw();
+});
+Battle_Masking_Start();
+struct_foreach(Battle.__defined_buttons, function(_name, _value) {
+	with (_value)
+		if (BeneathBoard)
+			draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, c_black, 1);
+});
+with (oBoard)
+	if (!VertexMode)
+		draw_surface(__frame_surf, 0, 0);
+Battle_Masking_End();
 __DrawUI();
 if (UI.BeneathBoard)
 {
@@ -78,8 +90,10 @@ if (UI.BeneathBoard)
 		if (!VertexMode)
 			draw_surface(__frame_surf, 0, 0);
 }
-if (UI.BeneathBoard && !Button.BeneathBoard)
-	Button.Draw();
+struct_foreach(Battle.__defined_buttons, function(_name, _value) {
+	if (oBattleController.UI.BeneathBoard || !_value.BeneathBoard)
+		_value.Draw();
+});
 //Renders the bullets on screen
 __RenderBullets();
 #endregion

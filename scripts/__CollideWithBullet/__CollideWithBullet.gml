@@ -11,6 +11,7 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	DefaultPlaceMeetingFunction =
 	function(bullet) {
 		static __SoulDist = 8 * sqrt(2);
+		//Early exit if the general rectangle bounding box is not colliding
 		if (!collision_rectangle(x - __SoulDist, y - __SoulDist, x + __SoulDist, y + __SoulDist, bullet, false, true))
 			return false;
 		bullet = instance_place(x, y, bullet);
@@ -29,11 +30,13 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	DefaultColorPlaceMeetingFunction =
 	function(bullet) {
 		static __SoulDist = 8 * sqrt(2);
+		//Early exit if the general rectangle bounding box is not colliding
 		if (!collision_rectangle(x - __SoulDist, y - __SoulDist, x + __SoulDist, y + __SoulDist, bullet, false, true))
 			return false;
 		bullet = instance_place(x, y, bullet);
 		__COALITION_BULLET_ACCOUNT_ANGLE
-		var collision = bullet != noone;
+		//Do not early exit until UNACCOUNT_ANGLE or else bullet angle will be modified
+		var collision = bullet != noone, Hurt = Soul.Hurt;
 		if (collision)
 		{
 			with (bullet)
@@ -44,17 +47,17 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 					switch (__type)
 					{
 						case 0:
-							Soul.Hurt(Damage);
+							Hurt(Damage);
 							break;
 						case 1:
 							if (Soul.IsMoving())
-								Soul.Hurt(Damage);
+								Hurt(Damage);
 								else
 									collision = false;
 							break;
 						case 2:
 							if (!Soul.IsMoving())
-								Soul.Hurt(Damage);
+								Hurt(Damage);
 								else
 									collision = false;
 							break;
@@ -108,12 +111,12 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 	var i = 0;
 	repeat (instance_number(oBulletParents))
 	{
-		var curBul = __BulletList[i++];
+		var curBul = __BulletList[i++], _obj = curBul.object_index;
 		if (curBul.Hurtable)
 		{
-			if (array_contains(CheckCollisions, curBul.object_index))
+			if (array_contains(CheckCollisions, curBul))
 			{
-				if (CheckFunctions[array_get_index(CheckCollisions, curBul.object_index)](curBul))
+				if (CheckFunctions[array_get_index(CheckCollisions, curBul)](curBul))
 				{
 					if (curBul.DestroyOnHit)
 						instance_destroy(curBul);

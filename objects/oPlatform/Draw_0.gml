@@ -1,2 +1,2 @@
 if (depth < oBoard.depth)
-	event_user(0);
+	__Draw();

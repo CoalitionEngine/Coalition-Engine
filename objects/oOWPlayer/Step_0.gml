@@ -4,14 +4,12 @@ if (__encounter_state > 0)
 	Movable = false;
 	draw_menu = false;
 	__encounter_time++;
-	if (__encounter_state == 1)	//Player is alerted
+	if (__encounter_state == 1 &&	//Player is alerted
+		__encounter_time == 30)
 	{
-		if (__encounter_time == 30)
-		{
-			__encounter_state++;
-			__encounter_time = 0;
-			__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN;
-		}
+		__encounter_state++;
+		__encounter_time = 0;
+		__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN;
 	}
 	if (__encounter_state == 2)	//Soul and screen flashes alternately
 	{
@@ -56,6 +54,7 @@ if (__ForceCollideless && CHECK_MOVING && !position_meeting(x, y, oOWCollision))
 // Menu opening
 if (input_menu && !oOWController.__menu_opened && !oOWController.__menu_disabled && !Overworld_DialogExists() && visible)
 {
+	struct_set_from_hash(__input_functions, __press_menu_hash, false);
 	// Open Menu, UI works in oOWController
 	oOWController.__menu_opened = true;
 	audio_play(snd_menu_switch);
@@ -113,7 +112,7 @@ if (assign_sprite != -1)
 //Player walking
 if (CHECK_MOVING && PlayerCanMove && !(x_stop && y_stop))
 	image_speed = spd / 12;
-if ((PlayerCanMove ? !CHECK_MOVING : !CutsceneIsActive()))
+if (!(PlayerCanMove ? CHECK_MOVING : CutsceneIsActive()))
 {
 	image_speed = 0;
 	image_index = 0;

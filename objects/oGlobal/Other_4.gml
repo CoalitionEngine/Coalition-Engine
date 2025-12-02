@@ -14,7 +14,7 @@ if (room == room_shop)
 		PlayMusic();
 		ReloadTexts();
 		//Apply localized text
-		static_get(self).__options = [__LangBuy, __LangSell, __LangTalk, __LangExit];
+		__options = [__LangBuy, __LangSell, __LangTalk, __LangExit];
 	}
 	//Showcase
 	if (__COALITION_SHOWCASE)

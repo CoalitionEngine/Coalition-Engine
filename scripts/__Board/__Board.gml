@@ -60,14 +60,14 @@ function __Board() constructor {
 	///@param {real} target The target board to get the data from
 	static GetUpPos = function(target = TargetBoard) {
 		forceinline
-		return GetY(target) - lengthdir_y(GetUp(target), GetAngle(target) - 90);
+		return GetY(target) - lengthdir_x(GetUp(target), GetAngle(target));
 	}
 	///@method GetDownPos(target)
 	///@desc Gets the downwards position of the board
 	///@param {real} target The target board to get the data from
 	static GetDownPos = function(target = TargetBoard) {
 		forceinline
-		return GetY(target) + lengthdir_y(GetDown(target), GetAngle(target) - 90);
+		return GetY(target) + lengthdir_x(GetDown(target), GetAngle(target));
 	}
 	///@method GetLeftPos([target])
 	///@desc Gets the leftwards position of the board
@@ -184,7 +184,6 @@ function __Board() constructor {
 function BoardMaskAll()
 {
 	forceinline
-	static pix_tex = sprite_get_texture(sprPixel, 0);
 	//Masking of normal boards
 	with (oBoard)
 		__DrawBackground();
@@ -192,3 +191,4 @@ function BoardMaskAll()
 	with (oVertexBoard)
 		__DrawBackground();
 }
+///?> To assign a custom sprite for the board, just assign the `sprite_index` as the sprite (Remember to have nine-slice enabled for the sprite)

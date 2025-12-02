@@ -40,10 +40,11 @@ if (global.timer >= 1)
 	//Drawing blasters
 	if (room == room_battle && instance_exists(oGB))
 	{
+		gpu_push_state();
 		//Apply GPU depth for blaster sprite drawing
-		var dep = gpu_get_depth();
 		gpu_set_ztestenable(true);
 		gpu_set_depth(-10);
+		//Draw the beam first to avoid overlapping
 		with (oGB)
 		{
 			var color = image_blend;
@@ -57,6 +58,7 @@ if (global.timer >= 1)
 			if (__state == 4)
 				draw_sprite_ext(sprite_index, 0, x, y, image_xscale, __beam_scale, image_angle, color, __beam_alpha);
 		}
+		//Afterwards, draw the blaster to ensure the blaster is always above the beam
 		with (oGB)
 		{
 			var color = image_blend;
@@ -68,8 +70,7 @@ if (global.timer >= 1)
 			}
 			draw_sprite_ext(Blaster.sprite_index, Blaster.image_index, Blaster.x, Blaster.y, Blaster.image_xscale, Blaster.image_yscale, image_angle, color, Blaster.image_alpha);
 		}
-		gpu_set_depth(dep);
-		gpu_set_ztestenable(false);
+		gpu_pop_state();
 	}
 }
 //Shop

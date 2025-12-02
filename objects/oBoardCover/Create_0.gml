@@ -1,6 +1,8 @@
 image_alpha = 1;
 depth = oBoard.depth - 1;
 __surface = surface_create(640, 480);
+__true_x = x;
+__true_y = y;
 
 up = 40;
 down = 40;

@@ -29,6 +29,45 @@ __at_turn_end = false;
 OutlineEnabled = false;
 OutlineColor = c_white;
 
+function __InAnyBoard()
+{
+	var _x = x, _y = y, _xscale = image_xscale / 2;
+	with (oBoard)
+	{
+		if (point_distance(__true_x, __true_y, _x, _y) <= __diagonal + _xscale)
+			return true;
+	}
+	with (oVertexBoard)
+	{
+		if (point_distance(__centroid_x, __centroid_y, _x, _y) <= __furthest_dist + _xscale)
+			return true;
+	}
+	return false;
+}
+
+function __Draw()
+{
+	forceinline
+	var _color, _angle = image_angle;
+	switch (__type)
+	{
+		case 1: _color = c_aqua;	break;
+		case 2: _color = c_orange;	break;
+		default: _color = __default_color; break;
+	}
+	var _x = x, _y = y, _xscale = image_xscale,
+		_color_outline = OutlineColor,
+		_has_outline = OutlineEnabled,
+		_sprite = sprite_index,
+		_index = image_index,
+		_alpha = image_alpha;
+	//Using image_index in case you are using several indexes for several types of bones
+	draw_sprite_ext(_sprite, _index, _x, _y, _xscale, 1, _angle, _color, _alpha);
+	if (_has_outline)
+		draw_sprite_ext(_sprite, _index + 1, _x, _y, _xscale, 1, _angle, _color_outline, _alpha);
+}
+
+
 if (__COALITION_VISUAL_MODE)
 {
 	__associate_visual_creation_script = [

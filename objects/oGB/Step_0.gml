@@ -1,7 +1,8 @@
-//Moving __state
+var _blaster = Blaster;
+//Moving state
 if (__state == 0)
 {
-	var _x = Blaster.x, _y = Blaster.y, _angle = image_angle;
+	var _x = _blaster.x, _y = _blaster.y, _angle = image_angle;
 	//Play charge sound
 	if (__charge_sound)
 	{
@@ -36,7 +37,7 @@ if (__state == 0)
 		_angle = __target_angle;
 		alarm[0] = max(1, __time_pause);
 	}
-	Blaster.x = _x; Blaster.y = _y; image_angle = _angle;
+	_blaster.x = _x; _blaster.y = _y; image_angle = _angle;
 }
 //Just fire
 if (__state == 2)
@@ -50,15 +51,15 @@ if (__state == 3)
 //Firing
 if (__state == 4)
 {
-	var _angle = image_angle, _yscale = Blaster.image_yscale;
+	var _angle = image_angle, _yscale = _blaster.image_yscale;
 	//Auto index
-	if (Blaster.image_index == sprite_get_number(Blaster.sprite_index) - 1)
-		Blaster.image_index--;
-	Blaster.image_index += 0.5;
+	if (_blaster.image_index == sprite_get_number(_blaster.sprite_index) - 1)
+		_blaster.image_index--;
+	_blaster.image_index += 0.5;
 	direction = _angle - 180;
 	//Movement
-	x = Blaster.x + lengthdir_x(50, image_angle);
-	y = Blaster.y + lengthdir_y(50, image_angle);
+	x = _blaster.x + lengthdir_x(50, image_angle);
+	y = _blaster.y + lengthdir_y(50, image_angle);
 	
 	//Fire events
 	if (__timer_blast++ == 0)
@@ -81,22 +82,23 @@ if (__state == 4)
 		speed += 0.5;
 	else if (__timer_exit >= __time_stay + 10 && !check_outside())
 		speed *= 1.1;
-	Blaster.x += lengthdir_x(speed, direction);
-	Blaster.y += lengthdir_y(speed, direction);
+	_blaster.x += lengthdir_x(speed, direction);
+	_blaster.y += lengthdir_y(speed, direction);
 	//Blaster scale
 	if (__timer_blast < 10)
-		__beam_scale += (Blaster.image_yscale / 16);
+		__beam_scale += (_blaster.image_yscale / 16);
 	else if (__timer_blast >= 10 + __time_blast)
 	{
 		//Beam settings
 		__beam_scale *= sqrt(0.8);
 		__beam_alpha -= 0.05;
 		if (__beam_scale <= .5 && __beam_alpha <= 0 && __timer_exit >= __time_stay)
-			Blaster.__auto_destroy(this);
+			_blaster.__auto_destroy();
 	}
 	else
-		__beam_scale = (Blaster.image_yscale + sin(__timer_blast / pi) * Blaster.image_yscale / 4) / 2;
+		__beam_scale = (_blaster.image_yscale + sin(__timer_blast / pi) * _blaster.image_yscale / 4) / 2;
 	image_angle = _angle;
 	image_xscale += speed;
 	image_yscale = __beam_scale * 2;
 }
+Blaster = _blaster;
