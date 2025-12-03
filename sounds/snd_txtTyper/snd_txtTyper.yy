@@ -15,7 +15,7 @@
   "name":"snd_txtTyper",
   "parent":{
     "name":"Text Voices",
-    "path":"folders/Coalition Engine/Global/Sounds/Text Voices.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Sounds/Text Voices.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

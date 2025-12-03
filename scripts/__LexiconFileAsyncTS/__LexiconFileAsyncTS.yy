@@ -6,7 +6,7 @@
   "name":"__LexiconFileAsyncTS",
   "parent":{
     "name":"File Handling",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/(System)/File Handling.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/(System)/File Handling.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

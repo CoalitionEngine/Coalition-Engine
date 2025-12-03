@@ -6,7 +6,7 @@
   "name":"__InputClassVerbState",
   "parent":{
     "name":"Classes",
-    "path":"folders/Coalition Engine/Libraries/Input/(System)/Classes.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/(System)/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

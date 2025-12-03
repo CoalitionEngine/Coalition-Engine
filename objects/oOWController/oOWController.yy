@@ -15,7 +15,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Coalition Engine/Overworld/Objects.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Overworld/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

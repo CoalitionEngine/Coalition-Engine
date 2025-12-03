@@ -6,7 +6,7 @@
   "name":"__Equipment_System",
   "parent":{
     "name":"System",
-    "path":"folders/Coalition Engine/Player Data/Equipment/System.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Player Data/Equipment/System.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

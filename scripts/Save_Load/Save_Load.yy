@@ -6,7 +6,7 @@
   "name":"Save_Load",
   "parent":{
     "name":"Player Data",
-    "path":"folders/Coalition Engine/Player Data.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Player Data.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

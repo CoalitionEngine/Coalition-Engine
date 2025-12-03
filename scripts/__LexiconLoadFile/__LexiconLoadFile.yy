@@ -6,7 +6,7 @@
   "name":"__LexiconLoadFile",
   "parent":{
     "name":"(System)",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/(System).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/(System).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"InputDeviceGetNewActivity",
   "parent":{
     "name":"Device",
-    "path":"folders/Coalition Engine/Libraries/Input/Device.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/Device.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

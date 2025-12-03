@@ -21,7 +21,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Global",
-    "path":"folders/Coalition Engine/Global.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global.yy",
   },
   "parentObjectId":null,
   "persistent":true,

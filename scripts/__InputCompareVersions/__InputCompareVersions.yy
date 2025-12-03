@@ -6,7 +6,7 @@
   "name":"__InputCompareVersions",
   "parent":{
     "name":"(System)",
-    "path":"folders/Coalition Engine/Libraries/Input/(System).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/(System).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

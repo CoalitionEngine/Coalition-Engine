@@ -14,7 +14,7 @@
   "name":"room_shop",
   "parent":{
     "name":"Shop",
-    "path":"folders/Coalition Engine/Shop.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Shop.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

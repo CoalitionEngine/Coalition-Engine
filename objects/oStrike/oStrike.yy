@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"UI",
-    "path":"folders/Coalition Engine/Battle/UI.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/UI.yy",
   },
   "parentObjectId":null,
   "persistent":false,

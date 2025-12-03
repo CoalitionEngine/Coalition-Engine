@@ -15,7 +15,7 @@
   "name":"snd_multi_crit",
   "parent":{
     "name":"Attack",
-    "path":"folders/Coalition Engine/Battle/UI/Sounds/Attack.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/UI/Sounds/Attack.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -6,7 +6,7 @@
   "name":"scribble_kerning_pair_set",
   "parent":{
     "name":"Font Modification",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Font Modification.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Font Modification.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

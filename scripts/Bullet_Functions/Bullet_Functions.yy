@@ -6,7 +6,7 @@
   "name":"Bullet_Functions",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Coalition Engine/Battle/Bullet/Scripts.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Bullet/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

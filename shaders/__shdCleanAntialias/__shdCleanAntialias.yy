@@ -4,7 +4,7 @@
   "name":"__shdCleanAntialias",
   "parent":{
     "name":"(System)",
-    "path":"folders/Coalition Engine/Libraries/Clean Shapes/(System).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Clean Shapes/(System).yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

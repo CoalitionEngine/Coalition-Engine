@@ -6,7 +6,7 @@
   "name":"scribble_typist",
   "parent":{
     "name":"Scribble",
-    "path":"folders/Coalition Engine/Libraries/Scribble.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

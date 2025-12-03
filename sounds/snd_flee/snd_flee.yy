@@ -15,7 +15,7 @@
   "name":"snd_flee",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Battle/UI/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/UI/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

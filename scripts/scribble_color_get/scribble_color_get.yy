@@ -6,7 +6,7 @@
   "name":"scribble_color_get",
   "parent":{
     "name":"Colours",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Colours.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Colours.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

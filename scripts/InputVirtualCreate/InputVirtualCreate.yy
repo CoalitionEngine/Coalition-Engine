@@ -6,7 +6,7 @@
   "name":"InputVirtualCreate",
   "parent":{
     "name":"Virtual Buttons",
-    "path":"folders/Coalition Engine/Libraries/Input/Virtual Buttons.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/Virtual Buttons.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

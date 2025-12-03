@@ -6,7 +6,7 @@
   "name":"Items",
   "parent":{
     "name":"Items",
-    "path":"folders/Coalition Engine/Player Data/Items.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Player Data/Items.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

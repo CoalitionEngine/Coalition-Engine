@@ -6,7 +6,7 @@
   "name":"__scribble_config_behaviours",
   "parent":{
     "name":"Configuration - Please edit these!",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Configuration - Please edit these!.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Configuration - Please edit these!.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"CleanAntialiasGet",
   "parent":{
     "name":"Clean Shapes",
-    "path":"folders/Coalition Engine/Libraries/Clean Shapes.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Clean Shapes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

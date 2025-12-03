@@ -6,7 +6,7 @@
   "name":"CleanTransformAddScale",
   "parent":{
     "name":"Transform",
-    "path":"folders/Coalition Engine/Libraries/Clean Shapes/Transform.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Clean Shapes/Transform.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

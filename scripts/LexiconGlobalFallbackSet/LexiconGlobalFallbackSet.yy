@@ -6,7 +6,7 @@
   "name":"LexiconGlobalFallbackSet",
   "parent":{
     "name":"Global",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/Global.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/Global.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

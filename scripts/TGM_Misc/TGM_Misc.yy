@@ -6,7 +6,7 @@
   "name":"TGM_Misc",
   "parent":{
     "name":"Code",
-    "path":"folders/Coalition Engine/Libraries/TurboGML/Code.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/TurboGML/Code.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

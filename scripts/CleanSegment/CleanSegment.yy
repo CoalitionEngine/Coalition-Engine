@@ -6,7 +6,7 @@
   "name":"CleanSegment",
   "parent":{
     "name":"Shapes",
-    "path":"folders/Coalition Engine/Libraries/Clean Shapes/Shapes.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Clean Shapes/Shapes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

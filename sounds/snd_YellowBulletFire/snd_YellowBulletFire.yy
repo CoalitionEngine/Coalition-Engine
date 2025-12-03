@@ -15,7 +15,7 @@
   "name":"snd_YellowBulletFire",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Battle/Soul/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Soul/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

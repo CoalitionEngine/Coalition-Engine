@@ -6,7 +6,7 @@
   "name":"__LexiconTextParser",
   "parent":{
     "name":"TextEntry",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/(System)/Parsers/TextEntry.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/(System)/Parsers/TextEntry.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

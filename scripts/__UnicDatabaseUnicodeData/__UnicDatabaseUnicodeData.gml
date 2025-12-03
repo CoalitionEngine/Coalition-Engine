@@ -14,7 +14,7 @@ function __UnicDatabaseUnicodeData()
     _state = {};
     with(_state)
     {
-    	var _compressedBuffer = buffer_load("unic_data.bin");
+    	var _compressedBuffer = buffer_load("UNIC/unic_data.bin");
         __buffer = buffer_decompress(_compressedBuffer);
         buffer_delete(_compressedBuffer);
         

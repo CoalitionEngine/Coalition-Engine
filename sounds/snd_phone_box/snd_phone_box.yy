@@ -15,7 +15,7 @@
   "name":"snd_phone_box",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Player Data/Cell/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Player Data/Cell/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

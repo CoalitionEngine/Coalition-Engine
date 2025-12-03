@@ -6,7 +6,7 @@
   "name":"scribble_rgb_to_bgr",
   "parent":{
     "name":"Legacy",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Legacy.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Legacy.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

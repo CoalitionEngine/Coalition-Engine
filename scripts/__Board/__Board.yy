@@ -6,7 +6,7 @@
   "name":"__Board",
   "parent":{
     "name":"Boards",
-    "path":"folders/Coalition Engine/Battle/Boards.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Boards.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

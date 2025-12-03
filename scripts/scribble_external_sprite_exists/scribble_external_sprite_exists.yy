@@ -6,7 +6,7 @@
   "name":"scribble_external_sprite_exists",
   "parent":{
     "name":"External Assets",
-    "path":"folders/Coalition Engine/Libraries/Scribble/External Assets.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/External Assets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

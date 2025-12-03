@@ -15,7 +15,7 @@
   "name":"snd_item_equip",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Player Data/Items/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Player Data/Items/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

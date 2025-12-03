@@ -15,7 +15,7 @@
   "name":"snd_damage",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Battle/Enemy/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Enemy/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

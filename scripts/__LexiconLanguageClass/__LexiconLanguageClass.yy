@@ -6,7 +6,7 @@
   "name":"__LexiconLanguageClass",
   "parent":{
     "name":"Classes",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/(System)/Classes.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/(System)/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

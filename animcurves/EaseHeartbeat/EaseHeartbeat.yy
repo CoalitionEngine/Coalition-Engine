@@ -21,7 +21,7 @@
   "name":"EaseHeartbeat",
   "parent":{
     "name":"Curves",
-    "path":"folders/Coalition Engine/Libraries/TweenGMX/User/Curves.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/TweenGMX/User/Curves.yy",
   },
   "resourceType":"GMAnimCurve",
   "resourceVersion":"2.0",

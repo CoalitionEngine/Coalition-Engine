@@ -6,7 +6,7 @@
   "name":"scribble_anim_cycle",
   "parent":{
     "name":"Animation",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Animation.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Animation.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

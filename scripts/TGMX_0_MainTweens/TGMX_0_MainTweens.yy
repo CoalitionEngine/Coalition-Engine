@@ -6,7 +6,7 @@
   "name":"TGMX_0_MainTweens",
   "parent":{
     "name":"User",
-    "path":"folders/Coalition Engine/Libraries/TweenGMX/User.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/TweenGMX/User.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

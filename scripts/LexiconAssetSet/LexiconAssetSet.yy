@@ -6,7 +6,7 @@
   "name":"LexiconAssetSet",
   "parent":{
     "name":"Asset",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/Asset.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/Asset.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

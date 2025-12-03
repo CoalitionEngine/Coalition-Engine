@@ -143,7 +143,7 @@ with PurpleSoulData
 			board_height =	board.up + board.down - 30,
 			_first_line_x = board_x - lengthdir_x(board_width / 2, board_angle) + lengthdir_y(board_height / 2, board_angle),
 			_h_line_count = HLineAmount,
-			_delta_x = lengthdir_x(board_height / (_h_line_count - 1), board_angle - 90),
+			_delta_x = lengthdir_x(board_height / (_h_line_count - 1), board_angle - 90);
 		return _first_line_x + line * _delta_x + (side ? lengthdir_x(board_width, board_angle) : 0);
 	}
 	///Gets the y coordinate of a horizontal line
@@ -173,7 +173,7 @@ with PurpleSoulData
 			board_height =	board.up + board.down - 30,
 			_first_line_x = board_x - lengthdir_x(board_width / 2, board_angle) + lengthdir_y(board_height / 2, board_angle),
 			_v_line_count = VLineAmount,
-			_delta_x = lengthdir_x(board_width / (_v_line_count - 1), board_angle),
+			_delta_x = lengthdir_x(board_width / (_v_line_count - 1), board_angle);
 		return _first_line_x + line * _delta_x + (side ? lengthdir_x(board_width, board_angle) : 0);
 	}
 	///Gets the y coordinate of a vertical line

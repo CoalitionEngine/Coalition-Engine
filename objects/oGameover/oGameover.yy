@@ -14,7 +14,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Gameover",
-    "path":"folders/Coalition Engine/Battle/Gameover.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Gameover.yy",
   },
   "parentObjectId":null,
   "persistent":false,

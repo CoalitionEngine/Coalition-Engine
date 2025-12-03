@@ -15,7 +15,7 @@
   "name":"snd_save",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Overworld/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Overworld/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

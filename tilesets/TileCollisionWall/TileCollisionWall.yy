@@ -14,7 +14,7 @@
   "out_tilevborder":2,
   "parent":{
     "name":"Tile Sets",
-    "path":"folders/Coalition Engine/Overworld/Tile Sets.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Overworld/Tile Sets.yy",
   },
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",

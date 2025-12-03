@@ -15,7 +15,7 @@
   "name":"snd_menu_cancel",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Global/UI/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/UI/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

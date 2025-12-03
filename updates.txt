@@ -1,5 +1,10 @@
 Update Logs
 
+v1.4.1 (TK)
+- Changed folder organization for next major update
+- Fixed bug where there are 27 characters in the naming screen
+- Added `Intro.DefineNamingEasterEgg` and `Intro.DefineState` for more intro customization
+
 v1.4.0 (TK)
 - Fixed bug where consuming items with stat boost will crash the game
 - Fixed some formatting

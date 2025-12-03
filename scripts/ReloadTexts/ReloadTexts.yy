@@ -6,7 +6,7 @@
   "name":"ReloadTexts",
   "parent":{
     "name":"Localization",
-    "path":"folders/Coalition Engine/Localization.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Localization.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

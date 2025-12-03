@@ -6,7 +6,7 @@
   "name":"draw_text_scribble_ext",
   "parent":{
     "name":"Quick Functions",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Quick Functions.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Quick Functions.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

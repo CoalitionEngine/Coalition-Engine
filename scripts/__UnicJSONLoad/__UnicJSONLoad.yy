@@ -6,7 +6,7 @@
   "name":"__UnicJSONLoad",
   "parent":{
     "name":"(System)",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/Unic/(System).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/Unic/(System).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"InputGetHotswap",
   "parent":{
     "name":"Hotswap",
-    "path":"folders/Coalition Engine/Libraries/Input/Hotswap.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/Hotswap.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

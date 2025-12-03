@@ -6,7 +6,7 @@
   "name":"EnterShop",
   "parent":{
     "name":"Shop",
-    "path":"folders/Coalition Engine/Shop.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Shop.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

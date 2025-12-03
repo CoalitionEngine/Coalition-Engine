@@ -13,7 +13,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"(System)",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/(System).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/(System).yy",
   },
   "parentObjectId":null,
   "persistent":true,

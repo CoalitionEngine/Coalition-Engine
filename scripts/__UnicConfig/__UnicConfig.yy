@@ -6,7 +6,7 @@
   "name":"__UnicConfig",
   "parent":{
     "name":"Unic",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/Unic.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/Unic.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

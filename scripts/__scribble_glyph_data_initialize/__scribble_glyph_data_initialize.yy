@@ -6,7 +6,7 @@
   "name":"__scribble_glyph_data_initialize",
   "parent":{
     "name":"Initialization",
-    "path":"folders/Coalition Engine/Libraries/Scribble/(System - don't call these functions)/Initialization.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/(System - don't call these functions)/Initialization.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

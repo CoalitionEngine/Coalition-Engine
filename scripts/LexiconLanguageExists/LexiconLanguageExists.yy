@@ -6,7 +6,7 @@
   "name":"LexiconLanguageExists",
   "parent":{
     "name":"Language",
-    "path":"folders/Coalition Engine/Libraries/Lexicon/Language.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Lexicon/Language.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

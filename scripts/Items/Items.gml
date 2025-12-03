@@ -151,7 +151,7 @@ function ItemLibrarySetStruct(item, ID, param)
 		var i = 0;
 		UseTexts = [];
 		var curUseText = Lexicon($"{base_txt}.{ID}.Use.{i}");
-		while (curUseText.toString() != $"{base_txt}.{ID}.Use.{i}")
+		while (LexiconEntryIsLoaded($"{base_txt}.{ID}.Use.{i}"))
 		{
 			array_push(UseTexts, curUseText.Get());
 			curUseText = Lexicon($"{base_txt}.{ID}.Use.{++i}");

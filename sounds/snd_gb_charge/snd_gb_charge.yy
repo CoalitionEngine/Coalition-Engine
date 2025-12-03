@@ -15,7 +15,7 @@
   "name":"snd_gb_charge",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Battle/Bullet/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Bullet/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

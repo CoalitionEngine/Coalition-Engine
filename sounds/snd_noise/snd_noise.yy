@@ -15,7 +15,7 @@
   "name":"snd_noise",
   "parent":{
     "name":"Sounds",
-    "path":"folders/Coalition Engine/Global/Sounds.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

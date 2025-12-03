@@ -6,7 +6,7 @@
   "name":"InputY",
   "parent":{
     "name":"Clusters",
-    "path":"folders/Coalition Engine/Libraries/Input/Checkers/Clusters.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input/Checkers/Clusters.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

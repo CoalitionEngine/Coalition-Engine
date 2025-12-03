@@ -6,7 +6,7 @@
   "name":"Initialization",
   "parent":{
     "name":"Initialize",
-    "path":"folders/Coalition Engine/Initialize.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Initialize.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

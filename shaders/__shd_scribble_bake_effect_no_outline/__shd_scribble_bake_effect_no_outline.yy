@@ -4,7 +4,7 @@
   "name":"__shd_scribble_bake_effect_no_outline",
   "parent":{
     "name":"Shaders",
-    "path":"folders/Coalition Engine/Libraries/Scribble/(System - don't call these functions)/Shaders.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/(System - don't call these functions)/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

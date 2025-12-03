@@ -6,7 +6,7 @@
   "name":"Surfaces",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Coalition Engine/Global/Scripts.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

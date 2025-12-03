@@ -4,7 +4,7 @@
   "name":"__shd_scribble_bake_outline_4dir",
   "parent":{
     "name":"Outline",
-    "path":"folders/Coalition Engine/Libraries/Scribble/(System - don't call these functions)/Deprecated/Outline.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/(System - don't call these functions)/Deprecated/Outline.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

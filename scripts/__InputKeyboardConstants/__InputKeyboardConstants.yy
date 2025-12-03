@@ -6,7 +6,7 @@
   "name":"__InputKeyboardConstants",
   "parent":{
     "name":"Input",
-    "path":"folders/Coalition Engine/Libraries/Input.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Input.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

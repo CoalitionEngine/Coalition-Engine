@@ -14,7 +14,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Coalition Engine/Battle/Soul/Objects.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Battle/Soul/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

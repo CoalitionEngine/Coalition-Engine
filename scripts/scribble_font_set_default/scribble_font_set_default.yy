@@ -6,7 +6,7 @@
   "name":"scribble_font_set_default",
   "parent":{
     "name":"Fonts",
-    "path":"folders/Coalition Engine/Libraries/Scribble/Fonts.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/Fonts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

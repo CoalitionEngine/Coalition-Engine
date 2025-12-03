@@ -6,7 +6,7 @@
   "name":"__scribble_font_add_from_bundle",
   "parent":{
     "name":"(System - don't call these functions)",
-    "path":"folders/Coalition Engine/Libraries/Scribble/(System - don't call these functions).yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Libraries/Scribble/(System - don't call these functions).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
