@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/83257329/226114457-a8702e87-0f37-46a4-8b09-f43b12e9511f.png" alt="HelpMePls">
+  <img src="https://github.com/user-attachments/assets/6a9e679d-2c7c-4b7f-8619-78ea37a7e42b" alt="HelpMePls">
 </p>
 <p align="center">An Undertale Engine dedicated to providing optimistic experience.</p>
 </p>
