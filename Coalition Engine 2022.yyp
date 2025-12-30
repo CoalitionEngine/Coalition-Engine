@@ -216,14 +216,13 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.1.210",
+    "IDEVersion":"2024.14.2.213",
   },
   "name":"Coalition Engine 2022",
   "resources":[
     {"id":{"name":"EaseFastToSlow","path":"animcurves/EaseFastToSlow/EaseFastToSlow.yy",},},
     {"id":{"name":"EaseHeartbeat","path":"animcurves/EaseHeartbeat/EaseHeartbeat.yy",},},
     {"id":{"name":"EaseMidSlow","path":"animcurves/EaseMidSlow/EaseMidSlow.yy",},},
-    {"id":{"name":"ImGui_GM","path":"extensions/ImGui_GM/ImGui_GM.yy",},},
     {"id":{"name":"__LexiconFontFallback","path":"fonts/__LexiconFontFallback/__LexiconFontFallback.yy",},},
     {"id":{"name":"fnt_8bitwonder","path":"fonts/fnt_8bitwonder/fnt_8bitwonder.yy",},},
     {"id":{"name":"fnt_cot","path":"fonts/fnt_cot/fnt_cot.yy",},},

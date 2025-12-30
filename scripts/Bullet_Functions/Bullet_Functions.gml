@@ -73,7 +73,7 @@ function len_step()
 	forceinline
 	with (Len)
 	{
-		if (target != noone && instance_exists(target))
+		if (instance_exists(target))
 		{
 			x = target.x;
 			y = target.y;

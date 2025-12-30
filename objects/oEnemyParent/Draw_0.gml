@@ -56,13 +56,12 @@ if (!__died)
 			if (_turn < 0)
 				_turn = 0;
 			//Check whether each enemy has finished their dialog, if so start the turn
-			var i = 0, n = instance_number(oEnemyParent), k = 0;
-			repeat (n)
+			var n = 0, k = 0;
+			with (oEnemyParent)
 			{
-				var findEnemy = instance_find(oEnemyParent, i);
-				if (string_length(findEnemy.__dialog_text[min(_turn, array_length(findEnemy.__dialog_text) - 1)]) == 0)
+				n++;
+				if (string_length(__dialog_text[min(_turn, array_length(__dialog_text) - 1)]) == 0)
 					k++;
-				++i;
 			}
 			if (k == n)
 				oBattleController.__begin_turn();

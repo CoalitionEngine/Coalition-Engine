@@ -19,5 +19,7 @@ Tome/
 
 # Private Coalition Visual Assets
 **/*CoalVis*/*.gml
+**/oCoalVisMainAtk/*
+**/oCoalVisMainOld/*
 
 **/ImGui_GM

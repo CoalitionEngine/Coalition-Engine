@@ -256,15 +256,12 @@ function __BlueSoulProcess(__on_ground, __on_ceil)
 			break;
 		}
 	//If the platform is sticky, carry the soul
-	if (RespectivePlatform != noone)
+	with (RespectivePlatform) //Note that this will not execute if platform is noone
 	{
-		with (RespectivePlatform)
+		if (sticky)
 		{
-			if (sticky)
-			{
-				other.x += x - xprevious;
-				other.y += y - yprevious;
-			}
+			other.x += x - xprevious;
+			other.y += y - yprevious;
 		}
 	}
 	///@method TriggerSlam
@@ -290,23 +287,17 @@ function __BlueSoulProcess(__on_ground, __on_ceil)
 	{
 		//Apply relative vertical movement
 		var _fall_x = -lengthdir_y(__fall_speed, _angle), _fall_y = lengthdir_x(__fall_speed, _angle),
-			step_count = max(10, __fall_speed / 2);
+			step_count = max(10, __fall_speed / 2), _soul = this;
 		repeat (step_count)
 		{
 			x += _fall_x / step_count;
 			y += _fall_y / step_count;
 			with (oPlatform)
-				if (__CollideCheck(other))
+				if (__CollideCheck(_soul) && _soul.__being_slammed)
 				{
-					__on_platform = true;
+					_soul.TriggerSlam();
 					break;
 				}
-			if (__on_platform)
-			{
-				if (__being_slammed)
-					TriggerSlam();
-				break;
-			}
 		}
 		//Apply relative horizontal movement
 		x += lengthdir_x(move_input, _angle);

@@ -74,30 +74,26 @@ if (!__died && !__is_spared)
 				DodgeMethod();
 			}
 		}
-		else
+		else if (COALITION_DATA.AttackItem.__AttackAnimationLanded)
 		{
-			//Only run damage event when the attacking animation is over
-			if (COALITION_DATA.AttackItem.__AttackAnimationLanded)
+			if (__attack_time++ == 0)
 			{
-				if (__attack_time++ == 0)
-				{
-					DamageEvent();
-					audio_play(snd_damage);
-					__HPBarHP = HP;
-					DamageTextColor = c_ltgray;
-					if (is_real(__damage))
-					{
-						HP -= __damage;
-						DamageTextColor = c_red;
-					}
-					DrawDamageText = true;
-					TweenFire("~oQuad", "$40", "__HPBarHP>", HP);
-					TweenFire("~", ["oQuad", "iQuad"], "#p", ">1", "$20", "DamageTextY>", "@-30");
-				}
-				//The is_real(damage) checks whether it's a solid hit
+				DamageEvent();
+				audio_play(snd_damage);
+				__HPBarHP = HP;
+				DamageTextColor = c_ltgray;
 				if (is_real(__damage))
-					x = (__attack_time < __attack_end_time) ? random_range(xstart - 3, xstart + 3) : xstart;
+				{
+					HP -= __damage;
+					DamageTextColor = c_red;
+				}
+				DrawDamageText = true;
+				TweenFire("~oQuad", "$40", "__HPBarHP>", HP);
+				TweenFire("~", ["oQuad", "iQuad"], "#p", ">1", "$20", "DamageTextY>", "@-30");
 			}
+			//The is_real(damage) checks whether it's a solid hit
+			if (is_real(__damage))
+				x = (__attack_time < __attack_end_time) ? random_range(xstart - 3, xstart + 3) : xstart;
 		}
 		if (COALITION_DATA.AttackItem.__AttackAnimationEnded)
 		{
@@ -153,18 +149,14 @@ if (!__died && !__is_spared)
 				audio_play(snd_vaporize);
 				TweenFire(id, "", 0, false, 0, 30, "image_alpha>", 0.5);
 			}
-			else SpareFunction();
+			else
+				SpareFunction();
 		}
-		//Check for any un-spared enemies, if yes then resume battle
+		//Check for any un-spared enemies, resume battle there are
 		var i = 0, continue_battle = false;
-		repeat (instance_number(oEnemyParent))
-		{
-			if (!instance_find(oEnemyParent, i).__is_spared)
-			{
+		with (oEnemyParent)
+			if (!__is_spared)
 				continue_battle = true;
-				break;
-			}
-		}
 		if (!continue_battle)
 			oBattleController.__end_battle();
 		//Begins turn if it's set to be

@@ -1,5 +1,10 @@
 Update Logs
 
+v1.4.2 (TK)
+- Moved camera logic to End Step
+- Minor optimization to `with(noone)`
+- Removed leftover files (I hope)
+
 v1.4.1 (TK)
 - Changed folder organization for next major update
 - Fixed bug where there are 27 characters in the naming screen

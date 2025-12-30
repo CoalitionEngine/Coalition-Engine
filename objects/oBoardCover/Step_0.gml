@@ -54,10 +54,11 @@ var //Store the coordinates of the edges
 var max_iterations = 10;
 //I hate this code
 var check_x = lengthdir_x((right - left) / 2, image_angle),
-	check_y = lengthdir_x((down - up) / 2, image_angle);
-while (instance_place(x + check_x, y + check_y, oSoul) != noone)
+	check_y = lengthdir_x((down - up) / 2, image_angle),
+	curSoul = instance_place(x + check_x, y + check_y, oSoul);
+while (curSoul != noone)
 {
-	with instance_place(x + check_x, y + check_y, oSoul)
+	with (curSoul)
 	{
 		//Gets the nearest edge of the board from the soul
 		var points = array_create(4, array_create(2)), dists = array_create(4), i = 0;
@@ -104,6 +105,7 @@ while (instance_place(x + check_x, y + check_y, oSoul) != noone)
 	}
 	if (--max_iterations < 0)
 		break;
+	curSoul = instance_place(x + check_x, y + check_y, oSoul);
 }
 left -= FrameThickness;
 right -= FrameThickness;

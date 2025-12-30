@@ -163,7 +163,6 @@
   "ResourceOrderSettings":[
     {"name":"EaseHeartbeat","order":1,"path":"animcurves/EaseHeartbeat/EaseHeartbeat.yy",},
     {"name":"EaseMidSlow","order":2,"path":"animcurves/EaseMidSlow/EaseMidSlow.yy",},
-    {"name":"ImGui_GM","order":1,"path":"extensions/ImGui_GM/ImGui_GM.yy",},
     {"name":"__LexiconFontFallback","order":10,"path":"fonts/__LexiconFontFallback/__LexiconFontFallback.yy",},
     {"name":"fnt_cot","order":1,"path":"fonts/fnt_cot/fnt_cot.yy",},
     {"name":"fnt_dmg","order":2,"path":"fonts/fnt_dmg/fnt_dmg.yy",},

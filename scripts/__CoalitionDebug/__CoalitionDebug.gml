@@ -115,23 +115,20 @@ function DrawDebugUI()
 		var base_string = string_concat("Char Position : ", oOWPlayer.x, ", ", oOWPlayer.y, "\nMouse Position : ", window_mouse_get_x(), ", ", window_mouse_get_y(), "\nCamera Position : ", camera_get_view_x(view_camera[0]), ", ", camera_get_view_y(view_camera[0]), "\nInst.Cnt: ", instance_count);
 		var inst = instance_position(mouse_x, mouse_y, all), inst_name = "";
 		//Naming
-		if (inst != noone)
+		with (inst)
 		{
-			switch (object_get_name(inst.object_index))
+			switch (object_get_name(object_index))
 			{
 				case "oOWPlayer": inst_name = "Player"; break;
 				case "oSavePoint": inst_name = "Save Point"; break;
 				case "oOWCollision":
-				case "oOWChars": inst_name = inst.Name; break;
-				default: inst_name = object_get_name(inst.object_index); break;
+				case "oOWChars": inst_name = Name; break;
+				default: inst_name = object_get_name(object_index); break;
 			}
-			with (inst)
-			{
-				var prev_hitbox = global.__CoalitionShowHitbox;
-				global.__CoalitionShowHitbox = true;
-				CoalitionShowHitbox(c_aqua);
-				global.__CoalitionShowHitbox = prev_hitbox;
-			}
+			var prev_hitbox = global.__CoalitionShowHitbox;
+			global.__CoalitionShowHitbox = true;
+			CoalitionShowHitbox(c_aqua);
+			global.__CoalitionShowHitbox = prev_hitbox;
 		}
 		draw_debug_color_text(5, 5, string_concat(base_string, "\nPointing At : " + inst_name));
 		draw_set_halign(fa_right);
