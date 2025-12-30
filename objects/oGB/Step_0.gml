@@ -99,6 +99,6 @@ if (__state == 4)
 		__beam_scale = (_blaster.image_yscale + sin(__timer_blast / pi) * _blaster.image_yscale / 4) / 2;
 	image_angle = _angle;
 	image_xscale += speed;
-	image_yscale = __beam_scale * 2;
+	image_yscale = __beam_scale;
 }
 Blaster = _blaster;
