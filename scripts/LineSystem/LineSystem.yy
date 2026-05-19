@@ -6,7 +6,7 @@
   "name":"LineSystem",
   "parent":{
     "name":"Line System",
-    "path":"folders/Coalition Engine/Effects/Optional/Line System.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Line System.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

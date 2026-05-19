@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Intro",
-    "path":"folders/Coalition Engine/Intro.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Intro.yy",
   },
   "parentObjectId":null,
   "persistent":false,

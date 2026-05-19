@@ -25,7 +25,7 @@ function __CoalitionFlashScreen(_element, _parameter_array, _character_index)
 ///A demostration on beginning an encounter in dialog
 function sansfightstart()
 {
-	oOWPlayer.Encounter_Begin();
+	Encounter.Begin()
 }
 ///Sets the overworld state to saving state
 function __CoalitionToSaveState()

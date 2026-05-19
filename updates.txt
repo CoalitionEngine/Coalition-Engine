@@ -1,5 +1,26 @@
 Update Logs
 
+v1.5.0 (TK)
+- Added `Encounter` for encounter animation customization
+- Moved `oOWPlayer.Encounter_Begin` to `Encounter.Begin` (No changes to arguments)
+- Added `string_is_empty` to check whether the string is an empty string (No, it's not `str == ""`)
+- Moved required effects into System folder
+- Slightly optimized vertex board collision
+- Added support for circle board shape
+- Fixed bug where input state is not cleared when room changes
+- Fixed bug where leaving empty dialog for the turn will cause mid turn dialog to not appear
+- Fixed bones might not be rendered in edge cases
+- Fixed overworld player may have a 0.5 pixel collision bug
+- Added `OnYellowCollide` in `oBulletParents` for custom function when the bullet is hit (Default `instance_destroy`)
+- Removed `YelowDestroyable` in `oBulletParents` (Circumvented by setting `OnYellowCollide` as empty function)
+- Added box and bomb for yellow soul
+- Fixed tweening not destroyed automatically when battle ends
+- Added optional argument for `oEnemyParent.DodgeMethod` as the timer of the dodging animation
+- Added `EndDodgeAnimation` and `GetDodgeAnimationTimer` in `oEnemyParent` for more dodge animation customization
+- Removed the gray MISS text in the dodge animation, you will now need to manually insert it
+- Added optional argument for `oEnemyParent.SetAttack`'s second argument (Attack function) as the timer of the attack
+- Fixed bug where board background is misplaced if the downward distance is larger than the upward distance
+
 v1.4.2 (TK)
 - Moved camera logic to End Step
 - Minor optimization to `with(noone)`

@@ -31,30 +31,30 @@ function SetDirection(new_dir) {
 	FacingDirection = new_dir;
 }
 
-#region Encounter
-__encounter_state = 0;
-__encounter_time = 0;
-__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.NONE;
-function Encounter_Begin(exclaim = true, move = true)
+#region Party Members
+__PartyMembers = [];
+__PartyMemberData = ds_list_create();
+function PartyMemberData() constructor
 {
-	forceinline
-	//Gets the relative position of the player
-	__encounter_soul_x = 	(x - Camera.ViewX()) * Camera.GetScale(1);
-	__encounter_soul_y = 	(y - Camera.ViewY() - sprite_height / 2) * Camera.GetScale(2);
-	__encounter_state = 3 - move - exclaim;
-	if (__encounter_state == 1)	
-		audio_play(snd_warning);
-	
-	//Store current room data to return to
-	global.__CurrentOverworldRoom = room;
-	global.__CurrentOverworldSubRoom = oOWController.__OverworldSubRoom;
-	global.__CurrentOverworldPosition = {x, y};
-	global.__CurrentOverworldDirection = FacingDirection;
+	DirSprites = array_create(4);
+	sprite_index = -1;
+	FacingDirection = 0;
+	SpriteFlipDirection = DIR.RIGHT;
+	image_speed = 0;
+	image_index = 0;
+	x = 0;
+	y = 0;
+	function __SpriteShouldFlip() {
+		return abs(angle_difference(FacingDirection, SpriteFlipDirection)) <= 45 && SpriteFlipDirection != -1;
+	}
+	static __GetDirectionalSprite = function(dir) {
+		return DirSprites[dir / 90];
+	}
 }
-enum __COALITION_ENCOUNTER_STATE_FLAG {
-	NONE = 0,
-	BLACK_SCREEN = 1,
-	DRAW_PLAYER = 2,
-	DRAW_SOUL = 4,
+function AddPartyMember(member)
+{
+	array_push(__PartyMembers, member);
+	if (DEBUG && array_length(__PartyMembers) > COALITION_OVERWORD_PARTY_MAX_MEMBERS)
+		print("Coalition Engine: Warning! Party member count exceeds COALITION_OVERWORD_PARTY_MAX_MEMBERS");
 }
 #endregion

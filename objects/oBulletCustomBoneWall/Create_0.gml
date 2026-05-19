@@ -4,7 +4,7 @@ __active = false;
 //Internal timer of bonewall
 __timer = 0;
 //The type of the bonewall, 0-> White, 1-> Blue, 2-> Orange
-__type = 0;
+type = 0;
 //The current state of the bonewall
 __state = 0;
 //The length of the bones created using the custom bonewall

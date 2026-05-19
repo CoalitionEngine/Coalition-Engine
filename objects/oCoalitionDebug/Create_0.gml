@@ -56,7 +56,7 @@ while (audio_exists(i))
 	++i;
 }
 var file_name = file_find_first("Music/*.ogg", fa_none);
-while (string_width(file_name) != 0)
+while (!string_is_empty(file_name))
 {
     array_push(AudioList, file_name);
     file_name = file_find_next();

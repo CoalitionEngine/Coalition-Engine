@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"BlendExt",
-    "path":"folders/Coalition Engine/Effects/Optional/BlendExt.yy",
+    "path":"folders/Coalition Engine/Optional Effects/BlendExt.yy",
   },
   "parentObjectId":null,
   "persistent":false,

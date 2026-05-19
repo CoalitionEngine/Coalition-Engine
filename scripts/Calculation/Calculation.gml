@@ -149,8 +149,8 @@ function toggle_bit(bit, index)
 }
 ///@func read_bit(bit, index)
 ///@desc Reads the value of the specified index of the bit
-///@param {real} bit The bit to edit
-///@param {real} index The index to change
+///@param {real} bit The bit to read
+///@param {real} index The index to read
 ///@returm {real}
 function read_bit(bit, index)
 {

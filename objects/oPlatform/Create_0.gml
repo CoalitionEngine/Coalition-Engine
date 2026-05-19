@@ -48,7 +48,7 @@ function __CollideCheck(soul)
 	if (proj_x * plat_delta_x + proj_y * plat_delta_y < 0 || point_distance(0, 0, proj_x, proj_y) > point_distance(0, 0, plat_delta_x, plat_delta_y))
 		return false;
 	//If the nearest point of soul to platform is close enough, it is colliding
-	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < _norm_delta + 1;
+	return point_distance(0, 0, proj_x + left_x - soul_x, proj_y + left_y - soul_y) < _norm_delta + 2;
 }
 
 function __InAnyBoard()

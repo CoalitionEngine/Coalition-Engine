@@ -10,8 +10,8 @@
   "name":"o25DCamera",
   "overriddenProperties":[],
   "parent":{
-    "name":"Optional",
-    "path":"folders/Coalition Engine/Effects/Optional.yy",
+    "name":"Optional Effects",
+    "path":"folders/Coalition Engine/Optional Effects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

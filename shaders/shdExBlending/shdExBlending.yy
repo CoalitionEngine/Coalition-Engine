@@ -4,7 +4,7 @@
   "name":"shdExBlending",
   "parent":{
     "name":"BlendExt",
-    "path":"folders/Coalition Engine/Effects/Optional/BlendExt.yy",
+    "path":"folders/Coalition Engine/Optional Effects/BlendExt.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

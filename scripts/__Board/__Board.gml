@@ -191,4 +191,54 @@ function BoardMaskAll()
 	with (oVertexBoard)
 		__DrawBackground();
 }
+
+function __CheckSoulInAnyBoard()
+{
+	//Normal board check
+	var j = 0;
+	repeat (array_length(BattleBoardList))
+	{
+		//Collision check of the Main Board
+		__COALITION_BOARD_LOCAL_VAR_DECALRE;
+		//Checks if the soul is inside the rectangle board
+		if (x == lengthdir_x(_dist, _dir) + board_x && y == lengthdir_y(_dist, _dir) + board_y)
+			return true;
+		++j;
+	}
+	//Vertex board check
+	//Half of sprite width + half of thickness frame
+	var Margin = 8 + 2.5, PreDir = PreciseCollision ? 45 : 90,
+		n = array_length(VertexBoardList), X = x, Y = y;
+	__PointInside = 0;
+	var i = 0;
+	//For each point
+	repeat (PreciseCollision ? 8 : 4)
+	{
+		var j = 0;
+		//Check in each vertex board
+		repeat (n)
+		{
+			with (VertexBoardList[j++])
+				__CheckInBoard(other, X, Y, i);
+		}
+		++i;
+	}
+	return __PointInside == power(2, PreciseCollision ? 8 : 4) - 1;
+}
+#macro __COALITION_BOARD_LOCAL_VAR_DECALRE \
+		var curBoard = BattleBoardList[j],\
+			board_x = curBoard.x, board_y = curBoard.y,\
+			board_angle		= posmod(curBoard.image_angle, 360),\
+			x_offset = oSoul.sprite_width / 2,\
+			y_offset = oSoul.sprite_height / 2,\
+			board_top_limit		= board_y - curBoard.up + y_offset,\
+			board_bottom_limit	= board_y + curBoard.down - y_offset,\
+			board_left_limit	= board_x - curBoard.left + x_offset,\
+			board_right_limit	= board_x + curBoard.right - x_offset,\
+			_dist = point_distance(board_x, board_y, x, y),\
+			_dir = point_direction(board_x, board_y, x, y) - board_angle,\
+			r_x = clamp(lengthdir_x(_dist, _dir) + board_x, board_left_limit, board_right_limit),\
+			r_y = clamp(lengthdir_y(_dist, _dir) + board_y, board_top_limit, board_bottom_limit);\
+		_dist = point_distance(board_x, board_y, r_x, r_y);\
+		_dir = point_direction(board_x, board_y, r_x, r_y) + board_angle
 ///?> To assign a custom sprite for the board, just assign the `sprite_index` as the sprite (Remember to have nine-slice enabled for the sprite)

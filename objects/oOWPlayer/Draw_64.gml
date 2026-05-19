@@ -1,8 +1,3 @@
 ///@desc Encounter begin drawing
-var _camScaleX = Camera.GetScale(1), _camScaleY = Camera.GetScale(2);
-if (__encounter_draw & __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN)
-	draw_clear(c_black);
-if (__encounter_draw & __COALITION_ENCOUNTER_STATE_FLAG.DRAW_PLAYER)
-	draw_sprite_ext(sprite_index, image_index, (x - Camera.ViewX()) * _camScaleX, (y - Camera.ViewY() - sprite_get_height(sprite_index) / 2) * _camScaleY, _camScaleX, _camScaleY, image_angle, c_white, 1);
-if (__encounter_draw & __COALITION_ENCOUNTER_STATE_FLAG.DRAW_SOUL)
-	draw_sprite_ext(sprSoul, 0, __encounter_soul_x, __encounter_soul_y, 1, 1, 0, c_red, 1);
+if (Encounter.__AnimationActivated)
+	Encounter.__State.Draw_GUI();

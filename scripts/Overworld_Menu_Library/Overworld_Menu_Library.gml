@@ -137,7 +137,7 @@ function InitializeOverworldStates() {
 				Overworld_CreateDialog(item_use_text[2], "fnt_dt_mono", snd_txtTyper, !__MenuAtTop());
 			}
 			var itemActText = item_use_text[__menu_choices[OVERWORLD_MENU_STATE.ITEM_INTERACTING]];
-			if (string_width(itemActText) > 0)
+			if (!string_is_empty(itemActText))
 				Overworld_CreateDialog(itemActText, "fnt_dt_mono", snd_txtTyper, !__MenuAtTop());
 			else
 				__ExitMenu();

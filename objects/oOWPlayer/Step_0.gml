@@ -1,41 +1,10 @@
 #region Encounter
-if (__encounter_state > 0)
+if (Encounter.__AnimationActivated)
 {
 	Movable = false;
 	draw_menu = false;
-	__encounter_time++;
-	if (__encounter_state == 1 &&	//Player is alerted
-		__encounter_time == 30)
-	{
-		__encounter_state++;
-		__encounter_time = 0;
-		__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN;
-	}
-	if (__encounter_state == 2)	//Soul and screen flashes alternately
-	{
-		if (!(__encounter_time % 5) && __encounter_time < 20)
-		{
-			audio_play(snd_noise);
-			__encounter_draw ^= __COALITION_ENCOUNTER_STATE_FLAG.DRAW_SOUL;
-		}
-		elif (__encounter_time == 20)	//Soul moves to FIGHT button position
-		{
-			__encounter_draw = __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN + __COALITION_ENCOUNTER_STATE_FLAG.DRAW_SOUL;
-			audio_play(snd_encounter_soul_move);
-			TweenFire(id, "", 0, false, 0, 30, "__encounter_soul_x>", 48, "__encounter_soul_y>", 454);
-		}
-		elif (__encounter_time == 50)	//Prepare the fading screen
-		{
-			__encounter_state++;
-			__encounter_time = 0;
-		}
-	}
-	//Fades screen
-	if (__encounter_state == 3 && __encounter_time == 1)
-	{
-		Fader_Fade(1, 0, 20, 0, c_black);
-		room_goto(room_battle);
-	}
+	Encounter.__Time++;
+	Encounter.__State.Step();
 }
 #endregion
 // Input check as local variable for handy referencing

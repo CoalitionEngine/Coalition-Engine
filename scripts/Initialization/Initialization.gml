@@ -138,7 +138,7 @@ function __CoalitionInitalize()
 	//Whether the current fight is a boss fight or not (Engine usage)
 	global.__BossFight = false;
 	//Using globalvar as macros will create a new constructor in each call
-	globalvar Battle, Enemy, Box, Cell, Board, Camera, Player, Shop, Soul, Overworld;
+	globalvar Battle, Enemy, Box, Cell, Board, Camera, Player, Shop, Soul, Overworld, Encounter;
 	Battle = new __Battle();
 	Enemy = new __Enemy();
 	Box = new __Box();
@@ -148,6 +148,8 @@ function __CoalitionInitalize()
 	Player = new __Player().SetBaseStats();
 	Soul = new __Soul();
 	Overworld = new __Overworld();
+	Encounter = new __Encounter();
+	Encounter_Animation_Data();
 	Encounter_Library();
 	
 	//Culling

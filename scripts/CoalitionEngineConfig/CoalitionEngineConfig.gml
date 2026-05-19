@@ -22,6 +22,7 @@
 ///| `COALITION_BATTLE_LERP_SPEED` | The lerp speed of the animation in battle |
 ///| `COALITION_MOVEMENT_NORMALIZED` | Whether moving diagonally will move faster than moving horizontally or vertically |
 ///| `COALITION_ITEM_HEAL_CLEAR_KR` | Whether KR will be set to 0 when an item is consumed |
+///| `COALITION_OVERWORD_PARTY_MAX_MEMBERS` | Maximum amount of party members the player can have (Excluding the player) |
 ///
 ///These macros are for retrieving player input, not that you may need to set them back to 0 after changing states to prevent "double input"
 ///## Input Macros
@@ -101,6 +102,8 @@
 #macro COALITION_MOVEMENT_NORMALIZED true
 
 #macro COALITION_ITEM_HEAL_CLEAR_KR false
+
+#macro COALITION_OVERWORD_PARTY_MAX_MEMBERS 2
 
 //Applies a more aggressive forceinline to scripts
 //This will lead to better performance but larger file size

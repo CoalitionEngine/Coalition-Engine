@@ -27,7 +27,7 @@ function Bullet_Bone(x, y, length, hspd, vspd, type = 0, out = false, mode = 0, 
 		
 		Length = length;
 		RotateSpeed = rotate;
-		__type = type;
+		self.type = type;
 		Duration = duration;
 		__stick_direction = mode;
 		AutoDestroy = destroyable;
@@ -220,7 +220,7 @@ function Bullet_CustomBoneWall(dir, height, distance, delay, duration, type = 0,
 		__time_warn = delay;
 		__time_stay = duration;
 		__time_move = move;
-		__type = type;
+		self.type = type;
 		__play_sound_at_create = cre_sound;
 		__animation_ease = ease;
 		__width = width;

@@ -103,6 +103,10 @@ function SetSlamSprites(dir, sprite, indexes)
 }
 //The method of dodging of the enemy (If any)
 DodgeMethod = method(undefined, COALITION_EMPTY_FUNCTION);
+function GetDamageAnimationTimer() { forceinline; return __attack_time; }
+function EndDodgeAnimation() { forceinline; __DodgeAnimationEnded = true; }
+//Detect whether the dodge animation ended
+__DodgeAnimationEnded = false;
 
 //Dust
 ContainsDust = true;
@@ -261,14 +265,16 @@ function __EnemyDrawFunction()
 	//Slamming
 	if (SlammingEnabled)
 	{
-		if (__slamming) {
+		if (__slamming)
+		{
 			var _slam_dir = __slam_direction / 90;
 			if (__slam_timer++)
 			{
 				FinalSprites[SlamSpriteNumber] = __slam_sprites[_slam_dir];
 				if (__slam_timer < 25)
 					FinalIndex[SlamSpriteNumber] = __slam_sprite_target_indexes[_slam_dir][__slam_timer / 5];	
-				else if __slam_timer == 25 __slamming = false;
+				else if __slam_timer == 25
+					__slamming = false;
 			}
 		}
 		else
@@ -280,8 +286,9 @@ function __EnemyDrawFunction()
 	}
 
 	//Draws the enemy sprites (Engine functions)
-	for (var i = 0; i < enemy_sprite_count; ++i) {
-		if (string_width(__enemy_sprite_draw_method[i]) == 0)
+	for (var i = 0; i < enemy_sprite_count; ++i)
+	{
+		if (string_is_empty(__enemy_sprite_draw_method[i]))
 		{
 			draw_sprite_ext(FinalSprites[i], FinalIndex[i],
 				x + __enemy_sprite_pos[i][0],

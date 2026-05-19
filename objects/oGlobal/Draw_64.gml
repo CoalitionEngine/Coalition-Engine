@@ -7,8 +7,9 @@ if (__fader_alpha > 0)
 	draw_sprite_ext(sprPixel, 0, 0, 0, 640, 480, 0, __fader_color, __fader_alpha);
 
 //Gradient, pre-baked (will only run once to store the surface)
-if (global.timer == 1)
+if (!__GradientInit && surface_exists(__GradientSurf))
 {
+	__GradientInit = true;
 	surface_set_target(__GradientSurf);
 	shader_set(shdGradient);
 	draw_sprite_ext(sprPixel, 0, 0, 0, 1, 480, 0, c_white, 1);

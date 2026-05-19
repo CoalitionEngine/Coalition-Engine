@@ -6,7 +6,7 @@
   "name":"__CoalitionNoiseFade",
   "parent":{
     "name":"Noise Fading",
-    "path":"folders/Coalition Engine/Effects/Optional/Noise Fading.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Noise Fading.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

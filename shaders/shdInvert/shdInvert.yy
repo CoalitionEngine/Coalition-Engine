@@ -4,7 +4,7 @@
   "name":"shdInvert",
   "parent":{
     "name":"Extra Effects",
-    "path":"folders/Coalition Engine/Effects/Optional/Extra Effects.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Extra Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

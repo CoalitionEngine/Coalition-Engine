@@ -47,7 +47,7 @@ else if (__state == 1)
 			_ease = __animation_ease,
 			EaseIn = _ease[0], EaseOut = _ease[1],
 			InitDistance = _distances[0], Displace = _distances[1],
-			_height = __height, _move = __time_move, _stay = __time_stay, _type = __type,
+			_height = __height, _move = __time_move, _stay = __time_stay, _type = type,
 			_in_displace_x = lengthdir_x(InitDistance - Displace, _angle),
 			_in_displace_y = lengthdir_y(InitDistance - Displace, _angle),
 			_out_displace_x = lengthdir_x(Displace, _angle),

@@ -65,7 +65,7 @@ function __RenderBullets() {
 	with (oBulletParents)
 	{
 		//Blaster drawing is reserved for later
-		if (!__bullet_rendered && depth >= BoardDepth && is_callable(RenderCheck) && RenderCheck())
+		if (!__bullet_rendered && depth >= BoardDepth && ((is_callable(RenderCheck) && RenderCheck()) || RenderCheck == -1))
 		{
 			gpu_set_depth(depth);
 			__Draw();

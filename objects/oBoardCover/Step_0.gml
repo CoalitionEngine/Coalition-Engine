@@ -55,13 +55,14 @@ var max_iterations = 10;
 //I hate this code
 var check_x = lengthdir_x((right - left) / 2, image_angle),
 	check_y = lengthdir_x((down - up) / 2, image_angle),
-	curSoul = instance_place(x + check_x, y + check_y, oSoul);
+	curSoul = instance_place(x + check_x, y + check_y, oSoul),
+	points = array_create(4, array_create(2));
 while (curSoul != noone)
 {
 	with (curSoul)
 	{
 		//Gets the nearest edge of the board from the soul
-		var points = array_create(4, array_create(2)), dists = array_create(4), i = 0;
+		var dists = array_create(4), i = 0;
 		repeat (4)
 		{
 			points[i] = nearestPointOnEdge(x, y, edges_list[i * 2], edges_list[i * 2 + 1], edges_list[(i * 2 + 2) % 8], edges_list[(i * 2 + 3) % 8]);

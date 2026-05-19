@@ -32,3 +32,7 @@ if (room == room_shop)
 		};
 	}
 }
+//Clear input states
+struct_foreach(__input_functions, function(key, value) {
+	__input_functions[$ key] = false;
+});

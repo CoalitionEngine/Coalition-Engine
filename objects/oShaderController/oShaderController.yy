@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Coalition Shader Controller",
-    "path":"folders/Coalition Engine/Effects/Required/Coalition Shader Controller.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Required Effects/Coalition Shader Controller.yy",
   },
   "parentObjectId":null,
   "persistent":true,

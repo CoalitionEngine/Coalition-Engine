@@ -5,7 +5,7 @@ __edge_list = [];
 __angles = array_create(3, 0);
 __rotations = array_create(3, 0);
 scale = {x: 0, y: 0, z: 0};
-__type = 0;
+type = 0;
 ///add the nodes to the list
 function __add_vert(X, Y, Z, list = __vert_list)
 {

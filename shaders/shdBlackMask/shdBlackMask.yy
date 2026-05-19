@@ -3,8 +3,8 @@
   "%Name":"shdBlackMask",
   "name":"shdBlackMask",
   "parent":{
-    "name":"Required",
-    "path":"folders/Coalition Engine/Effects/Required.yy",
+    "name":"Required Effects",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Required Effects.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

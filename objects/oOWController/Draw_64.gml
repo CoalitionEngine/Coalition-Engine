@@ -20,7 +20,7 @@ if (__menu_ui_x > -140)
 #endregion
 #region Dialog
 // Check if a Overworld Dialog is occuring and the screen is not flashed due to encounter animation
-if (__dialog_exists && !(oOWPlayer.__encounter_draw & __COALITION_ENCOUNTER_STATE_FLAG.BLACK_SCREEN))
+if (__dialog_exists)
 {
 	//Dialog Box drawing
 	var dialog_box_y = __dialog_at_bottom ? 320 : 10;

@@ -241,46 +241,46 @@ function InitializeSoulModes() {
 	});
 	Soul.DefineSoulMode(SOUL_MODE.BLUE, c_blue, function() {
 		__COALITION_SOUL_DEFINE_LOCAL_VAR
-		//If the board assigned to the soul is not a vertex board, process normally
-		if (!BattleBoardList[TargetSoul].VertexMode)
+		//If the board assigned to the soul is a vertex board, use the alternate method
+		if (BattleBoardList[TargetSoul].VertexMode)
 		{
-			//Reassign the input checking for blue soul because the diagonal movement does not apply to it
-			__h_spd = InputOpposing(INPUT_VERB.LEFT, INPUT_VERB.RIGHT);
-			__v_spd = InputOpposing(INPUT_VERB.UP, INPUT_VERB.DOWN);
-			MoveDirection %= 360;
-			image_angle = (MoveDirection + 90) % 360;
-
-			var _angle = image_angle,
-				_dist = point_distance(board_x, board_y, x, y),
-				_dir = point_direction(board_x, board_y, x, y) - board_dir,
-				r_x = lengthdir_x(_dist, _dir) + board_x,
-				r_y = lengthdir_y(_dist, _dir) + board_y,
-				displace_x = lengthdir_x(x_offset + board.FrameThickness / 2, _angle - 90),
-				displace_y = lengthdir_y(y_offset + board.FrameThickness / 2, _angle - 90),
-				//Store board vertices into vectors for checking (Rotated board is a parallelogram)
-				
-				TL = new Vector2(-board.left, -board.up).Rotated(board_angle),
-				TR = new Vector2(board.right, -board.up).Rotated(board_angle),
-				BL = new Vector2(-board.left, board.down).Rotated(board_angle),
-				BR = new Vector2(board.right, board.down).Rotated(board_angle);
-				var board_vertices =
-				[
-					board_x + TL.x, board_y + TL.y,
-					board_x + TR.x, board_y + TR.y,
-					board_x + BR.x, board_y + BR.y,
-					board_x + BL.x, board_y + BL.y,
-				];
 			__BlueSoulProcess(
-				!point_in_parallelogram(r_x + displace_x, r_y + displace_y, board_vertices),
-				!point_in_parallelogram(r_x - displace_x, r_y - displace_y, board_vertices)
-				);
-			exit;
+				!read_bit(__PointInside, MoveDirection / 90),
+				!read_bit(__PointInside, (MoveDirection / 90 + 2) % 4)
+			);
+			return;
 		}
-		//If the board is a vertex board
+		//If the board assigned to the soul is not a vertex board, process normally
+		//Reassign the input checking for blue soul because the diagonal movement does not apply to it
+		__h_spd = InputOpposing(INPUT_VERB.LEFT, INPUT_VERB.RIGHT);
+		__v_spd = InputOpposing(INPUT_VERB.UP, INPUT_VERB.DOWN);
+		MoveDirection %= 360;
+		image_angle = (MoveDirection + 90) % 360;
+
+		var _angle = image_angle,
+			_dist = point_distance(board_x, board_y, x, y),
+			_dir = point_direction(board_x, board_y, x, y) - board_dir,
+			r_x = lengthdir_x(_dist, _dir) + board_x,
+			r_y = lengthdir_y(_dist, _dir) + board_y,
+			displace_x = lengthdir_x(x_offset + board.FrameThickness / 2, _angle - 90),
+			displace_y = lengthdir_y(y_offset + board.FrameThickness / 2, _angle - 90),
+			//Store board vertices into vectors for checking (Rotated board is a parallelogram)
+				
+			TL = new Vector2(-board.left, -board.up).Rotated(board_angle),
+			TR = new Vector2(board.right, -board.up).Rotated(board_angle),
+			BL = new Vector2(-board.left, board.down).Rotated(board_angle),
+			BR = new Vector2(board.right, board.down).Rotated(board_angle);
+			var board_vertices =
+			[
+				board_x + TL.x, board_y + TL.y,
+				board_x + TR.x, board_y + TR.y,
+				board_x + BR.x, board_y + BR.y,
+				board_x + BL.x, board_y + BL.y,
+			];
 		__BlueSoulProcess(
-			!__PointInside[MoveDirection / 90],
-			!__PointInside[(MoveDirection / 90 + 2) % 4]
-		);
+			!point_in_parallelogram(r_x + displace_x, r_y + displace_y, board_vertices),
+			!point_in_parallelogram(r_x - displace_x, r_y - displace_y, board_vertices)
+			);
 	},, true);
 }
 #macro __COALITION_SOUL_DEFINE_LOCAL_VAR	var move_spd = global.__CoalitionPlayerSpeed / (HOLD_CANCEL + 1),\

@@ -63,7 +63,7 @@ if (!__died)
 				if (string_length(__dialog_text[min(_turn, array_length(__dialog_text) - 1)]) == 0)
 					k++;
 			}
-			if (k == n)
+			if (k == n && __state == BATTLE_STATE.DIALOG)
 				oBattleController.__begin_turn();
 			else
 			{

@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Screen Splice",
-    "path":"folders/Coalition Engine/Effects/Required/Screen Splice.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Required Effects/Screen Splice.yy",
   },
   "parentObjectId":null,
   "persistent":false,

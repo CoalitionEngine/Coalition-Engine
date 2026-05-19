@@ -233,22 +233,22 @@ function __game_restart() {
 function __array_equals(var1, var2)
 {
 	forceinline
-	if (array_length(var1) == array_length(var2))
+	var var1len = array_length(var1);
+	if (var1len != array_length(var2))
+		return false;
+	var i = 0;
+	repeat (var1len)
 	{
-		var i = 0;
-		repeat (array_length(var1))
+		var var1item = var1[i], var2item = var2[i];
+		if (typeof(var1item) == typeof(var2item))
 		{
-			if (typeof(var1[i]) == typeof(var2[i]))
-			{
-				if (is_struct(var1[i]) && !struct_equals(var1[i], var2[i]))
-					return false;
-				else if (is_array(var1[i]) && !array_equals(var1[i], var2[i]))
-					return false;
-			}
-			++i;
+			if (is_struct(var1item) && !struct_equals(var1item, var2item))
+				return false;
+			else if (is_array(var1item) && !array_equals(var1item, var2item))
+				return false;
 		}
+		++i;
 	}
-	else return false;
 	return true;
 }
 #macro array_equals __array_equals

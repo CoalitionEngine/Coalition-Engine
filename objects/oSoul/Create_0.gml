@@ -196,7 +196,7 @@ with PurpleSoulData
 //Polygon board collision
 //A precise detection will use an 8-sided collision check instead of a 4-sided check
 PreciseCollision = true;
-__PointInside = array_create(PreciseCollision ? 8 : 4, false);
+__PointInside = 0;
 #region Functions
 ///Processes blue soul falling
 ///Parameters should all be booleans that represent whether the soul is colliding with the right ground, etc.

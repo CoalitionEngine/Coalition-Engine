@@ -1,11 +1,10 @@
 ///@desc Script for the soul to collide with bullet, runs only in soul object for better optimisation
-///@param {Array<Asset.GMObject>} Exceptions Exceptions of collision
-function __CoalitionCollideWithBullet(exceptions = []) {
+function __CoalitionCollideWithBullet() {
 	aggressive_forceinline
 	static CheckCollisions =
 	[
 		//Parent always goes last
-		oGreenArr, oGB, oBulletParents
+		oGreenArr, oGB, oYellowBomb, oBulletParents
 	], size = array_length(CheckCollisions),
 	//Default function for place_meeting cases for bullets that damages player when touched
 	DefaultPlaceMeetingFunction =
@@ -44,24 +43,7 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 				if (image_alpha < 0.5)
 					collision = false;
 				else
-					switch (__type)
-					{
-						case 0:
-							Hurt(Damage);
-							break;
-						case 1:
-							if (Soul.IsMoving())
-								Hurt(Damage);
-								else
-									collision = false;
-							break;
-						case 2:
-							if (!Soul.IsMoving())
-								Hurt(Damage);
-								else
-									collision = false;
-							break;
-					}
+					__COALITION_BULLET_COLOR_COLLISION
 			}
 		}
 		__COALITION_BULLET_UNACCOUNT_ANGLE
@@ -75,32 +57,39 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 		//oGB
 		function(bullet) {
 			bullet = instance_position(x, y, oGB);
-			var collision = bullet != noone;
+			var collision = bullet != noone, Hurt = Soul.Hurt;
 			if (collision)
 			{
 				with (bullet)
 				{
 					if (__state == 4 && __beam_alpha >= 0.5)
 					{
-						switch (__type)
-						{
-							case 0:
-								Soul.Hurt(Damage);
-								break;
-							case 1:
-								if (Soul.IsMoving())
-									Soul.Hurt(Damage);
-								else
-									collision = false;
-								break;
-							case 2:
-								if (!Soul.IsMoving())
-									Soul.Hurt(Damage);
-								else
-									collision = false;
-								break;
-						}
+						__COALITION_BULLET_COLOR_COLLISION
 					}
+				}
+			}
+			return collision;
+		},
+		//oYellowBomb
+		function(bullet) {
+			var Hurt = Soul.Hurt;
+			if (bullet.State != YELLOW_BOMB_STATE.EXPLODE)
+			{
+				bullet = instance_position(x, y, oYellowBomb);
+				var collision = bullet != noone;
+			}
+			else
+			{
+				if (image_index >= 3)
+					return false;
+				collision = distance_to_line(x, y, bullet.x + lengthdir_x(1500, image_angle), bullet.y + lengthdir_y(1500, image_angle), bullet.x - lengthdir_x(1500, image_angle), bullet.y - lengthdir_y(1500, image_angle)) ||
+							distance_to_line(x, y, bullet.x + lengthdir_x(1500, image_angle + 90), bullet.y + lengthdir_y(1500, image_angle + 90), bullet.x - lengthdir_x(1500, image_angle + 90), bullet.y - lengthdir_y(1500, image_angle + 90));
+			}
+			if (collision)
+			{
+				with (bullet)
+				{
+					__COALITION_BULLET_COLOR_COLLISION
 				}
 			}
 			return collision;
@@ -149,3 +138,21 @@ function __CoalitionCollideWithBullet(exceptions = []) {
 			if (__LenExists)\
 				image_angle -= Len.angle_extra;\
 		}
+#macro __COALITION_BULLET_COLOR_COLLISION switch (type)\
+										{\
+											case 0:\
+												Hurt(Damage);\
+												break;\
+											case 1:\
+												if (Soul.IsMoving())\
+													Hurt(Damage);\
+												else\
+													collision = false;\
+												break;\
+											case 2:\
+												if (!Soul.IsMoving())\
+													Hurt(Damage);\
+												else\
+													collision = false;\
+												break;\
+										}

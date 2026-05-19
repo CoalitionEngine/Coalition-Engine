@@ -248,7 +248,7 @@ function __Shop() constructor {
 			__state = SHOP_STATE.MENU;
 			__choice = [__choice[0], 0, 0, 0, 0];
 			__choice_displacement = 0;
-			if (string_width(__TempText) != 0)
+			if (!string_is_empty(__TempText))
 			{
 				SetText(__TempText);
 				__TempText = "";
@@ -350,7 +350,7 @@ function __Shop() constructor {
 					__state = SHOP_STATE.CONFIRM_BUY;
 					//Reset typist and set tempoary display text
 					__typist.reset().skip();
-					if (string_width(__TempText) == 0)
+					if (string_is_empty(__TempText))
 						__TempText = Text;
 					SetText(Lexicon("Shop.ItemBuyText", BuyableItems[__choice[1]].ShopPrice).Get());
 				}
@@ -399,7 +399,7 @@ function __Shop() constructor {
 					}
 					else //If not
 					{
-						if (string_width(__TempText) == 0)
+						if (string_is_empty(__TempText))
 							__TempText = Text;
 						SetText(__InsufficientGText);
 					}
@@ -459,7 +459,7 @@ function __Shop() constructor {
 				__state = SHOP_STATE.CONFIRM_SELL;
 				//Set tempoary text
 				__typist.reset().skip();
-				if (string_width(__TempText) == 0)
+				if (string_is_empty(__TempText))
 					__TempText = Text;
 				SetText(Lexicon("Shop.ItemSellText", global.__CoalitionUserItems[__choice[1]].ShopPrice).Get());
 			}

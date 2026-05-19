@@ -6,7 +6,7 @@
   "name":"Blur_Screen",
   "parent":{
     "name":"Blur",
-    "path":"folders/Coalition Engine/Effects/Required/Blur.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Required Effects/Blur.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

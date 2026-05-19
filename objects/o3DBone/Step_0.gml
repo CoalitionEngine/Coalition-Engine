@@ -20,13 +20,14 @@ repeat (n)
 		_bone.y = y + (y1 + y2) / 2;
 		_bone.Length = point_distance(x1, y1, x2, y2) - len3 / (abs(z1 - z2) / 50 + 5);
 		_bone.image_angle = point_direction(x1, y1, x2, y2);
-		_bone.__type = __type;
+		_bone.type = type;
 		if (_bone.x > 640 + _bone.length && hspeed > 0)  ||
 			(_bone.x < 0 - _bone.length && hspeed < 0)	 ||
 			(_bone.y > 480 + _bone.length && vspeed > 0) ||
 			(_bone.y < 0 - _bone.length && vspeed < 0)
 			out_cnt++;
-		if (out_cnt == n) instance_destroy();
+		if (out_cnt == n)	
+			instance_destroy();
 	}
 	i++;
 }

@@ -12,16 +12,16 @@ image_speed = 0;
 //The rendering check for the bullet, default -1 so it will be constantly drawn
 RenderCheck = -1;
 //Whether it is collidiable with a yellow soul bullet
-YellowCollidable = true;
-//Whether the bullet can be destroyed by shooting a yellow soul bullet at it (YellowCollidable must be true)
-YellowDestroyable = true;
+YellowCollidable = false;
+///The function to execute when the bullet is collided
+OnYellowCollide = instance_destroy;
 //Internal check for whether the bullet is rendered in __RenderBullets
 __bullet_rendered = false;
 __LenExists = false;
 __AxisExists = false;
 array_push(__BulletList, self);
 
-__Draw = function() { event_perform(ev_draw, ev_draw_normal); };
+__Draw = draw_self;
 
 if (__COALITION_VISUAL_MODE)
 {

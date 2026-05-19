@@ -134,3 +134,13 @@ function string_lower_buffer(_string) {
 	buffer_seek(_strBuffer, buffer_seek_start, 0);
 	return buffer_read(_strBuffer, buffer_text);
 }
+///@func string_is_empty(str)
+///@desc Returns whether a string is an empty string
+///@param {string} str the string to test
+///@returns {bool} Whether the string is an empty string
+function string_is_empty(str)
+{
+	forceinline
+	//string_byte_length is roughly as fast as string_length in VM but is twice as fast in YYC
+	return string_byte_length(str) == 0;
+}

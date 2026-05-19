@@ -11,8 +11,11 @@
 function Fader_Fade(start = oGlobal.__fader_alpha, target, duration, delay = 0, color = oGlobal.__fader_color)
 {
 	forceinline
+	static curTween = undefined;
 	oGlobal.__fader_color = color;
-	TweenFire(oGlobal, "", 0, false, delay, duration, "__fader_alpha", start, target);
+	if (!is_undefined(curTween) && TweenIsPlaying(curTween))
+		TweenDestroy(curTween);
+	curTween = TweenFire(oGlobal, "", 0, false, delay, duration, "__fader_alpha", start, target);
 }
 ///@func TrailEffect(duration, [sprite], [subimg], [x], [y], [xscale], [yscale], [rotation], [color], [alpha])
 ///@desc Creates a trail of given sprite and params using an instance (This may decrease performance)

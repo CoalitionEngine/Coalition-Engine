@@ -9,6 +9,6 @@ Event = function() {
 	else if !irandom(5)
 	{
 		with oOWPlayer
-			Encounter_Begin();
+			Encounter.Begin();
 	}
 };

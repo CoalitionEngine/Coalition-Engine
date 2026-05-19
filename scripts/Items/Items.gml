@@ -46,7 +46,7 @@ function Item_Use(item) {
 	if (instance_exists(oBattleController))
 	{
 		var stat_text = "";
-		if (string_width(item.StatBoostText) != 0)	
+		if (!string_is_empty(item.StatBoostText))	
 			stat_text = "[delay, 333]\n* " + item.StatBoostText;
 		//Store a copy of the item to the effect processing array if needed
 		if (is_callable(item.EffectDuringTurn) || is_callable(item.EffectAtTurnEnd))

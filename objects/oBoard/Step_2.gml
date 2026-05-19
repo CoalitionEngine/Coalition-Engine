@@ -27,35 +27,36 @@ _frame_x[3] = point_x;
 _frame_y[3] = point_y;
 
 // Background/Surface
-point_xy(x - _left, y - _up);
-__bg_x = point_x;
-__bg_y = point_y;
 __bg_w = _left + _right;
 __bg_h = _up + _down;
 
 //Ensure coordinate calculation is frame perfect
-var _target_surf_width = right + left + FrameThickness * 2, _target_surf_height = up + down + FrameThickness * 2;
 if (!surface_exists(__frame_surf))
 {
-	__frame_surf = surface_create(_target_surf_width, _target_surf_height);
-	__cur_surf_width = _target_surf_width;
-	__cur_surf_height = _target_surf_height;
+	__frame_surf = surface_create(side_v, side_h);
+	__cur_surf_width = side_v;
+	__cur_surf_height = side_h;
+}
+//Resize board frame surface if needed
+if (__cur_surf_width != side_v || __cur_surf_height != side_h)
+{
+	surface_resize(__frame_surf, side_v, side_h);
+	__cur_surf_width = side_v;
+	__cur_surf_height = side_h;
 }
 //Draws the board frame
-if (__cur_surf_width != _target_surf_width || __cur_surf_height != _target_surf_height)
-	surface_resize(__frame_surf, _target_surf_width, _target_surf_height);
 surface_set_target(__frame_surf);
 draw_clear_alpha(c_black, 0);
 if (!sprite_exists(sprite_index))
 {
-	var _left_x = (right - left) / 2, _up_y = (down - up) / 2;
-	draw_sprite_ext(sprPixel, 0, _left_x, _up_y, _left + _right + _frame_thickness * 2, _frame_thickness, 0, c_white, 1);
-	draw_sprite_ext(sprPixel, 0, _left_x, _up_y + _target_surf_height - FrameThickness, _left + _right + _frame_thickness * 2, _frame_thickness, 0, c_white, 1);
-	draw_sprite_ext(sprPixel, 0, _left_x, _up_y, _frame_thickness, _up + _down + _frame_thickness * 2, 0, c_white, 1);
-	draw_sprite_ext(sprPixel, 0, _left_x + _target_surf_width - FrameThickness, _up_y, _frame_thickness, _up + _down + _frame_thickness * 2, 0, c_white, 1);
+	draw_sprite_ext(sprPixel, 0, 0, 0, side_v, side_h, 0, c_white, 1);
+	gpu_push_state();
+	gpu_set_blendmode(bm_subtract);
+	draw_sprite_ext(sprPixel, 0, _frame_thickness, _frame_thickness, side_v - _frame_thickness * 2, side_h - _frame_thickness * 2, 0, c_white, 1);
+	gpu_pop_state();
 }
 else //If the board is a sprite
-	draw_sprite_stretched(sprite_index, image_index, 0, 0, _target_surf_width, _target_surf_height);
+	draw_sprite_stretched(sprite_index, image_index, 0, 0, side_v, side_h);
 //Drawing of the Cover Board
 __DrawCoverBoard();
 surface_reset_target();

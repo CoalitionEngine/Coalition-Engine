@@ -1,3 +1,5 @@
+//Ensure depth of controller is always deeper than player
+depth = oOWPlayer.depth + 1;
 //Check if the overworld audio group is loaded
 if (!audio_group_is_loaded(audgrpoverworld)) audio_group_load(audgrpoverworld);
 #region Culling

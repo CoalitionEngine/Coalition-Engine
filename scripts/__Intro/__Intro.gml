@@ -37,14 +37,14 @@ function __Intro() constructor {
 
 enum INTRO_MENU_STATE
 {
-	LOGO,
-	SETTINGS,
-	FIRST_TIME, // First time ever open the game
+	FIRST_TIME,
 	NAMING,
 	NAME_CHECKING,
 	NAME_CONFIRM,
-	NAME_CHOSEN, // Name changing locked after first time naming ever
+	LOGO,
+	SETTINGS,
 	MENU,
+	CREDITS
 }
 
 __IntroData = new __Intro();

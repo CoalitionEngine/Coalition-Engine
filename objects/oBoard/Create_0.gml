@@ -20,8 +20,6 @@ __frame_surf = -1;
 __cur_surf_width = 0;
 __cur_surf_height = 0;
 
-__bg_x = 0;
-__bg_y = 0;
 __bg_w = 0;
 __bg_h = 0;
 //The thickness of the board frame
@@ -101,5 +99,5 @@ function __DrawCoverBoard()
 function __DrawBackground(bg_color = BackgroundColor) {
 	forceinline
 	if (!VertexMode)
-		draw_sprite_ext(sprPixel, 0, __bg_x, __bg_y, __bg_w, __bg_h, image_angle, bg_color, image_alpha);
+		draw_sprite_ext(sprPixelBig, 0, __true_x, __true_y, __bg_w / 2, __bg_h / 2, image_angle, bg_color, image_alpha);
 }

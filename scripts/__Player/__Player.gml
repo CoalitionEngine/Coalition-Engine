@@ -103,16 +103,15 @@ function __Player() constructor
 	///@desc Sets/Gets the name of the player
 	///@param {string} name The name to set (If needed)
 	///@return {Struct.__Player,String}
-	static Name = function(name = NaN)
+	static Name = function(name = undefined)
 	{
-		static hash = variable_get_hash("Name");
-		if (!is_nan(name))
+		if (!is_undefined(name))
 		{
-			struct_set_from_hash(COALITION_DATA, hash, name);
+			COALITION_DATA.Name = name;
 			return self;
 		}
 		else
-			return struct_get_from_hash(COALITION_DATA, hash);
+			return COALITION_DATA.Name;
 	}
 	///@method LV([lv])
 	///@desc Sets/Gets the lv of the player
@@ -120,14 +119,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static LV = function(lv = NaN)
 	{
-		static hash = variable_get_hash("LV");
 		if (!is_nan(lv))
 		{
-			struct_set_from_hash(COALITION_DATA, hash, lv);
+			COALITION_DATA.LV = lv;
 			return self;
 		}
 		else
-			return struct_get_from_hash(COALITION_DATA, hash);
+			return COALITION_DATA.LV;
 	}
 	///@method Gold([gold])
 	///@desc Sets/Gets the current Gold the player has
@@ -135,14 +133,13 @@ function __Player() constructor
 	///@return {Struct.__Player,String}
 	static Gold = function(amount = NaN)
 	{
-		static hash = variable_get_hash("Gold");
 		if (!is_nan(amount))
 		{
-			struct_set_from_hash(COALITION_DATA, hash, amount);
+			COALITION_DATA.Gold = amount;
 			return self;
 		}
 		else
-			return struct_get_from_hash(COALITION_DATA, hash);
+			return COALITION_DATA.Gold;
 	}
 	///@method Exp([exp])
 	///@desc Sets/Gets the current Exp the player has
@@ -150,14 +147,13 @@ function __Player() constructor
 	///@return {Struct.__Player,Real}
 	static Exp = function(amount = NaN)
 	{
-		static hash = variable_get_hash("Exp");
 		if (!is_nan(amount))
 		{
-			struct_set_from_hash(COALITION_DATA, hash, amount);
+			COALITION_DATA.Exp = amount;
 			return self;
 		}
 		else
-			return struct_get_from_hash(COALITION_DATA, hash);
+			return COALITION_DATA.Exp;
 	}
 	///@method Spd([spd])
 	///@desc Sets/Gets the speed of the player

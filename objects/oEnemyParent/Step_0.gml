@@ -1,14 +1,15 @@
 //Variable safeguard
 __CoalitionEngineError(Dialog.DefaultFont == "" || !is_string(Dialog.DefaultFont), $"{nameof(this)} has an incorrect Dialog.DefaultFont, it should be the name of the font as a string.");
 //Struct step
-if (variable_instance_exists(id, "__Struct_Step") && is_method(__Struct_Step)) __Struct_Step();
+if (variable_instance_exists(id, "__Struct_Step") && is_method(__Struct_Step))
+	__Struct_Step();
 //Turn processing
 if (!__turn_has_ended)
 {
 	if (!__died && __state == BATTLE_STATE.IN_TURN && __enemy_in_battle)
 	{
 		if (array_length(__AttackFunctions) > __current_turn)
-			__AttackFunctions[__current_turn]();
+			__AttackFunctions[__current_turn](time);
 		else
 		{
 			__current_turn--;
@@ -25,29 +26,27 @@ if (!__turn_has_ended)
 	all_turns_ended = false;
 }
 //Dusting logic
-if (ContainsDust && __enemy_total_height > 0 && __enemy_max_width > 0)
+if (ContainsDust && __enemy_total_height > 0 && __enemy_max_width > 0 && !__died && __is_dying && __death_time >= 1 + __attack_end_time)
 {
-	if (!__died && __is_dying && __death_time >= 1 + __attack_end_time)
+	var total_height = __enemy_total_height;
+	with (__dust)
 	{
-		var total_height = __enemy_total_height;
-		with (__dust)
+		//Dust height adding
+		if (height < total_height)
+			height += total_height / other.DustAnimDuration * 6;
+		var i = 0;
+		//Only calculates 1/3 of the dust for randomization and less performance weight
+		repeat (array_length(x) / 3)
 		{
-			//Dust height adding
-			if (height < total_height)
-				height += total_height / other.DustAnimDuration * 6;
-			var i = 0;
-			//Only calculates 1/3 of the dust for randomization and less performance weight
-			repeat (array_length(x) / 3)
-			{
-				if (image_alpha[i] > 0) {
-					x[i] += lengthdir_x(speed[i], direction[i]);
-					y[i] += lengthdir_y(speed[i], direction[i]);
-					image_alpha[i] -= 1 / life[i];
-					image_angle[i] += rotate[i];
-					if (!__being_drawn) __being_drawn = true;
-				}
-				i += 3;
+			if (image_alpha[i] > 0) {
+				x[i] += lengthdir_x(speed[i], direction[i]);
+				y[i] += lengthdir_y(speed[i], direction[i]);
+				image_alpha[i] -= 1 / life[i];
+				image_angle[i] += rotate[i];
+				if (!__being_drawn)
+				__being_drawn = true;
 			}
+			i += 3;
 		}
 	}
 }
@@ -65,18 +64,10 @@ if (!__died && !__is_spared)
 	if (__is_being_attacked)
 	{
 		if (CanDodge) // The movement for dodge
-		{
-			if (!__attack_time++)
-			{
-				DrawDamageText = true;
-				DamageTextColor = c_ltgray;
-				__damage = "MISS";
-				DodgeMethod();
-			}
-		}
+			DodgeMethod(GetDamageAnimationTimer());
 		else if (COALITION_DATA.AttackItem.__AttackAnimationLanded)
 		{
-			if (__attack_time++ == 0)
+			if (__attack_time == 0)
 			{
 				DamageEvent();
 				audio_play(snd_damage);
@@ -99,12 +90,13 @@ if (!__died && !__is_spared)
 		{
 			if (HP > 0) // Check if the enemy is going to die
 			{
-				if (__attack_time >= __attack_end_time)
+				if (CanDodge ? __DodgeAnimationEnded : __attack_time >= __attack_end_time)
 				{
 					oBattleController.HP[__enemy_slot] = __HPBarHP;
 					//Reset variables
 					__attack_time = 0;
 					__is_being_attacked = false;
+					__DodgeAnimationEnded = false;
 					DrawDamageText = false;
 				}
 			}
@@ -132,6 +124,7 @@ if (!__died && !__is_spared)
 				}
 			}
 		}
+		__attack_time++;
 	}
 	//Sparing animation
 	else if (__is_being_spared)

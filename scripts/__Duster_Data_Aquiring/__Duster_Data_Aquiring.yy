@@ -6,7 +6,7 @@
   "name":"__Duster_Data_Aquiring",
   "parent":{
     "name":"Duster",
-    "path":"folders/Coalition Engine/Effects/Optional/Duster.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Duster.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

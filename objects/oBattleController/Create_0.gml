@@ -23,7 +23,7 @@ if (ALLOW_DEBUG)
 __menu_state = 0;
 //Current battle state
 __battle_state = 0;
-//The turn elapsed in the battle
+//The turn elapsed in the battle, does not represent the turn of each individual enemy
 __battle_turn = 0;
 //The button chosen by the player
 __menu_button_choice = 0;
@@ -130,11 +130,8 @@ function __ResetFightAim()
 						with (COALITION_DATA.AttackItem)\
 						{\
 							__AttackAnimation(strike_target_x, target_enemy.y - target_enemy.__enemy_total_height / 2);\
-							__AttackAnimationTimer++;\
-						}\
-						if (COALITION_DATA.AttackItem.__AttackAnimationLanded)\
-						{\
-							__enemies[__target_option].__is_being_attacked = true;\
+							if (__AttackAnimationTimer++ == 0)\
+								target_enemy.__is_being_attacked = true;\
 						}\
 					}
 #macro __COALITION_BATTLE_END_ATTACK_ANIMATION if ((_target_xscale < 0.08 || _target_yscale < 0.08) && COALITION_DATA.AttackItem.__AttackAnimationEnded)\

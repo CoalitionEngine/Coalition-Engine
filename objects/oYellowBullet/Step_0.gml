@@ -2,8 +2,7 @@
 with (oBulletParents)
 	if (YellowCollidable && place_meeting(x, y, other))
 	{
-		if (YellowDestroyable)
-			instance_destroy();
+		OnYellowCollide();
 		instance_destroy(other);
 	}
 //Draw trail

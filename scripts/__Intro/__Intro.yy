@@ -6,7 +6,7 @@
   "name":"__Intro",
   "parent":{
     "name":"Intro",
-    "path":"folders/Coalition Engine/Intro.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Intro.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

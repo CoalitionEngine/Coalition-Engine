@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ZipWriter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ZipWriter",
+  "parent":{
+    "name":"Extensions",
+    "path":"folders/Extensions.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

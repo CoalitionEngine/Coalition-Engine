@@ -16,38 +16,38 @@ function __Enemy() constructor {
 		{
 			__enemies = array_create(3, noone);
 			var enemy_presets = global.__CoalitionEnemyEncounterLibrary;
-			for (var i = 0, enemies = []; i < 3; ++i)
+			for (var i = 0, curEnemy = noone; i < 3; ++i)
 			{
-				enemies[i] = enemy_presets[encounter_number][i];
+				curEnemy = enemy_presets[encounter_number][i];
 				//Check if the 'enemy' is using the constructor method
-				var enemy_is_struct = is_instanceof(enemies[i], EnemyData);
-				if (enemies[i] != noone || enemy_is_struct)
+				var enemy_is_struct = is_instanceof(curEnemy, EnemyData);
+				if (curEnemy == noone && !enemy_is_struct)
+					continue;
+				__enemies[i] = enemy_is_struct ?
+					instance_create_depth(160 * (i + 1), 250, 1, oEnemyParent, { __Struct_Step: curEnemy.Step, __Struct_Draw: curEnemy.Draw }) :
+					instance_create_depth(160 * (i + 1), 250, 1, curEnemy);
+				__enemies[i].__enemy_slot = i;
+				//Initialize enemy data if it is a struct
+				if (enemy_is_struct)
 				{
-					__enemies[i] = enemy_is_struct ?
-						instance_create_depth(160 * (i + 1), 250, 1, oEnemyParent, { __Struct_Step: enemies[i].Step, __Struct_Draw: enemies[i].Draw }) :
-						instance_create_depth(160 * (i + 1), 250, 1, enemies[i]);
-					__enemies[i].__enemy_slot = i;
-					if (enemy_is_struct)
+					with (__enemies[i])
 					{
-						with (__enemies[i])
-						{
-							__EnemyStruct = enemies[i];
-							__EnemyStruct.Create();
-							array_copy(__AttackFunctions, 0, __EnemyStruct.__AttackFunctions, 0, array_length(__EnemyStruct.__AttackFunctions));
-							array_copy(__PreAttackFunctions, 0, __EnemyStruct.__PreAttackFunctions, 0, array_length(__EnemyStruct.__PreAttackFunctions));
-							array_copy(__PostAttackFunctions, 0, __EnemyStruct.__PostAttackFunctions, 0, array_length(__EnemyStruct.__PostAttackFunctions));
-						}
+						__EnemyStruct = curEnemy;
+						__EnemyStruct.Create();
+						array_copy(__AttackFunctions, 0, __EnemyStruct.__AttackFunctions, 0, array_length(__EnemyStruct.__AttackFunctions));
+						array_copy(__PreAttackFunctions, 0, __EnemyStruct.__PreAttackFunctions, 0, array_length(__EnemyStruct.__PreAttackFunctions));
+						array_copy(__PostAttackFunctions, 0, __EnemyStruct.__PostAttackFunctions, 0, array_length(__EnemyStruct.__PostAttackFunctions));
 					}
-					//Since there can only be one boss at a time, this will always hold true
-					//Even if the boss summons minion enemies, it is still a boss fight
-					global.__BossFight = enemies[i].IsBoss;
-					if (enemies[i].BeginAtTurn)
-					{
-						__menu_state = -1;
-						__battle_turn++;
-						__dialog_start();
-						oSoul.visible = true;
-					}
+				}
+				//Since there can only be one boss at a time, this will always hold true
+				//Even if the boss summons minion enemies, it is still a boss fight
+				global.__BossFight = curEnemy.IsBoss;
+				if (curEnemy.BeginAtTurn)
+				{
+					__menu_state = -1;
+					__battle_turn++;
+					__dialog_start();
+					oSoul.visible = true;
 				}
 			}
 		}

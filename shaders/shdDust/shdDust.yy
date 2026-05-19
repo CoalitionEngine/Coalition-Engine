@@ -4,7 +4,7 @@
   "name":"shdDust",
   "parent":{
     "name":"Duster",
-    "path":"folders/Coalition Engine/Effects/Optional/Duster.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Duster.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

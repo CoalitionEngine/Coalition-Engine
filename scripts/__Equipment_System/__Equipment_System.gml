@@ -24,7 +24,7 @@ function Equipment(type = EQUIPMENT_TYPE.ARMOR) constructor {
 	///@desc Updates the drop text for equipment if no custom text is placed
 	///@param {string} key The key of the item in the localization file
 	static __InitializeDropText = function(key) {
-		if (string_width(DropText) == 0)
+		if (string_is_empty(DropText))
 			DropText = $"* You threw away the {Name}.";
 	}
 	id = -1;

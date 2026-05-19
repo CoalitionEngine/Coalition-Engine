@@ -14,7 +14,7 @@ __DurationTimer = 0;
 //The mode of the bone, each representing whether it will be locked to a direction of the board
 __stick_direction = 0;
 //The color type of the bone 0-> White, 1-> Blue, 2-> Orange
-__type = 0;
+type = 0;
 //The main color of the bone
 __default_color = c_white;
 len_load();
@@ -34,7 +34,7 @@ function __InAnyBoard()
 	var _x = x, _y = y, _xscale = image_xscale / 2;
 	with (oBoard)
 	{
-		if (point_distance(__true_x, __true_y, _x, _y) <= __diagonal + _xscale)
+		if (point_distance(__true_x, __true_y, _x, _y) <= __diagonal * 2 + _xscale)
 			return true;
 	}
 	with (oVertexBoard)
@@ -49,7 +49,7 @@ function __Draw()
 {
 	forceinline
 	var _color, _angle = image_angle;
-	switch (__type)
+	switch (type)
 	{
 		case 1: _color = c_aqua;	break;
 		case 2: _color = c_orange;	break;

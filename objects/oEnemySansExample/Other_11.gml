@@ -70,14 +70,20 @@ SetAttack(2, function() {
 SetAttack(0, function() {
 	if (time == 0)
 	{
-		Soul.SetMode(SOUL_MODE.PURPLE);
-		Board.SetSize(70, 70, 120, 120, 0);
-		oBoard.image_angle = 20;
-		Battle.Button(0).y = 100;
-		Battle.Button(0).OverrideAlpha = true;
-		Battle.Button(0).image_alpha = 1;
-		//oBoard.ConvertToVertex();
-		//oVertexBoard.InsertPolygonPoint(1, 320, 100);
+		//Soul.SetMode(SOUL_MODE.PURPLE);
+		//Board.SetSize(70, 70, 120, 120, 0);
+		//oBoard.image_angle = 20;
+		//Battle.Button(0).y = 100;
+		//Battle.Button(0).OverrideAlpha = true;
+		//Battle.Button(0).image_alpha = 1;
+		//with (instance_create_depth(320, 250, 0, oVertexBoard))
+		//{
+			//Mode = VERTEX_BOX_MODE.CIRCLE;
+			//Radius = 50;
+		//}
+		oBoard.ConvertToVertex();
+		oVertexBoard.SetPolygonPoint(0, 320, 100);
+		oVertexBoard.InsertPolygonPoint(1, 350, 100);
 		//oBattleController.Button.BeneathBoard = true;
 		//oBattleController.UI.BeneathBoard = true;
 		//for (var i = 0; i < 64 * 48; ++i) {

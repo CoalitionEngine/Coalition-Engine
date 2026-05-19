@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Bloom",
-    "path":"folders/Coalition Engine/Effects/Required/Bloom.yy",
+    "path":"folders/Coalition Engine/(System - don't call or modify them)/Global/Required Effects/Bloom.yy",
   },
   "parentObjectId":null,
   "persistent":false,

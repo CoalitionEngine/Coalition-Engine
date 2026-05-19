@@ -117,7 +117,7 @@ function nearestPointOnEdge(pointX, pointY, StartX, StartY, EndX, EndY)
 	if (StartX == EndX) return new Vector2(StartX, pointY);
 	if (StartY == EndY) return new Vector2(pointX, StartY);
 	/*
-		Explaination:
+		Explanation:
 		Let the target coordinates be (A, B).
 		
 		We first find the equation of the line (Start -> End) in "y = mx + c" form.

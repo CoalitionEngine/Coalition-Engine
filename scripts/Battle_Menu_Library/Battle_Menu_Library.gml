@@ -407,7 +407,7 @@ function InitializeBattleStates() {
 		repeat (array_length(__enemies[__target_option].__ActNames))
 		{
 			var assign_act_text = __enemies[__target_option].__ActNames[i];
-			if (string_width(assign_act_text) != 0)
+			if (!string_is_empty(assign_act_text))
 				enemy_check_texts += "* " + assign_act_text;
 			if (is_odd(i))
 				enemy_check_texts += "\n";

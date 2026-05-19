@@ -4,7 +4,7 @@
   "name":"shdHorrFi",
   "parent":{
     "name":"Horrifi",
-    "path":"folders/Coalition Engine/Effects/Optional/Horrifi.yy",
+    "path":"folders/Coalition Engine/Optional Effects/Horrifi.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",
